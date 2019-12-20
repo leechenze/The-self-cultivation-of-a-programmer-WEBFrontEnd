@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img{
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            display: inline-block;
+            vertical-align:middle;
+        }
+        .scrollBox{
+            width:80%;
+            height: auto;
+            margin: 0 auto;
+            border: 2px dashed #000;
+            border-radius: 20px;
+            padding: 20px;
+        }
+        .scrollBox .item{
+            width: 80%;
+            margin: 0 auto;
+            background: #e5e5e5;
+            border: 1px solid #fff;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+        }
+        .scrollBox .item-content{
+            width: 800px;
+            margin: 10px;
+            display: inline-block;
+        }
+        .scrollBox .item-content h3,p{
+            margin: 5px;
+        }
+    </style>
+    <style>
+        .active{
+            border:10px solid #cccccc;
+            box-sizing: border-box;
+        }
+        .replaceWith{
+            width:80%;
+            margin: 0 auto;
+            height: auto;
+            border: 1px solid #000;
+        }
+        .replaceWith img{
+            width: 100px;
+            height: 100px;
+        }
+        .replaceWith{
+            
+        }
+    
+    </style>
+    <!-- 选项卡 -->
+    <style>
+        body{
+            font:16px 'Microsoft YaHei', sans-serif;
+        }
+        .container{
+            margin: 100px auto;
+            width:80%;
+        }
+        ul{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .option-list{
+            height: 40px;
+            border-bottom: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+        }
+        .option-list li {
+            float: left;
+            padding: 0 20px;
+            height: 39px;
+            line-height: 40px;
+            border-top: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            background-color:#f5f5f5;
+            cursor:pointer;
+        }
+        .option-list li.current{
+            background-color: #fff;
+            height: 40px;
+        }
+
+        .card-list li {
+            display: none;
+            padding: 20px;
+            height: 300px;
+            border: 1px solid #ccc;
+            border-top:none;
+        }
+        
+        .card-list li.current{
+            display:block;
+        }
+    </style>
+</head>
+<body>
+    <ul id="my-list">
+        <li>克林顿</li>
+        <li>尼克松</li>
+        <li>华盛顿</li>
+        <li>肯尼迪</li>
+        <li>特朗普</li>
+        <li>奥巴马</li>
+        <li>习近平</li>
+    </ul>
+
+    <div class="scrollBox">
+        <div class="item">
+            <img src="./images/1.jpg" alt="">
+            <div class="item-content">
+                <h3>Hello World</h3>
+                <p>
+                    webpack4.x的使用，包含工作中常用的插件使用，技巧使用、以及学习思路，零基础可以很好的入门，有经验的人可以系统学习。
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="./images/2.jpg" alt="">
+            <div class="item-content">
+                <h3>Hello World</h3>
+                <p>
+                    webpack4.x的使用，包含工作中常用的插件使用，技巧使用、以及学习思路，零基础可以很好的入门，有经验的人可以系统学习。
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="./images/3.jpg" alt="">
+            <div class="item-content">
+                <h3>Hello World</h3>
+                <p>
+                    webpack4.x的使用，包含工作中常用的插件使用，技巧使用、以及学习思路，零基础可以很好的入门，有经验的人可以系统学习。
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="./images/4.jpg" alt="">
+            <div class="item-content">
+                <h3>Hello World</h3>
+                <p>
+                    webpack4.x的使用，包含工作中常用的插件使用，技巧使用、以及学习思路，零基础可以很好的入门，有经验的人可以系统学习。
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="./images/5.jpg" alt="">
+            <div class="item-content">
+                <h3>Hello World</h3>
+                <p>
+                    webpack4.x的使用，包含工作中常用的插件使用，技巧使用、以及学习思路，零基础可以很好的入门，有经验的人可以系统学习。
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="./images/6.jpg" alt="">
+            <div class="item-content">
+                <h3>Hello World</h3>
+                <p>
+                    webpack4.x的使用，包含工作中常用的插件使用，技巧使用、以及学习思路，零基础可以很好的入门，有经验的人可以系统学习。
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="./images/7.jpg" alt="">
+            <div class="item-content">
+                <h3>Hello World</h3>
+                <p>
+                    webpack4.x的使用，包含工作中常用的插件使用，技巧使用、以及学习思路，零基础可以很好的入门，有经验的人可以系统学习。
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="./images/8.jpg" alt="">
+            <div class="item-content">
+                <h3>Hello World</h3>
+                <p>
+                    webpack4.x的使用，包含工作中常用的插件使用，技巧使用、以及学习思路，零基础可以很好的入门，有经验的人可以系统学习。
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="./images/9.jpg" alt="">
+            <div class="item-content">
+                <h3>Hello World</h3>
+                <p>
+                    webpack4.x的使用，包含工作中常用的插件使用，技巧使用、以及学习思路，零基础可以很好的入门，有经验的人可以系统学习。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script> window.location.href += '#wrap'</script>
+    <ul id="wrap">
+        <img src="./images/1.jpg" />
+        <img src="./images/2.jpg" />
+        <img src="./images/3.jpg" />
+        <img src="./images/4.jpg" />
+        <li>
+            <img src="./images/5.jpg" />
+        </li>
+    </ul>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    <script> window.location.href += '#replaceWith'</script>
+    <div class="replaceWith" id="replaceWith">
+        <img src="./images/1.jpg" alt="">
+        <img src="./images/2.jpg" alt="">
+        <img src="./images/3.jpg" alt="">
+        <img src="./images/4.jpg" alt="">
+        <img src="./images/5.jpg" alt="">
+    </div>
+    <img src="./images/6.jpg" class="targetImg" alt="">
+    <img src="./images/9.jpg" class="originImg" alt="">
+    <input type="button" class="replaceBtn" value="replace">
+    <input type="button" class="deleteBtn" value="delete">
+    <input type="button" class="removeBtn" value="remove">
+    <input type="button" class="detachBtn" value="detach">
+    <input type="button" class="removeReplyBtn" value="removeBack">
+    <input type="button" class="detachReplyBtn" value="detachBack">
+    
+    
+    
+    
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    <script> window.location.href += '#replaceWith'</script>
+    <ul class="empty" id="empty">
+        <li>empty</li>
+        <li>empty</li>
+        <li>empty</li>
+        <li>empty</li>
+        <li>empty</li>
+    </ul>
+    <ul class="remove" id="empty">
+        <li>remove</li>
+        <li>remove</li>
+        <li>remove</li>
+        <li>remove</li>
+        <li>remove</li>
+    </ul>
+    <ul class="detach" id="empty">
+        <li>detach</li>
+        <li>detach</li>
+        <li>detach</li>
+        <li>detach</li>
+        <li>detach</li>
+    </ul>
+
+
+    <input type="button" class="clone" value="clone">
+    
+
+
+
+
+    <script>window.location.href += '#tabSelete'</script>
+    <div class="container" id="tabSelete">
+        <div class="option-list">
+            <ul>
+                <li class="current">毛泽东</li>
+                <li>特朗普</li>
+                <li>奥巴马</li>
+                <li>小布什</li>
+                <li>华盛顿</li>
+            </ul>
+        </div>
+        <div class="card-list">
+            <ul>
+                <li class="current">毛泽东毛泽东毛泽东毛泽东毛泽东毛泽东毛泽东毛泽东</li>
+                <li>特朗普特朗普特朗普特朗普特朗普特朗普特朗普特朗普</li>
+                <li>奥巴马奥巴马奥巴马奥巴马奥巴马奥巴马奥巴马奥巴马</li>
+                <li>小布什小布什小布什小布什小布什小布什小布什小布什</li>
+                <li>华盛顿华盛顿华盛顿华盛顿华盛顿华盛顿华盛顿华盛顿</li>
+            </ul>
+        </div>
+    </div>
+    
+    
+    
+    
+    <script src="./jQuery/jquery3.4.1.min.js"></script>
+    <script>
+        // DOM对象方法
+            // each() 遍历
+                // $('#my-list li').each(function (ind, ele) {
+                //     // ele.innerHTML += '喜欢我';
+                //     // $(ele).append('中国');
+                // })
+            // map() 返回新的集合;
+                // var list = $('#my-list li').map(function (ind, ele) {
+                //     // $(ele).append('中国');
+                //     return $(ele).html();
+                // });
+                // console.log(list);
+            // length 
+            // size();
+                // var list = $('#my-list li').map(function (ind, ele) {
+                //     return $(ele).html();
+                // });
+                // console.log(list.length);
+                // size报错是因为自从1.8版本之后就不再支持size() 方法了, 和length是一样的,返回长度;
+                // console.log(list.size());
+            // index() 返回某个元素在他的父元素中的索引;
+                // jQuery的一个好处避免了原生的闭包应用;
+                // console.log($('#my-list li:last').index());
+                // $('#my-list li').click(function () {
+                //     alert($(this).index() + 1);
+                // })
+                
+            // get() 等同于[0], 如果没有参数就会把一个jQuery集合转换成纯数组(jQuery集合是类数组);
+                // var list = $('#my-list li').map(function (ind, ele) {
+                //     return $(ele).html();
+                // });
+                // console.log(list.get());
+
+            // is(select); 参数是一个选择器,判断jQueryDOM是否满足某个条件, 返回布尔值;
+                // console.log($('#my-list').is('#my-list'));
+                // console.log($('#my-list').is(':'));
+            
+        
+        // DOM对象操作
+            // 1.创建元素
+                // console.log($('<li></li>'))
+                // console.log($('<li>'))
+            // 2.内部插入对象
+                // append();
+                    // $('#my-list').append($('<li class="MaoZeDong">毛泽东</li>'));
+                    // $('#my-list').append('<li class="MaoZeDong">毛泽东</li>');
+                
+                // appendTo();
+                    // $('<li class="MaoZeDong">毛泽东</li>').appendTo('#my-list');
+                
+                // prepend();
+                    // $('#my-list').prepend($('<li class="MaoZeDong">毛泽东</li>'));
+                    
+                // prependTo();
+                    // $('<li class="MaoZeDong">毛泽东</li>').prependTo('#my-list')
+
+                
+            // 3.外部插入对象
+                // after()
+                    // $('#my-list').after('<li class="MoZeDong">毛泽东</li>')
+
+                // insertAfter()
+                    // $('<li class="MoZeDong">毛泽东</li>').insertAfter('#my-list');
+
+                // before()
+                    // $('#my-list').before('<li class="MoZeDong">毛泽东</li>')
+                    
+                    
+                // insertBefore();
+                    // $('<li class="MoZeDong">毛泽东</li>').insertBefore('#my-list');
+
+                
+            // 4.包裹操作
+                // wrap()
+                    // $('#wrap').find('img').wrap('<li></li>');
+
+                // wrapAll()
+                    // $('#wrap').find('img').wrapAll('<li></li>');
+                    
+                // wrapInner()
+                    // $('#wrap').wrap('<li></li>');
+                    // $('#wrap').wrapInner('<li></li>');
+                    
+                // unwrap()
+                    // $('#wrap img:last').unwrap();
+                    
+            // 替换操作
+                // replaceWith()
+                    // 替换新建元素
+                    // $('.targetImg').replaceWith('<img src="./images/9.jpg" />');
+                    // 替换已有元素
+                    // $('.targetImg').replaceWith($('.originImg'));
+                    
+                // replaceAll()
+                    // $('<img src="./images/7.jpg" />').replaceAll($('.targetImg'));
+                
+            // 删除操作
+                
+                // empty()
+                    // $('.empty').empty();
+                
+                // 区别在于 remove会删除元素身上的事件, detach不会删除元素身上绑定的事件;
+                // remove()
+                    // $('.empty').remove();
+                
+                // detach()
+                    // $('.detach').detach();
+                    
+            // 克隆操作
+                
+                // clone();
+                // $('.clone').click(function() {
+                //     console.log($(this));
+                //     $(this).clone().appendTo('body');
+                // })
+                
+
+            
+                
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                    
+                    
+        // 案例
+            // 消息提醒
+                // $(document).ready(function () {
+                //     setInterval(function () {
+                //         // insertBefore()会清空之前的DOM元素中的子元素;
+                //         // $('.scrollBox div.item').last().insertBefore('.scrollBox');
+                //         // prependTo()不会清空之前的DOM元素中的子元素;
+                //         // $('.scrollBox div.item').last().prependTo('.scrollBox');
+
+                //         $('.scrollBox div.item').last().hide().prependTo('.scrollBox').slideDown();
+                //     },2000);
+                // })
+                    
+            // 替换删除图片
+                // $(function() {
+                //     var $removeResult = null,
+                //         $detachResult = null;
+                //     $('#replaceWith img').click(function () {
+                //         $(this).toggleClass('active').siblings().removeClass('active');
+                //     })
+
+                //     $('.replaceBtn').click(function () {
+                //         // 替换新建元素;
+                //         // $('#replaceWith img.active').replaceWith('<img src="./images/5.jpg" />')
+                //         // 替换已有元素;
+                //         // $('#replaceWith img.active').replaceWith($('.targetImg'))
+                //     })
+                //     $('.deleteBtn').click(function () {
+                //         $('#replaceWith').empty();
+                //     })
+
+                //     $('.removeBtn').click(function () {
+                //         $removeResult = $('#replaceWith img.active').remove();
+                //     })
+                //     $('.detachBtn').click(function () {
+                //         $detachResult = $('#replaceWith img.active').detach();
+                //     })
+
+                //     // detach 和 remove方法的区别如下: 删除以后通过这两个方法的返回值, remove是没有之前的事件的, 而detach还有原来事件;
+                //     $('.removeReplyBtn').click(function () {
+                //         $('#replaceWith').append($removeResult);
+                //     })
+                //     $('.detachReplyBtn').click(function () {
+                //         $('#replaceWith').append($detachResult);
+                //     })
+                // })
+                
+
+            // 选项卡案例
+                // $(function () {
+                //     $('.option-list li').click(function () {
+                //         $(this).addClass('current').siblings('li').removeClass('current');
+                //         $('.card-list li').removeClass('current').eq($(this).index()).addClass('current');
+                //     })
+                // })
+                    
+                    
+        
+    </script>
+</body>
+</html>

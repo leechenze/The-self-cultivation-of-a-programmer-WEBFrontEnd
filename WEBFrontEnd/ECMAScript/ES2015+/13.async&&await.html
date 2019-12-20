@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // 验证async的返回值是否是promise对象;
+        // async function fn(){
+        //     return 'i love you';
+        // }
+        // fn().then(res => {
+        //     console.log(res);
+        // }).catch(err => {
+        //     console.log(err);
+        // })
+
+
+        // 验证async函数出错会不会后续执行
+        // async function fn(){
+        //     // throw new Error('出错了');
+        //     await Promise.reject('出错了');
+        //     console.log('如果上一步出错就不走这里了');
+        //     let a = await Promise.resolve('成功的');
+        //     console.log(a);
+        // }
+        // fn().then(res => {
+        //     console.log(res);
+        // }).catch(err => {
+        //     console.log(err);
+        // })
+
+
+        // async函数出错保证后续执行 try...catch... 方法;
+        // async function fn(){
+        //     try{
+        //         await Promise.reject('出错了');
+        //     }catch(err){
+        //         console.log('成功执行了');
+        //         await Promise.resolve('success');
+        //     }
+        // }
+        
+        // fn().then(res => {
+        //     console.log(res);
+        // }).catch(err => {
+        //     console.log(err);
+        // })
+
+
+        // async函数出错保证后续执行 promise.catch()方法实现：
+        // async function fn(){
+        //     await Promise.reject('出错了').catch(err => {
+        //         console.log(err);
+        //     })
+        //     console.log('成功执行了');
+        //     await Promise.resolve('success');
+        // }
+        
+        // fn().then(res => {
+        //     console.log(res);
+        // }).catch(err => {
+        //     console.log(err);
+        // })
+
+
+        // async await案例;
+        // function returnPromise(num){
+        //     return new Promise((resolve,reject) => {  
+        //         setTimeout(() => {
+        //             resolve(2 * num);
+        //         })
+        //     })
+        // }
+
+        // async function timeout(){
+        //     return await returnPromise(5);
+        // }
+        // timeout().then(res => {
+        //     console.log(res);
+        // })
+        // console.log('虽然我在后面,但是我先执行');
+        
+
+
+
+
+    </script>
+</body>
+</html>

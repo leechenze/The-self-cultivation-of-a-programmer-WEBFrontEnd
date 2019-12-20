@@ -1,0 +1,1592 @@
+﻿博学之, 审问之, 慎思之, 明辨之, 笃行之;
+
+
+jQuery是一个快速的小的功能丰富的JavaScript库. 它使HTML文档遍历和操作,事件处理,动画和AJAX等操作更加简单,易于使用的API在许多浏览器中起作用.结合了多功能性和可扩展性,jQuery改变了数百万开发人员编写JavaScript的方式.
+
+
+壹.jQuery基础
+    jQuery的使用
+        在文档加载完毕后执行;
+        $(document).ready(function () {})
+        间写方式如下:
+        $(function () {});
+        
+        而且每一个$(function() {});都是一个单独的作用域;
+        就像立执行函数那种作用域理论相同, 有效防止全局变量污染;
+        
+        $(function () {})和onload的区别;
+        ready等待页面中的DOM加载完毕后执行
+        $(function () {confirm('readyOK')})
+        load等待页面中所有的东西包括图片,视频,音频,等等所有元素都加载完毕后才会执行;
+        window.onload = function () {confirm('loadOK')}
+        
+    
+    jQuery的特点;
+        轻量,开源,免费,易于学习;
+        兼容行处理;
+        jQuery3.4版本比jQuery1.12.4版本小的原因正式因为去掉了处理兼容性的一些代码;
+        强大的选择器
+        便捷的DOM操作;
+        链式操作;
+        可靠的事件机制;
+        封装了简单易用的AJAX操作;
+        丰富的扩展插件;
+        
+    jQuery的DOM对象;
+        console.log($('#box'));
+        console.log(document.getElementById('box'));
+
+        使用jQuery选择器获取的对象,和原生获取的DOM对象并不同,称之为jQueryDOM对象(类数组对象);
+        但是对象都是同一个对象, 只不过是jQuery转换为了一个类数组形式的对象,第零位就是DOM对象;
+        也就是说jQueryDOM对象本质上是由DOM对象组成的集合;
+        jQuery转换原生: $('#box')[0];
+        原生转换jQuery: $(document.getElementById('box'));
+        
+
+    jQuery全局对象;
+        jQuery(document).ready(function () {
+            console.log(jQuery);
+            简称$
+            console.log($);
+            console.log(jQuery === $);
+
+            以上结论得出$就是一个函数, 并且$的参数不同,作用也是完全不一样的, 如下实例;
+            作为选择器使用
+            console.log($('#box'));
+            转换DOM对象使用;
+            console.log($(document.getElementById('box')))
+            创建新元素;
+            console.log($('<p>').html('asdf').appendTo('body'));
+            console.log($('<p>asdf</p>').appendTo('body'));
+        })
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+贰.jQuery选择器
+
+    1.基础选择器
+        ID选择器
+        console.log($('#firstEle'));
+        类选择器
+        console.log($('.secondEle'));
+        标签选择器
+        console.log($('li'));
+        全局选择器
+        console.log($('*'));
+        组合选择器
+        console.log($('li.item'));
+        多个选择器
+        console.log($('li,p'));
+    2.层级选择器
+        后低选择器
+        console.log($('#firstEle li'));
+        子元素选择器(> ul下的li下的li会被选中(无论嵌套几层), 但是ul下的li下的ul下的li这种结构就不会被选中);
+        console.log($('#firstEle>li'));
+        其后比邻一个兄弟选择器
+        console.log($('#mylist+li'));
+        其后比邻所有兄弟选择器
+        console.log($('#mylist~li'));
+    3.筛选选择器(jQuery特有的选择器), 一定分开理解 : 冒号前面是一部分(获取一个集合), 冒号后面又是一部分(条件); $(':first') === $('*:first');
+        :last 查找集合中的第一个元素;
+        console.log($('.secondEle li:first'));
+        :first 查找集合中的最后一个元素;
+        console.log($('.secondEle li:last'));
+        :eq() 指定索引选择,从零开始;
+        console.log($('.secondEle li:eq(1)'));
+        :gt(2) 指定索引大于2的元素
+        console.log($('.secondEle li:gt(2)'));
+        :lt(2) 指定索引小于2的元素 
+        console.log($('.secondEle li:lt(2)'));
+        :odd 索引是奇数(指定奇数行);
+        console.log($('.secondEle li:odd'));
+        :even 索引是偶数(指定偶数行);
+        console.log($('.secondEle li:even'));
+        :not(selete) 从集合中过滤掉指定选择器的元素;
+        console.log($('.secondEle li:not(.seleteItem)'));
+        :lang() 指定语言选择器, html上的lang="en"就声明了html中的所有元素的lang都是en
+        console.log($('.secondEle li:lang(zh)'));
+        :header 选中所有的标题元素, h1-h6的元素;
+        console.log($(':header'));console.log($('*:header'))
+        :animated 选中正在执行动画的元素;
+        console.log($(':animated'));
+        :focus 选中获取焦点的元素;
+        $(':focus').css('border', '2px solid red');console.log($(':focus'));
+        :root 选中根元素, 单独针对html选择的一个选择器;
+        console.log($(':root'));
+        :target 过滤出锚点指向的元素;
+        $('a:last').click(function() {console.log($(':target'))})
+    4.内容选择器
+        :contains() 选中包含指定内容的元素, 也可以查到包含符合内容的孙子元素;
+        console.log($('li:contains(世界)'));
+        :has() 选中后代元素中的current类名的父元素, 谁的下面有.current的元素就选中谁;
+        console.log($(':has(.current)'));
+        :empty 选中空元素;
+        console.log($('ul:empty'));
+        :parent 和empty刚好相反, 选中非空元素;
+        console.log($('ul:parent'));
+    5.可见性选择器
+        :visible 获取所有可见的元素;
+        console.log($(':visible'))
+        :hidden 获取所有不可见的元素;
+        console.log($(':hidden'));
+    6.属性选择器
+        选中有属性alt的img标签
+        console.log($('img[alt]'))
+        选中有属性alt='what the fuck'的img标签
+        console.log($('img[alt="what the fuck"]'))
+        选中属性alt不是what the fuck的img标签
+        console.log($('img[alt!="what the fuck"]'))
+        选中属性alt是以hello开头的img标签
+        console.log($('img[alt^="hello"]'))
+        选中属性alt是以hello结尾的img标签
+        console.log($('img[alt$="world"]'))
+        选中属性alt有包含you字符的img标签
+        console.log($('img[alt*="you"]'))
+        选中属性alt有包含fuck字符的img标签和有title属性的标签;
+        console.log($('img[alt*="fuck"][title]'))
+    7.子元素选择器(和C3的子元素选择器是一样的);
+        选中所有兄弟元素的第一个
+        console.log($('.first-child li:first-child'))
+        选中所有兄弟元素的最后一个
+        console.log($('.first-child li:last-child'))
+        选中指定的元素nth是从1开始,eq是从0开始
+        console.log($('.first-child li:nth-child(3)'))
+        选中指定的元素的从后向前数
+        console.log($('.first-child li:nth-last-child(2)'))
+        选中没有兄弟元素的元素
+        console.log($(':only-child'));
+        
+        
+        选中指定标签的第一个元素, 非p元素不考虑,同样也是从1开始计;
+        console.log($('.first-of-type p:first-of-type'))
+        选中所有兄弟元素第一个; 选中了p元素但是:后条件过滤p并不是兄弟元素中的第一个;
+        console.log($('.first-of-type p:first-child'))
+        选中指定标签的最后一个;
+        console.log($('.first-of-type p:last-of-type'))
+        选中指定标签的指定位数的倒数的元素;
+        console.log($('.first-of-type p:nth-last-of-type(1)'))
+        选中指定标签的指定位数的元素;
+        console.log($('.first-of-type p:nth-of-type(1)'));
+        选中没有兄弟元素并且是唯一标签名的元素,所以head和body会选中;
+        console.log($(':only-of-type'));
+    8.表单选择器
+        选中所有表单控件(input,select,textarea,button等等);
+        console.log($(':input'));
+        选中所有的文本框
+        console.log($(':text'));
+        选中所有的密码框
+        console.log($(':password'));
+        选中所有的单选框
+        console.log($(':radio'));
+        选中所有的复选框
+        console.log($(':checkbox'));
+        选中所有的文件框
+        console.log($(':file'));
+        选中所有的提交按钮,包括button,因为button默认值事submit;
+        console.log($(':submit'));
+        选中所有的重置按钮
+        console.log($(':reset'));
+        选中所有的普通按钮,包括input类型是button的标签;
+        console.log($(':button'));
+    9.表单对象选择器
+        选中禁用的表单控件;
+        console.log($(':disabled'));
+        选中没有禁用的表单控件;
+        console.log($(':enabled'));
+        选中选中的复选框,和下拉框中的option;
+        console.log($(':checked'));
+        选中下拉框选中的一项;
+        console.log($(':selected'));
+    10.混淆选择器
+        用来处理特殊的基础选择ID,class等有特殊符号;
+        console.log($('#' + $.escapeSelector('#escapeSelector')));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+叁.jQuery属性与样式
+    
+    属性操作: attr(), prop(), removeAttr(), removeProp();
+        区别: attr()操作所有属性(自定义和内置的), prop()只操作HTML元素的内置属性;
+        获取属性值
+            console.log($('img').attr('src'));
+            console.log($('img').prop('src'));
+
+            console.log($('img').attr('loadimg'));
+            console.log($('img').prop('loadimg'));
+        修改属性值
+            $('img').attr('title', '你好');
+            $('img').prop('title', '我好');
+        添加属性值
+            $('img').attr('loadPic', 'attr.png');
+            $('img').prop('width', '100');
+            
+        删除属性
+            $('img').removeAttr('loadimg').removeAttr('title');
+            $('img').removeProp('loadimg').removeProp('title');
+        
+        removeAttr(), 可以删除所有属性(自定义和内置的);
+        removeProp(), 并不能够删除内置属性,作用仅限于删除用prop()给DOM对象本身添加的自定义属性, 并且还不能删除用prop给DOM对象添加的内置属性, 作用如下: prop虽然不能设置只是不能在展示在元素节点上, 但是却挂载到了jQuery的DOM对象上,而且还可以调用,如果给jQueryDOM对象添加一些不可见的标记确实用得到;
+            $('img').prop('tag','100');
+            console.log($('img').prop('tag'));
+            $('img').removeProp('tag');
+            console.log($('img').prop('tag'));
+    
+        jQuery的一个集合时的设值和获值;
+            一个集合的设值: 会很方便,不需要遍历, 集合中的每一个元素都能够设值;
+            $('img').attr('width', '200');
+            一个集合的获值: 只会获取集合中的第零个值;
+            console.log($('img').attr('src'));
+        
+    CSS类: 
+        addClass(): 不会去掉原来的类名; 而attr()则会重新覆盖class属性, 导致原来的class属性消失; 
+        hasClass(): 判断DOM元素是否有某一个类名, 返回Boolean值;
+        removeClass(): 删除一个类;
+        toggleClass(): 切换class值,如果没有就加上,如果有就删除;
+            证明addClass不会覆盖原有的class值, 而attr设值则会重新覆盖;
+            $(this).addClass('current');
+            $(this).attr('class', 'current');
+            
+            点击添加类名,再次点击删除类名;
+            $('.img-list img').click(function () {
+                第一种方法;
+                    if($(this).hasClass('current')){
+                        $(this).removeClass('current');
+                    }else{
+                        $(this).addClass('current')
+                    }
+                第二种方法;
+                    $(this).toggleClass('current');
+            })
+            
+        
+    
+    
+    
+        
+    HTML代码/文本/值
+        html(), text();
+            内容的设值和获值,
+            区别: html()获取和设置html, text()获取和设置text;
+            console.log($('.box').html());
+            console.log($('.box').text());
+    
+            $('.box').html('<h1>hello world</h1>');
+            $('.box').text('<h1>hello world</h1>');
+    
+        val(); 表单元素的获值和设值;
+            $('#btn').click(function () {
+                console.log($('#nameInput').val())
+                console.log($('textarea[name="content"]').val())
+            })
+            
+            $('#nameInput').val('请输入内容');
+            $('textarea[name="content"]').val('请输入内容');
+    
+    
+    CSS操作
+        CSS属性的获值和设值;
+        获值
+            console.log($('.box').css('width'))
+        设值
+            第一种用法;
+            $('.box').css('width','200px').css('height','200px');
+            第二种用法;
+            $('.box').css({
+                'width':'300px',
+                'height':'300px',
+            })
+        
+    位置
+        获取元素位置;
+            offset(), 元素在页面上的位置坐标, 可读可写;
+                console.log($('.position').offset());
+                console.log($('.position').offset().top);
+                console.log($('.position').offset().left);
+            position(), 根据第一个祖先元素定位, 如果没有定位的祖先元素, 就和offset一样根据页面定位, 只读方法,不可修改;
+                console.log($('.position').position());
+                console.log($('.position').position().top);
+                console.log($('.position').position().left);
+        设置元素位置;
+            offset()设置元素位置, position不能设置,只能读取;
+            $('.position').offset({left:100, top:100});
+        
+        获取滚动条位置
+            scrollTop(),scrollLeft();
+            console.log($('.scroll').scrollTop());
+            console.log($('.scroll').scrollLeft());
+        设置滚动条位置
+            $('.scroll').scrollTop(20);
+            $('.scroll').scrollLeft(20);
+
+            小案例
+                点击left,top按钮控制上下滚动;
+                $('button:contains("left")').click(function (e) {
+                    $('.scroll').scrollLeft($('.scroll').scrollLeft() + 10);
+                })
+                $('button:contains("top")').click(function (e) {
+                    $('.scroll').scrollTop($('.scroll').scrollTop() + 10);
+                })
+        
+    尺寸;
+        width()/height();
+            元素内容尺寸,并非和模型尺寸;
+            console.log($('#box').width())
+            console.log($('#box').height());
+            
+        innerWidth()/innerHeight();
+            内容尺寸 + padding距离
+            console.log($('#box').innerWidth());
+            console.log($('#box').innerWidth());
+            
+        outerWidth()/outerHeight();
+            盒模型的尺寸;(content + padding + border);
+            console.log($('#box').outerWidth());
+            console.log($('#box').outerHeight());
+        
+        设置尺寸;
+            console.log($('#box').width(100));
+            console.log($('#box').innerWidth(100));
+            console.log($('#box').outerWidth(100));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+肆.jQuery筛选(过滤,查找,串联)
+    过滤
+        返回元素集合中的第零个元素;
+        console.log($('.my-list').first());
+        返回元素集合中的最后一个元素;
+        console.log($('.my-list').last());
+        返回元素集合中指定索引的元素;
+        console.log($('.my-list li').eq(0));
+        返回集合中除去指定条件的其他元素集合;
+        console.log($('.my-list li').not('.lincoln'));
+        返回集合中指定条件的元素;
+        console.log($('.my-list li').filter('.lincoln'));
+        和数组中的slice方法相同, 返回截取集合中的元素 参数(第一位开始,第三位结束);
+        console.log($('.my-list li').slice(1,3));
+        选中集合li中, 子元素有span.Kennedy的元素;
+        console.log($('.my-list li').has('span.kennedy'));
+        选中集合li中, 子元素有span.Kennedy的元素;
+        console.log($('.my-list li').has('span.kennedy'));
+        
+    查找
+        获取ul中为li的子元素, 不加参数,返回所有的子元素;
+        console.log($('.my-list').children('li'));
+        获取ul中的所有为li的后代元素, 必须要指定一个参数;
+        console.log($('.my-list').find('li:contains("老布什")'));
+        
+        获取父元素, 返回最近的父元素;
+        console.log($('#item').parent());
+        获取祖先元素, 返回父元素集合;
+        console.log($('#item').parents());
+        获取所有的祖先元素, 查到body, 但是如果ul,就会查到ul为止,并且不包含ul;
+        console.log($('#item').parentsUntil('ul'));
+        返回第一个有定位的祖先元素;
+        console.log($('#item').offsetParent());
+        获取后面的一个兄弟元素;
+        console.log($('li:contains("特朗普")').next())
+        获取后面所有的兄弟元素;
+        console.log($('li:contains("特朗普")').nextAll())
+        获取后面所有的兄弟元素,查到p元素为止, 不在向后查, 如果是li就查到li为止不在向后查,所以为空;
+        console.log($('li:contains("特朗普")').nextUntil('p'));  
+        获取前面的一个兄弟元素
+        console.log($('li:contains("林肯")').prev());
+        获取后面所有的兄弟元素
+        console.log($('li:contains("林肯")').prevAll());
+        获取前面所有的兄弟元素, 同nextUntil同理;
+        console.log($('li:contains("林肯")').prevUntil());
+        获取所有的兄弟元素;
+        console.log($('li:contains("林肯")').siblings());
+        获取所有祖先元素中和自身中,第一个满足条件的元素;
+        console.log($('ul.my-list :nth-child(2):last').closest('ul'));
+    
+    
+    串联
+        add(select): 把选中的元素加入到当前集合, $('#my-list').find('li') 是一个jQueryDOM集合, 
+        在这个DOM集合后调用add就会将add中选中的DOM元素, 添加到这个集合中;
+            console.log($('#my-list').find('li').add('.test'));
+            console.log($('#my-list').add('.test'));
+        
+        addBack(): 把调用该方法的元素, 添加到当前集合; 返回调用的这个集合和上一个集合
+            console.log($('body').find('#my-list').find('li').addBack());
+            console.log($('body').find('#my-list li').addBack());
+
+        end(): 返回最后一次破坏性操作之前的DOM;
+            破坏性操作:   会改变DOM的返回结果的,如: children(), find(), parent(), parents(), next(), prev();
+            非破坏性操作: 不会改变DOM的返回结果,如: css(), addClass(), toggleClass();
+            console.log($('#my-list').find('li').end());
+        
+        contents(): 返回所有子节点的集合
+            console.log($('contents').contents());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+伍.jQueryDOM操作
+    DOM对象方法
+        each() 遍历
+            $('#my-list li').each(function (ind, ele) {
+                ele.innerHTML += '喜欢我';
+                $(ele).append('中国');
+            })
+        map() 返回新的集合;
+            var list = $('#my-list li').map(function (ind, ele) {
+                $(ele).append('中国');
+                return $(ele).html();
+            });
+            console.log(list);
+        length 
+        size();
+            var list = $('#my-list li').map(function (ind, ele) {
+                return $(ele).html();
+            });
+            console.log(list.length);
+            size报错是因为自从1.8版本之后就不再支持size() 方法了, 和length是一样的,返回长度;
+            console.log(list.size());
+        index() 返回某个元素在他的父元素中的索引;
+            jQuery的一个好处避免了原生的闭包应用;
+            console.log($('#my-list li:last').index());
+            $('#my-list li').click(function () {
+                alert($(this).index() + 1);
+            })
+            
+        get() 等同于[0], 如果没有参数就会把一个jQuery集合转换成纯数组(jQuery集合是类数组);
+            var list = $('#my-list li').map(function (ind, ele) {
+                return $(ele).html();
+            });
+            console.log(list.get());
+
+        is(select); 参数是一个选择器,判断jQueryDOM是否满足某个条件, 返回布尔值;
+            console.log($('#my-list').is('#my-list'));
+            console.log($('#my-list').is(':'));
+        
+    
+    DOM对象操作
+        1.创建元素
+            console.log($('<li></li>'))
+            console.log($('<li>'))
+        2.内部插入对象
+            append();
+                $('#my-list').append($('<li class="MaoZeDong">毛泽东</li>'));
+                $('#my-list').append('<li class="MaoZeDong">毛泽东</li>');
+            
+            appendTo();
+                $('<li class="MaoZeDong">毛泽东</li>').appendTo('#my-list');
+            
+            prepend();
+                $('#my-list').prepend($('<li class="MaoZeDong">毛泽东</li>'));
+                
+            prependTo();
+                $('<li class="MaoZeDong">毛泽东</li>').prependTo('#my-list')
+
+            
+        3.外部插入对象
+            after()
+                $('#my-list').after('<li class="MoZeDong">毛泽东</li>')
+
+            insertAfter()
+                $('<li class="MoZeDong">毛泽东</li>').insertAfter('#my-list');
+
+            before()
+                $('#my-list').before('<li class="MoZeDong">毛泽东</li>')
+                
+                
+            insertBefore();
+                $('<li class="MoZeDong">毛泽东</li>').insertBefore('#my-list');
+
+            
+        4.包裹操作
+            wrap()
+                $('#wrap').find('img').wrap('<li></li>');
+
+            wrapAll()
+                $('#wrap').find('img').wrapAll('<li></li>');
+                
+            wrapInner()
+                $('#wrap').wrap('<li></li>');
+                $('#wrap').wrapInner('<li></li>');
+                
+            unwrap()
+                $('#wrap img:last').unwrap();
+                
+        替换操作
+            replaceWith()
+                替换新建元素
+                $('.targetImg').replaceWith('<img src="./images/9.jpg" />');
+                替换已有元素
+                $('.targetImg').replaceWith($('.originImg'));
+                
+            replaceAll()
+                $('<img src="./images/7.jpg" />').replaceAll($('.targetImg'));
+            
+        删除操作
+            
+            empty()
+                $('.empty').empty();
+            
+            区别在于 remove会删除元素身上的事件, detach不会删除元素身上绑定的事件;
+            remove()
+                $('.empty').remove();
+            
+            detach()
+                $('.detach').detach();
+                
+        克隆操作
+            
+            clone();
+            $('.clone').click(function() {
+                console.log($(this));
+                $(this).clone().appendTo('body');
+            })
+            
+
+        
+        
+        
+                
+                
+    案例
+        消息提醒
+            $(document).ready(function () {
+                setInterval(function () {
+                    insertBefore()会清空之前的DOM元素中的子元素;
+                    $('.scrollBox div.item').last().insertBefore('.scrollBox');
+                    prependTo()不会清空之前的DOM元素中的子元素;
+                    $('.scrollBox div.item').last().prependTo('.scrollBox');
+
+                    $('.scrollBox div.item').last().hide().prependTo('.scrollBox').slideDown();
+                },2000);
+            })
+                
+        替换删除图片
+            $(function() {
+                var $removeResult = null,
+                    $detachResult = null;
+                $('#replaceWith img').click(function () {
+                    $(this).toggleClass('active').siblings().removeClass('active');
+                })
+
+                $('.replaceBtn').click(function () {
+                    替换新建元素;
+                    $('#replaceWith img.active').replaceWith('<img src="./images/5.jpg" />')
+                    替换已有元素;
+                    $('#replaceWith img.active').replaceWith($('.targetImg'))
+                })
+                $('.deleteBtn').click(function () {
+                    $('#replaceWith').empty();
+                })
+
+                $('.removeBtn').click(function () {
+                    $removeResult = $('#replaceWith img.active').remove();
+                })
+                $('.detachBtn').click(function () {
+                    $detachResult = $('#replaceWith img.active').detach();
+                })
+
+                detach 和 remove方法的区别如下: 删除以后通过这两个方法的返回值, remove是没有之前的事件的, 而detach还有原来事件;
+                $('.removeReplyBtn').click(function () {
+                    $('#replaceWith').append($removeResult);
+                })
+                $('.detachReplyBtn').click(function () {
+                    $('#replaceWith').append($detachResult);
+                })
+            })
+            
+
+        选项卡案例
+            $(function () {
+                $('.option-list li').click(function () {
+                    $(this).addClass('current').siblings('li').removeClass('current');
+                    $('.card-list li').removeClass('current').eq($(this).index()).addClass('current');
+                })
+            })
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+陆.jQuery事件处理
+    事件绑定    
+        on
+            on标准用法;
+            $('.btn').on('click',function() {
+                console.log('onClick');
+            })
+
+            on绑定多个事件;
+            $('.btn').on({
+                'click' : function () {
+                    console.log('onClick');
+                },
+                'mouseover' : function () {
+                    console.log('onMouse');
+                },
+                'dblclick' : function () {
+                    console.log('onDBlClick');
+                }
+            })
+
+        one
+            $('.btn').one('dblclick',function() {
+                console.log('oneDBClick');
+            })
+            
+                    
+    解除事件绑定
+        off()
+        $('.unbtn').on('click',function () {
+            解除所有事件
+            $('.btn').off();
+            解除滑入事件
+            $('.btn').off('mouseover');
+        })
+    
+    
+    事件委托
+        普通方式, 新添加的元素没有相应的事件, 只有$('.Entrust li')选择的这些元素有绑定事件;
+        $('.Entrust li').on('click',function () {
+            $(this).toggleClass('current');
+        })
+
+        事件委托的方式, 新添加的元素会绑定相应的事件;
+        $('.Entrust').on('click','li',function () {
+            $(this).toggleClass('current');
+        })
+        
+        $('.addBtn').click(function () {
+            $('<li></li>').html($('.InputVal').val()).appendTo('.Entrust');
+        })
+        
+        
+    控制事件触发    
+        
+        trigger()
+            $('.triggerBtn').click(function () {
+                console.log('clickHandler');
+            })
+            
+            $('.triggerBtn').mouseover(function () {
+                console.log('mouseoverHandle');
+            })
+
+            
+            
+            $('.triggerBtn1').click(function () {
+                触发别的元素的事件, 以下皆可行;
+                $('.triggerBtn').trigger('click');
+                $('.triggerBtn').trigger('mouseover');
+                $('.triggerBtn')[0].click();
+                $('.triggerBtn').mouseover();
+            })
+
+        triggerHndle();
+            console.log($('.triggerBtn').triggerHandler('click'))
+            triggerHandler 和 trigger功能相同, 有以下几点区别;
+                trigger返回jQuery对象, 可以链式操作, triggerHandler返回值是Undefined;
+                trigger可以触发元素自带事件(比如: 表单事件, 提交按钮, 输入框的focus), triggerHandler 无法触发;
+                    $('.triggerHandlerBtn').click(function(){
+                        $('.triggerHandler').trigger('focus');
+                        $('.triggerHandler').triggerHandler('focus');
+                    })
+                trigger会触发集合中所有元素事件, triggerHandler只会触发集合中第一个元素的事件;
+                    $('.triggerUlLi li').click(function () {
+                        console.log($(this).index());
+                    });
+                    $('.totalBtn').click(function () {
+                        $('.triggerUlLi li').trigger('click');
+                        $('.triggerUlLi li').triggerHandler('click');
+                    })
+        
+        
+    事件列表  
+        
+        ready();  页面中DOM加载完毕
+        focusin();   绑定给输入框父元素的获取焦点事件;
+            $('.inputGroup').on('focusin',function(){
+                $(this).css('background-color', 'red');
+            })
+        focusout();  绑定给输入框父元素的失去焦点事件;
+            $('.inputGroup').on('focusout',function(){
+                $(this).css('background-color', 'transparent');
+            })
+        mouseenter();    类似于mouseover;
+            enter当鼠标划入当前元素或者其子元素时都会触发;
+            over 当鼠标划入当前元素时触发;
+            $('.detailTitle').on('mouseover',function () {
+                $(this).next().slideDown();
+            }).on('mouseout', function () {
+                $(this).next().slideUp();
+            })
+            
+            $('.detailTitle').on('mouseenter',function () {
+                $(this).next().slideDown();
+            }).on('mouseleave', function () {
+                $(this).next().slideUp();
+            })
+            
+            
+        mouseleave();    类似于mouseout;
+        
+
+        blur();  失去焦点时触发;
+        change();   元素发生改变时触发;
+        click();    点击时触发;
+        dblclick();     双击时触发;
+        focus();    获取焦点时触发;
+        keydown();  键盘按下时触发;
+        keypress(); 和keydown事件类似按下时触发, 没插入一个字符都会发生press事件;
+        keyup();    键盘抬起时触发;
+        mousedown();    鼠标按下时触发;
+        mouseup();  鼠标抬起时触发;
+        mousemove();    鼠标滑动时触发;
+        resize();   大小改变时触发;
+        scroll();   鼠标滚动时触发;
+        select();   当textarea或文本类型的input元素中的文本被选择时触发;
+        submit();   提交表单时触发;
+        hover();     此事件相当于mouseenter + mouseleave;
+        toggle();   匹配多个时间处理函数, 详情见jQuery动画(277);
+
+
+    事件对象
+        $(document).on({
+            'click': function (event) {
+                pageX   鼠标光标的水平坐标, 类似于原生的clientX;
+                    console.log(event.pageX);
+                    
+                pageY   鼠标光标的纵向坐标, 类似于原生的clientY;
+                    console.log(event.pageY);
+                
+                target   事件源
+                    console.log(event.target);
+            
+                
+            },
+            'keypress' : function (event) {
+                which   键盘按键的阿斯克码
+                    console.log(event.which);
+                
+                type 事件类型
+                    console.log(event.type);
+            }
+        })
+        
+
+        preventDefault();    阻止默认事件
+            $('#preventDefault').on('click',function (event) {
+                点击a链接时如果href为空就会空跳转一次刷新一次页面, 所以后面的css设置就会被空跳转覆盖而失效;
+                event.preventDefault();
+                $(document.body).css('background-color','red');
+            })
+        
+        stopPropagation();  阻止冒泡
+            $('#preventDefault').on('click',function (event) {
+                event.preventDefault();
+                阻止document的单击事件发生(阻止冒泡);
+                event.stopPropagation();
+            })
+        
+        return false 既能阻止事件冒泡,又能阻止默认操作;
+            $('#preventDefault').on('click',function (event) {
+                $(document.body).css('background-color','red');
+                return false;
+            })
+        
+        
+
+
+
+
+
+    案例
+        拖拽案例;
+            $(function () {
+                $('.dragDrop').on({
+                    'mousedown': function (event) {
+                        按下半透明;
+                        $(this).css('opacity','0.5');
+                        var offsetX = event.pageX - $(this).offset().left,
+                            offsetY = event.pageY - $(this).offset().top;
+                        鼠标移动事件;
+                        $(this).on('mousemove',function (ev) {
+                            var x = ev.pageX - offsetX,
+                                y = ev.pageY - offsetY;
+                            $(this).offset({
+                                left: x,
+                                top: y,
+                            })
+                        })
+                    },
+                    'mouseup': function () {
+                        $(this).css('opacity','1');
+                        $(this).off('mousemove');
+                    },
+                })
+            })
+        
+        键盘控制元素移动;
+
+            上: 38
+            右: 39
+            下: 40
+            左: 37
+        
+        
+            $(function () {
+                计算页面的宽高;
+                var pWidth = $(window).width(),
+                    pHeight = $(window).height();
+                $(document).on('keydown', function (event) {
+                    console.log(event.which);
+                    获取目前位置;
+                    var curLeft = $('.moveEle').offset().left,
+                        curTop = $('.moveEle').offset().top;
+                    switch(event.which) {
+                        case 38:
+                            $('.moveEle').offset({
+                                top: Math.max(curTop - 20,0)
+                            })
+                            break;
+                        case 39:
+                            $('.moveEle').offset({
+                                left: Math.min(curLeft + 20,pWidth - $('.moveEle').width())
+                            })
+                            break;
+                        case 40:
+                            $('.moveEle').offset({
+                                top: Math.min(curTop + 20,pHeight - $('.moveEle').height())
+                            })
+                            break;
+                        case 37:
+                            $('.moveEle').offset({
+                                left: Math.max(curLeft - 20,0)
+                            })
+                    }
+                    
+                })
+            })
+            
+            
+        放大镜案例
+            $(function () {
+                创建元素;
+                var $smallBox = $('<div class="smallBox">'),
+                    $bigBox = $('<div class="bigBox"></div>'),
+                    $smallImage = $('<img src="./images/FDJMaterial.jpg" alt="">'),
+                    $bigImage = $('<img src="./images/FDJMaterial.jpg" alt="">'),
+                    $zoom = $('<div class="zoom"></div>');
+                $(document.body).html($smallBox.append($smallImage).append($zoom)).append($bigBox.append($bigImage));
+                
+                
+                $smallBox.on('mouseenter', function (event) {
+                    var smallLeft = $smallBox.offset().left,
+                        smallTop = $smallBox.offset().top;
+                        计算鼠标在小图上的位置
+                        
+                    $zoom.show();
+                    $bigBox.show().offset({
+                        left : smallLeft + 400 + 10,
+                        top : smallTop,
+                    })
+
+                    $(this).on('mousemove', function (event) {
+                        计算鼠标在小图的位置;
+                        var sLeft = event.pageX - smallLeft,
+                            sTop = event.pageY - smallTop,
+                            计算放大镜位置;
+                            zLeft = Math.min(Math.max(sLeft - $zoom.width()/2,0), $smallBox.width() - $zoom.width()),
+                            zTop = Math.max(Math.min(sTop - $zoom.height()/2, $smallBox.width() - $zoom.width()), 0);
+
+                        这里需要注意计算放大镜元素, 小图元素, 大图元素比例;
+                        $bigBox.scrollLeft(zLeft * 4).scrollTop(zTop * 4);
+
+                        $zoom.css({
+                            'left' : zLeft + 'px',
+                            'top' : zTop + 'px',
+                        });  
+                    })
+                    
+                }).on('mouseleave', function () {
+                    $zoom.hide();
+                    $bigBox.hide();
+                })
+            })
+            
+         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+柒.jQuery动画
+    1.基本效果(width, height, padding, margin, opacity样式属性变化, 动画方法的参数基本都相同, 都有callback, num, 'fast', 'normal', 'slow');
+        hide()
+            $('.btn00').on('click', function () {
+                $('.box').hide();
+                $('.box').hide('fast');
+                $('.box').hide('normal');
+                $('.box').hide('slow');
+                $('.box').hide(3000);
+
+                $('.box').hide(1000, function (){
+                    alert('隐藏后执行');
+                });
+            })
+        show()
+            $('.btn00').on('click', function () {
+                $('.box').show();
+                $('.box').show('fast');
+                $('.box').show('normal');
+                $('.box').show('slow');
+                $('.box').show(3000);
+
+                $('.box').hide().show(1000, function (){
+                    alert('显示后执行');
+                });
+            })
+                
+        toggle() 
+            $('.btn00').on('click', function () {
+                $('.box').toggle();
+                $('.box').toggle('fast');
+                $('.box').toggle('normal');
+                $('.box').toggle('slow');
+                $('.box').toggle(3000);
+
+                $('.box').toggle(1000, function (){
+                    alert('执行');
+                });
+            })
+
+        2.滑动效果(height, margin-top, padding-top会变化);
+            slideDown();
+                $('.btn00').on('click', function () {
+                    $('.box').hide().slideDown('slow');
+                });
+            slideUp();
+                $('.btn00').on('click', function () {
+                    $('.box').slideUp('slow');
+                });
+                    
+            slideToggle();
+                $('.btn00').on('click', function () {
+                    $('.box').slideToggle('slow');
+                });
+                
+        3.渐隐渐现效果
+            fadeIn()
+                $('.btn00').on('click', function () {
+                    $('.box').hide().fadeIn('slow');
+                });
+                
+            fadeOut()
+                $('.btn00').on('click', function () {
+                    $('.box').fadeOut('slow');
+                });
+
+            fadeToggle()
+                $('.btn00').on('click', function () {
+                    $('.box').fadeToggle('slow');
+                });
+
+            fadeTo() 改变元素的透明度;
+                $('.btn00').on('click', function () {
+                    $('.box').fadeTo('slow', 0.5, function () {
+                        alert('执行');
+                    });
+                });
+        4.自定义动画
+            animate()(如果指定的值是toggle时, 就会进行切换效果)
+                $('.btn00').on('click',function () {
+                    $('.box').animate({
+                        'width' : 'toggle',
+                        'height' : 'toggle',
+                    },2000, function () {
+                        alert('animate');
+                    })
+                })
+        
+            stop(); 停止动画;
+                $('.btn01').on('click',function () {
+                    $('.box').stop();
+                })
+
+            finish(); 完成动画;
+                $('.btn02').on('click',function () {
+                    $('.box').finish();
+                })
+
+            delay(); 延迟动画;
+                $('.btn03').on('click',function () {
+                    $('.box').hide('slow').delay(3000).show('slow');
+                })
+
+                
+
+        5.动画设置
+        jQuery.fx.off
+            关闭页面中所有的动画;
+            $.fx.off = true;
+            $('.btn00').on('click', function () {
+                $('.box').fadeOut('slow');
+            });
+            
+        jQuery.fx.interval
+            console.log('jquery 动画的帧数' + $.fx.interval);
+        
+
+        6.动画队列;
+            所有的动画操作, 会加入到队列中, 一次执行;
+                $('.btn00').on('click',function () {
+                    $('.box').slideUp(1000).show(2000).fadeTo(1000,.5).animate({
+                        'width': '200px',
+                        'opacity': '1',
+                    },1000).children().prop('src','./images/8.jpg');
+                })
+            
+        
+    jQuery动画与C3动画;
+        1.C3动画仅IE9+支持, jQuery可以使用IE低版本的浏览器;
+        2.C3的动画或者过度, 必须给元素指定具体的属性值, jQuery有封装的方法;
+            
+            
+            
+        
+
+
+
+    案例
+        消息滚动;
+        $(document).ready(function () {
+            setInterval(function () {
+                $('.scrollBox div.item').last().fadeOut('slow', function () {
+                    $('.scrollBox div.item').last().prependTo('.scrollBox').delay(200).slideDown(500);
+                })
+            },2000);
+        })
+        
+        轮播图案例;
+        $(document).ready(function () {
+            var m = 1,
+                speed = 1000;
+                
+            var playTime = setInterval(runPlay, speed);
+                
+            当值当前索引;
+            function runPlay() {
+                if(m >= 5) {
+                    m = 0;
+                }
+                controlImg(m);
+                m++;
+            }
+            控制当前图片和导航;
+            function controlImg(p) {
+                $('.imgList a').removeClass('current').eq(p).addClass('current');
+                $('.iconList li').removeClass('current').eq(p).addClass('current');
+            }
+                
+            控制划入划出停止和开始;
+            $('#play-box').mouseenter(function () {
+                clearInterval(playTime);
+                $('.slidebar').fadeTo('slow',1);
+            }).mouseleave(function () {
+                playTime = setInterval(runPlay, speed);
+                $('.slidebar').fadeTo('slow',0);
+            });
+
+            控制小点导航;
+            $('.iconList li').click(function () {
+                controlImg($(this).index());
+                修改m的值, 点击导航的时候继续当前导航往后走;
+                m = $(this).index();
+            })
+
+                
+            下一张图片
+            $('.slidebarRight').click(function () {
+                runPlay();
+            })
+            上一张图片
+            $('.slidebarLeft').click(function () {
+                if(m < 0){
+                    m = 4;
+                }
+                controlImg(m - 2)
+                m--;
+            })
+        })
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+捌.jQueryAJAX
+    1.快速请求方法;
+            get();
+                $(function() {
+                    $('.getRequest').click(function () {
+                        $.get('http:ocalhost:8080/server/get-content.json?name=lili&message=hello,world;',function(data) {
+                            console.log(data);
+                        });
+                        通过表单方法 serialize()可以直接这样写, 同时这个方法只会获取有表单中有name属性的input, name的值就是参数中 =(等号) 前面的字段
+                        $.get('http:ocalhost:8080/server/get-content.json?'+ $('#myForm').serialize(),function(data) {
+                            console.log(data);
+                        });
+
+
+                        ajax的get请求;
+                        $.ajax({
+                            url:'http:ocalhost:8080/server/get-content.json',
+                            type: 'get',
+                            async: true,
+                            data 就相当于url的?后面拼接的参数;
+                            data: {
+                                name: $('#myForm input[name=name]').val(),
+                                message: $('#myForm input[name=message]').val(),
+                            },
+                            data: 'name=lili&message=hello,world;',
+                            success: function (data) {
+                                console.log(data);
+                            }
+                        })
+                    })
+                })
+            post();
+            $(function () {
+                $('.postRequest').click(function () {
+                    $.post() 只能通过$.ajaxSetup来设置content-type, 因为$.post()和$.get() 的参数只有url, data, success, dataType;
+                    第二个传递参数的data可以是个对象{}, 也可以是个字符串'', 这里就直接写入$('#myForm').serialize();
+                    $.ajaxSetup({heads: {'content-type' : 'application/x-www-form-urlencoded'}});
+                    $.post("http:ocalhost:8080/server/post-content.php", $('#myForm').serialize(),function(data){
+                        console.log(data);
+                    }, "php");
+
+                    $.ajax({
+                        url:'http:ocalhost:8080/server/post-content.php',
+                        async: true,
+                        type: 'post',
+                        data: $('#myForm').serialize(),
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (data){
+                            console.log(data);
+                        }
+                    })                    
+                })
+            })
+        2.ajax方法;
+            ajax();
+                $(function () {
+                    $.ajax({
+                        url: 'http:ocalhost:8080/server/ajax.json',
+                        type: 'get',
+                        async: true,
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    })
+                })
+            
+        表单方法;
+            serialize();(非常方便, 不需要从表单中获取每一个input.val()进行麻烦的操作);
+                $(function() {
+                    $('.serialize').click(function () {
+                        console.log($('#myForm').serialize());
+                    })
+                })
+
+                
+                
+                
+        案例 
+            地址联动案例
+                $(function () {
+                    州讯网提供API接口;
+                    var addressAPI = 'http:houxunwang.cn/data/?id=104&key=VuvO/9VgTt7+h5yJ84oxR2fJOwTgsJeZ/pxz7fk&ske=1',
+                        result = null;
+                    获取省信息;
+                    $.ajax({
+                        url:addressAPI,
+                        type: 'get',
+                        dataType:'json',
+                        success: function (data) {
+                            result = data.result;
+                            $.each(result, function (ind, item) {
+                                $('<option>').html(item.province).val(item.id).appendTo('#prov');
+                            })
+                            $('select#prov').trigger('change');
+                        },
+                    })
+                    获取市信息
+                    $('select#prov').on('change', function () {
+                        var that = this;
+                        $.ajax({
+                            url:addressAPI,
+                            type: 'get',
+                            dataType:'json',
+                            success: function (data) {
+                                $.each(result, function (ind, item) {
+                                    switch (that.value) {
+                                        case  item.id:
+                                            省级改变后市级不会改变, 因为后面appendTo一直在追加;所以前面应该清空一下市级信息;
+                                            $(that).next().empty()
+
+                                            console.log(item);
+                                            $.each(item.city, function (ind,item) {
+                                                console.log(item)
+                                                $('<option>').html(item.city).val(item.id).appendTo('#city');
+                                            })
+                                            自动触发后面的change事件;
+                                            $(that).next().trigger('change');
+                                        break;
+                                    }
+                                })
+                            },
+                        })
+                    });
+
+                    获取区县信息;
+                    $('select#city').on('change',function () {
+                        var that = this;
+                        $.ajax({
+                            url:addressAPI,
+                            type:'get',
+                            dataType:'json',
+                            success: function (data) {
+                                console.log(result);
+                                $.each(result,function (ind,pitem){
+                                    $.each(pitem.city,function (ind,citem) {
+                                        switch(that.value) {
+                                            case citem.id:
+                                                $(that).next().empty()
+                                                console.log(citem);
+                                                $.each(citem.district, function (ind,ditem) {
+                                                    $('<option>').html(ditem.district).val(ditem.id).appendTo('#district');
+                                                })
+                                                $(that).next().trigger('change');
+                                            break;
+                                        }
+                                    })
+                                })
+                            }
+                        })
+                    })
+                })    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+玖.jQuery工具方法
+    
+    数组对象的方法
+        
+        $.each(arr, fn(ind,item));   遍历数组,类数组等;
+            var arr = [1,2,3,4,5];
+            $.each(arr, function (ind, item) {
+                console.log(ind);
+                console.log(item);
+            })
+            $.each($('.myList li'), function (ind, item) {
+                console.log(ind);
+                console.log(item);
+            })
+
+        $.grep(arr, fn(item, ind));   过滤数组, 回掉函数参数和each相反;
+            var result = $.grep($('.myList li'), function (item, ind) {
+                return $(item).html() % 2 == 0;
+            })
+            console.log(result);
+            
+        $.map(arr, fn(item, ind)); 返回一个新的数组;
+            var result = $.map($('.myList li'), function (item, ind) {
+                return $(item).html() % 2 == 0;
+            })
+            var result = $.map($('.myList li'), function (item, ind) {
+                return $(item).html();
+            })
+            console.log(result);
+        
+        $.makeArray(arr);   把类数组转换成纯数组;
+            var result = $.makeArray($('.myList li'));
+            console.log($('.myList li'))
+            console.log(document.querySelectorAll('.myList li'));
+            console.log(result);
+            
+        $.inArray(ele, arr);     判断一个元素在数组中的位置(返回ele在arr中的位置), 如果ele不存在与arr中,则返回-1;
+            var list = [1,2,3,4,5];
+            console.log($.inArray(4,list));
+
+        $.merge(arr, newArr);   合并数组;
+            var list = [1,2,3,4,5];
+            var newArr = ['trump', 'leecs', 'obama'];
+            var newList = $.merge(list, newArr)
+            console.log(newList);
+
+        toArray();   jQueryDOM直接转为纯数组, 功能和makeArray相似;
+            var arr = $('.myList li').toArray();
+            console.log(arr);
+            
+        
+    函数方法
+        $.proxy(fn, context);   比较相似原生中的bind()方法;
+        function test() {
+            console.log(this);
+        }
+        var res = $.proxy(test, {name: 'leecs'});
+        res();
+        
+    类型判断
+        $.type();
+            console.log($.type(100))
+            原生中的typeof [] 返回的是object, 而$.type检测[] 返回的就是array;
+            console.log($.type([1,2,3]))
+            jQueryDOM 返回的还是一个object
+            console.log($.type($('.myList')))
+            
+        $.isFunction();  判断是不是一个function
+            function test() {};
+            var a = 10;
+            console.log($.isFunction(test));
+            console.log($.isFunction($))
+            console.log($.isFunction($.isFunction))
+            console.log($.isFunction(a))
+            
+        $.isEmptyObject();   判断是不是一个空对象;
+            console.log($.isEmptyObject({}));
+            console.log($.isEmptyObject({name:'leecs'}));
+        
+        $.isPlainObject();   判断是不是一个纯对象;
+            console.log($.isPlainObject({}));
+            console.log($.isPlainObject([]));
+            console.log($.isPlainObject($('.myList')));
+
+        $.isWindow();    判断是不是window对象;
+            console.log($.isWindow(window));
+            console.log($.isWindow($(window)));
+        
+        $.isNumeric();   判断是不是数字, 而并非判断数字类型; NaN返回false, 因为他是数字类型,而不是数字;
+            console.log($.isNumeric(123))
+            console.log($.isNumeric(NaN))
+            
+    
+    字符串
+        $.trim();    去除两边的空格
+            var str = ' hello 同志 ';
+            console.log('|' + str + '|');
+            console.log('|' + $.trim(str) + '|');
+        
+        $.param();   序列化成字符串
+            console.log($.param({name: 'leecs', age: 19}));
+            将一个表单DOM进行序列化, 自动获取里面的值进行序列化, 只能获取表单;
+            $('.btn_form').click(function () {
+                console.log($.param($('input[type=text]')));
+            })
+            
+            
+    版本
+        $.fn.jquery;
+            console.log($.fn.jquery);
+        
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+拾.jQuery核心
+
+拾壹.jQuery延迟对象
+
+拾贰.jQuery插件
+    
+
+拾叁.jQuery回掉函数
+

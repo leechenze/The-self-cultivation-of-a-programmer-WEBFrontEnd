@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DEMO</title>
+</head>
+
+<body>
+    <script>
+        // if (1 > 0) {
+        //     document.write('a');
+        //     document.write('b');
+        //     document.write('c');
+        // }
+
+        // if (2 > 0) {
+        //     document.write('a');
+        //     document.write('b');
+        //     document.write('c');
+        // }
+
+        // if (3 > 0) {
+        //     document.write('a');
+        //     document.write('b');
+        //     document.write('c');
+        // }
+
+        // 耦合代码(耦合度太高的冗余代码);
+        // 编程讲究一个原则是: 高内聚, 弱耦合;
+        // 意思就是把相同功能的代码抽取出来放到一个黑匣子里面, 当每次使用的时候调用这个黑匣子就可以了
+        // JS中的这个提高效率的黑匣子就是函数;
+
+        // function test() {
+        //     document.write('a');
+        //     document.write('b');
+        //     document.write('c');
+        // }
+
+        // test();
+        // test();
+        // test();
+        // 这个函数被调用几次就会被重复执行几次;
+        
+        // if (1 > 0) {
+        //     test();
+        // }
+
+        // if (2 > 0) {
+        //     test();
+        // }
+
+        // if (3 > 0) {
+        //     test();
+        // }
+
+        // 其实函数也是个引用值
+        // 变量中存储的是数据
+        // 函数中存储的是很多功能语句;
+
+        // 正式进入函数课程:
+            // 函数声明
+            // function test(){};
+            // // 命名表达式 表达式就是忽略他的名字的
+            // var test = function test () {};
+            // // 匿名表达式
+            // var test = function () {};
+        
+
+        // 习题
+            
+        // 1.写一个函数, 实现n的阶乘;
+            
+        // 2.写一个函数, 实现斐波那契数列;
+            // function jc(num){
+            //     if(num == 1){
+            //         return 1;
+            //     }
+            //     return num * jc(n - 1);
+            // }
+        // 3.写一个函数,输入数字,并逆转成汉字形式输出;
+            // function reverse(){
+            //     var num = String(window.prompt('input'));
+            //     var str = '';
+            //     for(var i = num.length-1; i >= 0; i--){
+            //         str = str + num[i];
+            //     }
+            //     console.log(str);
+            //     return;
+            // }
+
+        // ====================================================================================
+        // 函数作用域
+        
+    </script>
+</body>
+
+</html>

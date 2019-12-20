@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // let obj = new Proxy({},{
+        //     set(target,prop,value){
+        //         console.log(target)
+        //         console.log(prop)
+        //         console.log(value);
+        //     }
+        // })
+
+        // obj.a = 123;
+
+        // set 实例;
+        // 假设设置一个年龄 18岁以上才可以访问此网站; 不能超过两百岁;
+        // let obj = new Proxy({},{
+        //     set(target,prop,value,property){
+        //         if(prop == 'age'){s
+        //             if(!Number.isInteger(value)){
+        //                throw new TypeError('年龄必须为整数'); 
+        //             }
+        //             if(value >= 200){
+        //                 throw new TypeError('年龄不能大于二百岁');
+        //             }
+        //         }
+        //         target[prop] = value;
+        //     }
+        // })
+
+        // obj.name = 'leecs';
+        // obj.age = 13;
+        // console.log(obj);
+
+
+
+        
+        // deleteProperty;
+        // let json = {
+        //     a:1,
+        //     b:2
+        // };
+
+        // let newJson = new Proxy(json,{
+        //     deleteProperty(target,property){
+        //         console.log(`您要删除a这个属性`);
+        //         // to do before;
+        //         delete target[property];
+        //     }
+        // })
+
+        // delete newJson.a;
+        // console.log(newJson);
+
+
+        
+
+        // has();
+        // let json = {
+        //     a:1,
+        //     b:2
+        // };
+
+        // let newJson = new Proxy(json,{
+        //     has(target,property){
+        //         console.log('调用has方法了');
+        //         return property in target;
+        //     }
+        // })
+
+        // console.log('a' in newJson);
+
+
+
+        // apply();
+        // apply 如下例子一般是配合方法使用的; 如果想要执行原来的非代理函数 
+        // 那就需要另一个东西;这个东西就是reflect;
+        // function fn(){
+        //     return '我是函数';
+        // }
+
+        // let newFn = new Proxy(fn,{
+        //     apply(){
+        //         return '函数吗';
+        //     }
+        // })
+
+        // console.log(newFn());
+
+
+        
+
+
+
+
+
+
+
+
+
+        // reflect 实例;
+        // function sum(a,b){
+        //     return a+b;
+        // }
+        // let newSum = new Proxy(sum,{
+        //     apply(target,context,args){
+        //         // 目标对象,this指向,参数集合;
+        //         // console.log(target,context,args);
+        //         // console.log(...arguments);
+        //         // 这里的arguments是apply的;
+                
+        //         // 调用代理的原函数;
+        //         // return Reflect.apply(...arguments);
+        //         return Reflect.apply(...arguments)**2;
+        //         // 等同于 Reflect.apply(sum,undefined,[2,3]);
+                
+                
+        //     }
+        // })
+
+        // console.log(newSum(2,3));
+
+
+
+
+
+        // 1.reflect深入研究
+        // console.log(Math.ceil(4.7));    // 5
+        // let result = Reflect.apply(Math.ceil,null,[4.7]);
+        // Reflect.apply(调用Math.ceil,this指向null,数组集合是[4.7]); 声明result接收;
+        // console.log(result);
+
+        // 2.reflect深入研究
+        // function show(...args){
+        //     console.log(this);
+        //     console.log(args);
+        // }
+
+        // 这种方法可以调用show函数;
+        // show(1,2,3,4);
+        // 通过call,apply来调用;
+        // show.call('asb',1,2,3,4,5);
+        // show.apply('asb',[1,2,3,4,5]);
+        // reflect.apply()方法一样可以调用;
+        // Reflect.apply(show,'adbd',[1,2,3,4,5]);
+        
+        // 3.reflect.has() 方法; 判断assign是否是Object身上的方法;
+        // console.log('assign' in Object);
+        // console.log(Reflect.has(Object,'assign'))
+
+        // 4.reflect.deleteProperty();
+        // let json = {a:1,b:2}
+        // delete json.a;
+        // Reflect.deleteProperty(json,'a');
+        // console.log(json);
+        
+        
+        
+        
+    </script>
+</body>
+</html>

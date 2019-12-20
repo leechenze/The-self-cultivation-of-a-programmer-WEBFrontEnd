@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+    <script type="text/javascript">
+        // let sym = Symbol('aaa');
+        // console.log(sym);
+        // console.log(typeof sym);
+
+        // 使用场景
+        // let sym = Symbol('strive');
+        // let json = {
+        //     a : 'apple',
+        //     b : 'banana',
+        //     [sym] : 'aaa'
+        // }
+        
+        // console.log(json.a);
+        // console.log(json[sym])
+        
+        // for (let key in json){
+        //     console.log(key);
+        // }
+        
+    
+        // function * show(){
+        //     yield 'welcome';
+        //     yield 'to';
+        //     return 'leecs';
+        // }
+
+        // let g1 = show();
+
+        // for(let val of obj){
+        //     console.log(val);
+        // }
+        
+        // for...of... 
+
+
+        // console.log(g1.next()); // {value: "welcome", done: false}
+        // console.log(g1.next()); // {value: "to", done: false}
+        // console.log(g1.next()); // {value: "leecs", done: true}
+        
+        // function * show(){
+        //     yield 'welcome';
+        //     yield 'to';
+        //     yield 'strive';
+        //     return 'leecs';
+        // }
+        // console.log(...show());
+        // console.log(Array.from(show()));
+        
+
+        // next 传递参数;
+
+        // let gen = function * (x){
+        //     let y = yield (2 * ( x + 1));
+        //     console.log(y);
+        //     let z = yield (y / 3);
+        //     return (x + y + z );
+        // }
+
+        // let g1 = gen(5);
+        // let re = g1.next().value;
+        
+        // // 第二次执行如果不传参数 那么第一次next()的console.log(y)的是 NaN;
+        // let re1 = g1.next(re).value;
+        // console.log(g1.next(re1));
+
+
+
+        // es6中有三类结构生来就具有Iterator接口：数组、类数组对象、Map和Set结构
+        // var myIterable = {
+        //     a : 1,
+        //     b : 2
+        // };
+        
+        // console.log(Symbol.iterator);
+        // console.log(myIterable[Symbol.iterator]);
+        // myIterable[Symbol.iterator] = function* (obj = myIterable) {
+        // let propKeys = Object.keys(obj);
+
+        // for (let propKey of propKeys) {
+        //     yield [propKey, obj[propKey]];
+        // }
+        // };
+
+        // console.log([...myIterable])
+
+        
+
+
+
+
+
+        // generator 结合 axios 使用;
+        // https://api.github.com/users/lichenze
+        // function * gen(){
+        //     let val = yield 'leecs';
+        //     yield axios.get(`https://api.github.com/users/${val}`);
+        //     yield axios.get(`https://api.github.com/users/${val}`);
+        //     return 'sss'
+        // }
+        // let g1 = gen();
+        
+        // let name = g1.next().value;
+
+        // g1.next().value.then((res) => {
+        //     console.log(res);
+        // })
+        // g1.next(name).value.then((res) => {
+        //     console.log(res);
+        // })
+        
+    </script>
+</body>
+</html>

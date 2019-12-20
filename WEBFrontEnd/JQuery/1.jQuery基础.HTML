@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery基础篇</title>
+</head>
+<body>
+    1.获取jQuery文件
+        jQuery官网: www.jquery.com download下载;
+        NPM下载, CDN方式: 不推荐国外的访问比较慢, 推荐国内的BootCDN比较快;
+    2.版本介绍:
+        jQuery2.0以上版本是不兼容IE8及以下版本的;
+        jQuery2.0及以下版本兼容IE8以及以下版本;
+    3.jQuery的兼容性引入方式;
+    <!-- chrome firefox safari opera IE9+ -->
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <!-- IE8及以下 -->
+    <!-- [if lte IE 8]>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <![endif]-->
+
+
+    <h1>jQuery的使用</h1>
+    <hr>
+    <div id="box"></div>
+    <!-- 需要关掉谷歌服务代理 -->
+    <img src="https://www.google.com/1.png" alt="">
+    <script>
+        // jQuery的使用
+            // 在文档加载完毕后执行;
+            // $(document).ready(function () {})
+            // 间写方式如下:
+            // $(function () {});
+            
+            // 而且每一个$(function() {});都是一个单独的作用域;
+            // 就像立执行函数那种作用域理论相同, 有效防止全局变量污染;
+            
+            // $(function () {})和onload的区别;
+            // ready等待页面中的DOM加载完毕后执行
+            // $(function () {confirm('readyOK')})
+            // load等待页面中所有的东西包括图片,视频,音频,等等所有元素都加载完毕后才会执行;
+            // window.onload = function () {confirm('loadOK')}
+            
+        
+        // jQuery的特点;
+            // 轻量,开源,免费,易于学习;
+            // 兼容行处理;
+            // jQuery3.4版本比jQuery1.12.4版本小的原因正式因为去掉了处理兼容性的一些代码;
+            // 强大的选择器
+            // 便捷的DOM操作;
+            // 链式操作;
+            // 可靠的事件机制;
+            // 封装了简单易用的AJAX操作;
+            // 丰富的扩展插件;
+            
+        // jQuery的DOM对象;
+            // console.log($('#box'));
+            // console.log(document.getElementById('box'));
+
+            // 使用jQuery选择器获取的对象,和原生获取的DOM对象并不同,称之为jQueryDOM对象(类数组对象);
+            // 但是对象都是同一个对象, 只不过是jQuery转换为了一个类数组形式的对象,第零位就是DOM对象;
+            // 也就是说jQueryDOM对象本质上是由DOM对象组成的集合;
+            // jQuery转换原生: $('#box')[0];
+            // 原生转换jQuery: $(document.getElementById('box'));
+            
+
+        // jQuery全局对象;
+            // jQuery(document).ready(function () {
+            //     console.log(jQuery);
+            //     // 简称$
+            //     console.log($);
+            //     console.log(jQuery === $);
+
+            //     // 以上结论得出$就是一个函数, 并且$的参数不同,作用也是完全不一样的, 如下实例;
+            //     // 作为选择器使用
+            //     console.log($('#box'));
+            //     // 转换DOM对象使用;
+            //     console.log($(document.getElementById('box')))
+            //     // 创建新元素;
+            //     console.log($('<p>').html('asdf').appendTo('body'));
+            //     console.log($('<p>asdf</p>').appendTo('body'));
+            // })
+            
+            
+        
+        
+        
+        
+        
+        
+    </script>
+</body>
+</html>

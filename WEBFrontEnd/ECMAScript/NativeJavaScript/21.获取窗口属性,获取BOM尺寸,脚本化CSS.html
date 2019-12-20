@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,body{
+            margin: 0;
+            padding: 0;
+        }
+        div.box{
+            width:300px;
+            height:300px;
+            background:red;
+            border:75px solid blue;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div id="offsetLeft"></div>
+    <div class="offsetParent" style="position:relative;">
+        <div></div>
+    </div>
+
+    <!-- 脚本化CSS -->
+    <hr>
+    <div style="width:100px;height:100px;background-color:red;" class="scriptCSS"></div>
+    
+    <div class="getComputedStyle" style="height:100px; background:orange;width:100px;"></div>
+    <style>
+        div.getComputedStyle::after{
+            content: '';
+            width:10px;
+            height:10px;
+            background:blue;
+            display: inline-block;
+        }
+    </style>
+    <script>
+        
+        
+        // var div = document.getElementsByClassName('box')[0],
+        //     offsetLeft = document.getElementById('offsetLeft');
+        
+        // 获取窗口属性, 获取BOM尺寸, 脚本化CSS;
+            // 1.查看滚动条的滚动距离;
+                // window.(pageXOffset/pageYOffset); (IE8以及IE8以下不兼容);
+                    // 滚动条水平的滚动距离
+                    // console.log(window.pageXOffset);
+                    // 滚动条垂直的滚动距离;
+                    // console.log(window.pageYOffset);
+                    
+                // (document.body/documentElement).(scrollLeft/scrollTop);(IE8以及IE8以下方法);
+                    // 滚动条水平的滚动距离;
+                    // console.log(documentElement.scrollLeft + document.body.scrollLeft);
+                    // 滚动条垂直的滚动距离;
+                    // console.log(documentElement.scrollTop + document.body.scrollTop);
+                        // 兼容行混乱问题, 虽然他们都是解决IE8以下兼容的, 但是有一个很复杂的兼容;
+                        // 如果一个浏览器中documentElement.scrollLeft有值, 那么document.body.scrollLeft一定没值;
+                        // 同样, 如果document.body.scrollLeft有值, 那么documentElement.scrollLeft一定没值;
+                        // 所以以上结论: 处理IE8下问题为了更好的解决兼容问题最好的就是两者相加;因为这俩方法之间只会存在一个有值的!
+                    // window.addEventListener('scroll',function () {
+                        // console.log(documentElement.scrollTop + document.body.scrollTop);
+                    // })
+
+                    
+            // 2.查看可是区域窗口的尺寸;
+                // window.(innerWidth/innerHeight);(IE8以及IE8以下不兼容);
+                    // 屏幕的宽度;
+                    // console.log(window.innerWidth);
+                    // 屏幕的高度;
+                    // console.log(window.innerHeight);
+                
+                // 文档开头有<!DOCTYPE html>标签代表标准模式, 如果没有<!DOCTYPE html>就代表怪异(混杂)模式;
+                // 浏览器会读取文档模式进行页面渲染; 怪异模式一旦启动JS引擎识别的语法就会想前兼容, 就是能够识别IE6之前的语法;
+                // (document.documentElement/document.body).(clientWidth/clientHeight);(IE8以及IE8以下的方法);
+                    // IE8下获取屏幕的宽度;     标准模式下生效;
+                    // console.log(document.docuemntElement.clientWidth)
+                    // IE8下获取屏幕的宽度;     怪异(混杂)模式下生效;
+                    // console.log(document.body.clientWidth); 
+                
+        
+            // 3.查看元素的几何尺寸
+                // dom.getBoundingClientRect(),  (兼容性很好)
+                // 返回一个对象; 对象里面有left, top, right, bottom等属性;
+                // left和top代表该元素左上角的X坐标和Y坐标, right和bottom代表元素右下角的X坐标和Y坐标;
+                
+                    // var div = document.getElementsByClassName('box')[0];
+                    // console.log(div.getBoundingClientRect());
+                    
+                // 但是返回的结果并不是实时的;
+                    
+                    // var boxObj = div.getBoundingClientRect();
+                    // div.style.width = '200px';
+                    // console.log(boxObj);
+                    // // 证明只是一个静态写照, 并不会实时更新;
+                
+            // 4.查看元素的尺寸
+                
+                // dom.(offsetWidth/offsetHeight);
+                    // 查看元素的宽度;
+                    // console.log(div.offsetWidth);
+                    // 查看元素的高度;
+                    // console.log(div.offsetHeight);
+
+            // 5.查看元素的位置
+                // dom.(offsetLeft/offsetTop);
+                // 对于无定位父级的元素, 相对的是文档的坐标. 对于有定位父级的元素, 相对的是最近的有定位的父级元素;
+                    // 查看元素距离左边距离
+                    // console.log(offsetLeft.offsetLeft);
+                    // 查看元素距离上边的距离
+                    // console.log(offsetLeft.offsetTop);
+                    
+                // dom.offsetParent
+                    // 返回最近的有定位的父级元素, 如果没有返回body, body.offsetParent返回null;
+                    // var offsetParent = document.getElementsByClassName('offsetParent')[0],
+                    //     div = offsetParent.children[0];
+                    // // div的父级定位元素是div.offsetParent元素;
+                    // console.log(div.offsetParent);
+                    // // div.offsetParent的父级元素是body(最顶级的父级定位元素);
+                    // console.log(offsetParent.offsetParent);
+                    // // body是最顶层的定位元素;
+                    // console.log(offsetParent.offsetParent.offsetParent);
+
+            // 6.滚动条滚动;
+                // window上有三个方法, (不光是所有dom元素都有这三个方法);
+                // domEle.scroll/scrollTo();  scrollBy();
+                    // scroll和scrollTop(x, y);两个方法是一样的, 兼容也是一样的;
+                    // 第一个参数是滚动条的X轴坐标, 第二个参数是滚动条的Y轴坐标, 可以设置滚动条;
+                        // 将滚动条返回到顶部;
+                        // console.log(window.scrollTo(0,0))
+                        // 将滚动条设定到距离顶部500px的位置;
+                        // console.log(window.scrollTo(0,500))
+                    
+                    // scrollBy(); 和scrollTo/scroll()方法类似,参数也相同; 区别: By会在之前的数据基础上做累加;
+                        // console.log(window.scrollBy(0, 10));
+            
+            // 7.滚动条位置
+                // domEle.scrollTop; (垂直元素滚动条距离顶部距离);
+                // domEle.scrollLeft; (水平元素滚动条距离左边距离);
+                // domEle.scrollHeight(垂直方向元素滚动条的长度);
+                // domEle.scrollWidth(水平方向元素滚动条的长度);
+                // domEle.clientWidth(元素可视区域的宽度);
+                // domEle.clientHeight(元素可视区域的高度);
+                
+            window.scrollTo(0, 9999);
+
+            
+            
+            // 脚本化CSS;(JS 中只有style这个对象来写入样式属性, 别的方法都只是可以读取, 都不能写入操作);
+                // domEle.style.prop; 可读写行间样式, 没有兼容性问题, 遇到float这样的保留字属性, 前面应加CSS;
+                    // div.style.float
+                    // div.style.cssFloat;
+
+                // domEle.style返回一个类数组, 一个CSS的声明(就是这个元素可以使用的css属性集合);
+                // domEle.style这个对象是可读可写的; 而且无论是读取还是写入操作的都是行间样式; 内部样式表和外链样式不会被读取到;
+                    // var div = document.getElementsByClassName('scriptCSS')[0];
+                    // // 读
+                    // console.log(div.style['width'])
+                    // // 写
+                    // div.style['border'] = '10px solid #000';
+                    
+
+                    
+                // 查询行间样式;
+                    // window.getComputedStyle(ele, null);(W3C标准方法);
+                        
+                        // 获取样式的一个方法(获取的都是计算过的, 所以只能读取, 不能写入, 写入操作会报错,这个方法获取的属性是计算过的);
+                        // var div = document.getElementsByClassName('getComputedStyle')[0];
+                        // 这里返回的还是CSSStyleDeclaration 这个对象;
+                        // 和style返回的不同之处在于, computedStyle获取的是当前元素所展示出的一切CSS的显示值, 包括默认值;
+                        // 并且getComputedStyle可以找到这个元素在内部样式表和外部样式表以及行内样式的一切 CSS 属性; 返回权重最高的属性;
+                        // 而style只是操作行内属性的;
+                        
+                        // console.log(window.getComputedStyle(div,null));
+                        // console.log(window.getComputedStyle(div,null).width);
+                        
+                        // 第二个参数是获取伪元素样式的一个方法;
+                        // console.log(window.getComputedStyle(div, 'after'));
+                        // console.log(window.getComputedStyle(div, 'after').width);
+
+                        
+                        // 计算样式只读;
+                        // 返回的计算样式的值都是绝对值; 没有相对单位;
+
+                        
+                        
+                    // domEle.currentStyle.prop;(IE8以及一下版本的方法);
+
+                        // 和W3C的getComputedStyle属性是功能是一样的, 只不过是IE8以及一下版本独有的属性;
+                        // var div = document.getElementsByClassName('getComputedStyle')[0];
+                        // console.log(div.currentStyle);
+                    
+                    
+                    
+                    
+
+
+
+
+
+
+
+
+
+
+
+        // 习题:
+            // 封装一个兼容方法, 求滚动轮滚动距离getScrollOffset();
+                // function getScrollOffset() {
+                //     if(window.pageXOffset){
+                //         return {
+                //             x : window.pageXOffset,
+                //             y : window.pageYOffset,
+                //         }
+                //     } else {
+                //         return {
+                //             x : document.documentElement.scrollLeft + document.body.scrollLeft,
+                //             y : document.documentElement.scrollTop + document.body.scrollTop,
+                //         }
+                //     }
+                // }
+
+            // 封装一个兼容方法, 求页面的可视区宽度;
+                // function getClientOffset() {
+                //     if(window.innerWidth) {
+                //         return {    
+                //             w : window.innerWidth,
+                //             h : window.innerHeight,
+                //         }
+                //     } else {
+                //         // document上的compatMode方法判断文档如果是怪异模式就会返回BackCompat;
+                //         debugger;
+                //         if(document.compatMode = 'BackCompat') {
+                //             return {
+                //                 w : document.body.clientWidth,
+                //                 h : document.body.clientHeight,
+                //             }
+                //         } else {
+                //             return {
+                //                 w : document.documentElement.clientWidth,
+                //                 h : document.documentElement.clientHeight,
+                //             }
+                //         }
+                //     }
+                // }
+
+            // 求元素相对于文档的坐标 getElementPosition;
+                
+            // 模拟实现阅读器自动滚动;
+                    
+                // var div = document.createElement('div'),
+                //     divBoxFirst = document.getElementsByClassName('box')[0],
+                //     start = document.createElement('div'),
+                //     stop = document.createElement('div'),
+                //     body = document.body,
+                //     time,key = true;
+                
+                // body.insertBefore(div, divBoxFirst);
+                // div.className = 'readerContent';
+                // div.innerHTML =
+                //     `
+                //         吴邪和胖子来到亨得烈博物馆，一般书画的保存要防光防尘，尤其是紫外线对书画损伤特别大，这里的书画却直接被光线照射，十分不专业。吴邪准备找馆长说说看，胖子想要劝吴邪却没有劝住。吴邪找到馆长亨得烈，但他不知道这个亨得烈就是阿宁的老板裘德考。吴邪跟亨得烈讲了书画要如何保存，结果亨得烈却称那些是明清两朝的文物，作者名气不大，价值一般，对他来说就如同废纸一般。吴邪这才意识到亨得烈只是商人，跟他说那么多是一点意义也没有。
+                        
+                //         吴邪和胖子找到一旁的工作人员，打听有关拍卖会和博物馆里是否有蛇眉铜鱼的事，结果却被告知根本没有拍卖会的事，也没有见过蛇眉铜鱼。忽然，吴邪在人群中看见三叔的身影，三叔正匆匆地离去。吴邪连忙追了上去，却不见了三叔。吴邪肯定那个人就是三叔，他继续追了上去，果真看见三叔正跟一个老外在说话，还把手中的箱子给了老外，而这个老外刚刚就跟馆长亨得烈在一起。
+
+                //         吴邪和胖子准备上前找三叔，可转眼三叔就不见了，最后决定跟踪跟三叔见面的那个老外。吴邪心中存疑，这个老外拿着三叔的箱子要去什么地方，三叔和亨得烈又是什么关系，还有拍卖会又是怎么回事。吴邪感觉他的生活四处都是谜团，四面八方都是入口，走出去才发现每一条路都是死路。胖子劝吴邪要控制情绪，不要那么较真。可吴邪收到的短信和网页都在指引他们来到这里，并且认为能找到蛇眉铜鱼，可来到这里才发现什么都没有。
+
+                //         胖子早就说过这里面透露着阴谋诡计，是有人在设局。吴邪不相信三叔会对他设局，胖子并没有说是三叔，还开玩笑说很可能是阿宁的公司，因为在海底墓没有弄死吴邪，所以选择在国外。只是阿宁把三叔和考古队的事说得有鼻子有眼，还有解连环死的时候拿着蛇眉铜鱼，吴邪因此怀疑还有一个蛇眉铜鱼是在阿宁手上。
+                //         吴邪和胖子来到拍卖会上，只是他们没有邀请函，无法进入会场。好在有个女的见吴邪长得帅气，声称吴邪是她的同伴，成功将吴邪带进会场。到了会场的吴邪看到拍卖的手册，上面果真有蛇眉铜鱼。胖子假装是会场的服务员混了进来，他告诉吴邪在潘家园见过那个老外，是个中国通，对手工艺品特别感兴趣，到处拜师学艺，就不学好事。是个文物贩子，拍卖会里的那些东西就是他们在倒腾，胖子是恨不得把他们拉出去枪毙。
+
+                //         吴邪感慨没有信仰是建不成眼前这么大的金塔，就像一个信仰的支撑，才能守住小城，所以信仰很重要。胖子的信仰就是钞票，吴邪的信仰就是做一切有意义的事情，他今晚是一定要把蛇眉铜鱼拍下来。拍卖东西要很多钱，可吴邪没钱，只得打电话四处借钱，可对方听说是借钱，就找各种理由拒绝。胖子见吴邪为了借钱的事愁眉不展，偷偷地把他在潘家园的房子给卖了帮吴邪。
+
+                //         拍卖会正式开始，第一件拍品是一个瓷瓶，拍卖师介绍这件瓷瓶的历史是出自圆明园。吴邪不想属于中国的文物落入外国人之手，他竞起价来。胖子提醒吴邪他们来的目的是拍下蛇眉铜鱼，像瓷瓶那样的文物有很多，他们根本拍不回来。可吴邪还是执意竞价，最终拍下这件瓷瓶。
+                //         吴邪和胖子来到亨得烈博物馆，一般书画的保存要防光防尘，尤其是紫外线对书画损伤特别大，这里的书画却直接被光线照射，十分不专业。吴邪准备找馆长说说看，胖子想要劝吴邪却没有劝住。吴邪找到馆长亨得烈，但他不知道这个亨得烈就是阿宁的老板裘德考。吴邪跟亨得烈讲了书画要如何保存，结果亨得烈却称那些是明清两朝的文物，作者名气不大，价值一般，对他来说就如同废纸一般。吴邪这才意识到亨得烈只是商人，跟他说那么多是一点意义也没有。
+
+                //         吴邪和胖子找到一旁的工作人员，打听有关拍卖会和博物馆里是否有蛇眉铜鱼的事，结果却被告知根本没有拍卖会的事，也没有见过蛇眉铜鱼。忽然，吴邪在人群中看见三叔的身影，三叔正匆匆地离去。吴邪连忙追了上去，却不见了三叔。吴邪肯定那个人就是三叔，他继续追了上去，果真看见三叔正跟一个老外在说话，还把手中的箱子给了老外，而这个老外刚刚就跟馆长亨得烈在一起。
+
+                //         吴邪和胖子准备上前找三叔，可转眼三叔就不见了，最后决定跟踪跟三叔见面的那个老外。吴邪心中存疑，这个老外拿着三叔的箱子要去什么地方，三叔和亨得烈又是什么关系，还有拍卖会又是怎么回事。吴邪感觉他的生活四处都是谜团，四面八方都是入口，走出去才发现每一条路都是死路。胖子劝吴邪要控制情绪，不要那么较真。可吴邪收到的短信和网页都在指引他们来到这里，并且认为能找到蛇眉铜鱼，可来到这里才发现什么都没有。
+
+                //         胖子早就说过这里面透露着阴谋诡计，是有人在设局。吴邪不相信三叔会对他设局，胖子并没有说是三叔，还开玩笑说很可能是阿宁的公司，因为在海底墓没有弄死吴邪，所以选择在国外。只是阿宁把三叔和考古队的事说得有鼻子有眼，还有解连环死的时候拿着蛇眉铜鱼，吴邪因此怀疑还有一个蛇眉铜鱼是在阿宁手上。
+                //         吴邪和胖子来到拍卖会上，只是他们没有邀请函，无法进入会场。好在有个女的见吴邪长得帅气，声称吴邪是她的同伴，成功将吴邪带进会场。到了会场的吴邪看到拍卖的手册，上面果真有蛇眉铜鱼。胖子假装是会场的服务员混了进来，他告诉吴邪在潘家园见过那个老外，是个中国通，对手工艺品特别感兴趣，到处拜师学艺，就不学好事。是个文物贩子，拍卖会里的那些东西就是他们在倒腾，胖子是恨不得把他们拉出去枪毙。
+
+                //         吴邪感慨没有信仰是建不成眼前这么大的金塔，就像一个信仰的支撑，才能守住小城，所以信仰很重要。胖子的信仰就是钞票，吴邪的信仰就是做一切有意义的事情，他今晚是一定要把蛇眉铜鱼拍下来。拍卖东西要很多钱，可吴邪没钱，只得打电话四处借钱，可对方听说是借钱，就找各种理由拒绝。胖子见吴邪为了借钱的事愁眉不展，偷偷地把他在潘家园的房子给卖了帮吴邪。
+
+                //         拍卖会正式开始，第一件拍品是一个瓷瓶，拍卖师介绍这件瓷瓶的历史是出自圆明园。吴邪不想属于中国的文物落入外国人之手，他竞起价来。胖子提醒吴邪他们来的目的是拍下蛇眉铜鱼，像瓷瓶那样的文物有很多，他们根本拍不回来。可吴邪还是执意竞价，最终拍下这件瓷瓶。
+                //         吴邪和胖子来到亨得烈博物馆，一般书画的保存要防光防尘，尤其是紫外线对书画损伤特别大，这里的书画却直接被光线照射，十分不专业。吴邪准备找馆长说说看，胖子想要劝吴邪却没有劝住。吴邪找到馆长亨得烈，但他不知道这个亨得烈就是阿宁的老板裘德考。吴邪跟亨得烈讲了书画要如何保存，结果亨得烈却称那些是明清两朝的文物，作者名气不大，价值一般，对他来说就如同废纸一般。吴邪这才意识到亨得烈只是商人，跟他说那么多是一点意义也没有。
+
+                //         吴邪和胖子找到一旁的工作人员，打听有关拍卖会和博物馆里是否有蛇眉铜鱼的事，结果却被告知根本没有拍卖会的事，也没有见过蛇眉铜鱼。忽然，吴邪在人群中看见三叔的身影，三叔正匆匆地离去。吴邪连忙追了上去，却不见了三叔。吴邪肯定那个人就是三叔，他继续追了上去，果真看见三叔正跟一个老外在说话，还把手中的箱子给了老外，而这个老外刚刚就跟馆长亨得烈在一起。
+
+                //         吴邪和胖子准备上前找三叔，可转眼三叔就不见了，最后决定跟踪跟三叔见面的那个老外。吴邪心中存疑，这个老外拿着三叔的箱子要去什么地方，三叔和亨得烈又是什么关系，还有拍卖会又是怎么回事。吴邪感觉他的生活四处都是谜团，四面八方都是入口，走出去才发现每一条路都是死路。胖子劝吴邪要控制情绪，不要那么较真。可吴邪收到的短信和网页都在指引他们来到这里，并且认为能找到蛇眉铜鱼，可来到这里才发现什么都没有。
+
+                //         胖子早就说过这里面透露着阴谋诡计，是有人在设局。吴邪不相信三叔会对他设局，胖子并没有说是三叔，还开玩笑说很可能是阿宁的公司，因为在海底墓没有弄死吴邪，所以选择在国外。只是阿宁把三叔和考古队的事说得有鼻子有眼，还有解连环死的时候拿着蛇眉铜鱼，吴邪因此怀疑还有一个蛇眉铜鱼是在阿宁手上。
+                //         吴邪和胖子来到拍卖会上，只是他们没有邀请函，无法进入会场。好在有个女的见吴邪长得帅气，声称吴邪是她的同伴，成功将吴邪带进会场。到了会场的吴邪看到拍卖的手册，上面果真有蛇眉铜鱼。胖子假装是会场的服务员混了进来，他告诉吴邪在潘家园见过那个老外，是个中国通，对手工艺品特别感兴趣，到处拜师学艺，就不学好事。是个文物贩子，拍卖会里的那些东西就是他们在倒腾，胖子是恨不得把他们拉出去枪毙。
+
+                //         吴邪感慨没有信仰是建不成眼前这么大的金塔，就像一个信仰的支撑，才能守住小城，所以信仰很重要。胖子的信仰就是钞票，吴邪的信仰就是做一切有意义的事情，他今晚是一定要把蛇眉铜鱼拍下来。拍卖东西要很多钱，可吴邪没钱，只得打电话四处借钱，可对方听说是借钱，就找各种理由拒绝。胖子见吴邪为了借钱的事愁眉不展，偷偷地把他在潘家园的房子给卖了帮吴邪。
+
+                //         拍卖会正式开始，第一件拍品是一个瓷瓶，拍卖师介绍这件瓷瓶的历史是出自圆明园。吴邪不想属于中国的文物落入外国人之手，他竞起价来。胖子提醒吴邪他们来的目的是拍下蛇眉铜鱼，像瓷瓶那样的文物有很多，他们根本拍不回来。可吴邪还是执意竞价，最终拍下这件瓷瓶。
+                //     `
+                // div.style.cssText = 'height:500px; overflow:scroll; padding:10px;position:relative;';
+                // div.appendChild(start);div.appendChild(stop);
+                // start.innerHTML = 'start';
+                // stop.innerHTML = 'stop';
+                // start.style.cssText = 'width:50px;height:50px;position:fixed;top:50px;left:0px;background:#0f0;font-size:20px;';
+                // stop.style.cssText = 'width:50px;height:50px;position:fixed;top:100px;left:0px;background:#f00;font-size:20px;';
+                // start.onclick = function () {
+                //     if(key){
+                //         time = setInterval(function () {
+                //             div.scrollBy(0,1);
+                //         }, 20);
+                //         key = false;
+                //     }
+                // }
+
+                // stop.onclick = function () {
+                //     clearInterval(time);
+                //     key = true;
+                // }
+            
+                
+            // 封装兼容性方法getStyle(ele,prop);
+                // function getStyle(ele,prop) {
+                    
+                //     if(window.getComputedStyle) {
+                //         return window.getComputedStyle(ele,null)[prop];
+                //     }else{
+                //         return ele.currentStyle[prop];
+                //     }
+                // }
+
+            
+            // 运动方块
+                // var div = document.createElement('div'),
+                //     body = document.body,
+                //     speed = 1;
+                // body.appendChild(div);
+                // div.style.cssText = 'width:100px;height:100px; background:red;';
+                // var time = setInterval(function () {
+                //     speed += speed/10;
+                //     div.style.marginLeft = parseInt(getStyle(div,'marginLeft')) + speed + 'px';
+                    
+                //     if(parseInt(getStyle(div,'marginLeft')) > 960) {
+                //         clearInterval(time);
+                //     }
+                // },10);
+                // console.log(parseInt(getStyle(div, 'marginLeft')));
+                
+                
+                // function getStyle(ele,prop) {
+                //     if(window.getComputedStyle){
+                //         return window.getComputedStyle(ele,null)[prop];
+                //     }else{
+                //         return ele.currentStyle[prop];
+                //     }
+                // }
+                
+    </script>
+</body>
+</html>

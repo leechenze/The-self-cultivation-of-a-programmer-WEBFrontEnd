@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 基本效果 -->
+    <style>
+        .box{
+            width: 400px;
+            height: 400px;
+            overflow: hidden;
+        }
+        .box img{
+            width: 100%;
+        }
+    </style>
+
+    <!-- 消息提醒 -->
+    <style>
+        img{
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            display: inline-block;
+            vertical-align:middle;
+        }
+        .scrollBox{
+            width:80%;
+            height: auto;
+            margin: 30px auto;
+            border: 2px dashed #000;
+            border-radius: 20px;
+            padding: 20px;
+        }
+        .scrollBox .item{
+            width: 80%;
+            margin: 0 auto;
+            background: #e5e5e5;
+            border: 1px solid #fff;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+        }
+        .scrollBox .item-content{
+            width: 800px;
+            margin: 10px;
+            display: inline-block;
+        }
+        .scrollBox .item-content h3,p{
+            margin: 5px;
+        }
+    </style>
+    <!-- 轮播图 -->
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            font: 16px 'Microsoft YaHei', sans-serif;
+        }
+
+        ul{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .playBox{
+            position: relative;
+            width: 520px;
+            height: 280px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+        }
+
+        .playBox .imgList{
+            width: 100%;
+            height: 100%;
+        }
+        .playBox a{
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .playBox a.current{
+            display: block;
+        }
+        .playBox a img{
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+
+        .iconList{
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            margin-left: -50px;
+        }
+
+        .iconList li{
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #fff;
+            cursor: pointer;
+            font-size: 0px;
+            float: left;
+            margin: 0 5px;
+        }
+        
+        .iconList li.current{
+            background-color: #000;
+        }
+
+        .slidebar{
+            position: absolute;
+            top: 50%;
+            width: 30px;
+            height: 50px;
+            margin-top: -25px;
+            background-color: #000;
+            text-align: center;
+            line-height: 45px;
+            font-size: 25px;
+            font-weight: bolder;
+            font-family: 'simsun';
+            opacity: 0.5;
+            filter: alpha(opacity=60);
+            color: #fff;
+            display: none;
+            cursor: pointer;
+        }
+        .slidebarLeft{
+            left: 0;
+        }
+        .slidebarRight{
+            right: 0;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- 基本效果 -->
+    <button class="btn00">万能按钮</button>
+    <button class="btn01">stop</button>
+    <button class="btn02">finish</button>
+    <button class="btn03">delay</button>
+    <div class="box">
+        <img src="./images/1.jpg" alt="">
+    </div>
+    <!-- 滑动效果 -->
+    <!-- 渐隐渐现效果 -->
+    <!-- 自定义动画 -->
+    <!-- 动画设置 -->
+    <!-- 消息滚动 -->
+    <div class="scrollBox">
+        <div class="item">
+            <img src="./images/1.jpg" alt="">
+            <div class="item-content">
+                <h3>Hello World</h3>
+                <p>
+                    webpack4.x的使用，包含工作中常用的插件使用，技巧使用、以及学习思路，零基础可以很好的入门，有经验的人可以系统学习。
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="./images/2.jpg" alt="">
+            <div class="item-content">
+                <h3>Hello World</h3>
+                <p>
+                    webpack4.x的使用，包含工作中常用的插件使用，技巧使用、以及学习思路，零基础可以很好的入门，有经验的人可以系统学习。
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="./images/3.jpg" alt="">
+            <div class="item-content">
+                <h3>Hello World</h3>
+                <p>
+                    webpack4.x的使用，包含工作中常用的插件使用，技巧使用、以及学习思路，零基础可以很好的入门，有经验的人可以系统学习。
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="./images/4.jpg" alt="">
+            <div class="item-content">
+                <h3>Hello World</h3>
+                <p>
+                    webpack4.x的使用，包含工作中常用的插件使用，技巧使用、以及学习思路，零基础可以很好的入门，有经验的人可以系统学习。
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="./images/5.jpg" alt="">
+            <div class="item-content">
+                <h3>Hello World</h3>
+                <p>
+                    webpack4.x的使用，包含工作中常用的插件使用，技巧使用、以及学习思路，零基础可以很好的入门，有经验的人可以系统学习。
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="./images/9.jpg" alt="">
+            <div class="item-content">
+                <h3>Hello World</h3>
+                <p>
+                    webpack4.x的使用，包含工作中常用的插件使用，技巧使用、以及学习思路，零基础可以很好的入门，有经验的人可以系统学习。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 轮播图 -->
+    <div id="play-box" class="playBox">
+        <div class="imgList">
+            <a class="current" href="#javascript:void(false);" target="_blank">
+                <img src="./images/1.jpg" alt="">
+            </a>
+            <a href="#javascript:void(false);" target="_blank">
+                <img src="./images/2.jpg" alt="">
+            </a>
+            <a href="#javascript:void(false);" target="_blank">
+                <img src="./images/3.jpg" alt="">
+            </a>
+            <a href="#javascript:void(false);" target="_blank">
+                <img src="./images/4.jpg" alt="">
+            </a>
+            <a href="#javascript:void(false);" target="_blank">
+                <img src="./images/5.jpg" alt="">
+            </a>
+        </div>
+
+        <div class="iconList">
+            <ul>
+                <li class="current">1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+            </ul>
+        </div>
+        <div class="slidebar slidebarLeft"><</div>
+        <div class="slidebar slidebarRight">></div>
+    </div>
+    
+    <script src="./jQuery/jquery3.4.1.min.js"></script>
+    <script>
+        //1.基本效果(width, height, padding, margin, opacity样式属性变化, 动画方法的参数基本都相同, 都有callback, num, 'fast', 'normal', 'slow');
+            // hide()
+                $('.btn00').on('click', function () {
+                    // $('.box').hide();
+                    // $('.box').hide('fast');
+                    // $('.box').hide('normal');
+                    // $('.box').hide('slow');
+                    // $('.box').hide(3000);
+
+                    // $('.box').hide(1000, function (){
+                    //     alert('隐藏后执行');
+                    // });
+                })
+            // show()
+                $('.btn00').on('click', function () {
+                    // $('.box').show();
+                    // $('.box').show('fast');
+                    // $('.box').show('normal');
+                    // $('.box').show('slow');
+                    // $('.box').show(3000);
+
+                    // $('.box').hide().show(1000, function (){
+                    //     alert('显示后执行');
+                    // });
+                })
+                
+            // toggle() 
+                $('.btn00').on('click', function () {
+                    // $('.box').toggle();
+                    // $('.box').toggle('fast');
+                    // $('.box').toggle('normal');
+                    // $('.box').toggle('slow');
+                    // $('.box').toggle(3000);
+
+                    // $('.box').toggle(1000, function (){
+                    //     // alert('执行');
+                    // });
+                })
+
+        //2.滑动效果(height, margin-top, padding-top会变化);
+            // slideDown();
+                $('.btn00').on('click', function () {
+                    // $('.box').hide().slideDown('slow');
+                });
+            // slideUp();
+                $('.btn00').on('click', function () {
+                    // $('.box').slideUp('slow');
+                });
+                
+            // slideToggle();
+                $('.btn00').on('click', function () {
+                    // $('.box').slideToggle('slow');
+                });
+                
+        //3.渐隐渐现效果
+            // fadeIn()
+                $('.btn00').on('click', function () {
+                    // $('.box').hide().fadeIn('slow');
+                });
+                
+            // fadeOut()
+                $('.btn00').on('click', function () {
+                    // $('.box').fadeOut('slow');
+                });
+
+            // fadeToggle()
+                $('.btn00').on('click', function () {
+                    // $('.box').fadeToggle('slow');
+                });
+
+            // fadeTo() 改变元素的透明度;
+                $('.btn00').on('click', function () {
+                    // $('.box').fadeTo('slow', 0.5, function () {
+                    //     alert('执行');
+                    // });
+                });
+        //4.自定义动画
+                // animate()(如果指定的值是toggle时, 就会进行切换效果)
+                $('.btn00').on('click',function () {
+                    // $('.box').animate({
+                    //     'width' : 'toggle',
+                    //     'height' : 'toggle',
+                    // },2000, function () {
+                    //     // alert('animate');
+                    // })
+                })
+        
+                // stop(); 停止动画;
+                $('.btn01').on('click',function () {
+                    // $('.box').stop();
+                })
+
+                // finish(); 完成动画;
+                $('.btn02').on('click',function () {
+                    // $('.box').finish();
+                })
+
+                // delay(); 延迟动画;
+                $('.btn03').on('click',function () {
+                    // $('.box').hide('slow').delay(3000).show('slow');
+                })
+
+                
+
+        //5.动画设置
+            // jQuery.fx.off
+                // 关闭页面中所有的动画;
+                // $.fx.off = true;
+                // $('.btn00').on('click', function () {
+                //     $('.box').fadeOut('slow');
+                // });
+            
+            // jQuery.fx.interval
+                // console.log('jquery 动画的帧数' + $.fx.interval);
+        
+
+        //6.动画队列;
+            // 所有的动画操作, 会加入到队列中, 一次执行;
+            $('.btn00').on('click',function () {
+                // $('.box').slideUp(1000).show(2000).fadeTo(1000,.5).animate({
+                //     'width': '200px',
+                //     'opacity': '1',
+                // },1000).children().prop('src','./images/8.jpg');
+            })
+            
+        
+        // jQuery动画与C3动画;
+            // 1.C3动画仅IE9+支持, jQuery可以使用IE低版本的浏览器;
+            // 2.C3的动画或者过度, 必须给元素指定具体的属性值, jQuery有封装的方法;
+            
+            
+            
+        
+            
+            
+        
+
+
+
+
+
+
+
+        // 案例
+            // 消息滚动
+            // $(document).ready(function () {
+            //     setInterval(function () {
+            //         $('.scrollBox div.item').last().fadeOut('slow', function () {
+            //             $('.scrollBox div.item').last().prependTo('.scrollBox').delay(200).slideDown(500);
+            //         })
+            //     },2000);
+            // })
+        
+            // 轮播图案例;
+            // $(document).ready(function () {
+            //     var m = 1,
+            //         speed = 1000;
+                
+            //     var playTime = setInterval(runPlay, speed);
+                
+            //     // 当值当前索引;
+            //     function runPlay() {
+            //         if(m >= 5) {
+            //             m = 0;
+            //         }
+            //         controlImg(m);
+            //         m++;
+            //     }
+            //     // 控制当前图片和导航;
+            //     function controlImg(p) {
+            //         $('.imgList a').removeClass('current').eq(p).addClass('current');
+            //         $('.iconList li').removeClass('current').eq(p).addClass('current');
+            //     }
+                
+            //     // 控制划入划出停止和开始;
+            //     $('#play-box').mouseenter(function () {
+            //         clearInterval(playTime);
+            //         $('.slidebar').fadeTo('slow',1);
+            //     }).mouseleave(function () {
+            //         playTime = setInterval(runPlay, speed);
+            //         $('.slidebar').fadeTo('slow',0);
+            //     });
+
+            //     // 控制小点导航;
+            //     $('.iconList li').click(function () {
+            //         controlImg($(this).index());
+            //         // 修改m的值, 点击导航的时候继续当前导航往后走;
+            //         m = $(this).index();
+            //     })
+
+                
+            //     // 下一张图片
+            //     $('.slidebarRight').click(function () {
+            //         runPlay();
+            //     })
+            //     // 上一张图片
+            //     $('.slidebarLeft').click(function () {
+            //         if(m < 0){
+            //             m = 4;
+            //         }
+            //         controlImg(m - 2)
+            //         m--;
+            //     })
+            // })
+            
+    </script>
+</body>
+</html>

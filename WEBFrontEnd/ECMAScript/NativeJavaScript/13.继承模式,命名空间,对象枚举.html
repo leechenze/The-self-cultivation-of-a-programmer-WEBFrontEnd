@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1.继承模式;
+            // 1.继承发展史;
+                // 1.传统形式 ==> 原型链;
+                    // 过多的继承了没用的属性;
+                    
+                    // Grand.prototype = {
+                    //     lastName : 'lee',
+                    // }
+                    // function Grand() {
+                        
+                    // }
+                    // var grand = new Grand();
+                    
+                    // Father.prototype = grand;
+                    // function Father() {
+                    //     this.name = 'cs';
+                    // }
+                    // var father = new Father();
+                    
+                    // Son.prototype = father;
+                    // function Son() {
+                    //     this.hobbit = 'somke';
+                    // }
+                    // var son = new Son();
+                    
+                    // 这种grand继承到son 有一个矛盾就是不需要的属性也继承来了; 效率极差, 很快废弃使用;
+                    // 实际开发是根本不可能用到的这个方法;
+                    
+                    
+                // 2.借用构造函数;
+                    // 不能继承借用构造函数的原型;
+                    // 每次构造函数都要多走一个函数;
+                
+                    // 实际这种关系并非是继承的关系; 只是借用其他函数的属性方法实现自己的功能; 但是也是继承发展史的一个环节;
+                    // function Person(name, age, sex) {
+                    //     this.name = name;
+                    //     this.age = age;
+                    //     this.sex = sex;
+                    // }
+
+                    // function Student(name, age, sex, grade) {
+                    //     Person.call(this, name, age, sex);
+                    //     console.log(this);
+                    // }
+                    // Student();
+                    
+                    
+                    
+                // 3.共享原型;
+                    // 不能随便改动自己的原型; 但是这是现在开发应用的一个雏形;
+
+                    // // 就是让两个构造函数继承于同一个原型; 现在在原型的概念上衍生了一个新的用法, 多个构造函数共用了同一个原型对象;
+                    // Father.prototype.lastName = 'lee';
+                    // function Father() {
+                    // }
+                    // function Daughter() {
+                    // }
+                    // // 共享原型不足; 女儿sex改成woman, 父亲的sex也同样改成woman;
+                    // // daughter和father所操作的原型是同一个; 所以daughter是不能操作原型的;
+                    // // 想给daughter加一个自己的属性; 但是因为共用一个原型, 影响了father的属性;
+                    
+                    // Daughter.prototype.sex = 'woman';
+                    // 
+                    // interit(Daughter,Father);
+                    // // 先继承后构造实力对象
+
+                    // var father = new Father();
+                    // var daughter = new Daughter();
+
+                    // // 封装成一个函数;
+                    // function interit(Target, Origin) {
+                    //     // 参数为两个构造函数; 需要Target继承Origin;
+                    //     Target.prototype = Origin.prototype;
+                    // }
+                    
+                    
+                    
+                // 4.圣杯模式; ( 最完美的继承模式 )
+                    // 就是利用了一个构造函数F() 作为中间件;
+                    // 其实和同样还是共享模式, 解决了共享模式不能操作自己原型属性的不足;
+                    // function interit(Target, Origin){
+                    //     function F() {};
+                    //     F.prototype = Origin.prototype;
+                    //     Target.prototype = new F();
+                    //     // 但是有一个问题 原型中的构造函数指向发生了混乱;
+                    //     // daughter.__proto__   ==>     new F().__proto__   ==>     Father.prototype    constructor    ===     Father();
+                    //     // 矫正daughter的构造函数指向;
+                    //     Target.prototype.constructor = Target;
+                    //     // 定义一个继承关系中真正继承自谁的方法;
+                    //     Target.prototype.primitiveObject = Origin.prototype;
+                    // }
+                    
+                    // Father.prototype.lastName = 'lee';
+                    // function Father() {
+                    // }
+                    // function Daughter() {
+                    // }
+                    // interit(Daughter, Father);
+                    // var father = new Father();
+                    // var daughter = new Daughter();
+
+                    // console.log(daughter.constructor);
+
+
+                    // 深入改善封装圣杯模式;
+                        // var interit = (function (){
+                        //     var F = function () {};
+                        //     return function (Target, Origin) {
+                        //         F.prototype = Origin.prototype;
+                        //         Target.prototype = F.prototype;
+                        //         console.log(Target.prototype);
+                        //         Target.prototype.constructor = Target;
+                        //         Target.prototype.primitiveObject = Origin.prototype;
+                        //     }
+                        // }());
+
+                        
+                        // Person.prototype.lastName = 'lee';
+                        // function Person() {
+                        // }
+                        // function Son() {
+                        // }
+                        // interit(Son, Person);
+                        // var person = new Person();
+                        // var son = new Son();
+                        // console.log(son.lastName);
+                        // console.log(son.primitiveObject);
+        
+            
+        // 2.命名空间;
+            // 管理变量, 防止污染全局, 适用于模块化开发;
+                // 在JS多年前, 曾经用这种方式模拟命名空间;
+                // var org = {
+                //     departmentO : {
+                //         leecs : {
+                //             name : 'abc',
+                //         },
+                //         wufutu : {
+                            
+                //         }
+                //     },
+                //     departmentT : {
+                //         maodun : {
+                            
+                //         },
+                //         muertai : {
+                            
+                //         }
+                //     }
+                // }
+
+                // var leecs = org.departmentO.leecs;
+                // console.log(leecs);
+
+                // 现在真正的解决办法是webPack, gulp, grunt..等同步化开发的构建工具包管理器;
+                
+                // var init = (function () {
+                //     var name = 'abc';
+
+                //     function callName() {
+                //         console.log(name);
+                //     }
+                //     return function () {
+                //         callName();
+                //     }
+                    
+                // }())
+                
+                
+            // jQuery是一个非常强大的JavaScript方法库, jQuery强大的链式调用是因为底层的return this;
+
+            // 属性表示方法;
+                // obj.name == obj['name'], 是等同的;
+                // obj.name    隐式转换为       obj['name'];
+                // obj[name] name不加引号就会被系统当成一个变量;
+                
+                
+        // 3.对象枚举;(对象遍历);
+            // 1.for...in...
+                // var obj = {
+                //     name : 'leecs',
+                //     age : 123,
+                //     sex : 'male',
+                //     height : 196,
+                //     weight : 75,
+                // }
+                // // for...in...循环, 这个对象有几个属性就会有遍历几圈;
+                // // 他在循环每一圈的时候, 会将这个对象的属性名放到这个prop变量中去;
+                
+                // for(var prop in obj) {
+                //     console.log(prop);
+                // }
+                
+                // 以下实例;
+                    // 第一个;
+                    // var obj = {
+                    //     a : 123,
+                    //     b : 234,
+                    //     c : 345,
+                    // },
+                    // key;
+                    // for(key in obj) {
+                    //     obj[key] ++;
+                    // }
+                    // console.log(obj);
+                    
+
+                    // 第二个
+                    // var obj = {
+                    //     a : 123,
+                    //     b : 234,
+                    //     c : 345,
+                    //     // key : 20,
+                    // },
+                    // key;
+                    // for(key in obj) {
+                    //     // obj[key] ++;
+                    //     obj.key   // 会打印三个undefined, 因为隐式转会就会成为 obj['key'] 而obj并没有key这个属性;
+                    //     // 所以只能boj[key]这么写;
+                    // }
+            
+            
+            // 2.hasOwnProperty();
+                // var obj = {
+                //     name : 'leecs',
+                //     age : 123,
+                //     sex : 'male',
+                //     height : 196,
+                //     weight : 75,
+                //     __proto__ : {
+                //         lastName : 'lee',
+                //     }
+                // },
+                // key;
+                // // obj.__proto__ === Object.prototype; __proto__ 地址指向;
+                // Object.prototype.abc = '123';
+                // for(key in obj) {
+                //     // console.log(obj[key]);
+                //     // 现在原型上的方法也被遍历了, 但是原型上的顶级原型 Object.prototype这个对象的方法是不会打印的
+                //     // 但是如果Object.prototype原型上如果是手动设的也会被打印的;
+                //     // 因为顶级的方法是系统自带的, 遍历只会打印手动设的值;
+                //     // 如果不遍历原型上的方法, Object身上有个方法: obj.hasOwnProperty();
+                //     // hasOwnProperty() 就是判断这个属性是不是obj自己的属性, 返回布尔类型值;
+                //     // 如果是他自己的那么就返回true, 如果是原型上的就会返回false;
+                    
+                //     if(obj.hasOwnProperty(key)){
+                //         console.log(obj[key]);
+                //     }
+
+                //     if(!obj.hasOwnProperty(key)){
+                //         console.log(obj[key]);
+                //     }
+                // }
+
+                
+            // 3.in
+                // 判断一个属性是否是属于某个对象的;
+                // var obj = {
+                //     name : 'leecs',
+                //     age : 123,
+                //     sex : 'male',
+                //     height : 196,
+                //     weight : 75,
+                //     __proto__ : {
+                //         lastName : 'lee',
+                //     }
+                // };
+
+                // console.log('name' in obj);
+                // console.log('age' in obj);
+                
+            // 4.instanceof
+                // A instanceof B
+                // 判断A是否是B构造函数构造出来的;
+                // 其实是看对象 A 的原型链上是否有 B 的原型;
+                // function Person() {}
+                // var person = new Person();
+                // console.log(person instanceof Person);
+                
+                
+                // A instanceof B
+                // 其实是看对象 A 的原型链上是否有 B 的原型;
+                // with(console) {
+                //     log(person instanceof Person);
+                //     log(person instanceof Object);
+                //     log([] instanceof Array);
+                //     log({} instanceof Object);
+                // }
+        
+        
+                // 解释如下:
+                // Object.prototype.toString.call([]);
+                // Object.prototype.toString是一个函数引用;
+                // 而.call()勇于改变this指向; 哪个函数调用call 哪个函数的this就是call()的第一个参数的this;
+                // 就相当于把 function toString() {} 这个方法的this 全部指向了一个[]
+                // 那么这个方法返回的结果就是识别this 的数据类型 返回字符串 "[object Array]";
+
+                // Object.prototype.toString = function () {
+                    // new Array();
+                    // new Number();
+                    // new String();
+                    // 每个JavaScript内置的构造函数都是重写过的
+                    // Object.prototype.toString() 原始对象上的toString();
+                    // 返回的是一个判断当前对象类型的字符串值;
+                    // 识别this
+                    // 返回this数据类型的相应结果;
+                    
+                // }
+
+        
+            // 判断array的三种方法;
+                // // 判断[].的构造函数是否是 function Array() {};
+                // [].constructor == Array;
+                // // 判断[].的原型链上是否有Array;
+                // [] instanceof Array
+                // // 通过Object的原型上的toString的方法this指向一个数组 看返回结果是什么;
+                // Object.prototype.toString.call([]);
+            
+    </script>
+</body>
+</html>

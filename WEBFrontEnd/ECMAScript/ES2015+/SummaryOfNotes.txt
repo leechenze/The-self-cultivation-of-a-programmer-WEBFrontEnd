@@ -1,0 +1,1482 @@
+﻿一、ECMA 版本介绍
+    
+    ECMA标准每年六月份都会发布新的版本
+    ESnext 就指的是ES下一代JS语言
+    
+    任何人都可以向标准委员会(TC39) 要求更改语言标准
+    
+    如果提案被参考 变成标准 经历五个阶段
+        stage 1;        展示阶段
+        stage 2;        征求广大开发者意见
+        stage 3;        进入草案阶段  基本上会被采纳
+        stage 4;        候选阶段
+        stage 5;        定案阶段(标准形成);
+
+    GitHub 提案网址:
+    https://github.com/tc39/ecma262
+
+二、let，const；
+    ES6中{}就是一个块级作用域;
+    var 定义一个变量是属于window的
+    let,const 定义的变量不属于window;
+
+
+            Ranger 29/08/2019 10:00:26
+            let，你就可以认为让js有了块级作用域
+
+            Ranger 29/08/2019 10:00:40
+            var没有块级作用域
+
+            Ranger 29/08/2019 10:00:54
+            你想想，如果用var 你怎么实现let这种输出1234的效果
+
+            Ranger 29/08/2019 10:01:40
+            得用闭包吧
+
+            Ranger 29/08/2019 10:02:15
+            闭包的作用域不就是保持一个作用域吗
+
+            Ranger 29/08/2019 10:02:23
+            let的作用也是产生一个作用域 
+
+                
+                function test() {
+                    var arr = [];
+                    for (let i = 0; i < 10; i++) {
+                            arr[i] = function () {
+                                return i;
+                            }
+                    }
+                    return arr;   
+                }
+                var myArr = test();
+
+                用ES5实现let,var代码如下
+
+                function test() {
+                    var arr = [];
+                    for (var i = 0; i < 10; i++) {
+                        function _loop(n) {
+                            arr[n] = function () {
+                                return n;
+                            }
+                        }
+                        _loop(i);
+                    }
+                    return arr;
+                }
+                var myArr = test();
+            
+            
+            
+            
+                
+
+
+    let         相当于之前的var
+        1.没有预解析，不存在变量提升
+        2.在同一个作用域里不能重复定义变量，但是可以重新赋值
+        3.
+        4.for()循环里面仍是父级作用域，{}里面是块级作用域
+        
+
+    const       常量，定义好了不能改变，特性和let是一样的
+        1、const常量不能修改
+        2、const定义常量必须有值，不能后赋值，不能修改
+        3、const不能改变的只是原始值，但是引用值可以改变但是同样不能重新赋值；
+            {想要引用值不能重新赋值的话:Object.freeze('[]')};
+
+            
+    建议：
+        1、尽量使用let 不要使用var 有效的避免全局作用域污染问题
+        2、不会修改的的东西一定使用const 比如:  const http = require('http');
+
+
+
+三、解构赋值
+    非常有用，特别在做数据交换处理数据信息时候 ajax
+
+    字符串的解构赋值
+    
+        let str = 'abcd';
+        let [a,b,c,d] = str;
+        console.log(a)
+        console.log(b)
+        console.log(c)
+        console.log(d)
+
+    数组的解构赋值
+        let[a,b,c] = [10,20,30]; 注意左右两边结构格式保持一致;
+        let[a,b,c='暂无数据'] = [10,20]    如果格式不一致的情况下还可以自己给默认值;
+        let[a,b,c='暂无数据'] = [10,20,undefined]    undefined 是未定义 这种情况可以设值
+        let[a,b,c='暂无数据'] = [10,20,null]    null 就是实实在在的一个值(空值) 这种情况下是不可以设值的 因为null就是一个值
+        let[a,b,c=99] = [10,20,30];        结果仍然是10，20，30  就是说解构的时候如果有值的时候就根据值走 如果没有可以在定义变量的时候自己设值
+    
+            let a = 20;
+            let b = 40;
+            [a,b] = [b,a];
+        赋值解构 调换位置
+    
+
+    对象的解构赋值
+    let json = {
+        name:'leecs',
+        age:18,
+        job:'码云',
+    }
+    let {name,age,job} = json;
+    let {name:n,age:a,job:j} = json;        console.log(n,a,j); === console.log(name,age,job);
+    : 就相当于给json里面的每一个重新定义了一个名称;
+
+    
+    function getpos(){
+        return {
+            left:10,
+            top:20
+        }
+    }
+    let {left:l,top:t} = getpos();
+    console.log(l,t);
+
+    
+    function program({name,age} = {'name':'leecs',"age":18}){
+        console.log(name,age);         
+    }
+    program();
+
+    function program({username,age}){
+        console.log(username,age);
+    }
+    program({});
+
+    根据arguments这个对象实现解构 所以实参列表必须传入一个{} 或者 在形参定义这个{}来定义
+    没有{}就会报错 有就是undefined
+    
+    
+    对象结构可以:重新命名:还可=重新设值;
+    let json = {name:'leecs',age:20};
+    let {name,age,c:a='moren'} = json;
+    console.log(name,age,a); 
+
+    扩展运算符 ...
+    let arr = [1,2,3];
+    console.log(arr);
+    console.log(...arr);
+    
+
+四、字符串模板
+    `${}` 字符串的模板;
+    有点可以随意换行 不用转义字符转译
+    
+    let str = 'name'+name+',age'+age+'sui';
+    let str = `name${name},age${age}sui`;
+    console.log(str);
+    
+    
+    字符串查找
+        ES5: str.indexOf(要匹配的str) 返回索引位;
+        ES7: str.includes(要匹配的str) 返回Boolean;
+        ES7: str.startsWith(检测的str开头位);  返回Boolean
+        ES7: str.endsWith(检测的str结尾位);   返回Boolean
+        ES7: str.repeat(正整数);  返回str重复文本  参数为几就重复几次;
+        ES7: str.padStart(计算str填充后长度,填充内容)  向前填充 
+        ES7: str.padEnd(计算str填充后长度,填充内容)  向后填充
+        
+        判断浏览器:  navigator.userAgent.includes('Chrome');
+        判断协议:   str.startsWith('http') 
+        判断文件:   str.endsWith('png')
+        判断重复:   str.repeat(正整数).includes(str);
+        
+        字符串向后填充:  
+                    let str = 'a';
+                    let padstr = 'xasd';
+                    str = str.padEnd(str.length+padstr.length,padstr);
+        
+        
+五、箭头函数(函数变化)
+    函数默认参数 : 在实参没有传递参数的情况下 可以在形参中直接进行默认(=)的方式来进行默认传参,解构赋值的方式也可以在传参场景应用;
+
+        function show({a:c='c',b:d='d'}={}){
+            console.log(c,d);
+        }
+        show();
+
+        function show(a,b){
+            b = b || '李晨泽晨泽';
+            console.log(a,b);
+        }
+        show('welcome','leecs');
+
+        function show(a,b='leecs'){
+            console.log(a,b);
+        }
+        show('welcome','李晨泽');
+    
+        
+        扩展运算符   ...
+        [1,2,3,4,5] ==> ...[1,2,3,4,5] ==> 1,2,3,4,5;
+        rest运算符  ...
+        1,2,3,4,5 ==> ...1,2,3,4,5 ==> [1,2,3,4,5]
+        注意 作为rest运算符是针对函数传参的场景使用的 故称剩余参数运算符 必须放到函数形参最后以为使用
+        Array.from()将对象转换为一个数组;q
+        
+        
+            let arr = [1,2,3,4,5];
+            let arr1 = [...arr];  == let arr1 = Array.from(arr);
+
+            
+            function show(...a){
+                console.log(...a);
+            }
+            show(1,2,3,4,5);
+
+
+            function show(a,b,c){
+                console.log(a,b,c);
+            }
+            show(...[1,9,8]);
+            
+
+            必须放到函数最后以为使用
+            function show(a,b,...c){
+                console.log(a,b,c);
+            }
+            show(...[1,9,8,3,6,1]);
+
+
+            function show(){
+                let a = Array.prototype.slice.call(arguments);
+                return a.sort();
+            }
+            console.log(show(1,4,2,3,5));
+
+            function show(...a){
+                return a.sort();
+            }
+            console.log(show(1,3,4,2,5));
+    
+        
+        箭头函数 =>
+            
+            function show(){
+                return 1;
+            }
+            console.log(show());
+
+            => 左边是参数,右边是返回值
+            let show = () => 1;
+            console.log(show());
+
+            写函数语句如下
+            let show = () => {
+                函数语句
+            }
+
+            1.this指向问题，this指向定义函数时所在的对象，不在运行时所在的对象;
+                var json = {
+                    id:1,
+                    fn:function(){
+                        setTimeout(function(){
+                            console.log(this.id);
+                        },1000)
+                    }
+                    fn:function (){
+                        setTimeout(()=>{
+                            console.log(this.id)
+                        })
+                    }
+                }
+                json.fn();
+
+            2.箭头函数里面没有arguments 用(...);
+                let show = (...arguments) => {
+                    console.log(arguments)
+                }
+                show(1,2,5,4,3);
+
+            3.箭头函数不能当构造函数用  报错Info: Show is not a constructor;
+                let Show = () => {
+                    this.name = 'show';
+                }
+                let newShow = new Show();
+                console.log(newshow);
+
+
+六、数组循环
+    统一两个参数  (arr.forEach/map....)  两个参数(callback,定义this); 如果是箭头函数 第二个参数根据 => 函数的this走;
+    
+        arr.forEach(function(val,ind,arr){},this)
+            forEach 没有返回值 return的是undefined
+        arr.map(function(val,ind,arr){},this);
+            map 有返回值 返回的是Array 一个处理过后的新数组;
+        arr.filter(function(val,ind,arr){},this);
+            filter 过滤一些不合格的元素 有返回值 如果回掉函数返回的是true 就留下来  返回过滤后的新数组;
+        arr.some(function(val,ind,arr){},this)
+            some 类似于查找 如果里面某一个元素符合条件 就返回true;
+        arr.every(function(val,ind,arr){},this);
+            every 同some 不同的是 数组中所有元素符合条件 才返回true;
+        arr.reduce(function(prev,cur,ind,arr){},this)
+            reduce 有返回值 返回一个Num 数组求和,求阶乘,幂数等等算法类型的运算用得到;
+        arr.reduceRight(function(prev,cur,ind,arr){},initArr)
+            reduce  同reduce 反向计算的;
+        
+    
+    ES2017 新增
+        运算符   **
+        2 ** 3 == Math.pow(2,3);        求幂数
+        arr.keys();                     返回键名
+        arr.values();                   返回键值
+        arr.entries();                  返回键值对(数组形式的返回);
+        
+        以上是for...of...数组的操作;如果是json的话可以 : 
+            Object.keys(obj);           返回obj的键             详见(6章);
+            Object.values(obj);         返回obj的值
+            Object.entries(obj);        返回obj的键和值
+        
+            
+        for(let i in arr)               i 对象表示键名 数组表示索引;
+        for(let i of arr)               i 表示键值  注意遍历对象数组用for...in...   es6的for...of...只支持es6新增对象的遍历;
+        for(let [key,val] of arr.entries());
+
+        
+七、数组新增
+    ... 扩展运算符 可以把类数组转换为数组;
+        let arr = [1,2,3];
+        let arr2 = [...arr];
+        
+        let arr2 = Array.from(arr);
+
+    Array.from() 就是把arguments类数组对象转换为数组
+        
+        在没有[...arr] 扩展运算符的时候人们就用from()来转换类数组;
+
+    什么是类数组 只要有length 属性就都是类数组
+        包括str,arguments,json(必须有length属性), 因为json是没有length属性的 而且json的键值必须是 0,1,2,3形式比如:
+        let json = {
+            0:'leecs',
+            1:18,
+            2:'man',
+            length:2
+        }
+
+    Array.of(); 将一组值转成数组
+        let arr = Array.of('apple','orange','banbana');
+        console.log(arr);
+    arr.find(function(val,ind,arr){},this)
+        find 查找,找出第一个符合条件的数组成员,如果没有找到,返回undefined; find只返回一个值 如果有多个匹配只返回第一个匹配的;
+    arr.findIndex(function(val,ind,arr){},this)
+        findIndex 找的是位置 没找到返回-1;
+    arr.fill(填充的东西,填充的位置,结束位置)
+        fill new Array(10)的数组是十个empty  arr.fill('默认值',1,3); 从第一位开始填充到第三位结束(不包含第三位)  返回[empty,'默认值','默认值',empty*10]
+    arr.includes(); 
+        includes 返回的是Boolean 判断数组中有没有包含的字符 有返回true 没有返回false;
+    arr.indexOf();
+        indexOf 返回Number 判断数组中有没有包含的字符 有返回字符在其中的索引位, 没有返回false;
+    
+
+
+八、对象语法以及新增
+    
+    简洁语法如下：
+        name, === name:name,
+        showName(){} === showName:function(){};
+        一定注意 在对象中已经把函数简化 不要使用箭头函数; 否则this指向不好处理;
+
+            let name = 'leecs',
+                age = 18;
+            let json = {
+                name:name,
+                age:age,
+                showName:function(){
+                    return this.name;
+                }
+            }
+
+            let json = {
+                name,
+                age,
+                showName(){
+                    return this.name;
+                }
+            }
+            console.log(json.showName());
+
+    简洁语法实例如下
+        在Vue中处处可见对象的简洁语法;      
+            new Vue.Store({
+                state,
+                mutation,
+                types,
+                actions
+            });
+                
+            new Vue({
+                router,
+                App,
+                vuex
+            });
+    
+    
+    对象的源头Object新增方法;
+        Object.is();        用来比较两个对象是否相等
+            Object(judge1,judge2);参数两个判断1,判断2;
+            Object.is('a','b');
+            Object.is(NaN,NaN);        true;        ES5中为false
+            Object.is(+0 == -0);        false;      ES5中为true;
+            Object.is() == (===)        判断对象是否相等就===这个功能是一样的 只不过处理了 NaN和+0-0的问题;
+        
+
+        Object.assign()         用来合并对象
+            1.复制一个对象
+            2.合并参数
+            Object.assign(目标对象,source1,source2,source3);
+
+            
+            let json1 = {a:1};
+            let json2 = {b:2,a:2};
+            let json3 = {c:3};
+
+            let obj =  Object.assign({},json1,json2,json3);
+            console.log(obj);               
+            因为后面的覆盖前面的 后面的json2对象中已经有了a这个键名和键值 就会使用a:2;
+            此时obj是{a:2,b:2,c:3};
+            
+            function ajax(options){
+                let defaults = {
+                    type:'get',
+                    header,
+                    data:{},
+                    ...
+                }
+                let newObj = Object.assign({},defaults,options);
+                后面的覆盖前面的 用户传了就使用用户的用户没有传就使用默认的;
+            }
+            
+            
+            let arr = ['apple','banana','orange'];
+            let arr0 = Object.assign([],arr); 
+
+        Object.freeze(); 冻结对象 freeze出来的东西不能做任何操作 包括增删改查;
+        
+            const arr = Object.freeze(['1','2','3','4']);
+            arr.push('s')
+            console.log(arr);       // 报错对象不可扩展;
+        
+        
+        Object.keys();
+        Object.values();
+        Object.entries();
+
+
+            let {keys,values,.entries} = Object;
+            let json = {
+                a:1,
+                b:2,
+                c:3
+            }
+            
+            for(let key of keys(json)){
+                console.log(key);
+            }
+            for(let key of values(json)){
+                console.log(values);
+            }
+            for(let item of entries()){
+                console.log(item);
+                console.log(item[0]);
+            }
+        
+
+        对象身上的扩展运算符(剩余参数运算符);
+            let {x,y, ...z} = {x:1,y:2,a:3,b:4};
+            console.log(x,y,z);
+            
+            let json = {a:2,b:3};
+            let json2 = {...json};
+            delete json.a;
+            console.log(json2);
+            console.log(json);
+
+九、Promise;  承诺,许诺
+    Promise 作用: 解决异步回掉问题
+        返回值仍然是promise 所以可以链式操作;
+    传统方式 只能使用:回掉函数,事件驱动;
+
+        promise 中一个回掉函数中两个参数分别为resolve,reject(成功,失败);
+            
+            new Promise(function (resolve,relject){
+                resolve 成功的回掉
+                reject  失败的回掉
+            })
+            
+        promise.then(success,fail)      
+            .then 中是两个回掉函数 第一个是成功success,第二个是失败fail, 
+            第一个回掉中的参数是对应的promise 中的resolve的信息 
+            第二个回掉中的参数是对应的promise 中的reject 的错误信息
+            没有第二个回掉函数fail 就会报错 如果有fail 就会将错误信息捕获 不会报红;
+        
+            promise.then(function (res){
+                console.log(res);
+            },function (err){
+                console.log(err);
+            })
+
+        promise.catch(fail)
+            .catch就是用来捕获错误用的 换种说法就是.then第二个回掉参数的别名;
+            所以then的第二个参数平时最好不要用 就用promise提供的.catch()方法;
+            new Promise().then(function(){}).catch();
+            
+            promise.catch(function(err){
+                console.log(err);
+            })
+        promise.resolve('a')
+            将现有的东西,转换成一个promise对象,并且是resolve状态的(成功状态的);
+
+            new Promise(function(resolve)=>{resolve('aaa')}) === Promise.resolve('aaa');
+
+            let p1 = Promise.resolve('aaa');
+            p1.catch((err)=>{
+                console.log(err);
+            })
+            等价于
+            new Promise((resolve) => {resolve('aaa')}).then((res)=>{console.log(res)});
+        promise.reject('a')
+            将现有的东西转换为一个promise对象,但是是reject状态的(失败的状态);
+            
+            let p1 = Promise.reject('aaa');
+            p1.catch((err)=>{
+                console.log(err);
+            })
+            等价于
+            new Promise((resolve,reject)=>{
+                reject('aaa');
+            }).catch((err)=>{
+                console.log(err);
+            })
+        
+        promise.all([p1,p2,p3]);
+            all作用: 就是把promise打包，扔到一个数组里面，打完包还是一个promise对象;
+            all 必须确保,所有的promise对象都是resolve状态(成功的状态);
+            如果有一个是reject(失败的状态) 那么就会出现错误;
+        
+        promise.race([p1,p2,p3]);
+            rece作用: 同all大致相同 不同的是 如果在失败状态之前有一个成功状态 那么就会被返回;
+            如果在这个promise数组中resolve在reject之后那么就会报错误reject 
+            一般不会用到这个 数据请求都是用得到发送成功 全部为resolve状态才会进行promise.all(); 一般都是resolve状态的;
+        
+        promise.finally(callback)
+            finally方法用于指定不管promise对象的最后状态如何 都会执行这个finally方法  接收一个普通回掉函数作为参数
+            接收的这个回掉函数不管怎样都执行;
+            
+            nodeJS 服务监听的案例
+            server.listen(8080).then(function (){
+                // run test
+            }).finally(server.stop);
+
+        promise.try()
+        
+            实际开发中，经常遇到一种情况：不知道或者不想区分，函数f是同步函数还是异步操作，但是想用 Promise 来处理它。
+            因为这样就可以不管f是否包含异步操作，都用then方法指定下一步流程，用catch方法处理f抛出的错误。
+            Promise.try就是模拟try代码块，就像promise.catch模拟的是catch代码块        
+
+            const f = () => console.log('sss');
+            promise.try(f);
+            console.log('s');
+            同步执行了以下结果;
+            // sss
+            // s
+
+
+
+            
+        传统方式:
+            ajax({
+                url,
+                success:function (){  // 获取token
+                    ajax(
+                        url,
+                        success:function (){  // 获取用户信息    
+                            ajax({
+                                url,
+                                () => {
+                                    // 获取用户新闻
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+
+        Promise:
+            let a = 10;
+            let promise = new Promise(function (resolve,reject){
+                if(a == 10){
+                    resolve('成功')
+                }else{
+                    reject('失败');
+                }
+            })
+            
+            promise.then(function(res){
+                console.log(res);
+            },function(err){
+                console.log(err);
+            })
+
+        
+
+
+        模拟用户登陆小案例
+            
+            let status = 1;
+            let userLogin = (resolve,reject) => {
+                setTimeout(()=>{
+                    if(status == 1){
+                        resolve({user:'leecs',msg:'登陆成功',token:'sdsfw23rsd'});
+                    }else{
+                        reject('失败了');
+                    }
+                },2000)
+            }
+
+            let getUserInfo = (resolve,reject) => {
+                setTimeout(()=>{
+                    if(status == 1){
+                        resolve({data:'获取用户信息成功',msg:'登陆中',token:'sdfgk2398j'});
+                    }else{
+                        reject('失败了');
+                    }
+                },1000)
+            }
+
+
+            let p1 = new Promise((userLogin)).then((res)=>{
+                console.log('用户登陆成功');
+                // 用户登陆成功之后获取用户信息;
+                return new Promise((getUserInfo))
+            }).then((res)=>{
+                console.log('获取用户信息成功');
+                console.log(res);
+            })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+十、ES6模块化
+    在ES6模块化中默认使用严格模式 不管有没有声明Strict  自动采用严格模式 ("use Strict");
+    
+    
+    js 不支持模块化
+    在ES6之前 社区制定了一套模块规范
+        Common.js规范     主要规定了服务端 比如在nodejs中    require('http');
+        AMD规范           本身代表性的有一些框架 requireJS,curlJS
+        CMD规范           代表性的框架  seaJS
+        
+    在ES6 规范出来之前 服务端使用CommonJS规范 客户端使用AMD\CMD规范 太麻烦了 所以ES6出了一套新规范
+    ES6 统一了服务端和客户端的模块规范     代码统一了   import {xxx} from ddd;  在服务端和客户端都可以使用;
+    
+    使用模块:
+        script 的 type 必须声明为 module; 才能在此处操作import;
+        <script type='module'>
+            // import '模块'
+        </script>
+    
+    ES6模块化只需要清楚两个问题
+        需要放到服务器环境 现在都是服务器环境无论是vue,react自动启动server;
+        1. 如何去定义模块;
+            export consot a = 12;
+        2. 如何去引入模块;
+            可以是相对路径,也可以是绝对路径    
+                相对路径:   import './js/module1.js'
+                    相对路径只能引入当前路径下的文件;
+                绝对路径:   import 'https://cdn.bootcss.com/jquery/3.4.1/jquery.js';
+                    绝对路径可以引入外链的文件;
+            import模块无论引入多少次,只会执行一次; 可以在任何js模块导入;
+            import有提升功能,自动提升到顶部,首先执行;
+            导出的模块内容,如果里面的内容改动,引入这个模块的地方的内容也会改动; (详情见:module6.js);
+            但是如果export default {} 整个模块的方式导出 引用的地方不会有改动; commonJS规范因为缓存的原因也不会更改;
+            
+            import() 这种语法是动态的加载模块 类似于 node 中的 require();
+            因为默认import 语法不能写到if判断中的,在if中出现import会报错; 比如: 
+                if(true){
+                    条件成立的时候
+                    import './js/module6.js';
+                }else{
+                    条件不成立的时候
+                    imoprt './js/module6.js'
+                }
+                
+            import() 动态引入 很好的解决了这种方法; 如下: 
+            
+                import('https://cdn.bootcss.com/jquery/3.4.1/jquery.js').then((res) => {
+                    $(document).ready(
+                        $('body').css({
+                            'background':'red',
+                        })
+                    )
+                })    
+
+            import() 采用的是promise的规范 返回值是一个promise对象 可以用promise对象的任何方法; 可以结合promise 和 async && await 去使用;
+                promise.all([
+                    import('./js/module1.js');
+                    import('./js/module2.js');
+                    import('./js/module3.js');
+                ]).then(([mod1,mod2]) => {
+                    console.log(mod1);
+                    console.log(mod2);
+                })
+
+                async function main (){
+                    const mod1 = await import('./js/module1.js');
+                    const mod2 = await import('./js/module2.js');
+                    // console.log(Promise.all([mod1,mod2]));
+                    // console.log(await Promise.all([mod1,mod2]));
+                    const [m1,m2] = await Promise.all([mod1,mod2]);
+                    console.log(m1);
+                    console.log(m2);
+                }
+                main();
+                
+
+            import() 动态加载优点： 
+                1.按需加载
+                2.可以写到if条件判断中
+                3.路径也可以动态加载
+                    动态加载路径案例;
+                    let sign = 1;
+                    function config (){
+                        switch(sign){
+                            case 1:
+                                return './js/module6.js';
+                                break;
+                            case 2: 
+                                return './js/module5.js'
+                                break;
+                        }
+                    }
+                    import('https://cdn.bootcss.com/jquery/3.4.1/jquery.js').then((res) => {
+                        $(document).ready(
+                            $('body').css({
+                                'background':'red',
+                            })
+                        )
+                    })
+
+
+
+
+        module.js文件:
+            const a = 10,b = 20,c = 30;
+            export {a as aa,b as bb,c as cc};
+            ===
+            export const a = 10;
+            export const b = 20;
+            export const c = 30;
+        ES6模块化.html文件:
+            import {a as aa,b as bb,c as cc} from './js/module1.js';
+            console.log(aa,bb,cc);
+
+            import * as all from './js/module3.js';
+            console.log(all); console.log(all.aa);
+            
+            import a from './js/module3.js';
+            如果不加花括号的这种引入语法 在js模块中就必须要对应default; 比如: export default 12;
+            那么现在打印这个a就是12;
+            
+            import a,{b,c} from './js/module4.js';
+            对应的模块js 就是: 
+            const [a,b,c] = [10,20,30];
+            export {
+                b,c
+            }
+            export default {
+                a
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+十一、类(class)和继承;
+    程序中的类在java python 中都很重要
+    ES6 没出来之前 如何去玩面向对象的;
+    再没有ES6的话怎么写这个函数 函数模拟如下
+    
+    准备一个类  ==> 人:Person;
+        属性      name,age,
+        展示名字  showName
+        
+    面向对象,类 两部分组成
+        属性  属性类似于数据
+        方法  方法类似于行为
+        
+    ES5 之前函数模拟类
+           (11章);
+        
+            function Person(name){
+                this.name = name;
+            }
+            Person.prototype.showName = function (){
+                return `${this.name}`;
+            }
+
+            let p1 = new Person('leecs');
+            console.log(p1.showName);
+
+    ES6中实现类
+        用class Person{} 声明出来的Person
+        在使用 typeof Person 打印出来是个function;
+
+           (11章);
+            
+            // 可以理解class 为 function;
+            class Person{
+                // 当Person 被 new 的时候会自动执行constructor这个构造函数; () 里面的参数就是new构造时候的参数;
+                constructor(name,age){
+                    this.name = name;                
+                }
+                // 类中的方法直接在Person下面写 就相当于ES5中写到了原型上;
+                showName(){
+                    return `${this.name}`;   
+                }
+            }
+            let p1 = new Person('leecs');
+            console.log(p1.showName);
+            
+
+            表达式形式的声明类; (不推荐);
+            const Person = class{
+                constructor(name){
+                    this.name = name;                    
+                }
+                showName(){
+                    return `${this.name}`;
+                }
+            }
+            let p1 = new Person('leecs');
+            console.log(p1.showName());
+            
+        
+            特殊写法 [a+b] 会拿到外部let的变量拼接成strivemethod 所以p1.strivemethod() 是成立的, p1[a+b]() 也是成立的;
+            这种特殊语法在react中会用得到; 
+                let a = 'strive';
+                let b = 'method';
+                class Person{
+                    constructor(name){
+                        this.name = name;                    
+                    }
+                    [a+b](){
+                        return `${this.name}`;
+                    }
+                }
+                
+                let p1 = new Person('leecs');
+                console.log(p1.strivemethod());
+                console.log(p1[a+b]);
+            
+            这种特殊语法在json中也是支持的 如下:
+                let a = 'strive';
+                let b = 'method';
+                let json = {
+                    [a+b](){
+                    console.log('这是a+b的结果');
+                    },
+                    [b+a]:function(){
+                        console.log('这是b+a的结果');
+                    }
+                }
+                console.log(json.strivemethod());
+                console.log(json.methodstrive());
+                
+                
+            class 定义类的时候需要特别注意的地方;
+                ES6中class声明类是没有预解析这一步的 所以不存在提升的;
+                在ES5中 用函数模拟类是可以的; 因为ES5中默认函数提升功能;
+
+                ES6里面this 比ES5的this清楚多了 就是指向类声明的的构造函数;
+                如果需要结构类声明出来的实例对象 那么this的指向就会有问题;
+                如果要解决问题就需要在constructor中bind绑定this 
+                this.fnName = this.fnName.bind(this);
+
+                    class Person{
+                        constructor(){
+                            this.name = 'leecs';
+                            this.showName = this.showName.bind(this);
+                        }
+                        showName(){
+                            console.log(this.name);
+                            return `${this.name}`;
+                        }
+                    }
+
+                    let p1 = new Person();
+                    let {showName} = p1;
+                    这样解构出来直接执行会有this问题 this是undefined
+                    如果正常通过p1调用showName()是不会有this问题的
+                    解构实例对象this问题解决 就需要绑定this
+                    在constructor中  this.fnName = this.fnName.bind(this);
+                    console.log(showName());
+                                
+            
+    
+    
+        class中新增的两个函数 封装底层或者写框架的时候会用到;
+        当没有getter和setter时，就可以正常读写属性
+            当个p1实例对象添加一个新值的时候看会自动出发setter函数;
+            存值的函数(setter)
+                get newVal(){
+                    return this.temporary;
+                }
+            同时也触发getter返回setter 处理过后的新的值;
+            取值的函数(getter)
+                set newVal(newVal){
+                    this.temporaryVal = newVal;
+                }
+
+            // 存值,取值函数(setter,getter);
+            class Person{
+                constructor(){
+                    this.name = 'leecs';
+                }
+                // 当在构造出来的实例对象添加一个值的时候 会默认触发setter函数; 也同样可以操作constructor中内部定义的值;
+                set aaa(aaa){
+                    this.setaaa = `${aaa}           ${this.name}`;
+                }
+                // getter函数可以重新定义外部实例对象添加的返回值;
+                get aaa(){
+                    return this.setaaa;
+                }
+            }
+            let p1 = new Person();
+            
+            // p1是个构造出来的实例对象 我们也可以在外面给他设值;一旦给p1实例对象设值 并且在setter函数中定义, 这一刻起就会触发setter和getter;
+            p1.aaa = 'strive';
+            console.log(p1.aaa);
+
+
+        静态方法: 
+            就是类(Person)上面的方法,而不是实例(p1)上面的方法;
+            
+                class Person{
+                    constructor(){
+                        
+                    }
+                    showName(){
+                        return `这是showName方法`;
+                    }
+                    static showName(){
+                        return `这是类的静态方法`;
+                    }
+                }
+                
+                let p1 = new Person();
+                console.log(p1.showName());
+                console.log(Person.showName());
+            
+            所谓父类静态方法又可以被子类所继承;
+                ES5 继承:
+                    // 父类
+                    function Person(name){
+                        this.name = name;
+                    }
+
+                    Person.prototype.showName = function (){
+                        return `父类的名字是${this.name}`;
+                    }
+                    
+                    // 子类
+                    function Son(name,skill){
+                        Person.call(this,name);
+                        this.skill = skill;
+                    }
+                    
+                    Son.prototype = new Person();
+
+                    // 调用
+                    let s1 = new Son('leecs','开车');
+                    console.log(s1.name);
+                    console.log(s1.showName());
+
+
+                ES6类的继承: extends;
+                    // 父类
+                    class Person{
+                        constructor(name){
+                            this.name = name;
+                        }
+                        showName(){
+                            return `父类的名字是${this.name}`;
+                        }
+                    }
+                    
+                    // 子类
+                    class Son extends Person{
+                        
+                    }
+                    let s1 = new Son('leecs','开车');
+                    console.log(s1.name);
+                    console.log(s1.showName());
+                    
+    
+
+
+                    深入子级自己的属性和方法扩展;
+                        
+                        class Person{
+                            constructor(name,skill){
+                                this.name = name;
+                                this.skill = skill;
+                            }
+                            showName(){
+                                console.log('父类的showName执行了');
+                                return `父类的名字是${this.name}`;
+                            }
+                            static showName(){
+                                console.log(`这是父类的静态方法`);
+                                return `这是父类的静态方法`;
+                            }
+                        }
+                        
+                        // 子类
+                        class Son extends Person{
+                            // 子类需要声明自己的属性 就需要定义一个constructor; 那么子类定义的constructor就会将父类的覆盖
+                            // 所以ES6规定的 子类的构造函数中必须执行一个函数就是super(); 所谓super就是父级的构造函数 (super == Person);
+                            // super执行 就相当于把父级的属性拉过来了 这样就继承了父级的属性; 同时constructor也有arguments;
+                            // 参数接受 父类的constructor中有几个参数就要在子类的super()中传递几个参数; \
+                            // 也可以直接传递一个arguments进去;
+                            // 子类的constructor是不需要传递arguments的; 
+                            // arguments就是函数中的arguments可以直接 构造函数中获取;
+                            
+                            constructor(name,skill){
+                                super(name);
+                                this.skill = skill;
+                                // super(arguments);
+                                // this.name = arguments[0];
+                                // this.skill = arguments[1]
+                            }
+                            
+                            // 父类有showName方法 如果这时候在子级也定义一个showName方法 那么子级的方法就会将父级的方法覆盖掉;
+                            // 如果必须要在子类调用父类的showName 保证父类的showName方法也执行
+                            // 就需要super身上的方法 super.showName(); 
+                            // super可以当函数在constructor中直接调用 也可以当对象来调用他身上的方法;              
+                            showName(){
+                                super.showName(); // 父级的showName方法执行;
+                                // 去做子级的事情;
+                                console.log('子类showName执行了');
+                                // 返回值还是会执行子类的; 父类的返回值在子类中并不会执行;
+                                // 父类的返回值执行可以: return super.showName();
+                                // return super.showName();
+                                return `子类中的showName`;
+
+                            }
+
+                            showSkill(){
+                                return `哥们的技能是:${this.skill}`;
+                            }
+                            
+
+                            // 静态方法也可以从super调用 子类调用父类的static方法也只能在静态函数中调用
+                            static showName(){
+                                super.showName();
+                                return `这是子类的静态方法`;
+                            }
+                            
+                        }
+                        let s1 = new Son('leecs','开车');
+                        // console.log(s1.name);
+                        // console.log(s1.skill);
+                        // console.log(s1.showName());
+                        // console.log(s1.showSkill());
+                        // console.log(Son.showName());
+
+        
+
+        拖拽案例   (11章);
+            this和super的区别：
+                this  关键词指向函数所在的当前对象
+                super 指向的是当前对象的原型对象
+        
+            ev.screenX 光标在屏幕上的水平位置
+            ev.clientX 光标在浏览器上的水平位置
+            ev.offsetX 光标在事件元素上的水平位置 IE支持;
+            ev.pageX   光标在事件元素上的水平位置 IE不支持;
+            ele.offsetLeft 元素距离浏览器左边线的位置;
+            ele.offsetWidth 元素的宽度+padding+border;
+            ele.offsetWidth 元素的宽度;
+            window.screen.height 浏览器窗口的高度
+            window.innerHeight   浏览器工作区的高度;
+
+
+
+
+
+十二、Symbol和generator;
+    数据类型:
+        number,string,undefined,Boolean,function
+    ES6新增数据类型 symbol   nodeJS 底层用到它;
+        
+    定义其他数据类型:
+        new Number(1);
+        new String('a');
+        new Array();
+        
+    注意: 
+        1、symbol 不是个构造函数 前面不能加new;
+        2、symbol 返回的值事唯一的; 
+            使用场景作为一个唯一值使用; 定义一个key 或者一写私有的东西;
+        3、symbol 是一个单独的数据类型 基本类型;
+        4、如果symbol作为key, 用for...in...  出不来; 因为定义的私有的东西是出不来的;
+    
+
+    generator函数(迭代器);
+        解决异步问题; 深度嵌套;
+        
+        next()是将yield表达式替换成一个值。 
+        throw()是将yield表达式替换成一个throw语句。 
+        return()是将yield表达式替换成一个return语句。
+        
+        声明generator函数 语法如下:
+            普通函数和函数名称之间加个*; * 左右的空格可加可不加 没有严格要求;
+            function * show(){
+                配合来用 yield;
+                
+            }
+
+        
+        定义:
+            一般一个函数只能返回一个结果，generator可以使得函数返回多个结果 return之后的yield不会被next() 执行;
+            generator函数的next() 方法; 返回值是一个对象 value表示当前值 done为Boolean 表示当前是否执行完毕;
+            next() 调用到return 再次调用 返回对象的value是undefined; done是true;因为done在next()到return的时候就已经是true;
+            
+            function * show(){
+                yield 'welcome';
+                yield 'to';
+                return 'leecs';
+            }
+            
+            let g1 = show();
+            console.log(g1.next()); // {value: "welcome", done: false}
+            console.log(g1.next()); // {value: "to", done: false}
+            console.log(g1.next()); // {value: "leecs", done: true}
+        上述调用,手动调用,麻烦;
+            
+        为了解决上述问题 就需要遍历;
+        for循环 for...in...循环都不可以遍历genterator;
+        遍历generator对象使用 for...of...
+        
+        for...of...自动遍历; return的东西不能遍历;
+        
+        不仅可以配合for...of...玩; 还可以玩解构赋值;
+        
+        let [a,b,c] = show();
+        
+        console.log(...show()) 或者 console.log(Array.from(show()));
+        
+        
+            next 传递参数;
+            let gen = function * (x){
+                let y = yield (2 * ( x + 1));
+                console.log(y); // 没参数的情况下打印undefined
+                let z = yield (y / 3);
+                return (x + y + z );
+            }
+
+            let g1 = gen(5);
+            let re = g1.next().value;
+
+            第二次执行如果不传参数 那么第一次next()的console.log(y)的是 undefined;
+            let re1 = g1.next(re).value;
+            console.log(g1.next(re1));
+
+
+        generator 结合 axios 数据请求;
+        
+        异步: 上一个操作没有执行完 下一个操作一样执行;
+        同步: 等待上一个操作的执行完毕下一个操作才能执行;
+        
+        关于异步解决方案
+            1、 回掉函数 callback
+            2、 事件监听
+            3、 发布|订阅模式
+            4、 promise对象
+            5、 async
+        
+
+        es6中有三类结构生来就具有Iterator接口：数组、类数组对象、Map和Set结构
+
+
+
+十三、async&&await
+    规定async
+        在一个普通函数之前 加一个async 就表示又异步的任务;
+        async function fn(){
+            let f1 = await 'sss';  表示后面的结果需要等待
+        }
+
+        node 读取文件 fs.readFile(); 典型的异步操作对比;
+        node js/promise.js 运行文件;
+
+        1.promise;
+               js/promise.js;
+        2.generator;
+               js/generator.js;
+        3.async;
+               js/async.js;
+
+    
+    async 特点:
+
+        1.await 只能配合async使用 只能放到async函数中;
+        2.相比generator + yield 语法更具语义化
+        3.await 后面可以是一个promise对象 也可以是数字、字符串、布尔值等等... 
+            而generator函数后面必要是一个promise对象 要不然用不了 promise方法 generator函数的意义就不大了;
+        4.async 返回的是一个promise对象; 同样也有promise 的三种状态(待定、成功的、失败的);
+        5.只要await 语句后面的promise 状态变成reject(失败的状态)  那么整个async函数就会中断执行;
+    
+    建议: 
+        async函数中的await的地方都try...catch掉
+           async.js;
+            try{
+                let f1 = await readFile('./data/aaa.txt');
+                let f2 = await readFile('./data/bbb.txt');    
+                let f3 = await readFile('./data/ccc.txt');
+            }catch(err){}
+        
+
+十四.weakSet和Set
+    数据解构: 
+        数组
+        json,二叉树....
+    set数据解构 类似数组 但是不能有重复的值
+    
+    set用法:
+        new Set(['a','b']);
+            setArr.add();    添加一项;
+            setArr.delete(); 删除一项;
+            setArr.has();    检测里面有没有某一项;
+            setArr.size      查看个数和length一样;
+            setArr.clear();  清空setArr;
+
+            setArr.add('a').add('v').add('b'); 返回自身可以链式调用;
+            
+            循环
+                let setArr = new Set(['a','b','c','d']);
+                for(let item of setArr.keys()){
+                    console.log(item); // a,b,c,d
+                }
+
+                for(let item of setArr.values()){
+                    console.log(item); // a,b,c,d
+                }
+
+                for(let [key,val] of setArr.entries()){
+                    console.log(key,val);
+                }
+                
+            去重
+                let arr = [1,2,3,2,3,5,4,5,4,6,4];
+                let set = new Set(arr)
+                [...set]; 即可;
+                    
+            let set = new Set([1,2,3,4,5,6]);
+            set = new Set([...set].filter(res => res%2 == 1))
+            console.log(...set);
+            
+            
+        new Set([])         存储数组
+        new WeakSet({})     存储对象,json; 而且同样初始化的时候不能new WeakSet({a:1,b:2})  同样报错 并且没有size; 没有clear;
+            new Weak知道有就行 不用;
+        
+        new Set().add()  通过add方法添加对象是不会报错的 但是 new Set({a:1,b:2}) 就会报错; 详见 (14章);
+        
+        
+十五.weakMap和Map
+    json 的键 只能是 字符串
+    map 的键可以是任意类型
+        使用: 
+            map.set(key,val);   设置一项值
+            map.get(key);       获取一项值
+            map.delete(key);    删除一项值
+            map.had()           判断map中是否有一项值
+            map.clear()         清空map值;
+        
+        循环:
+            for(let [k,v] of map){
+                map默认值是 map.entries();
+                set默认值是 set.values();
+            }
+            
+        WeakMap key只能是一个对象;
+        
+        
+    总结set,map 总结
+        set里面是数组 不重复 没有key 没有get方法  循环默认是set.values();
+        map里面是json  json key只能是一个字符串 map就相当于是json的功能增强; key可以是任何类型 包括object; 并且循环的时候默认的是map.entriess();
+
+        相比之下 map 比 set 多一个get的方法;
+
+
+
+十六.数字变化和Math新增东西
+    数值 
+        二进制(binary);  0b就是二进制的前缀;
+            let a = 0b010101;
+
+        八进制(Octal);    0o是八进制的前缀;
+            let a = 0o666;
+            
+        十六进制()
+            #fff 表示颜色的; css中常用的十六进制颜色码;
+        
+        ES6中的Number 把原来window上的方法都放到了Number身上;
+        Number.isNaN();     判断是不是非数;
+        Number.isFinite();  判断是不是数字;
+        Number.isInteger(); 判断是不是整数;
+        Number.parseFloat();判断是否是小数; es6之前number是没有这个方法的 是window身上的方法;
+        Number.parseInt();  判断是否是整数; es6之前number是没有这个方法的 是window身上的方法;
+
+        安全整数;
+            
+            -(2^53-1) 到 (2^53-1)
+            Number.isSafeInteger(); 判断是否是安全数字 就是判断是不是在JavaScript的识别范围之内;
+            Numver.MAX_SAFE_INTEGER;最大的安全整数;
+            同时window下面有一个Bigint()方法;
+            window.BigInt()
+            BigInt是JavaScript中的一个新的原始类型，可以用任意精度表示整数。
+            使用BigInt，即使超出JavaScript Number 的安全整数限制，也可以安全地存储和操作大整数。
+            要创建一个BigInt，在数字后面添加n后缀即可，例如，123变成123n。
+            全局BigInt(number)函数可以用来将Number转换成BigInt。换句话说，BigInt(123) === 123n。
+        
+    Math  
+        Math.trunc();   截断 只保留整数部分;
+        math.sign();    判断一个数字是整数还是负数还是零; 其他值返回NaN;
+        math.cbrt();    计算一个数字立方;   假如 27 立方是3 (3*3*3);
+
+
+
+十七.2018(ES9)新增;
+    1.正则命名捕获
+        语法:(?<命名>)
+    2.正则反向引用命名捕获;
+        语法:/\k<名字>/
+        let reg = /^(?<leecs>welcome)-\k<leecs>$/;
+        'welcome-welcome';
+    3.替换 replace
+        正则替换中的反向引用语法为 $<year>/$<month>/$<day>   
+    4.dotAll 模式 .的全部模式 取s来命名 和 g i m 同级;        let reg = /\w+/gims;
+        之前. 在正则里面表示匹配任何东西,但是不包括 \n 等等表情符号等;
+        在ES2018的时候发布正则dotAll的模式草案 就是解决.不能匹配任何东西的缺陷;
+        只需要在正则后面加上一个 /^\w+.\w+$/ssssss 即可; 这个s是一个模式和g m i 写在同一个位置;
+    5.标签函数
+        和普通函数没什么区别;但是调用不太一样了;
+        function fn(){
+            
+        }
+        
+        fn() 这样调用就是普通函数
+        fn`` 这是标签函数的调用;
+        
+十八.proxy代理
+    主要功能: 扩展(增强)对象, 方法(函数) 对象一些功能;
+    
+    比如说: Vue 就用到了 proxy;
+    Vue.config.keyCode.down = 40;
+    
+    proxy 作用: 
+        非常广义  比如vue中的拦截功能
+        警告错误, 上报, 扩展功能, 统计, 增强对象等等;
+        只要能够想到的一些想到的需求 proxy都能够用到
+    proxy是设计模式的一种而已 代理模式;
+        js 设计模式(工厂模式,构造函数模式,原型模式,组合使用构造函数与原型模式,动态原型模式,代理模式等等....);
+        
+    示例:
+
+        let obj = {
+            name:'leecs'
+        }
+        
+        在访问之前拦截到 您访问了这个name;
+        obj.name // leecs
+
+    语法: 
+        new Proxy(target,handler);
+        let obj = new Proxy(被代理的对象(可以是空对象),对代理对象的操作);
+            handler 就是一个json 
+            {
+                set(){}, set 设置对象属性的时候做的操作;
+                get(){}, get就是访问的操作 获取对象属性的时候需要做的事情;
+                deletePropertype(){}, del 删除属性做的操作;
+                has(){}, 问你有没有这个东西;
+                apply(){}, 调用函数的处理;
+                ......
+            }
+        
+            
+    更多实例详见(18章);
+
+    
+    
+十九.Reflect的使用
+    Proxy其他属性:
+        set(target,property,value){}     设置,拦截;
+        get(target,property){}     访问,获取对象属性前一刻处理的操作;
+        deletePropertype(target,property){}    删除,拦截;
+        has(target,property){}     检测是否有这个属性;
+        apply(target,context,arguments){}         调用函数处理,一般是配合对象扩展对象,方法()的一些功能;
+        apply 如下例子一般是配合方法使用的; 如果想要执行原来的非代理函数 
+        那就需要另一个东西;这个东西就是reflect;
+    reflect 反射: 详见(19章);
+        像Object 身上有很多方法; 严格来说Object是属于语言内部的一些方法;
+        就比如说 Object.keys(),Object.values(),Object.entries(),Object.deletePropertyper();等等等 这些都算是语言内部的一些方法;
+        目前TC39协会组织的ES2019的一个新标准就是想把Object.xxx 身上的一些方法(语言内部的一些方法)暴露到Reflect身上(放到Reflect身上)
+        可以认为Reflect.apply()的apply是语言内部的一个方法挂到Reflect身上了;
+        截止2019年八月份reflect还不是太成熟;很多官方标准的一些东西即在Object身上有 也在Reflect身上部署了一些;
+        但是官方提到在未来 基本上所有的新增东西都会放到Reflect身上; 也就是说reflect身上支持的东西会越来越多;
+        直白来说 可以通过reflect对象身上直接拿到语言内部的方法;
+        比如说 'assign' in Object 判断在不在Object身上;
+        可以用 Reflect.has(Object,'assign'); 来表示;
+
+
+        函数执行
+        fn(1,2,3);              ==>     Reflect.apply(fn,window,[1,2,3])
+        判断对象属性
+        'assign' in Object      ==>     Reflect.has(Object,'assign');
+        删除属性
+        delete json.a           ==>     Reflect.deleteProperty(json,'a');
+        
+        
+        如果需要增强方法的一些功能的话 需要跟反射Reflect配合使用的;
+        
+        Reflect.apply(调用的函数,this指向,参数数组);
+        Reflect.has(对象,属性)
+        Reflect.deleteProperty(对象,属性);

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // let obj = {
+        //     name:'leecs',
+        // }
+
+        // let newObj = new Proxy(obj,{
+        //     // 两个参数 target就是obj, 访问的是哪个属性?
+        //     // 第二个参数访问的是哪个属性那么这个property参数就是谁; 那么现在这个property就是name; 如果newObj.aaa 那么property就是aaa;
+        //     get(target,property){
+        //         console.log(target,property);
+        //         // 如果重新给返回值了 那么newObj的访问结果就是这个返回值;
+        //         // return 'aaa';
+        //         console.log(`您访问了${property}属性`);
+        //         return target[property];
+        //     },
+        // })
+
+        // // 虽然newObj身上没有这个anme 但是newObj代理的是obj obj身上有name; 
+        // // 而且访问name的时候会先调用代理的get方法然后才会访问到name;
+        // newObj.name;
+        // console.log(newObj.name);
+
+
+
+
+
+
+
+
+
+
+        // 实现一个例子: 访问一个对象身上的属性,默认不存在的时候给了一个undefined;
+        // 希望如果不存在的话 就给一个错误信息出来或者警告信息;
+
+        // let obj = {
+        //     name : 'leecs'
+        // }
+
+        // let newObj = new Proxy(obj,{
+        //     get(target,property){
+        //         if(property in target){
+        //             return target[property]
+        //         }else{
+        //             // throw new ReferenceError(`${property}属性不在此对象上`);
+        //             console.warn(`${property}属性不在此对象上`);
+        //             return '^_Y';
+        //         }
+
+        //         // LEECS 首先想到的方法
+        //         // if(target[property] == undefined){
+        //         //     throw new ReferenceError(`${property}属性不在此对象上`);
+        //         // }else{
+        //         //     return target[property];
+        //         // }
+        //     }
+        // })
+
+
+        // console.log(newObj.name);
+        // // 这个时候没有age信息 访问的信息就是undefined; 希望是给一个警告或者一个错误;
+        // console.log(newObj.age);
+
+
+
+
+
+
+
+
+        // 实现一个div 类似于react 中的 rander 里面可以写jsx jsx最后都转成了一个对象 这个对象有属性有text的这些东西等.....
+
+        // 现在代理的对象没有那么就是一个{} 空的
+        // const DOM = new Proxy({},{
+        //     get(target,property){
+        //         // 现在这个target 就是一个空对象,property 就是这个DOM.div的div;
+
+        //         // 那么现在返回的这个函数就是DOM.div 执行的函数;
+        //         return function(attr={},...children){
+        //             // DOM.什么就创建什么 property就是DOM.什么 现在DOM 是div 所以创建的就是一个div;
+        //             const el = document.createElement(property);
+
+        //             // 添加属性;
+        //             for(let key of Object.keys(attr)){
+        //                 el.setAttribute(key,attr[key]);
+        //             }
+        //             // 添加自元素;
+        //             for(let child of children){
+        //                 if(typeof child == 'string'){
+        //                     child = document.createTextNode(child);
+        //                 }
+        //                 el.appendChild(child);
+        //             }
+        //             return el;
+        //         }
+        //     }
+        // })
+
+        // let odiv = DOM.div(
+        //     {id:'div1',class:'aaa'},
+        //     '我是div',
+        //     '呵呵呵',
+        //     DOM.a({href:'http://www.google.com'},'访问谷歌')
+        // );
+
+        // console.log(odiv);
+
+
+        // window.onload = function(){
+        //     document.body.appendChild(odiv);
+        // }
+
+
+
+
+
+        // 自己来一遍;
+        // JS设计模式的一种 代理模式;
+        const DOM = new Proxy({}, {
+            get(target, property) {
+                return function (attr = {}, ...children) {
+                    let el = document.createElement(property);
+                    // 添加属性;
+                    for (let key of Object.keys(attr)) {
+                        el.setAttribute(key, attr[key]);
+                    }
+                    // 添加子节点;
+                    for (let child of children) {
+                        // el.innerHTML += child;
+                        if(typeof child == 'string'){
+                            child = document.createTextNode(child);
+                        }
+                        el.appendChild(child);
+                    }
+                    console.log(el);
+                    return el;
+                }
+            }
+        })
+
+        window.onload = function (){
+            document.body.appendChild(DOM.div({
+                id: 'div1',
+                class: 'div2'
+            },
+            'div内容',
+            '呵呵呵呵',
+            DOM.a({href:'http://www.google.com'},'访问谷歌网站'),
+            DOM.ul({id:'aul'},
+                DOM.li({class:'lis'},'leecs 很厉害'),
+                DOM.li({class:'lis'},'leecs 很厉害'),
+                DOM.li({class:'lis'},'leecs 很厉害'),
+                DOM.li({class:'lis'},'leecs 很厉害'),
+                DOM.li({class:'lis'},'leecs 很厉害'),
+            )
+        ));
+        }
+    </script>
+</body>
+
+</html>

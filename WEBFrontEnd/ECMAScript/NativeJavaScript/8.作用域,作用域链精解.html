@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 作用域链精解;
+        // 作用域属于一个函数;
+        // 一个函数产生了一样的作用域;
+        // 一切为对象的东西都有是属性, 那么这个东西是对象的话, 这个东西一定有属性, 三段论;
+        // 函数也是个特殊对象, 它叫特殊类对象, 它的属性fn.name, fn.prototype, fn.length...等都是可以用的属性;
+        // 特殊类对象还有一些属性是访问不了的, 比如说:this.[[scope]] 翻译过来就是域, 区域的意思, 计算机专业术语叫做域,
+        // this.[[scope]] 里面就是存储的就是由这个函数产生的作用域, 很复杂的结构;
+        // 但是类对象的这个[[scope]]属性是隐式的, 也就是说不能拿出来用;
+        // 系统会通过内部的一些原理定期的调用这个[[scopes]], 但是系统不会让开发者使用, 但是这个东西全是存在的;
+        // 一个函数下的狗构造函数(constructor)下 最后一项可以看到这个属性, 以及其中的方法;
+
+
+        // [[scopes]] 官方解释:
+        // 每个JavaScript函数都是一个对象, 对象中有些属性我们可以访问, 但是有些不可以, 这些属性仅供JavaScript引擎存取, [[scopes]]就是其中一个;
+        // [[scope]] 指的就是我们所说的作用域, 其中存储了运行期上下去的集合;
+        // 执行期上下文:(就是AO, GO)
+        // 当函数执行前一刻, 会创建一个成为执行期上下文的内部对象, 一个执行期上下文定义了一个函数执行时的环境,
+        // 函数每次执行时对应的执行上下文都是第一无二的, 所以多次调用一个函数会导致创建多个执行期上下文,
+        // 当函数执行完毕, 它所产生的执行期上下文即被销毁
+        // 查找变量
+        // 在哪个函数中查找变量, 就上哪个函数的作用域链的顶端依次向下查找;
+        // 作用域链:
+        // [[scope]] 中所存储的执行期上下文对象的集合, 这个集合程链式链接, 我们把这种链式链接叫做作用域链;
+
+
+
+        // a函数被定义的时候, 就有自己的属性和方法了, 这个时候他就有a.[[scope]], 存储作用域的;
+        // 定义的时候就存储了一位东西, 这个东西是GO; 在形象的说: 他所在环境的哪个执行期上下文,
+        // 而他所在的环境是全局的, 所以他存的是GO;
+        // a被执行的时候, a.[[scope]]的第零位放的是AO了, 第一位放的是GO了
+        // 当在a里面变量查找的时候, 他会在 a 作用域链的顶端依次向下查找
+        // 紧接着 由于 a 函数的执行又产生了b函数的定义, 那么b函数此时的执行期上下文就是 a 函数的AO, 
+        // 他的作用域链就是 a 的AO, 和GO; 也就是b的定义就是 a 的执行;
+        // 而 b 的执行又生成了b自己的AO, 放到了自己作用域链的最顶端 放到了第零位;
+        // 所以在 b 中变量查找的时候就会依次查找第零位 b 的A0,第一位 a 的AO, 和第二位全局GO;
+        // function a () {
+        //     function b () {
+        //         var b = 234;
+        //     }
+        //     var a = 123;
+        //     b();
+        // }
+        // var global = 100;
+        // a();
+
+
+
+        // b函数的改变的 a = 0 操作的AO 和 a函数的AO 是就是一个AO;
+        // function a () {
+        //     function b () {
+        //         var b = 234;
+        //         a = 0;
+        //     }
+        //     var a = 123;
+        //     b();
+        //     console.log(a);             // 0;
+        // }
+        // var global = 100;
+        // a();
+
+
+
+        // function a () {
+        //     function b () {
+        //         var b = 234;
+        //     }
+        //     var a = 123;
+        //     b();
+        // }
+        // var global = 100;
+        // a();
+
+
+        // 这里如果
+
+        // 第一步 a.定义(defined)
+        // a.[[scope]]  ==>         0 : GO {
+        //                              this : window,
+        //                              window : (object),
+        //                              document : (object),
+        //                              a : function a () {},
+        //                              global : 100,
+        //                          };
+        // 第二步 a.执行(doing)
+        // a.[[scope]]  ==>         0 : a.AO {
+        //                              this : window,
+        //                              arguments : [],
+        //                              a : 123,
+        //                              b : function b () {},
+        //                          };
+        //                          1 : GO {
+        //                              this : window,
+        //                              window : (object),
+        //                              document : (object),
+        //                              a : function a () {},
+        //                              global : 100,
+        //                          };    
+        // 第三步 b.定义(doing)
+        // b.[[scope]]  ==>         0 : a.AO {
+        //                              this : window,
+        //                              arguments : [],
+        //                              a : 123,
+        //                              b : function b () {},
+        //                          };
+        //                          1 : GO {
+        //                              this : window,
+        //                              window : (object),
+        //                              document : (object),
+        //                              a : function a () {},
+        //                              global : 100,
+        //                          };
+        // 第四步 b.执行(doing);
+        // b.[[scope]]  ==>         0 : b.AO {
+        //                              this : window,
+        //                              arguments : [],
+        //                              b : 234,  
+        //                          }
+        //                          1 : a.AO {
+        //                              this : window,
+        //                              arguments : [],
+        //                              a : 123,
+        //                              b : function b () {},
+        //                          };
+        //                          2 : GO {
+        //                              this : window,
+        //                              window : (object),
+        //                              document : (object),
+        //                              a : function a () {},
+        //                              global : 100,
+        //                          };
+        // 第五步b的执行完毕是最后一步, 也就导致a的执行完毕, a的执行完毕, a的执行期上下文销毁, 此时b的定义和执行时期的[[scope]] 就全部没了;
+
+
+        // 习题
+
+        // function a () {
+        //     function b () {
+        //         function c () {
+
+        //         }
+        //         c();
+        //     }
+        //     b();
+        // }
+        // a();
+
+        // a.defined    ==>     0 : Go
+        // a.doing      ==>     0 : a.AO
+        //                      1 : GO
+        // b.defined    ==>     0 : a.AO
+        //                      1 : GO
+        // b.doing      ==>     0 : b.AO
+        //                      1 : a.AO
+        //                      2 : GO
+        // c.defined    ==>     0 : b.AO
+        //                      1 : a.AO
+        //                      2 : GO
+        // c.doing      ==>     0 : c.AO
+        //                      1 : b.AO
+        //                      2 : a.AO
+        //                      3 : GO
+        // 而且还要明白 其中的所有的a函数产生的AO, b函数产生的AO, 还是c函数产生的AO, 包括全局GO, 都是一个人 只不过是互相借用了一下而已;
+        // 写完这章表就明白, 在任何一个函数里面, 想访问一个变量的话, 就找它的作用域链;
+        // 假如如果a函数中查找变量那就看a函数执行时产生的作用域链;
+        // 假如如果b函数中查找变量那就看b函数执行时产生的作用域链;
+        // 假如如果c函数中查找变量那就看c函数执行时产生的作用域链;
+        // 这张表列表出来就一目了然, 为什么最里的局部函数就能访问外面所有的, 而最外部的函数只能访问全局GO的; 全是因为作用域链;
+        
+    </script>
+</body>
+
+</html>

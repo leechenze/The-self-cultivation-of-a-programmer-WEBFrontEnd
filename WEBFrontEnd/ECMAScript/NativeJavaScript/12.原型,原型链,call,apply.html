@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // 1.原型
+            // 1.定义:原型就是function对象的一个属性,他定义了构造函数制造出的对象的公共祖先;通过该构造函数产生的对象,可以继承该原型的属性和方法;原型也是对象;
+            // 2.利用原型特点和概念, 可以提供共有的属性;
+            // 3.对象如何查看原型, ==> 隐式属性 ==> __proto__;
+            // 4.对象如何查看对象的构造函数 ==> constructor;
+                
+                // 1.定义:原型就是function对象的一个属性,他定义了构造函数制造出的对象的公共祖先;通过该构造函数产生的对象,可以继承该原型的属性和方法;原型也是对象;
+
+                    // Person.prototype         ==>     原型; 定义的时候已经定义好了;
+                    // Person.prototype = {};   他就是构造函数的公共祖先; 原型也是对象;
+
+                    // Person.prototype = {
+                    //     name : 'lee',
+                    //     say : function () {
+                            
+                    //     },
+                    // }
+                    // // 第二种方法写入到原型
+                    // // Person.prototype.name = 'lee',
+                    // // Person.prototype.say = function () {}                    
+                    
+                    
+                    // function Person() {
+                        
+                    // }
+                    // var person = new Person();
+                    // console.log(person.name);
+                    // var person1 = new Person();
+                    // 虽然Person构造函数没有name但是person实例对象有 因为构造函数Person的原型有name这个属性;
+                    // 但凡是通过同一个构造函数构造出来的实例对象, 都会继承Person.prototype(原型)上的任何属性;
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+
+                
+                // 2.利用原型特点和概念, 可以提供共有的属性;
+                    
+                    // 1
+                    // Person.prototype = {
+                    //     name : 'lee',
+                    //     say : function () {
+                    //         return 'Person.prototype';
+                    //     }
+                    // }
+                    
+                    // function Person() {
+                    //     this.name = 'ji';
+                    //     this.say = function () {
+                    //         return 'Person';
+                    //     }
+                    // }
+                    // var person = new Person();
+                    // console.log(person.name);
+                    // console.log(person.say());
+                    
+                    // 2
+                    // Person.prototype = {
+                    //     lastName : 'lee',
+                    //     say : function () {
+                    //         return 'Person.prototype.say';
+                    //     }
+                    // }
+                    
+                    // function Person(name, age, sex) {
+                    //     this.name = name;
+                    //     this.age = age;
+                    //     this.sex = sex;
+                    //     this.say = function () {
+                    //         return 'Person.say';
+                    //     }
+                    // }
+                    // var person = new Person('leecs', 30, 'male');
+                    // console.log(person.name);
+                    // console.log(person.lastName);
+                    // console.log(person.say());
+                    // 同理如果有的自己身上有name属性就用自己的属性, 如果没有就去原型上面找name属性;
+                    // 这就属于一个正常的对象应该访问的一系列的特性; 有自己的属性, 也有原型提供的;
+                    
+
+                    // 3.工厂模式 (根据原型特点和概念, 提供共有的属性)
+                    // function Car(color, owner) {
+                    //     this.owner = owner;
+                    //     this.color = color;
+                    //     // this.carName = 'BWM';
+                    //     // this.lang = '4900';
+                    // }
+                    // Car.prototype.carName = 'BWN';
+                    // Car.prototype.lang = '4900';
+                    // var car = new Car('red', 'leecs');
+                    // 如上代码Car.carName, lang这些代码每一次执行都需要执行一边; 会造成代码的冗余; 浪费效率;
+                    // 那么这些冗余的多次调用的方法只需要放到原型上 每次Car() 构造函数执行的时候去原型上面获取属性, 不需要执行一次创建一次, 执行一次创建一次;
+                    // 所以在实际开发中把这些共有的属性或者方法, 提取出来放到原型上面; 有效减少代码冗余;
+                    
+                    // 原型的增删改查;(构造函数构造出来的实例对象是万万不能对原型的属性方法进行增删改查的);
+                    // Person.prototype.lastName = 'lee';
+                    // function Person(name) {
+                    //     this.name = name;
+                    // }
+                    // var person = new Person('cs');
+                    // 增
+                        // person.lastName = 'james';
+                        // 是给自己的构造函数添加了一个lastName属性; 而并不是把原型的同名属性改变; 除非Person.prototype.lastName = xxx 这么来改;
+                        // 访问的话自己有了也就用自己的了 那么访问的就并不是原型上面的了;
+                    // 删
+                        // 删除自己构造函数的属性;
+                        // delete person.name;
+                        // console.log(person.name);
+                        // 删除原型的属性;
+                        // delete Person.prototype.lastName; 
+                        // delete person.lastName 虽然它没有lastName属性用的是原型的, 但是这样删除是删除不了原型的方法的;
+                    
+
+
+
+
+
+
+                // 3.对象如何查看原型, ==> 隐式属性 ==> __proto__;
+                    
+                    // 实力对象.prototype是访问不了的, 只能构造函数.prototype; 来访问原型;
+                    // 其实__proto__就是让实例对象能够直接访问到构造函数上的原型的一个隐式的属性;
+                    // Person.prototype === person.__proto__;
+                    
+                    // __proto__有什么用途, 是哪里来的?
+                        // 其实在new执行第一步的时候 隐式的 var this = {}, 这个this 并不是空对象, 里面就有__proto__的属性, 指向的就是Person.prototype;
+                        // 当访问实例对象属性的时候, 如果没有, 就会沿着 __proto__ 的指向 Person.prototype上 去查找原型上有没有需要的属性; 
+                        // __proto__ 相当于一个连接的关系, 把原型和自己链接在一起了; 能拿原型上的属性的根本原因就是因为这个__proto__;
+                        // 并且实例对象的原型也可以手动更改指向;
+                        // var obj = {name : 'leecs'};
+                        
+                        // Person.prototype = {
+                        //     // var this = {
+                        //     //      __proto__ : Person.prototype;
+                        //     // };
+                        //     name : 'abc',
+                        // }
+                        // function Person() {
+                            
+                        // }
+                        // var person = new Person();
+                        // person.__proto__ = obj;
+                        // console.log(person.name);           // 通过原型的修改会更改为leecs 因为原型指向为obj 走的就是obj里的name;
+                        
+                        
+                    
+                    // function Person() {
+                    //     // var this = {
+                    //     //     __proto__ : Person.prototype,   
+                    //     // }
+                    //     // __proto__ 指向的空间还是name 为 sunny 的原型对象;
+                    //     // 那么现在 Person.prototype的空间换成name为cherry的原型对象 __proto__的指向还是name为sunny的空间; 
+                    //     // 所以person.name就应该是沿着__proto__找到第一个原型对象上的name属性为sunny;
+                    //     // Person.prototype.name 这种方法改变改的还是原来name为sunny的原型对象的方法;
+                    //     // 而Person.prototype = {name : 'cherry'} 就是代表重写了这个原型对象;
+                    //     // 以上所说都是在实例对象构造出来之后在重写Person.prototype
+                    //     // 但是Person.prototype在实例对象构造出来之前重写就是代表Person.prototype是覆盖了;
+                    //     // __proto__就会读取最下面定义的Person.prototype;
+                    //     // 结论原型对象重写的方式只有在 实例对象生成之前才重写才会以覆盖的方式生效, 否则放后面不会在对实例对象有影响;
+                    // }
+                    // Person.prototype = {
+                    //     name : 'sunny'
+                    // }
+                    // var person = new Person();
+                    // Person.prototype = {
+                    //     name : 'cherry',
+                    // }
+
+                    // console.log(person.name);
+                    // // 打印是sunny;
+
+                    // 以上和以下情况类似;
+                    // var obj = {name : 'abc'};
+                    // var obj1 = obj;
+                    // obj = {name : 'b'};
+                    
+                    
+                
+                
+                
+                    
+                // 4.对象如何查看对象的构造函数 ==> constructor;
+                    // 在原型的内部, 系统默认的一个属性叫做constructor; 
+                    // constructor是构造器的意思, 一个实例对象调用constructor返回的是这个实例对象的构造函数;
+                    // 这个constructor就是构造函数的原型上的一个属性; 是浅色的(浅色就代表系统默认的, 隐式的属性或方法);
+
+                    // function Person() {
+                        
+                    // }
+                    // Car.prototype.constructor = Person;
+                    // function Car() {
+                        
+                    // }
+                    // var car = new Car();
+                    // console.log(car.constructor);
+                    
+                    // 以上实例说明可以改变, 原型上的constructor可以手动改变它;
+                
+                        // 一个函数的构造函数就是它本身;
+                        // function test() {}
+                        // console.log(test.constructor);
+        
+        
+        
+
+
+        // 2.原型链
+            // 1.如何构成原型链?
+                // 如下吧原型上面加上多个原型, 把原型练成链, 访问顺序和作用域链一样(近水楼台先得月), 这种叫做原型链;连接点是__proto__;
+                // Grand.prototype.__proto__ === Object.prototype;
+                // Object.prototype是所有对象的最终原型;
+                
+                // Grand.prototype = {
+                //     lastName : 'lee',
+                // }
+                // function Grand() {
+                    
+                // }
+                // var grand = new Grand();
+                
+                // Father.prototype = grand;
+                // function Father() {
+                //     this.name = 'cs';
+                // }
+                // var father = new Father();
+                
+                // Son.prototype = father;
+                // function Son() {
+                //     this.hobbit = 'somke';
+                // }
+                // var son = new Son();
+
+                // console.log(son.hobbit);        // 自己构造的属性;
+                // console.log(son.name);          // 父亲构造的属性;
+                // console.log(son.lastName);      // 爷爷构造的属性;
+                
+                // 所以son的原型上面有Object原型上的所有方法;
+                // console.log(son.toString());
+
+            
+        
+        
+            // 2.原型链上属性的增删改查
+                
+            
+                // Grand.prototype = {
+                //     lastName : 'lee',
+                // }
+                // function Grand() {
+                    
+                // }
+                // var grand = new Grand();
+                
+                // Father.prototype = grand;
+                // function Father() {
+                //     this.name = 'cs';
+                //     this.fortune = {
+                //         card1 : 'visa',
+                //     };
+                //     this.num = 100;
+                // }
+                // var father = new Father();
+                 
+                // Son.prototype = father;
+                // function Son() {
+                //     this.hobbit = 'somke';
+                // }
+                // var son = new Son();
+                // console.log(son.fortune);
+                // son.fortune = 200;
+                // // 给自身加fortune属性; 和father身上的不冲突;
+                // son.fortune.card2 = 'master';
+                // // 这种属于son调用了father的fortune属性 在他的基础上进行增删改查;
+                // // 就相当于引用值自己的修改 fortune.card2 = xxx; 同理覆盖是不行的;
+                // son.num ++;
+                // // son.num = son.num + 1; son.num取的是father的num 100; 但是加一赋完值就变成自己的属性了;
+                
+                
+
+
+
+                
+                // Person.prototype = {
+                //     name : 'a',
+                //     sayName : function () {
+                //         console.log(this.name);
+                //         // 谁调用的sayName方法this就指向谁;
+                //     }
+                // }
+                // function Person() {
+                //     this.name = 'b';
+                // }
+                // var person = new Person();
+                // console.log(person.sayName());          // b 
+                
+                
+                
+                
+                
+                
+                // Person.prototype = {
+                //     height : 100,
+                // }
+                // function Person() {
+                //     this.eat = function () {
+                //         this.height ++; 
+                //     }
+                // }
+                // var person = new Person();
+                // console.log(person.eat());          // b 
+                
+                
+                
+
+                
+                
+                
+                
+                
+            
+            
+            // 3.绝大多数对象的最终都会继承自 Object.prototype;
+                // function Person() {}
+                // 我们说这是一个构造函数, 他有一个默认的prototype 就是一个对象字面量;
+                // 所以对象字面量的原型就应该是Object.prototype 所以Person.prototype是原型链的终端毋庸置疑;
+
+                // var obj = {};
+                // var obj1 = new Object();
+                // 这种构造出来的obj实例对象并不相等; 但是{} 会隐式的 发生一个 new Object();的步骤;
+                // 但是一般都是采用字面量的形式定义声明一个对象; 太麻烦了还没什么用好处;
+                // 还不能在Object('asdf') 括号里面直接添加属性; 加上的字符串都成为一个个属性为 0:a, 1:s, 2:d, 3:f 的单个字符值;
+                // console.log(obj.__proto__ === Object.prototype);
+                // console.log(obj.constructor);
+                
+                
+            
+            
+            
+            
+            
+            // 4.Object.create(原型);
+                // Object.create(原型);更加灵活的一种创建原型的方法;
+                // var obj = {name : 'sunny', age : 123};
+                // var obj1 = Object.create(obj);
+                
+                
+                // Person.prototype.name = 'sunny';
+                // function Person() {
+                //     this.property = 'property';
+                // }
+                // var person = Object.create(Person.prototype);
+                    // person.__proto__ == Person.prototype;
+                // var person1 = Object.create(new Person());
+                    // person1.__proto__ == new Person();
+                
+                
+                // 那么是不是所有的对象都是最终继承字这个对象?; 并不是, 因为有Object.create();s
+                    // var obj = Object.create() 
+                    // 参数可以不是一个对象(包括引用值数组), 就必须是个null 不能添加为别的参数(包括空);
+                    // var obj = Object.create(null);
+                    // 如果一个通过create(null) 参数为null 构造出来的对象就没有原型(一个真正的空对象);No properties;
+                    // obj.__proto__ = {name : 'leecs', age : 12};
+                    // console.log(obj.name);
+                    // obj.name = 'sunny';
+                    // console.log(obj.name);
+                    // 如果手动加__proto__, 是没有继承特性的; 所以原型是一个隐式的内部属性, 手动添加的系统并不会读, 也就没有继承特点;
+                    
+                    // 参数可以不是一个对象(包括引用值数组), 就必须是个null 不能添加为别的参数(包括空);
+                    // var obj = Object.create([1,2,3,4]);
+                    // console.log(obj.__proto__); 数组也是对象; 所以create([1,2,3])就是一个数组;
+
+
+
+                // toString();
+                    // undefined和null没有toString()方法;
+                    // 因为这两个值是原始值, 也不是原型,也不是对象, 也没有包装类的过程
+                    
+                    // 各个属性值调用toString(); 返回的结果都是不同的;
+                    // var boolean = true.toString();
+                    // 返回一个字符串'true';
+                    // var number = 123; number.toString();
+                    // 返回一个'123';
+                    // 不能123.toString(); 数学计算中.的优先级是最高的; 会把这个点识别成数字的浮点型; 123.tostring()自然就是语法错误了;
+                    // var object = {}; object.toString();
+                    // 返回一个'[object object]';
+                    // 因为object 的toString是调用的Object.prototype上面的toString();方法;
+                    // 因为他的__proto__指向的就是 Object.prototype, 他就是终端, toString()就是它原型上的方法;
+                    
+                    // num的toString();方法;
+                    // var num = 123;
+                    // num.toString();
+                    // 隐式的 new Number(num).toString(); 
+                    // num的原型是Number.prototype;         Number.prototype.__proto__ == Object.prototype;
+                    // 但是Number.prototype对象上就有一个toString();方法;      console.log(Number.toString());     自然自己原型对象上有就用自己的, 就不会用Object原型终端身上的了;
+                    // Number原型上的toString()是重写过的; 就是相同名字, 不同功能的一个方法;
+                    
+
+                        // obj终端身上的方法;
+                        // Object.prototype = {
+                        //     toString : function () {
+                        //         ....
+                        //     }
+                        // }
+                        
+                        // Nubmer的原型; (它的身上的原型还是继承自Object的这个终端原型的);
+                        // Number.prototype = {
+                        //     toString : function () {
+                        //         return 'changed';
+                        //     }
+                        // }
+                        // function Number() {
+                            
+                        // }
+                        // // var num = 123;
+                        // var num = new Number(123);
+                        // console.log(num.toString());         // 重写后结果changed;
+                        
+
+                    // 重写toString()方法的数据类型函数;
+                        // Array.Prototype.toString();
+                        // Number.Prototype.toString();
+                        // Boolean.Prototype.toString();
+                        // String.Prototype.toString();
+                    
+                        // document.write() 往页面输出东西的时候其实会调用隐式的Object.原型.toString()方法;
+                        // var obj = {};
+                        // document.write(obj);    // 其实打印的是obj.toString().的结果;
+                        
+
+                        // 证明它用的是toStirng()的方法;
+                        // var obj = {};
+                        // obj.toString = function () {
+                        //     return 'leecs';
+                        // }
+                        // document.write(obj);        // 此时打印就是leecs;
+                        
+                        
+                    
+                    
+                    
+            // 一个小BUG;
+                // 0.14 * 100;         // 14.00000000000002;
+                // JavaScript 并不处理数据 所以设计者设计的时候存在一定的精度偏差
+                // 可计算的范围:
+                // 小数点前面16位数字, 小数点后16位数字;
+                    
+                    
+                    
+        // 2.call/apply
+            // 1.作用, 改变this指向;
+            // 2.区别, 传参形式的不同;
+                // 1.call
+                    // function Person(name,age) {
+                    //     this.name = name;
+                    //     this.age = age;
+                    // }
+                    // var person = new Person('lee', 100);
+                    // var obj = {};
+                    
+                    // 任何一个函数执行都会真正的隐式调用.call(), 方法();
+                    // 所以 Person()  就等于 Person.call();
+                    // Person.call();
+                    
+                    // call真正高深的用途在于参数;
+                    // Person.call(obj,'leesx', 100);
+                    // call 会让Person函数中的所有的this 指向 obj;
+                    // call第一个参数改变this指向, 第二位以后的参数会当作实参传到形参中去;
+                    // 这时候.call()的第一个参数是谁, person中的this就是谁; 借助person的属性制造自己的属性;
+                    // console.log(obj);
+
+                    
+
+                
+
+                    // function Person(name, age, sex) {
+                    //     this.name = name;
+                    //     this.age = age;
+                    //     this.sex = sex;
+                    // }
+                    
+                    // function Student(name, age, sex, tel, grade) {
+                    //     Person.call(this, name, age, sex);
+                    //     // 就相当于: 
+                    //     // this.name = name;
+                    //     // this.age = age;
+                    //     // this.sex = sex;
+                    //     // 这第三步骤拷到这里来了;
+                    //     // 但是一切前提是Student必须要new操作符 否则Person.call(this)指向的是window;window也是个对象; 将是window的name = name, age = age;
+                    //     this.tel = tel;
+                    //     this.grade = grade;
+                    // }
+                    
+                    // var student = new Student('sunny', 100, 'male', 186, 2017);
+                    
+                    
+
+                    
+                    // 比如一个车间, 模块化生产汽车, 生产轮子, 座椅...等等模块;
+                    // function Wheel(wheelSize, style) {
+                    //     this.wheelSize = wheelSize;
+                    //     this.style = style;
+                        
+                    // }
+                    // function Sit(c, color) {
+                    //     this.c = c;
+                    //     this.color = color;
+                    // }
+                    // function Model(height, width, lang) {
+                    //     this.height = height;
+                    //     this.widht = width;
+                    //     this.lang = lang;
+                    // }
+                    // // 现在车间什么都不做, 每个部门所造的东西拼到一起; 就形成一个大的工厂;
+                    // function Car(wheelSize, style, c, color, height, width, lang) {
+                    //     Wheel.call(this, wheelSize, style);
+                    //     Sit.call(this, c, color);
+                    //     Model.call(this, height, width, lang);
+                    // }
+                    // var car = new Car(100, '花里胡哨', '真皮座椅', '红色', 1900, 2000, 4900);
+                    // console.log(car);
+                    
+                // 2.apply;
+                    // .apply(this, [1, 2, 3, 4, 5]);
+                    // 只是一个传参形式的不同;(传进去一个arguments数组);
+                    // apply传参形式的好处, 可以直接将一个数组作为参数传递进去;而且call就没有这种好处;
+                    
+                    // function Wheel(wheelSize, style) {
+                    //     this.wheelSize = wheelSize;
+                    //     this.style = style;
+                        
+                    // }
+                    // function Sit(c, color) {
+                    //     this.c = c;
+                    //     this.color = color;
+                    // }
+                    // function Model(height, width, lang) {
+                    //     this.height = height;
+                    //     this.widht = width;
+                    //     this.lang = lang;
+                    // }
+
+                    // function Car(wheelSize, style, c, color, height, width, lang) {
+                    //     Wheel.apply(this, [wheelSize, style]);
+                    //     Sit.apply(this, [c, color]);
+                    //     Model.apply(this, [height, width, lang]);
+                    // }
+                    // var car = new Car(100, '花里胡哨', '真皮座椅', '红色', 1900, 2000, 4900);
+                    // console.log(car);
+        
+    </script>
+</body>
+</html>

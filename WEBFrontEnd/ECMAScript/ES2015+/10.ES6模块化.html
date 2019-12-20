@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script type="module">
+        // 相对路径
+        // import './js/module1.js';
+        // 绝对路径
+        // import 'https://cdn.bootcss.com/jquery/3.4.1/jquery.js';
+        
+        // import {a} from '/js/module1.js';
+        // console.log(a);
+        
+
+        // import {a as aa,b as bb,c as cc} from './js/module2.js'
+        // console.log(aa,bb,cc);
+
+        
+        // import {aa as a,bb as b,cc as c} from './js/module3.js';
+        // console.log(a,b,c)
+    
+        
+        // import * as all from './js/module3.js';
+        // console.log(all);
+        
+
+        // import a from './js/module4.js';
+        // console.log(a);
+
+
+        // import a,{b,c} from './js/module4.js';
+        // console.log(a,b,c);
+
+        
+        // 小栗子;
+        // import mod,{show,sum,a,b} from './js/module5.js'
+        // let p1 = new mod.Person();
+        // console.log(p1.showName());
+        // console.log(show());
+        // console.log(sum());
+        // console.log(a,b);
+        
+        
+
+        
+        // import a from './js/module6.js';
+        // console.log(a);
+        // setTimeout(() => {
+        //     console.log(a);
+        // }, (3000));
+        
+        // import mod from './js/module6.js';
+        // console.log(mod.a);
+        // setTimeout(() => {
+        //     console.log(mod.a);
+        // }, (3000));
+
+        // import {a,b} from './js/module6.js'
+        //  console.log(a);
+        //  setTimeout(() => {
+        //     console.log(a)
+        //  }, 3000);
+        
+
+
+        // import() 动态引入;
+            // 动态加载路径
+            // let sign = 1;
+            // function config (){
+            //     switch(sign){
+            //         case 1:
+            //             return './js/module6.js';
+            //             break;
+            //         case 2: 
+            //             return './js/module5.js'
+            //             break;
+            //     }
+            // }
+            // import('https://cdn.bootcss.com/jquery/3.4.1/jquery.js').then((res) => {
+            //     $(document).ready(
+            //         $('body').css({
+            //             'background':'red',
+            //         })
+            //     )
+            // })
+                
+
+        // Promise.all([
+        //     import('./js/module1.js'),
+        //     import('./js/module2.js'),
+        //     import('./js/module3.js'),
+        // ]).then(([mod1,mod2,mod3]) => {
+        //     console.log(mod1);
+        //     console.log(mod2);
+        //     console.log(mod3);
+        // },(res) => {
+        //     console.log(res);
+        // })
+    
+            
+
+        // async和await
+        // async function main (){
+        //     const mod1 = await import('./js/module1.js');
+        //     const mod2 = await import('./js/module2.js');
+        //     // console.log(Promise.all([mod1,mod2]));
+        //     // console.log(await Promise.all([mod1,mod2]));
+        //     const [m1,m2] = await Promise.all([mod1,mod2]);
+        //     console.log(m1);
+        //     console.log(m2);
+        // }
+        // main();
+        
+    
+    
+        
+    
+    
+        
+    </script>
+</body>
+</html>

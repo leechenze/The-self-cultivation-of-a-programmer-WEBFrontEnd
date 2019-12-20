@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1.克隆
+            // var obj = {
+            //     name : 'leecs',
+            //     age : 30,
+            //     card : ['visa', 'master'],
+            //     wife : {
+            //         name : 'monroe',
+            //         son : {
+            //             name : 'trump',
+            //         }
+            //     }
+            // }
+        
+            // var obj1 = {};
+                
+            // 浅层克隆;
+                // function clone(origin, target) {
+                //     var target = target || {};
+                //     for(var prop in origin) {
+                //         target[prop] = origin[prop];
+                //     }
+                //     return target;
+                // }
+                
+                // clone(obj,obj1);
+
+                
+                
+            // 深层克隆;
+                
+                // 递归深层克隆;
+                    // function deepClone(origin, target) {
+                    //     var target = target || {},
+                    //         toString = Object.prototype.toString;
+                    //     for(var prop in origin){
+                    //         // 判断是否是对象身上的属性,而并非原型的;
+                    //         if(origin.hasOwnProperty(prop)){
+                    //             // 判断引用值和原始值;
+                    //             if(origin[prop] !== 'null' && typeof(origin[prop]) == 'object'){
+                    //                 // 判断原始值是对象还是数;
+                    //                 // target[prop] = toString.call(origin[prop]) == '[object Array]' ? [] : {}
+                    //                 if(toString.call(origin[prop]) == '[object Array]'){
+                    //                     target[prop] = [];
+                    //                 }else {
+                    //                     target[prop] = {};
+                    //                 }
+                    //                 // 递归
+                    //                 arguments.callee(origin[prop], target[prop]);
+                    //             }else{
+                    //                 target[prop] = origin[prop];
+                    //             }
+                    //         }
+                    //     }
+                    // }
+                    
+                    // deepClone(obj,obj1);
+
+                
+                
+        // 2.三元运算;
+            // 条件判断 ? 是 : 否 (比if语句要强大的一点是自己返回运算结果或者值);
+
+            // var num = 1 > 0 ? 2 + 2 : 1 + 1;
+            
+            // var num = 1 > 0 ? ('10' > 9 ? 1 : 0) : 2
+            
+            
+            
+            
+        // 3.数组
+            // 数组的定义
+                // 数组字面量 
+                    // var arr = [];
+                    // var arr = [1,,1];           // [1, empty, 1];
+                    // var arr = [,,,,];           // empty 就是空值, length就是0;
+                    
+                    // var arr = [1,,,,,2];            // length是6, 中间的值不是undefined,也不是null,是一个真正意义的空值;
+
+                // 数组构造函数;
+                    // var arr = new Array();
+                    // 数组的所有方法都来源于Array.prototype;
+                    // var arr = new Array(1,2,3,4,5);
+                    
+                    // 字面量和构造函数数组的区别
+                    // var arr = new Array(10);
+                    // var arr1 = [10];
+                    // 如果构造函数数组参数值填一位, 系统就会把这一个参数当成长度, 创建一个一参数为准的长度的空数组;
+                    
+            // 数组的读写
+                // var arr = [1,2,3,4,5];
+                // console.log(arr[10]);
+                // 在JavaScript中数组报错除非是引用了Array没有的方法, 否则是不会报错的; 比如: 访问数组长度以外的数组位返回undefined, 不会报错;
+                
+                // 因为arr是基于对象的; 如果arr[10]来访问 就相当于  obj[10], 所以数组就是另外一种形式的对象; 
+                // obj没有为10的属性就返回的是undefined, 和arr[10]是一样的;
+                // 而且 取值没问题, 赋值也是没问题的
+                // arr[10] = 'abc';  这个数组第十位就是一个abc, 之前6789位没有的就都是empty;
+                
+            
+            // 数组方法;
+                // 改变原数组的方法(只有这七个方法能够改变原数组);
+                    // push, pop, shift, unshift, sort, reverse, splice; 
+
+                    // var arr = [1,2,3];
+                    // arr.push(10,20,30);       // 返回值: 数组长度, 功能: 数组最后一位添加值;
+                        // 模拟push方法;
+                        // Array.prototype.push = function () {
+                        //     for (var i = 0; i < arguments.length; i++) {
+                        //         // 不明确是arr, 还是arr1调用push方法; 所以只能用this代替调用者(调用myPush的对象);
+                        //         this[this.length] = arguments[i];
+                        //         // arr的最后一位是push()参数中的每一位;
+                        //     }
+                        //     return this.length;
+                        // }
+
+                        
+                    // arr.pop();              // 返回值: 剪切最后一位的值, 功能: 剪切(删除)最后一位, 传参无效;
+                    
+                    // arr.shift();            // 返回值: 剪切第一位的值, 功能: 剪切(删除)第一位, 传参无效;
+
+                    // arr.unshift();            // 返回值: 数组长度, 功能: 数组第一位添加值
+                    
+                    // arr.reverse();           // 返回值: 数组反转后的结果, 功能: 反转数组;
+                    
+                    // arr.splice(开始截取位, 截取长度, 切口处添加新的数据);            // 返回值: 截取的索引位数据, 功能: 数组剪接;
+                        // var arr = [1,2,3,5];    // 想要实现1,2,3,4,5; 在3和5之间加个4;
+                        // arr.splice(3,0,4);      // 第三位开始截取, 截取零位(不截取), 加入一个4;
+                    
+                    // arr.sort();                // 返回值: 数组排序后的结果, 功能: 数组排序;
+                        // 排序是按照阿斯克码排的; 数据10会被当成一零而小于2;
+                        // sort() 方法，有一个可选参数，必须是函数，供它调用
+
+                        // 回调函数的参数要有两个：第一个参数的元素肯定在第二个参数的元素前面!!!
+
+                        // 这个方法的排序是看回调函数的返回值：
+
+                        // 如果返回值大于 0，则位置互换。
+                        // 如果返回值小于 0，则位置不变。
+                        // var arr = [1,3,5,4,10];
+
+                        // arr.sort(function (a, b) {
+                        //     // a > b    另一种个表示方式    a - b > 0
+                        //     if(a > b) {
+                        //         return 1;
+                        //     }else{
+                        //         return -1;
+                        //     }
+
+                        //     // 如果2 > 1 返回2 - 1,
+                        //     // 否则2 < 3 返回2 - 3;
+                        //     // 无论如何都返回a - b; 并且结果也都是对的;
+                        //     if(a > b) {
+                        //         return a - b;
+                        //     }else{
+                        //         return a - b;
+                        //     }
+
+                        //     // 所以横竖有都是返回a - b 那么倒不如直接返回a - b了;
+                            
+
+                        //     return a - b;   // 升序;x
+                            
+                        //     if(a < b){
+                        //         return 1;
+                        //     }else {
+                        //         return -1;
+                        //     }
+                            
+
+                        //     if(a < b) {
+                        //         return b - a;
+                        //     }else{
+                        //         return b - a;
+                        //     }
+                            
+                        //     return b - a;   // 降序;
+                            
+                        // })
+                        
+                    // 
+                    
+                // 不能改变原数组的方法:
+                    // concat, join, split, toString, slice;
+                        
+                    // var arr = [1,2,3,4,5,6],
+                    //     arr1 = [7,8,9,0];
+                    
+                    // concat       // 连接两个数组
+                        // var result = arr.concat(arr1);
+                        
+                    // toString;        // 将数组改变成字符串;
+                        // var result = arr.toString();
+                    
+                    // slice        // 数组截取, 不改变原数组所以只能接收他的返回值了, 
+                    
+                        // slice();     没有参数就将整个截取; (截完之后就是一个数组);
+                        // slice(开始截取位一直截取到结束);     一个参数
+                        // slice(开始截取位, 截取到该位);     两个参数
+                            // 类数组转换成数组的方法;
+                            // var arr = Array.prototype.slice.call(arguments)
+                            // var arr = [].slice.call(arguments);
+                            
+                    // join         // 将数组的每一位连接返回字符串类型;
+                        // arr.join('-');   如果没有参数, 就会默认用逗号相连, 并且没有参数就和Array原型上系统重写过的toString()方法功能一样;
+                        // join和字符串的方法split是作用相反替补的;
+                    
+                    
+                        
+                        
+        // 4.类数组
+            // 1.可以利用属性名模拟数组的特性;
+            // 2.可以动态的增长length属性
+            // 3.如果强行让类数组调用push方法, 则会根据length属性值的位置进行属性的扩充;
+            
+                // 1.可以利用属性名模拟数组的特性;
+                    
+                    // arr = ['a', 'b', 'c'];
+                    // var obj = {
+                    //     '0' : 'a',
+                    //     '1' : 'b',
+                    //     '2' : 'c',
+                    //     'length' : 3,
+                    //     'push' : Array.prototype.push,
+                    //     'splice' : Array.prototype.splice,
+                    // };
+                    // 以上就是一个类数组, 他必要的组成部分: 
+                        // 1.属性为索引(0,1,2)属性;
+                        // 2.必须有length属性; 
+                        // 3.必须有splice方法, 类数组最好也加上一个Array的push方法,方便操作;
+                        // 如果加上splice方法就是一个数组, name这个对象展示就不是{}, 而是[]数组的样子了, 那么就不仅是对象, 而且还可以当作数组使用;
+                    // 那么数组也不过就是比类数字多了Array.prototype原型以及原型链上的一些方法和属性;
+                    // 类数组不仅能想对象一样使用, 还能想数组一样使用, 他的存储结构就更强大(能够把数组和对象的特性拼到一起);
+                    // DOM方法生成的所有类似于数组的东西,全是类数组;
+                
+                
+        // 习题
+            // 给一个有序的数组乱序;
+            // var arr = [1,2,3,4,5,6,7,8,9];
+            // arr.sort(function () {
+            //     return Math.random() - 0.5;
+            // })
+
+            
+            // 根据对象的age属性进行排序;
+            // var leecs = {
+            //     name : 'leecs',
+            //     age : 18,
+            //     sex : 'male',
+            // }
+            // var sunny = {
+            //     name : 'sunny',
+            //     age : 30,
+            //     sex : 'male',
+            // }
+            // var monroe = {
+            //     name : 'monroe',
+            //     age : 40,
+            //     sex : 'male',
+            // }
+            
+            // var arr = [leecs, monroe, sunny];
+            
+            // arr.sort(function (a,b) {
+                
+            //     return a['age'] - b['age'];
+                
+            // })
+            
+
+
+            // 根据字符串长度排序;     
+            // var arr = ['a', 'bb', 'ccc', 'dddd', 'eeeee', 'ffffff', 'ggggggggg', 'asdfasdasdfasfdasdf', 'c', 'cc', 'ccc', 'ccccc', 'ccc', 'cccc'];
+            
+            // arr.sort(function (a,b) {
+            //     return a['length'] - b['length'];
+            // })
+            
+            
+            // obj此时是什么;
+            // var obj = {
+            //     '2' : 'a',
+            //     '3' : 'b',
+            //     'length' : 2,
+            //     'push' : Array.prototype.push,
+            // };
+            // obj.push('c');
+            // obj.push('d');
+            // console.log(obj);
+            
+            
+            
+            // 封装type方法, typeof() 返回的并不精准, 封装一个type方法和typeof一样, 凡是返回值一定准确;
+            
+                // function type(target) {
+                //     var template = {
+                //         "[object Array]" : "array",
+                //         "[object Object]" : 'object',
+                //         "[object Number]" : 'number - object',
+                //         "[object Boolean]" : 'boolean - object',
+                //         "[object String]" : 'string - object',
+                //     },result = typeof target;
+                //     switch (result) {
+                //         case null:
+                //             return 'null';
+                //         case "object":
+                //             var strType = Object.prototype.toString.call(target);
+                //             return template[strType];
+                //         default :
+                //             return result;
+                //     };
+                // }
+
+            // 数组去重, 要求在原型链上操作;
+
+                // var arr = [1,1,2,2,3,3,4,5,6];
+                // Array.prototype.unique = function () {
+                //     var obj = {},
+                //         newArr = [];
+                //     // 方法一;
+                //         // for(let i = 0; i < this.length; i++) {
+                //         //     obj[this[i]] = 'a';
+                //         // }
+                //         // for(let item in obj) {
+                //         //     newArr.push(item);
+                //         // }
+                //         // return newArr;
+                //     // 方法二
+                //         // for(let i = 0; i < this.length; i++) {
+                //         //     if(!obj[this[i]]) {
+                //         //         obj[this[i]] = '随便添值';
+                //         //         newArr.push(this[i]);
+                //         //     }
+                //         // }
+                //         // return newArr;   
+                // }
+                
+    </script>
+</body>
+</html>

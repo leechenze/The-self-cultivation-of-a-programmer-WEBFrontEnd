@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 行间事件写法 -->
+    <div class="click" style='width:100px;height:100px;background:red;' onclick="console.log('a')"></div>
+    <ul>
+        <li>a</li>
+        <li>a</li>
+        <li>a</li>
+    </ul>
+
+    
+    <style>
+        .wrap{
+            width:300px;
+            height: 300px;
+            background:red;
+        }
+        .content{
+            width:200px;
+            height:200px;
+            background:blue;
+        }
+        .box{
+            width:100px;
+            height:100px;
+            background:green;
+        }
+    </style>
+    <div class="wrap">
+        <div class="content">
+            <div class="box"></div>
+        </div>
+    </div>
+    
+
+    <!-- 阻止默认事件 -->
+    <a href="https://www.baidu.com">baidu.com</a>
+    
+
+    <!-- 事件委托 -->
+    <ul id="eventEntrust">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+    </ul>
+    
+
+    <!-- 拖拽 -->
+    <div class="dragDrop" style="width:100px; height:100px; background:blue;position:absolute;left:0;top:0;"></div>
+    
+    <div class="eventType" style="width:100px; height:100px; background:green;position:absolute;left:0;top:0;"></div>
+
+
+    <!-- 文本类操作事件 -->
+    <input type="text" style="border: 1px solid #000;">
+    <!-- input -->
+    <input type="text" value="请输入内容..." onfocus="if(this.value == '请输入内容...')this.value = '';" onblur="if(this.value == '')this.value = '请输入内容...'">
+
+    <div class="scroll" style="width:300px;height:500px; border:1px solid #000; overflow:scroll;">
+        东汉末年，外戚诸梁姻族满朝，大将军梁冀专权。顺帝派遣周举、张纲等八名大臣分道巡按各州郡，纠察收审贪官污吏。
+        　　在这八个人当中，张纲年纪最轻，官职也最小，但他为人正直，敢于说话，对朝廷内部政治腐败、皇帝昏暗无能的现状极为不满。他认为，要整顿好官吏，首先应严厉惩办朝廷中贪赃枉法的大官。如果能这样做，地方上的小官吏就不敢为非作歹，否则，绝不会解决多大问题。为此，他对这次考察不感兴趣，没有马上成行。经再三催促，才勉强离京。
+        
+        　　张纲的车辆还未驶出京城洛阳的范围，在都亭他就下令停车，命手下人把乘坐的车子拆毁，把车轮埋在地下，不再往前走。手下人疑惑不解，于是问他这是为什么。张纲愤慨地说：“豺狼当路，安问狐狸！”表面的意思是说，豺狼横在路中间，何必再去查问狐狸！张纲的意思很清楚：那些横行不法的大官在朝廷上掌握大权，又何必去查问那些违法乱纪的小官呢？言下之意是首先应惩办不法的大官。
+        　　张纲回到京城向顺帝上书，揭发大将军梁冀等人结党营私、坑害百姓、陷害忠良的罪行，请求顺帝严加惩办。由于顺帝很宠爱梁冀的妹妹梁皇后，所以他虽然知道张纲的请求正直有理，却没有照着办理。
+        张俭是东汉山阳高平（今山东邹县西南）人，出身名门望族，祖上是楚汉时代曾和刘邦并列诸侯的赵王张耳，他以操行高洁闻名当世。张俭曾做过山阳东部督邮，深受汉桓帝宠信的中常侍侯览，家乡就在山阳郡。侯览是当时权势很大的宦官，他不但横行朝廷，而且称霸乡里。侯览先后夺占民宅三百余所，良田一百多顷。他自己建造住宅十几所，和宫廷的规模一样，他还给自己建造了规模宏大的陵族。
+        　　侯览如此残害百姓，作恶多端，张俭非常愤慨。于是，他上书汉桓帝，告发侯览的罪行，要求从严惩办侯览。因为侯览是皇帝身边的人，张俭的奏章还没到皇帝手里，就被侯览扣下了。从此，侯览对张俭怀恨在心，伺机报复。
+        
+        　　张俭有个同乡，名叫朱并，是个恶棍。张俭曾经严厉地惩处过他，因此他对张俭怀恨在心。后来，朱并投靠侯览，在侯览的指使下，朱并给朝廷上书，诬告张俭勾结同郡二十四人，结成党羽，图谋不轨。宦官曹节抓住这个机会，吩咐他的心腹上奏章，要求汉灵帝下令逮捕党人。汉灵帝才十四岁，根本不懂得什么是党人。他问曹节：“为什么要杀他们，他们有什么罪？”曹节指手划脚把党人怎样可怕、怎样图谋造反等所谓的罪行乱编了一通。汉灵帝居然相信了他们，连忙下令逮捕党人。
+       
+        　　张俭得知消息后，只得连夜逃走。侯览假借皇帝命令，向各郡县发出搜捕张俭的通令，对于敢擅自收藏张俭的人，一律格杀勿论。张俭见官府人马来势汹汹，只好匆匆逃跑，看到谁家可以避难，就投在谁家门下，暂时安身。
+        当时，人们恨透了宦官，都知道张俭历来正直，名声很好，所以人们都甘冒风险收留他。一天，张俭逃到鲁郡，投奔好友孔褒。孔褒不在，孔褒的小兄弟孔融当时只有十六岁，他热情地接待了张俭。张俭走后，官府闻讯赶来，逮捕了孔褒、孔融及他们的老母亲加以审问。孔融说：“是我招待了张俭，要治罪就治我吧！”孔褒说：“张俭是来投奔我的，要办就办我的罪，与我弟弟无关。”孔母说：“我是一家之主，要办就办我的罪。”他们一家争着承担责任，闹得官府不知如何处置。
+        　由于大家的保护，朝廷始终没有抓到张俭，直到公元184年，爆发了黄巾农民大起义后，汉灵帝才下令解除“党锢”，张俭结束逃亡生括。这时候，东汉王朝已濒临灭亡。
+    </div>
+    
+    <script>
+        // document.onclick = function () {
+        //     console.log('click handler');
+        // }
+        
+        var div = document.getElementsByClassName('click')[0],
+            a = document.getElementsByTagName('a')[0];
+        
+        // 1.绑定事件处理函数
+            // 1.ele.onxxx = function (event) {};兼容性好, 但是一个元素的同一个事件只能绑定一个处理程序, 基本等同于写在HTML上, this指向正常ele;
+
+                // 句柄事件写法;
+                // div.onclick = function() {console.log('a')};
+                
+                
+            // 2.obj.addEventListener('type', fn, false), IE9以下不兼容, 可以为一个事件,绑定多个处理程序; this指向正常obj;
+                
+                // 不管几个事件处理函数都会触发, (可以绑定多个事件处理函数);
+                // div.addEventListener('click',function () {console.log('aa')});
+                // div.addEventListener('click',function () {console.log('bb')});
+                // div.addEventListener('click',function () {console.log('cc')});
+            
+            // 3.obj.attachEvent('on' + type, fn), IE独有,一个事件同样可以绑定多个处理程序, this指向window;
+            
+                // div.attachEvent('onclick', function () {});
+                
+        // 2.解除事件处理函数, (如果绑定了匿名函数, 则无法解除);
+
+            // 1.ele.onclick = false/''/null;
+                // div.onclick = function () {alert('ss')};
+                // div.onclick = null;
+                
+            // 2.ele.removeEventListener(type, fn, false);
+                // div.addEventListener('click', test,false);
+                // div.removeEventListener('click',test,false);
+                // function test () {
+                //     console.log('ss');
+                // }
+                // 如果想要通过addEventListener对事件进行清除, 那么就必要在外面写一个函数作为引用, 清楚的时候在用这个引用;
+                // 否则不用这个方法永远也清楚不掉了, 因为唯一的一个函数引用就是一个匿名函数了;
+                
+                
+            // 3.ele.detachEvent('on' + type, fn);
+                // div.attachEvent('onclick', test);
+                // div.detachEvent('onclick', test);
+                // function test () {
+                //     console.log('ss');
+                // }
+                // 和addEventListener是一样的, 必须要有一个函数引用;
+             
+            
+        // 3.事件处理模型, 事件冒泡,捕获; 出发顺序: 先捕获, 后冒泡;
+            // 一个对象的一个事件类型, 只能存在一个事件模型, (假如一个click的事件类型, 如果结构嵌套, 那么他的事件模型要不是冒泡, 要么是捕获, 不可能同时存在冒泡和捕获);
+            // 没有冒泡的事件有: focus, blur, change, submit, reset, select等;
+            // 1.事件冒泡;
+            // 结构上嵌套关系的元素, 会存在事件冒泡的功能, 即同一事件, 自子元素冒泡向父元素;(由内向外);
+                
+                
+                // var wrap = document.getElementsByClassName('wrap')[0],
+                //     content = document.getElementsByClassName('content')[0],
+                //     box = document.getElementsByClassName('box')[0];
+                
+                // wrap.addEventListener('click', function() {
+                //     console.log('red');
+                // }, false);
+                // content.addEventListener('click', function() {
+                //     console.log('blue');
+                // }, false);
+                // box.addEventListener('click', function() {
+                //     console.log('green');
+                // }, false);
+                
+            
+            
+            
+            
+            
+            // 2.事件捕获;
+            // 结构上嵌套关系的元素, 会存在事件捕获的功能, 即同一事件, 自父元素捕获之子元素(事件源元素); (由外向内);
+            // 捕获事件只有在webkit内核上的浏览器上有, 其他内核的浏览器没有, 而触发捕获事件, 只需要改变addEventListener的第三个参数;
+            // 第三个参数如果是false, 事件处理模型就是冒泡模式, 如果是true, 事件处理模型就是捕获模式;
+                
+                
+                // var wrap = document.getElementsByClassName('wrap')[0],
+                //     content = document.getElementsByClassName('content')[0],
+                //     box = document.getElementsByClassName('box')[0];
+                
+                // wrap.addEventListener('click', function() {
+                //     console.log('red');
+                // }, true);
+                // content.addEventListener('click', function() {
+                //     console.log('blue');
+                // }, true);
+                // box.addEventListener('click', function() {
+                //     console.log('green');
+                // }, true);
+
+                
+            // 3.触发顺序: 先捕获,后冒泡, 而并不是先写那个就先触发哪个;
+                // var wrap = document.getElementsByClassName('wrap')[0],
+                //     content = document.getElementsByClassName('content')[0],
+                //     box = document.getElementsByClassName('box')[0];
+                
+                // wrap.addEventListener('click', function() {
+                //     console.log('red');
+                // }, false);
+                // content.addEventListener('click', function() {
+                //     console.log('blue');
+                // }, false);
+                // box.addEventListener('click', function() {
+                //     console.log('green');
+                // }, false);
+                
+                // wrap.addEventListener('click', function() {
+                //     console.log('red');
+                // }, true);
+                // content.addEventListener('click', function() {
+                //     console.log('blue');
+                // }, true);
+                // box.addEventListener('click', function() {
+                //     console.log('green');
+                // }, true);
+
+
+        
+        // 4.取消冒泡;
+        // 在每一个事件处理函数里面, 可以自定义一个形参, 这个形参就是系统定义一个事件对象;
+        // 事件对象上的每一个属性, 都记载了这个对象发生时的一些关键数据和一些关键信息;
+            // event.stopPropagation();(IE9以下版本不兼容, W3C标准);
+                // div.onclick = function (e) {
+                //     console.log(e);
+                //     e.stopPropagation();
+                //     // 这个事件对象上有一个 stopPropagation() 方法;
+                //     // 一旦调用了这个方法, e.stopPropagation() 就会起到阻止冒泡的功能;
+                // }
+        
+            // event.cancleBubble = true;(IE浏览器独有, 谷歌实现了这个方法);
+                // div.onclick = function (e) {
+                //     console.log(e);
+                //     e.cancelBubble = true;
+                //     // 这个事件对象上有一个 stopPropagation() 方法;
+                //     // 一旦调用了这个方法, e.stopPropagation() 就会起到阻止冒泡的功能;
+                // }
+                
+                
+
+        // 5.阻止默认事件, (表单提交, a标签跳转, 右键菜单等等);
+
+            // href中JavaScript中的void(), 就相当于写返回值return, 如果是零就返回零, false就返回false;
+            // <a href='javascript:void(false)'></a>
+            
+            // rturn false;(以对象属性的方式才会生效, 兼容性很好);
+                // document.oncontextmenu = function (e) {
+                //     console.log('aaa');
+                //     return false;
+                // }
+
+                // a.onclick = function(e) {
+                //     e.stopPropagation();
+                //     return false;
+                // }
+                
+            // event.preventDefault();(W3C标准, IE9以下不兼容);
+                // document.oncontextmenu = function (e) {
+                //     console.log('aaa');
+                //     e.preventDefault();
+                // }
+
+            // event.returnValue = false;(兼容IE);
+                // document.oncontextmenu = function (e) {
+                //     console.log('aaa');
+                //     e.returnValue = false;
+                // }
+            
+            
+        
+        // 6.事件对象
+            
+            // W3C标准的事件对象是事件处理函数中的第一个参数
+                // div.onclick = function (e) {
+                //     console.log(e);
+                // }
+
+            // IE浏览器的事件对象封装在window.event中的;
+                // div.onclick = function () {
+                //     console.log(window.event);
+                // }
+            
+            // 所以经常处理事件对象和事件源对象(target,srcElement)兼容问题的时候如下一步操作即可;
+                // div.onclick = function (e) {
+                //     var event = e || window.event,
+                //         target = event.target || event.srcElement;
+                // }
+                
+
+
+        // 7.事件委托
+            // 利用事件冒泡和事件源对象进行处理, 优点:
+                // 1.性能, 不需要循环所有的元素一个个绑定事件;
+                // 2.灵活, 当有新子元素时不需要重新绑定事件;
+                
+                    // var aul = document.getElementById('eventEntrust');
+                    // var lis = aul.getElementsByTagName('li');
+                    
+                // 循环遍历的方式, 把点击事件放在li子元素上循环每一个执行打印这个li的内容;
+                    // for(var i = 0; i < lis.length; i++) {
+                    //     lis[i].onclick = function () {
+                    //         console.log(this.innerHTML);
+                    //     }
+                    // }
+                    
+                // 事件委托方式, 把点击事件放到ul元素上, 通过事件源对象打印这个事件源的内容
+                    // aul.onclick = function(e) {
+                    //     var event = e || window.event,
+                    //         target = event.target || event.srcElement;
+                    //     console.log(target.innerHTML);
+                    // }
+
+                    
+                
+        // 8.事件分类
+            // 鼠标事件
+            // click, mousedown, mouseup, mousemove, contextmenu, mouseover, mouseout, mouseenter, mouseleave, mousewheel;
+                
+                // var div = document.getElementsByClassName('eventType')[0];
+                
+
+                // click == mousedown + mouseup; 执行顺序为(mousedown > mouseup > click);
+                    // document.onclick = function () {console.log('click')};
+                    // document.onmousedown = function () {console.log('mousedown')};
+                    // document.onmouseup = function () {console.log('mouseup')};
+
+                // enter和over, leave和out功能一样, enter和leave是H5的新规范;
+                // enter不支持冒泡, 只有在鼠标指针穿过被选元素时, 才会触发mouseenter事件
+                // over支持冒泡, 不论鼠标指针穿过被选元素或其子元素, 都会触发mouseover事件
+                    // div.onmouseover = function () {
+                    //     div.style.background = 'yellow';
+                    // }
+                    // div.onmouseout = function () {
+                    //     div.style.background = 'green';
+                    // }
+                    // div.onmouseenter = function () {
+                    //     div.style.background = 'yellow';
+                    // }
+                    // div.onmouseleave = function () {
+                    //     div.style.background = 'green';
+                    // }
+
+                // 区分鼠标左键, 右键;
+                // 只有mousedown和mouseup可以通过e.button判断鼠标左右和滚轮事件, 其他事件的事件对象没有button属性;
+                // mousedown事件的滚轮事件是按下的时候,并不是滑动的时候, 滚轮滑动事件是onmousewheel;    
+                    
+                    // div.onmousedown = function (e) {
+                    //     console.log(e.button);
+                    // }
+                    // div.onmousewheel = function (e) {
+                    //     console.log(e);
+                    // }
+                
+                // DOM3标准规定: click只能监听鼠标左键点击事件;
+                // 移动端没有mouse事件, touchstart, touchmove, touchend;三个移动端事件;
+                // 区分一个元素的事件拖拽还是点击, (点击是按下和抬起事件组合, 所以点击两个事件会有很微小的差别), 就通过这种生物行为来区分事件是怎样的;
+                    
+                    // var firstTime = 0,
+                    //     lastTime = 0,
+                    //     key = false;
+                    
+                    // document.onmousedown = function() {
+                    //     console.log('mousedown');
+                    //     firstTime = new Date().getTime()
+                    // }
+
+                    // document.onmouseup = function () {
+                    //     lastTime = new Date().getTime()
+                    //     console.log('mouseup');
+                    //     if(lastTime - firstTime < 300 ) {
+                    //         key = true;
+                    //     }
+                    // }
+                    
+                    // document.onclick = function () {
+                    //     if(key) {
+                    //         console.log('click');
+                    //         key = false;
+                    //     }
+                    // }
+
+                        
+                        
+            // 键盘事件                
+            // keydown, keyup, keypress; 执行顺序为(keydown > keypress > keyup);
+                
+                // document.onkeypress = function (e) {console.log('keypress')};
+                // document.onkeydown = function (e) {console.log('keydown')};
+                // document.onkeyup = function (e) {console.log('keyup')};
+            
+                
+                // keydown和keypress的区别; (String.fromCharCode() 输入unicode编码转换成unicode字符,unicode是包含ASCII码的);
+                    // document.onkeypress = function (e) {
+                    //     console.log(String.fromCharCode(e.keyCode))
+                    // };
+                    // document.onkeydown = function (e) {
+                    //     console.log(String.fromCharCode(e.keyCode))
+                    // };
+                    
+                    // keydown可以响应任意键盘按键, keypress只可以响应字符类键盘按键(不包括ctrl, alt, shift, tab等功能键);
+                    // keydown的keyCode, which是根据的键盘上的108键给出的键码, 所以字符按键(非功能键)一般用keypress监听;
+                    // keypress的keyCode, which, charCode是根据当前按下键的字符在ASCII码中对应的编码,
+                    // 可以通过String.fromCharCode(e.charCode)转换相应的字符;
+                    
+                    
+            // 文本类操作事件;
+            // input, focus, blur, change;
+                // var input = document.getElementsByTagName('input')[0];
+                
+                // input(只要输入或者删除就会一直触发input);
+                    // input.oninput = function (e) {
+                    //     console.log(this.value);
+                    // }
+
+                // change(只有在失去焦点时, 并且文本框中的内容改变了才会触发)
+                    // input.onchange = function (e) {
+                    //     console.log(this.value);
+                    // }
+                
+                // focus(当获取焦点的时候触发)
+                    // input.onfocus = function () {
+                    //     console.log(this.value);
+                    // }
+
+                // blur(当试去焦点的时候触发);
+                    // input.onblur = function () {
+                    //     console.log(this.value);
+                    // }
+                    
+            // 窗体类操作事件(window上的事件);
+            // scroll, load
+                // var div = document.getElementsByClassName('scroll')[0];
+
+                // scroll;(当元素或者window滚动的时候触发);
+                    // div.onscroll = function () {
+                    //     console.log(div.scrollTop + ' ' + div.scrollLeft);
+                    // }
+                    // window.onscroll = function () {
+                    //     console.log(window.pageXOffset + ' ' + window.pageYOffset);
+                    // }
+                
+                    
+                // load; (当渲染树全部加载完毕的时候执行, onload方法中的代码块最后被执行);
+                    // window.onload = function () {
+                    //     console.log(document.getElementsByClassName('load')[0]);
+                    // }
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        
+        
+        
+        
+        // 习题
+            // 一组li当每一个点击的时候输出它们每一个当前index;
+                // var ul = document.getElementsByTagName('ul')[0],
+                //     liCollection = document.getElementsByTagName('li');
+                
+                // for(var i = 0; i < liCollection.length; i++) {
+                //     (function (i) {
+                //         liCollection[i].addEventListener('click', function () {
+                //             console.log(i);
+                //         }, false);
+                //     }(i))
+                // }
+            // 封装一个addEvent方法, 给一个元素添加该事件类型的处理函数;
+                // function addEvent(ele, type, handle) {
+                //     if(ele.addEventListener) {
+                //         ele.addEventListener(type, handle, false);
+                //     }else if(ele.attachEvent){
+                //         ele.attachEvent('on' + type, function () {
+                //             handle.call(ele);
+                //         });
+                //     }else{
+                //         ele['on' + type] = handle;
+                //     }
+                // }
+                
+            // 封装取消冒泡函数stopBubble(event);
+                // function stopBubble(event) {
+                //     if(event.stopPropagation) {
+                //         event.stopPropagation();
+                //     }else{
+                //         event.cancelBubble = true;
+                //     }
+                // }
+
+            // 封装阻止默认事件的函数, cancelHandler;
+                // function cancelHandler (event) {
+                //     if(event.preventDefault) {
+                //         event.preventDefault();
+                //     }else{
+                //         event.returnValue = false;
+                //     }
+                // }
+                
+            // 拖拽
+                // var div = document.getElementsByClassName('dragDrop')[0],
+                //     disX,disY;
+                // div.onmousedown = function (e) {
+                //     disX = e.pageX - parseInt(div.style.left);
+                //     disY = e.pageY - parseInt(div.style.top);
+                //     console.log(disX + '  ' + disY);
+                //     document.onmousemove = function (e) {
+                //         var event = e || window.event;
+                        
+                //         div.style.left = event.pageX - disX + 'px';
+                //         div.style.top = event.pageY - disY + 'px';
+                //     }
+
+                //     document.onmouseup = function (e) {
+                //         document.onmousemove = null;
+                //     }
+                    
+                // }
+                
+            
+            
+            
+                
+    </script>
+    <div class="load"></div>
+</body>
+</html>

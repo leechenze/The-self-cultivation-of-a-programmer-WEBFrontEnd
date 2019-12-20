@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOCTYPEDocs</title>
+</head>
+<body>
+    <script>
+        // 对象;
+            // 1.用已知的知识点, 概述心中的对象;
+                // 对象是一种基础的变量类型;
+
+                
+                // var leecs = {
+                //     name : 'lee',
+                //     age : 30,
+                //     sex : 'male',
+                //     health : 100,
+                //     smoke : function () {
+                //         console.log('I am smoking! cool!!');
+                //         // leecs.health --;
+                //         this.health --;
+                //     },
+                //     drink : function () {
+                //         console.log('I am drink');
+                //         // leecs.health ++;
+                //         this.health ++;
+                //     }
+                // }
+
+                
+            
+            // 2.属性的增, 删, 改, 查;
+                // 如果访问一个对象没有的属性的时候就会返回undefined, 而并不会报错;
+                    
+                    // this, 指代当前对象, 对当前对象的一个引用;
+                    // // 增
+                    //     leecs.wife = '小王';
+                    // // 删
+                    //     delete leecs.wife;
+                    // // 改
+                    //     leecs.wife = '小乔';
+                    // // 查
+                    //     leecs.name;
+                
+                
+                
+            // 3.创建对象的方法;
+                // 1.字面量
+                    // var obj = {};      plainObject(对象字面量\对象直接量);
+                    
+                // 2.构造函数
+                    // 1.系统自带   
+                        // new Object();Array();Number();Boolean();String();Date();
+                        // var obj = new Object();
+                    // 2.自定义
+                        // function Person() {};
+                        // 构造函数和函数没有任何区别; 
+                        // 但是想要构造出一个对象来 就需要一个 new 操作符;
+                        // new 后面的函数就会生成一个自定义的对象; 和new Object() 没有任何区别; 增删改查操作 等等都无异;
+                        // 但是由于构造函数和普通函数没有任何区别;
+                        // 所以为了区分构造函数和普通函数, 在书写构造函数的时候就需要遵守一个(墨守成规的)原则 : 遵循大驼峰式命名规则;
+                            // 大驼峰 : TheFirstName
+                            // 小驼峰 : theFirstName
+
+                            // function Car() {
+                            //     this.name = 'BWM';
+                            //     this.height = '1400';
+                            //     this.lang = '4900';
+                            //     this.weight = 1000;
+                            //     // 磨损值;
+                            //     this.health = 100;
+                            //     this.run = function () {
+                            //         // 这个时候就只能用this了;
+                            //         // car和car1 都没有构造出来  他的实例对象都是未知的;
+                            //         this.health --;
+                            //     }
+                            // }
+
+                            // var car = new Car();
+                            // var car1 = new Car();
+                            // car.run(); 
+                            // car.health值为99  car1.health并不会改变; 也就是说一个构造函数生成的不同的实例对象,虽然是通过调用共同的构造函数中的方法, 
+                            // 但是他们的值各自是各自的; 完全是两个实例对象, 根本不会相互影响;
+                            
+                            // // 实现一个工厂模式的造车方式 比如需要一个客户需要自己选配颜色;
+                            //     function Car(color) {
+                            //         this.color = color;
+                            //         this.name = 'BWM';
+                            //         this.height = '1400';
+                            //         this.lang = '4900';
+                            //         this.weight = 1000;
+                            //         // 磨损值;
+                            //         this.health = 100;
+                            //         this.run = function () {
+                            //             // 这个时候就只能用this了;
+                            //             // car和car1 都没有构造出来  他的实例对象都是未知的;
+                            //             this.health --;
+                            //         }
+                            //     }
+
+                            //     var car = new Car('green');
+                            //     var car1 = new Car('blue');
+
+                            // // 一个学校里的学生除了入学年纪相同, 其他的各不相同;
+                            //     function Student(name, age, sex) {
+                            //         this.name = name;
+                            //         this.age = age;
+                            //         this.sex = sex;
+                            //         this.grade = '2017';
+                            //     }
+                            //     var student = new Student('张三', 18, 'male');
+                            //     console.log(student);
+                            
+
+                        // 构造函数内部原理
+                            // 1.在函数体最前面, 隐式的加上this = {};
+                            // 2.执行this.xxx = xxx;
+                            // 3.隐式的返回this; (但是如果显示的显示一个空对象) 那么构造出来就是一个空对象; 并且返回原始值不生效; 只要有new了就不会返回原始值;
+                                // 当一个函数调用了new操作符时, 就会隐式的发生这三个步骤; 完成函数构造的步骤;
+                                
+                                // function Student(name, age, sex) {
+                                //     // 隐式的var this = {};
+                                //     this.name = name;
+                                //     this.age = age;
+                                //     this.sex = sex;
+                                //     this.grade = '2017';
+                                //     // 隐式的 return this;
+                                // }
+                                // var student = new Student('张三', 18, 'male');
+                                
+                                // Student.AO = {
+                                //     this : {
+                                //         name : 'leecs',
+                                //         age : age,
+                                //         ....
+                                //     },
+                                // }
+                                
+                                
+                                
+                                // function Person(name, height) {
+                                //     var that = {
+                                        
+                                //     };
+                                //     that.name = name;
+                                //     that.height = height;
+                                //     that.say = function () {
+                                //         console.log(that.say);
+                                //     }
+                                //     return that;
+                                // }
+                                
+                                // var person = new Person('leecs', 196);
+                            
+                // 3.Object.create(原型)方法;  
+                    
+
+
+            
+
+        // 包装类;
+            // new String();
+            // new Boolean();
+            // new Number();
+
+            // ECMASscript中数字是原始值, 原始值是没有属性和方法的;
+            
+            // 数字分为两种数字;
+                // 数字;
+                // var num = 123;
+                // 构造函数数字
+                // var num = new Number(123);
+                // 构造函数数字甚至可以有自己的属性和方法; 但是数字并没有属性和方法;
+                // 构造函数数字进行了加减乘除运算时, 他的结果依旧会变成一个普通数字;
+
+            // 字符串, 布尔等原始值的构造函数都是同理;
+            // 但是一个str 会有length是属性; 下面解答;
+                // 包装类的过程;
+                // var num = 4;
+                // 在原始值调用属性的时候; 会隐式的发生以下的一个过程;
+                // new Number(4).len = 3;   delete;
+                // 会新建一个数字对象, 让这个对象的len = 3, 然后在delete 销毁;
+                // num.len = 3;
+                // 当再次访问的时候就会重新创建一次;
+                // new Number(4).len  这次访问的len 并非上次delete销毁的len 所以应该是undefined;
+                
+                
+                // 引用值数组length 改变会有一个截断的功能;
+                // var arr = [1,2,3,4,5]
+                // arr.length = 2;
+                // console.log(arr);
+                // 原始值字符串的length改变 经历的是包装类的过程; 所以并不会截断;
+
+                // var str = 'abcd';
+                // str.length = 2;
+                // new String(abcd).length = 2, delete;
+                // console.log(str);
+                // console.log(str.length);
+                // 再次访问他的长度的时候, 因为系统的字符串构造函数是有length这个属性的 所以访问的就应该是new String(abcd).length;
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            // 习题
+
+                // console的打印结果是什么;
+                // var str = 'abc';
+                // str += 1;
+                // var test = typeof str;                  // string
+                // if(test.length == 6) {                  
+                //     test.sign = 'typefo的返回结果可能为String';
+                //     // new String(string).sign = xxx;    delete;
+                // }
+                // console.log(test.sign);                  undefined
+                // // new String(string).sign               
+
+
+                // 分析下面的JavaScript代码块
+                // function Employee(name,code) {
+                //     this.name = 'leecs';
+                //     this.code = 'A001';
+                // }
+                // newemp = new Employee('zhangming', 'A002');
+                // console.log('雇员姓名:' + newemp.name);
+                // console.log('雇员姓名:' + newemp.code);
+                // 输出 leecs A001; 因为形参列表的参数在函数引用中并没有使用;
+                
+                
+
+                // 输出以下代码的执行结果;
+                // function Person(name, age, sex) {
+                //     var a = 0;
+                //     this.name = name;
+                //     this.age = age;
+                //     this.sex = sex;
+                //     function sss() {
+                //         a ++;
+                //         console.log(a);             
+                //     }
+                //     this.say = sss;
+                // }
+                
+                // var person = new Person();
+                // person.say();                   // 1;
+                // person.say();                   // 2;
+                // var person1 = new Person();
+                // person1.say();                  // 1;
+                // // person和person1 的构造函数的产生的AO对象没有关联; 因为构造函数Person 执行完毕就销毁了;  person1的构造函数是一个全新的;
+
+
+
+                // var x = 1, y = z = 0;
+                // function add(n) {
+                //     return n = n + 1;
+                // }
+                // y = add(x);
+                // function add(n) {
+                //     return n = n + 3;
+                // }
+                // z = add(x);
+                
+                // console.log(x);         // 1
+                // console.log(y);         // 4
+                // console.log(z);         // 4
+                
+    </script>
+</body>
+</html>

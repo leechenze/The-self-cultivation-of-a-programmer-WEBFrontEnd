@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>闭包</title>
+</head>
+<style>
+    *{
+        margin : 0;
+        padding : 0;
+    }
+    ul {
+        list-style:none;
+    }
+    ul li:nth-of-type(n){
+        height: 25px;
+        background-color:rgb(255, 255, 255);
+        
+    }
+    ul li:nth-of-type(2n){
+        height: 25px;
+        background-color:blue;   
+    }
+</style>
+<body>
+    <ul>
+        <li>0</li>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+    <script>
+        // 闭包 (闭包就是能够读取其他函数内部变量的函数, “定义在一个函数内部的函数“, 在本质上, 闭包是将函数内部和函数外部连接起来的桥梁.)
+        // 函数内部的函数存在的时间竟然比外部的函数获得时间还长(生命周期发生混乱); 正常是里面的函数存在的时间比外面地函数短, 因为必须等到外部函数执行才能执行到它 而闭包则不然;
+        
+        // function test() {
+        //     var arr = [];
+        //     for (let i = 0; i < 10; i++) {
+        //         debugger;
+        //         // 当前的i 随着for循环的变化都会变化; 但是后面的函数不会在意其中写了些什么代码, 因为根本在这一步就不会读到着个函数; 需要等到执行才可以读到函数里面的代码; 可是在外面执行的时候for循环已经结束了; 再回去读取i已经变成了最后一次执行的结果 : 10;
+        //         arr[i] = function () {
+        //             document.write(i + ' ');
+        //         }
+
+
+
+        //         // 在循环中把一个函数引用赋给当前arr的索引位
+        //         // 可是当前函数体并不是现在执行; 所以说每次循环到document.write(i + '');的时候这个i并没有被系统读到;
+        //         // 等到arr的每一位得到执行的时候才会被执行到函数体中的每一位 i ; 才会被系统读到函数体中的每一位i;
+        //     }
+        //     i 在这里已经变成了10;
+        //     console.log(i);
+        //     return arr;
+        // }
+
+        // var myArr = test();
+
+        // for (var j = 0; j < 10; j++) {
+        //     myArr[j]()
+        //     // 在这里arr的每一位执行: 这个时候才会读到函数体中的内容是什么; 可是这个时候i 已经循环完毕都变成了10; 所以就打印了十遍10;
+        // }
+
+
+        // 使用闭包实现
+            // 第一种方法;
+            // function test() {
+            //     var arr = [];
+            //     for (var i = 0; i < 10; i++){
+            //         arr[i] = (function (param) {
+            //             return param;
+            //         }(i));
+            //     }
+            //     return arr;
+            // }
+            // var myArr = test();
+            // console.log(myArr);
+        
+            
+        
+            // 第二种方法;
+            // function test() {
+            //     var arr = [];
+            //     for (var i = 0; i < 10; i++){
+            //         (function (param) {
+            //             arr[param] = function () {
+            //                 return param;
+            //             }
+            //         }(i))
+            //     }
+            //     return arr;
+            // }
+            // var myArr = test();
+            // for (var i = 0; i < 10; i++) {
+            //     console.log(myArr[i]());
+            // }
+
+
+            
+            // 第三种方法;
+            // function test() {
+            //     var arr = [];
+            //     for(var i = 0; i < 10; i++){
+            //         function loop(param) {
+            //             arr[param] = function () {
+            //                 return param;
+            //             }
+            //         }
+            //         loop(i);
+            //     }
+            //     return arr;
+            // }
+
+            // for (var i = 0; i < 10; i++){
+            //     console.log(test()[i]());
+            // }
+            
+            
+            
+            
+            
+            
+
+            
+            
+
+
+        // 习题:
+            // 使用JS.addEventListener, 在每个li元素绑定一个点击事件
+                // var liCollection = document.getElementsByTagName('li');
+                // for (var i = 0; i < liCollection.length; i++){
+                //     (function (param) {
+                //         liCollection[i].onclick = function () {
+                //             console.log(param);
+                //         }
+                //     }(i));
+                // }
+            
+
+
+                // var liCollection = document.getElementsByTagName('li'),i;
+                // for(var i = 0; i < liCollection.length; i++){
+                //     liCollection[i].index = i;
+                //     liCollection[i].onclick = function () {
+                //         console.log(this.index);
+                //     }
+                // }
+
+
+
+                // 这样写也行, 但是未点击时就会触发立执行函数;
+                // var liCollection = document.getElementsByTagName('li'),i;
+                // for(var i = 0; i < liCollection.length; i++){
+                //     liCollection[i].onclick = (function (param) {
+                //         console.log(param);
+                //     }(i));
+                // }
+
+
+
+                // var liCollection = document.getElementsByTagName('li'),i;
+                // for(var i = 0; i < liCollection.length; i++){
+                //     function loop(param) {
+                //         liCollection[param].onclick = function () {
+                //             console.log(param);
+                //         }
+                //     }
+                //     loop(i);
+                // }
+                
+
+
+                // var liCollection = document.getElementsByTagName('li'),i;
+                // for(var i = 0; i < liCollection.length; i++){
+                //     var loop = function (param) {
+                //         liCollection[param].onclick = function () {
+                //             console.log(param);
+                //         }
+                //     }(i);
+                // }
+                
+
+
+            // 写一个方法求一个字符串的字节长度;
+                
+                // 方法一
+                // var str = 'Hello 世界!'
+                // function stringSize(param){
+                //     var count = 0;
+                //     for (var i = 0; i < param.length; i++){
+                //         if(param.charCodeAt(i) > 255){
+                //             count += 2;
+                //         } else if (param.charCodeAt(i) <= 255) {
+                //             count ++;
+                //         }
+                //     }
+                //     console.log(count);
+                // }
+
+
+                // 方法二
+                // var str = 'Hello 世界!'
+                // function stringSize(param){
+                //     var count = param.length;
+                //     for (var i = 0; i < param.length; i++){
+                //         if(param.charCodeAt(i) > 255){
+                //             count ++;
+                //         }
+                //     }
+                //     console.log(count);
+                //     return count;
+                // }
+
+
+            // 写出来一下程序的执行结果;
+                // 逗号操作符, 返回后面的函数之后就形成了 var f = function j () {}();
+                // var a = (
+                //     function f() {
+                //         return '1';
+                //     },
+                //     function j() {
+                //         return 2;
+                //     }
+                // ());
+                // console.log(f);
+                
+                // 逗号操作符返回最后一位, 结果就是:
+                // var a = function j () {return 2;}();
+                // console.log(f);
+            
+            // 写出来以下程序的执行结果
+
+                // if后面的括号中是条件判断 会隐式类型转换 类型转换function并不是 为false的六个值, 就能够往下执行;
+                // 但是括号会把里面的函数变成表达式的; 变成函数表达式了就不是函数定义了;
+                // 就好像()立即执行函数的括号一样 变成表达式了, 这个函数名称 f 自然也就消失了;
+                // 好比(function f() { console.log(f)}());
+                // var a = (function f() { console.log(f)}());   a 是undefined
+                // 但是 f 消失了之后, 如果被typeof检测的话就会返回字符串的undefined;
+                // 所以最后的结果是 1undefined;
+                
+                // var x = 1;
+                
+                // if (function f() {}) {
+                //     x += typeof f;
+                // }
+                // console.log(x);
+                
+                
+    </script>
+</body>
+
+</html>

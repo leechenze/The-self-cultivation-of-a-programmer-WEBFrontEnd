@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div style="width:200px; height:200px;background:red;"></div>
+    <script>
+
+        // JSON
+            // JSON是一种传输数据的格式, 早之前使用的是xml, 以对象为样板, 本质上就是对象,但用途有区别, 
+            // 对象就是本地用户的, JSON是用来传输数据的;
+            // JSON中的键,规定必须加双引号, 用来分别JSON;
+            // 前后端数据传输的时候是只能传输文本格式, 对象传过去不会识别; 
+            // 所以就需要传输一个JSON格式的字符串; 字符串里面是一个JSON; 
+            // 把一个JSON变成字符串的JSON, 手动加双引号并不可行;
+            // JOSN是一个静态类, 虽然是个函数,但不用构造它, 它身上就有很多方法;
+
+            // var obj = {
+            //     'name' : 'leecs',
+            //     'age' : 123,
+            // }
+                
+            // JOSN.stringify(); 解析JSON为JSON串;
+                // var JSONStr = JSON.stringify(obj);
+                // console.log(JSONStr);
+            // JSON.parse(); 解析JOSN串为JSON;
+                // var JSONObj = JSON.parse(JSONStr);
+                // console.log(JSONObj);
+
+
+            
+            // window.location.host,                            返回url 的主机部分
+            // window.location.hostname,                        返回服务器地址（域名）
+            // window.location.href,                            返回整个url字符串(在浏览器中就是完整的地址栏)
+            // window.location.pathname,                        返回path
+            // window.location.protocol,                        返回协议名
+            // window.location.port,                            url 的端口
+            // window.location.search,                          传参
+            
+
+
+
+
+        
+        // 异步加载JS;
+            // JS加载的缺点: 加载工具类的JS文件时没必要阻塞文档, 过多的JS加载会影响, 页面效率,
+            // 一旦网速不好, 整个网站将等待JS加载完毕, 不进行后续渲染等工作, 所以有些工具类JS包需要按需加载;
+            // JS异步加载三种方案:
+                // 1.defer 异步加载, 但是要等到DOM文档全部解析完才会被执行. (IE9的方法, 也可以将代码写到内部);
+                    // 1.<script defer="defer" src="tools.js"><\/script>
+                    // 2.<script defer="defer">
+                        // Code...
+                    // <\/script>
+                    
+                // 2.async 异步加载, 加载完就执行, async只能加载外部脚本, 不能把JS写到script里面; (和defer功能相同, W3C的标准方法;)
+                    // 1.<script async="async" src="tools.js"><\/script>
+                    // 不能把Code写到 script标签之间, 如上defer可以这么写, async不可以;
+                    
+                // 3.创建script, 插入到DOM中, 加载完毕后callback, (IE和W3C都兼容的两种方式, 同时实现了预加载, 异步加载, 按需加载等需要);
+                
+                    // function loadScript(url, callback) {
+                    //     var script = document.createElement('script');
+                    //     script.type = "text/javascript";
+                    //     document.head.appendChild(script);
+                    //     // 当把这个script标签插入到DOM中去的时候才会执行里面的脚本;
+                        
+                    //     // 如果script有readyState方法证明是IE下, 走IE方法, 否则走W3C标准方法;
+                    //     if(script.readyState) {
+                    //         // IE中提供的事件当读取状态码改变的时候;
+                    //         script.onreadystatechange = function () {
+                    //             // script标签上有个readyState的状态码成功的时候会返回complete或者loaded;
+                    //             if(script.readyState == 'complete' || script.readyState == 'loaded') {
+                    //                 if(typeof(callback) == 'string') {
+                    //                     eval(callback)();
+                    //                 }else{
+                    //                     callback();
+                    //                 }
+                    //             }
+                    //         }
+                    //     } else {
+                    //         script.onload = function () {
+                    //             if(typeof(callback) == 'string') {
+                    //                 eval(callback)();
+                    //             }else{
+                    //                 callback();
+                    //             }
+                    //         }
+                    //     }
+                    //     script.src = url;
+                    //     // 系统读取到script.src = "tools.js", 的时候就会下载tools.js文件;
+                    // }
+                    
+                    // 这样调用的问题是会在当前代码块中找test这个变量,或是函数声明, 然而并没有, 结果是undefined, 所以就传了一个undefined进去;
+                    // loadScript('./demoJS/demo1.js',test);
+                    
+                    // 传递一个匿名函数的引用进去, 执行的时候执行函数引用, 而引用中的代码还是test执行;
+                    // loadScript('./demoJS/demo1.js',function () {test()});
+                    
+                    // 传递一个字符串,然后进行eval转化成代码;
+                    // loadScript('./demoJS/demo1.js','test');
+
+                    
+                    
+        // JS加载时间线;
+            // 1.创建一个Document, 开始解析WEB页面, 这个阶段document.readyState = 'loading';
+            // 2.遇到link外部引入的CSS, 创建线程加载, 并继续解析文档;
+            // 3.遇到script外部加载JS, 没有async,defer等异步属性, 同步加载, 并阻塞页面以后的加载, 等待当前JS加载完成, 然后继续解析文档;
+            // 4.遇到script外部加载JS, 设有asyuc,defer时, 浏览器开启新的线程加载, 并且继续解析文档, 不阻塞文档解析, 对于async属性的脚本立即执行, defer脚本加载完成后执行;
+                // 异步加载的JS和onload事件之后, 禁止使用(document.write()), 因为document.write会把之前的文档内容全部清空;
+            // 5.遇到img等, 正常解析dom结构, 然后浏览器异步加载src, 并继续解析文档;
+            // 6.当文档解析完成, document.readyState = 'interactive';
+            // 7.文档解析完成后, 所有设置有defer脚本会按照顺序执行. (注意与async不同, async会同步执行);
+            // 8.document对象触发DOMContentLoaded事件, 这也标志着程序执行从同步执行阶段, 转化为事件驱动阶段;
+            // 9.当所有async脚本加载完成并执行后, img等加载完成后, document.readyState = 'complete'. window对象触发load事件;
+            // 10.以上步骤走完, 文档以异步响应方式, 处理用户输入, 网络事件等;
+
+
+        
+        
+            // // 创建Document, 开始解析页面的时候;
+            // console.log(document.readyState);
+            // document.onreadystatechange = function () {
+            //     // 文档解析完成和文档加载完成;
+            //     console.log(document.readyState);
+            // }
+            
+            // document.addEventListener('DOMContentLoaded', function () {
+            //     console.log('文档解析完成之后');
+            // })
+            // // DOMContentLoaded方法和jQuery的$(document).ready(function() {}) 是一样的, 在文档解析完执行, 而window.onload则是在加载完执行, 所以最好用jQuery的ready方法;
+            // // DOMContentLoaded方法只有addEventListener来监听, on触发不了;
+            // // 于此同时监听DOM的方法还有以下几种, 称之为DOM变动事件: (DOM变动事件只能被addEventListener触发);
+            // document.addEventListener('DOMNodeInserted', function () {
+            //     console.log('DOM子节点发生变化时触发');
+            // })
+            // document.addEventListener('DOMSubtreeModified', function () {
+            //     console.log('DOM结构中发生任何变化时触发');
+            // })
+            // document.addEventListener('DOMNodeRemoved', function () {
+            //     console.log('在节点从其父节点中被移除时触发');
+            // })
+            // document.addEventListener('DOMNodeInsertedIntoDocument', function () {
+            //     console.log('在一个节点被直接插入文档中或者通过子树间接插入文档后触发,(DOMNodeInserted之后触发)');
+            // })
+            // document.addEventListener('DOMNodeRemovedFromDocument', function () {
+            //     console.log('在一个节点被直接从文档中删除或通过子树间接从文档中移除之前触发,(DOMNodeRemoved之后触发)');
+            // })
+            // document.addEventListener('DOMAttrModified', function () {
+            //     console.log('当属性被修改时触发');
+            // })
+            // document.addEventListener('DOMCharacterDataModified', function () {
+            //     console.log('在文本节点的值发生变化的时候触发');
+            // })
+            
+            
+        // 习题
+            // 封装一个兼容的加载工具库的方法, 用来代替async, defer;
+                // function loadScript(url, callback) {
+                //     var script = document.createElement('script');
+                //     script.type = "text/javascript";
+                //     document.head.appendChild(script);
+                //     // 当把这个script标签插入到DOM中去的时候才会执行里面的脚本;
+                    
+                //     // 如果script有readyState方法证明是IE下, 走IE方法, 否则走W3C标准方法;
+                //     if(script.readyState) {
+                //         // IE中提供的事件当读取状态码改变的时候;
+                //         script.onreadystatechange = function () {
+                //             // script标签上有个readyState的状态码成功的时候会返回complete或者loaded;
+                //             if(script.readyState == 'complete' || script.readyState == 'loaded') {
+                //                 if(typeof(callback) == 'string') {
+                //                     eval(callback)();
+                //                 }else{
+                //                     callback();
+                //                 }
+                //             }
+                //         }
+                //     } else {
+                //         script.onload = function () {
+                //             if(typeof(callback) == 'string') {
+                //                 eval(callback)();
+                //             }else{
+                //                 callback();
+                //             }
+                //         }
+                //     }
+                //     script.src = url;
+                //     // 系统读取到script.src = "tools.js", 的时候就会下载tools.js文件;
+                // }
+                
+            
+            
+            
+            
+            
+            
+            
+            
+        
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        input {
+            border: 1px solid #000;
+            text-align:center;
+            font-size:20px;
+            font-weight:bolder;
+        }
+    </style>
+</head>
+<body>
+    minutes: <input type="text" value="0">
+    seconds: <input type="text" value="0">
+    
+    <script>
+        
+        // 日期对象(是系统提供的 new Date());
+            // var date = new Date();
+            // console.log(date);
+            // Date对象方法;
+                
+                // Date()                  // 返回当前日期和时间的字符串形式;
+                    // console.log(Date());
+                // getDate();              // 从Date对象中返回一个月中的某一天(1 - 31);
+                    //  console.log(date.getDate());
+                // getDay();                // 从Date对象中返回一周中的某一天(0 - 6);
+                    // console.log(date.getDay());
+                    // 周日返回零, 周一返回一, 周六返回六;
+                // getMonth();              // 返回当前月份, (0 - 11);
+                    // console.log(date.getMonth());
+                    // 一月返回零, 十二月返回十一;
+                // getFullYear();           // 返回四位数的年份;
+                    // console.log(date.getFullYear());
+                // getHours();              // 返回当前小时(0 - 23);
+                    // console.log(date.getHours());
+                // getMinutes();            // 返回当前的分钟数(0 - 59);
+                    // console.log(date.getMinutes());
+                // getSeconds();            // 返回当前秒数(0 - 59);
+                    // console.log(date.getSeconds());
+                // getMilliseconds();       // 返回当前毫秒数(0 - 999);
+                    // console.log(date.getMilliseconds());
+                // getTime();               // 返回1970年1月1日至今的毫秒数, (时间戳);
+                    // console.log(date.getTime());
+
+                    // var firstTime = new Date().getTime();
+                    // for(var i = 0; i < 100000000; i++) {};
+                    // var secondTime = new Date().getTime();
+                    // console.log(secondTime - firstTime);
+                
+                // setDate();               // 设置date对象中的月份的某一天, 返回一段调整过的日期毫秒表示;
+                    // console.log(date);
+                    // date.setDate(21);
+                    // console.log(date);
+
+                // setMonth()	                // 设置 Date 对象中月份 (0 ~ 11)
+                    // console.log(date);
+                    // date.setMonth(11 - 1);
+                    // console.log(date);
+                    
+                // setFullYear()	            // 设置 Date 对象中的年份（四位数字）
+                    // console.log(date);
+                    // date.setFullYear(1993);
+                    // console.log(date);
+                    
+                // setHours()	                // 设置 Date 对象中的小时 (0 ~ 23)
+                    // console.log(date);
+                    // date.setHours(23);
+                    // console.log(date);
+                    
+                // setMinutes()	                // 设置 Date 对象中的分钟 (0 ~ 59)
+                    // console.log(date);
+                    // date.setMinutes(50);
+                    // console.log(date);
+
+                // setSeconds()	                // 设置 Date 对象中的秒钟 (0 ~ 59)
+                    // console.log(date);
+                    // date.setSeconds(35);
+                    // console.log(date);
+
+                // setMilliseconds()	        // 设置 Date 对象中的毫秒 (0 ~ 999)
+                    // console.log(date);
+                    // date.setMilliseconds(999);
+                    // console.log(date);
+
+                // setTime()	                // 以毫秒设置 Date 对象    
+                    // console.log(date);
+                    // date.setTime(1569142246751);
+                    // console.log(date);
+
+                    // 设置到56分的一个时间, 如果现在的时间大于56分时, 每间隔一秒执行一次handler;
+                    // date.setMinutes(56);
+                    // setInterval(function () {
+                    //     if(new Date().getTime() > date.getTime()) {
+                    //         console.log('handler');
+                    //     }
+                    // },1000);
+
+                    
+                    // 设置时间戳( 里面是立即执行函数求一个定义时间的时间戳,然后返回 );
+                    // date.setTime((function () {date.setDate(22); date.setMinutes(09); return date.getTime() }()));
+                    // setInterval(function () {
+                    //     if (new Date().getTime() > date.getTime()) {
+                    //         console.log('handler');
+                    //     }
+                    // },1000);
+
+                // toString();              // 把时间对象转换成字符串形式;
+                    // console.log(date.toString());
+
+                    
+        // 定时器(window上的方法, 内部的this全指向的是Global);
+            // setInterval();               // 设置定时器;
+
+                // setInterval(function () {
+                //     console.log('asdf');
+                // },1000)
+
+
+                // 每一个setInterval都会返回一个数字作为这个定时器的唯一标识;
+                // var time = setInterval(function () {}, 1000);
+                // console.log(time);
+                
+                
+                // 证明JS的定时器是不准的;
+                // var firstTime = new Date().getTime();
+                // setInterval(function () {
+                //     var lastTime = new Date().getTime();
+                //     console.log(lastTime - firstTime);
+                //     firstTime = lastTime;
+                // },1000);
+                
+            // clearInterval();             // 清除定时器;
+                // 参数是interval的返回值, 就是他的一个唯一标识;
+                
+                // var time = setInterval(function () {console.log('ss')}, 1000);
+                // clearInterval(time);
+
+                // var i = 0;
+                // setInterval(function () {
+                //     console.log(i++);
+                //     if(i > 10) {
+                //         clearInterval(1);
+                //     }
+                // })
+                // // 同等于以下的写法;
+                // var i = 0;
+                // var time = setInterval(function () {
+                //     console.log(i++);
+                //     if(i > 10) {
+                //         clearInterval(time);
+                //     }
+                // })
+
+        // 延时器(window上的方法, 内部的this全指向的是Global);
+            // setTimeout();            // 同setInterval是一样的, 不同点就是他在延迟执行后只执行一次;
+                // setTimeout(function () {
+                //     console.log('timeout');
+                // },1000);
+
+            // clearTimeout();          // 他们的返回值是不会重写覆盖的;timeout是1, interval就是2, 是不会重叠覆盖的;
+                // var time = setTimeout(function () {
+                //     console.log('settimeout');
+                // })
+                // clearTimeout(time);
+                
+                    
+            // 定时器,延时器的第一个参数如果是字符串也会有eval的功能, 当成代码来执行;
+            
+                // setInterval("console.log('asdf')", 1000);
+
+                // function handler() {console.log('asdf')};
+                // setInterval(handler,1000);
+                    
+            
+                        
+        // 习题
+            // 1.封装函数, 打印当前是何年何月何日, 几时几分几秒;
+                
+            // 2.计时器, 到三分钟时停止;
+                
+                // var minutesEle = document.getElementsByTagName('input')[0],
+                //     secondsEle = document.getElementsByTagName('input')[1],
+                //     minutes = 0,seconds = 0;
+                // var interval = setInterval(function () {
+                //     seconds++;
+                //     if (seconds == 59) {
+                //         seconds = 0;
+                //         minutes++;
+                //     }
+                //     secondsEle.value = seconds;
+                //     minutesEle.value = minutes;
+
+                //     if (minutes == 3) {
+                //         clearInterval(interval);
+                //     }
+                    
+                // },50)
+            
+                
+    </script>
+    
+</body>
+</html>

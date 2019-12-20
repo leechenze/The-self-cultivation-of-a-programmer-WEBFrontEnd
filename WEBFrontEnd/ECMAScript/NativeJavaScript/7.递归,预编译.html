@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 递归;
+            // 写一个函数实现n的阶乘;
+                
+                // function mul(n) {
+                    
+                //     if(n == 1 || n == 0){
+                //         return 1;
+                //     }
+                    
+                //     return n * mul(n - 1);
+                    
+                // }
+                
+                // 这样的一个过程就叫做递归;
+                // 递归底层的规律是先被执行的最后被执行完毕;
+                // 有递归就先写return, 然后把后面的规律写上就完事了;
+                // 递归的劣势就是慢, 特别复杂的程序不能用递归;因为他返回的公式是调用他自身的一个逻辑;
+                // 他就得等候层层嵌套的这个公式执行完毕; 这个过程就慢;
+                // 递归必要注意的两点
+                    // 1.找规律
+                        // n * mul(n - 1);
+                    // 2.找出口
+                        // n == 1 || n == 0;
+
+
+                // mul(5 - 1);在程序中是先执行, 但是最后才一步步返回时最后才执行完;
+                // mul(5)  ==>     5 * mul(5-1);               5 * (4 * (3 * (2 * 1)))
+                //
+                // mul(4)  ==>     4 * mul(4-1);               4 * (3 * (2 * 1))
+                //
+                // mul(3)  ==>     3 * mul(3-1);               3 * (2 * 1)
+                //         
+                // mul(2)  ==>     2 * mul(2-1);               执行到mul(1) 返回1 那么2 * mul(1) 现在就是 2 * 1; 然后这个2 * 1 
+                //                                             3 * mul(3 - 1) 的返回结果就是这一步的 2 * 1;
+                // mul(1)  ==>     1;                      
+            
+
+            // 写一个函数, 实现斐波那契数列;
+                
+                // f    s   t
+                // 1    1   2   3   5   8   13  21  34  55;
+                //     f   s   t
+                // 规律就是第3位是 第一位和第二位的和;
+                // fb(n) == fn(n - 1) + fn(n - 2);
+                // function fb(n){
+
+                //     if(n == 1 || n == 2){
+                //         return 1;
+                //     }
+                    
+                //     return fb(n - 1) + fb(n - 2);
+                // }
+
+                // 一定得有一个写的过程;
+                // fb(5)   ==>   fb(5 - 1) + fb(5 - 2);            // 第一步  (3 + 2 == 5)
+                //     fb(4)   ==>   fb(4 - 1) + fb(4 - 2);            // 第二部  (2 + 1 == 3)
+                //         fb(3)   ==>   fb(3 - 1) + fb(3 - 2);            // 第三步  (1 + 1 == 2) 
+                //             fb(2)   ==>     1           // 第四步
+                //             fb(1)   ==>     1           // 第四步
+                //         fb(2)   ==>   1             // 第三步
+                //     fb(3)   ==>   fb(3 - 1) + fb(3 - 2);            // 第二步  (1 + 1 == 2)
+                //         fb(2)   ==>   1             // 第三步
+                //         fb(1)   ==>   1             // 第三步
+                            
+                            
+                            
+                            
+        // 预编译
+            // JS执行的过程, JS是单线程, JS是解释性语言(翻译一句,执行一句);
+            // JS运行三部曲
+                // 1.语法分析
+                    // 就是在读取JavaScript代码块一行一行解释执行之前, 会对整个代码块进行一个通篇的语法扫描, 这个过程就叫做语法分析;
+                // 2.预编译
+                    // 通篇扫描完之后回执行一个过程, 叫做预编译
+                    // 预编译前奏
+                        // 1.函数声明整体提升
+                            // 不管test(),执行符写到哪里, 系统都会隐式的把这个函数体提升到逻辑的最前面
+                            // 其实不管在代码块的哪处调用test方法其实本质上都是在test函数体下面调用的;
+                            // test();
+                            // function test(){
+                            //     console.log('a');
+                            // }
+                        // 2.变量 声明提升,但是赋值不提升;
+                            // console.log(a);
+                            // var a = 123;
+                            // 这一步叫做变量声明赋值; 提升的只是变量声明的a; 而赋的值123 并不会像函数那样整体提升;
+                        // 3.implyGlobal 暗示全局变量: 即任何变量,如果变量未声明就赋值, 此变量就为全局对象window所有;
+                            // a = 10 等同于 window.a = 10;
+                            // 如果为声明就使用就会报错, 但是如果未声明就赋值就会生成一个暗示全局变量;
+                            // 这个暗示全局变量就归属window所有了;就相当于window这个对象的a属性是10, window.a = 10;
+                        // 4.一切声明的全局变量, 全是window的属性;
+                            // var a = 123     ==>     window.a = 123;
+                            // window 就是全局(全局的域);
+                            // 如果在全局访问console.log(a) 就是访问的window.a;
+                            
+                            // function test(){
+                            //     var a = b = 123;
+                            // }
+                            // test();
+                            // console.log(b);  结果是123;
+                            // 先后顺序是 先把123赋给b, 在声明a, 再把b赋给a;
+                            // 这样连续赋值就导致b未经声明就赋值, 那么这个未经声明就赋值的b就是一个暗示全局变量, 归window所有;
+                            // console.log(a);
+                            // 结果是undefined; 因为这是局部的变量, 在局部声明就不能归window所有;只有全局才能归window所有;
+                    // 局部预编译四部曲,和全局预编译三部曲;
+                        
+                            // GO对象当定义script标签的时候就生成了
+                            // 但是AO对象在函数执行前期才会生成;
+                    
+                        // 1.函数体系中的预编译(局部预编译)     即是AO;
+                            // 预编译发生在函数执行的前一刻 他创建了AO对象; Activation Object 翻译过来:(执行期上下文 or 局部的域);
+                            // 1.创建AO对象;
+                            // 2.找形参和变量声明,将变量和形参名作为AO属性名, 值为undefined;
+                            // 3.将实参和形参相统一;
+                            // 4.在函数体里面找到函数声明, 将函数名变为AO的属性名, 值赋予函数体;
+                                
+                                // 1.创建AO对象;
+                                    // AO = {
+                                        
+                                    // }
+                                // 2.找形参和变量声明,将变量和形参名作为AO属性名, 值为undefined; 
+                                    // (这一步就是变量声明提升, 局部域形参提升, 函数整体提升的一个过程);
+                                    // AO = {
+                                    //     a : undefined,
+                                    //     b : undefined,
+                                        
+                                    // }
+                                // 3.将实参和形参相统一;
+                                    // AO = {
+                                    //     a : 1,
+                                    //     b : undefined,
+                                        
+                                    // }
+                                // 4.在函数体里面找到函数声明,值赋予函数体;
+                                    // a原来的1值, 但是现在被覆盖了; 第四步的优先级是最高的;
+                                    // AO = {
+                                    //     a : function a () {},
+                                    //     b : undefined,
+                                    //     d : function d () {},
+                                    // }
+                                
+                                    // function fn(a){
+                                    //     console.log(a);         
+                                    //         AO = {
+                                    //             a : function a () {},
+                                    //             b : undefined,
+                                    //             d : function d () {},
+                                    //         }
+                                    //     var a = 123;            // 此时的a变成123
+                                    //     console.log(a);         
+                                    //         AO = {
+                                    //             a : 123,
+                                    //             b : undefined,
+                                    //             d : function d () {},
+                                    //         }
+                                    //     function a () {}            // 第二部函数整体提升已经提升上去了, 所以这步就不用看了;
+                                    //     console.log(a);         
+                                    //         AO = {
+                                    //             a : 123,
+                                    //             b : undefined,
+                                    //             d : function d () {},
+                                    //         }
+                                    //     var b = function (){}           // b此时是一个函数;        
+                                    //     console.log(b);         
+                                    //         AO = {
+                                    //             a : 123,
+                                    //             b : function () {},
+                                    //             d : function d () {},
+                                    //         }
+                                    //     function d () {}
+                                    // }
+                                    // fn(1);
+                                
+
+                            // 习题;
+                            
+                                // function test (a, b) {
+                                //     console.log(a);         // 1
+                                //     c = 0;
+                                //     var c;
+                                //     a = 3;
+                                //     b = 2;
+                                //     console.log(b);         // 2
+                                //     function b () {}
+                                //     function d () {}
+                                //     console.log(b);         // 2
+                                // }
+                                // test(1);
+
+                                // function test (a, b) {
+                                //     console.log(a);             // function a () {};
+                                //     console.log(b);             // undefined;
+                                //     var b = 234;                
+                                //     console.log(b);             // 234;
+                                //     a = 123;
+                                //     console.log(a);             // 123;
+                                //     function a () {}
+                                //     var a;
+                                //     b = 234;
+                                //     var b = function () {};
+                                //     console.log(a);              // 123; 
+                                //     console.log(b);              // function () {};
+                                // }
+                                // test(1);
+
+
+                                // console.log(test);          // function test () {};
+                                // function test () {
+                                //     console.log(test);          // function test () {};
+                                //     var test = 234;
+                                //     console.log(test);          // 234;
+                                //     function test () {
+
+                                //     }
+                                // }
+                                // test(1);
+                                // var test = 123;
+                                    
+                                    // AO 和 GO 的链式关系 GOAO都有一个函数
+                                    // 如果AO有test 就使用AO的 如果没有就去GO上找test();
+                                    // 如下解析:
+                                        // console.log(test);          // function test () {};
+                                        // function test () {
+                                        //     console.log(test);          // undefined;
+                                        //     var test = 234;
+                                        //     console.log(test);          // 234;
+                                        // }
+                                        // test(1);
+
+                                        // testAO里面什么也没有 他只能上GO去找global;
+                                        // console.log(test);          // function test () {...};
+                                        // function test () {
+                                        //     console.log(test);          // function test () {...}
+                                        // }
+                                        // test(1);
+                                
+                                
+                                
+                                // global = 100;
+                                // console.log(global);                // 100
+                                // function fn () {
+                                //     console.log(global);            // undefined
+                                //     global = 200;
+                                //     console.log(global);            // 200;
+                                //     var global = 300;
+                                // }
+                                // fn();
+                                // var global;
+
+                                
+
+                                
+                                // if 条件不成立 但是预编译变量声明提升会打破这个规则, 会把var b拿出来, 但是不执行 b = 123这个步骤;
+                                // function test () {
+                                //     console.log(b);         // undefined;
+                                //     if(a){
+                                //         var b  = 123;
+                                //     }
+                                //     c = 234;
+                                //     console.log(c);         // 234;
+                                // }
+                                // var a;
+                                // test();
+                                // a = 10;
+                                // console.log(c);             // 234;
+                                
+
+                                // function bar () {
+                                //     return foo;
+                                //     foo = 10;
+                                //     function foo () {
+                                        
+                                //     }
+                                //     var foo = 11;
+                                // }
+                                // console.log(bar());          // function foo(){};
+
+
+                                // console.log(bar());          // 11;
+                                // function bar(){
+                                //     foo = 10;
+                                //     function foo () {
+
+                                //     }
+                                //     var foo = 11;
+                                //     return foo;
+                                // }
+
+                                
+
+                                // a = 100;
+                                // function demo (e) {
+                                //     function e () {}
+                                //     arguments[0] = 2;
+                                //     console.log(e);         // 2
+                                //     if(a){
+                                //         var b = 123;
+                                //         function c() {
+                                //             // 现在if中定义的函数声明是语法不通过的(谷歌内核不认识), 所以函数c是拿不出来的; 但是过去可以;
+                                //             // 就是if 条件不成立 不执行if中的语句 但是变量声明b 可以打破规则提升,但是不能赋值;
+                                //             // 而function 17年可以提升像变量声明那样打破规则提升, 但是17年之后不可以函数整体提升了;
+                                //             // 所以以后 if 中不允许声明function;
+                                //         }
+                                //     }
+                                //     var c;
+                                //     a = 10;
+                                //     var a;
+                                //     console.log(b);     // undefined;
+                                //     f = 123;
+                                //     console.log(c);     // function c () {};
+                                //     console.log(a);     // 10;
+                                // }
+                                // var a;
+                                // demo(1);
+                                // console.log(a);     // 100;
+                                // console.log(f);     // 123;
+
+
+
+                                // var str = false + 1;
+                                // console.log(str);               // 1;
+                                // var demo = false == 1;
+                                // console.log(demo);              // false;
+                                // if (typeof(a) && -true + (+undefined) + '') {           // 'undefined' && -1 + NaN + ''
+                                //     console.log('基础扎实');
+                                // }
+                                // if(11 + '11' * 2 == 33){                    // 11 + 22 == 33 先算乘除;
+                                //     console.log('基础扎实');
+                                // }
+                                // !!" " + !!"" - !!false || console.log('可以打印吗');         // true + false - false || console.log('可以打印吗');
+                                //                                                             // 1 + 0 - 0 || 前面是对的就不会往后看了;
+                                
+                                
+                                // (window.foo || (window.foo = 'bar'));
+                                // () 优先级最高, 所以先计算window.foo == 'bar'; 返回'bar';
+                                // (window.foo || 'bar')    ==>     (undefined || 'bar')    ==> 'bar';
+                                // 如果不加里面的括号(window.foo || window.foo = 'bar'); 都会报错
+                                // || 是或运算符; 也是一个运算符;
+                                // 因为 || 优先级比 = 优先级高 就先计算 window.foo || window.foo了;
+                            
+                        // 函数体系外的预编译(全局预编译);
+                            // 1.创建GO对象; 所说的这个GO 就是window; 就是这个script的标签;
+                            // 2.找变量声明,将变量名作为AO属性名, 值为undefined;
+                            // 3.在全局找函数声明, 将函数名变为GO的属性名, 值赋予函数体;
+                            // var a = 123;
+                            // function a () {};
+                            
+                            // 再回过头来看全局变量和暗示全局变量归属window所有的问题;
+                            // function test(){
+                            //     var a = b = 123;
+                            // }
+                            // test();
+                            // 以下解读:
+                            // AO = {
+                            //     a : undefined,
+                            // }
+                            // GO = {
+                            //     test : function test () {},
+                            //     b : 123
+                            // }
+                            // 在执行test 的时候会生成一个test的AO对象;
+                            // 但是testAO对象对 b 可无动于衷啊 b在AO对象中也不是变量声明, 也不是形参;更不是函数;
+                            // testAO 只能定义var 后面的a 值为undefined; 并不能在AO定义b
+                            // 而这个b就是一个暗示全局变量;(所有未声明就赋值的东西都会形成一个暗示全局变量);
+                            
+                // 3.解释执行
+                    // 最后才会解释一行执行一行....这样, 也就是说在解释执行js代码块之前还有两步, 第一步叫做语法分析, 第二步叫做预编译, 第三步才会到解释执行的时候;
+                    
+    </script>                   
+</body>
+
+</html>

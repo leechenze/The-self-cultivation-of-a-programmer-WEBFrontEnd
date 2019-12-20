@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 查找元素节点 -->
+    <!-- <div id="only"></div>
+    <div class="class"></div>
+    <p></p>
+    <input type="text" name='input'>
+    <div><span><strong></strong><strong></strong><strong></strong></span></div> -->
+
+
+    <!-- 节点属性 -->
+    <div>
+        123
+        <!-- this is Comment -->
+        <strong class='isStrong' id="isStrongOnly"></strong>
+        <em></em>
+    </div>
+    <div id="empty"></div>
+
+
+
+
+    <!-- 遍历节点树 -->
+    <!-- <div>
+        <strong></strong>
+        <span></span>
+        <em></em>
+    </div> -->
+    
+    
+    
+
+    
+    <!-- 遍历元素节点树 -->
+    <!-- <div>
+        <strong></strong>
+        <span></span>
+        <em></em>
+    </div> -->
+    
+    
+    
+    
+    
+    
+    <script>
+        
+        // 什么是DOM;
+            // 1.Document(文档)
+            // 2.Object(对象)
+            // 3.Model(模型)
+        
+        // DOM定义了表示和修改文档所需的方法. DOM也是一个对象别称宿主对象, 由浏览器厂商定义, 用来操作html和xml功能的一类对象的集合.
+        // 也可以说DOM是对HTML以及XML的标准编程接口;
+            // 什么是xml;
+            // xml是html的一个最早版本, 开始现有的是xml, 后来衍生xhtml, 现在是html4.0, 以及5.0; 这么一个过程
+            // xml和html唯一的不用就是可以标签名可以自定义, 由于这个特性XML和JSON一样, 就成为了一种数据存储结构一种数据存储方法了, 存储格式就是标签语义格式;
+            // 最开始数据库的基本格式都是基于XML的, 现在被JSON格式慢慢取代了;
+            // DOM只能操作html 包括其中的属性等, 所以属性中有一个style可以操作样式, DOM可以间接的操作样式并不能直接操作css样式表, css为后缀的样式文件;
+        
+        // 节点类型
+            //                         nodeType返回的节点值;
+            // 元素节点                 1;
+            // 属性节点                 2;
+            // 文本节点                 3;
+            // 注释节点                 8;
+            // document                 9;
+            // documentFragment         11;
+            // 获取节点类型方法         nodeType;
+
+        
+
+
+        // 节点属性;
+            // 每一个节点基本上都有四个属性;
+            // nodeName             (元素的标签名, 以大写形式表示, 只读;)
+                // var div = document.getElementsByTagName('div')[0];
+                // console.log(document.nodeName);
+                //     // document是个单独的节点类型;
+                // console.log(div.childNodes[0].nodeName);
+                //     // 有内容的文本节点;
+                // console.log(div.childNodes[1].nodeName);
+                //     // 注释节点;
+                // console.log(div.childNodes[2].nodeName);
+                //     // 无内容的文本节点;
+                // console.log(div.nodeName);
+                //     // div的标签节点;
+                // console.log(div.lastElementChild.nodeName);
+                //     // em的标签节点;
+
+            // nodeValue            // (attribute节点,Text节点或者Comment节点的文本内容, 可读写; 只有文本节点和注释节点或者属性节点有nodeValue属性,其他节点类型都没有这个属性);
+                // var div = document.getElementsByTagName('div')[0];
+                // console.log(div.childNodes[0].nodeValue);
+                //     div.childNodes[0].nodeValue = '930316';
+                //     console.log(div.childNodes[0]);
+                // console.log(div.childNodes[1].nodeValue);
+                //     div.childNodes[1].nodeValue = 'that is Comment';
+                //     console.log(div.childNodes[1]);
+
+            // nodeType             (返回该节点的类型, 只读;)
+                // var div = document.getElementsByTagName('div')[0];
+                // console.log(div.childNodes[0].nodeType + '====================123');
+                // console.log(div.childNodes[1].nodeType + '====================<!-- this is Comment');
+                // console.log(div.childNodes[2].nodeType + '====================emptyText');
+                // console.log(div.childNodes[3].nodeType + '====================<strong class=\'isStrong\' id="isStrongOnly"></strong>');
+                // console.log(div.childNodes[4].nodeType + '====================emptyText');
+
+                // 封装一个能返回元素节点的方法;
+                // function retElementChild(node) {
+                    
+                //     // 创建一个类数组
+                //     var classArr = {
+                //         length:0,
+                //         push: Array.prototype.push,
+                //         splice: Array.prototype.splice,
+                //     },
+                //     child = node.childNodes;
+                //     for(var i = 0; i < child.length; i++) {
+                //         if(child[i].nodeType == 1) {
+                //             classArr.push(child[i]);
+                //         }
+                //     }
+                //     return classArr;
+                // }
+                
+                // retElementChild(div);
+                
+            
+            // attributes           (Element 属性节点的集合, 只有元素节点才有这个属性; 可读写);
+                // var strong = document.getElementsByTagName('strong')[0];
+                // console.log(strong.attributes);
+                //     // 属性节点集合;
+                // console.log(strong.attributes[0]);
+                //     // 属性节点;
+                // console.log(strong.attributes[0].nodeType);
+                //     // 属性节点返回2;
+
+                // 通过attributes身上的value属性还可以取值和赋值!
+                // 但是不可以更改name属性(也就是标签上的属性名 id class这些);
+                // console.log(strong.attributes[0].name);
+                // console.log(strong.attributes[0].value);
+                // strong.attributes[0].value = 'sss';
+                // console.log(strong.attributes[0]);
+                
+                // strong.getAttribute('id') === strong.attributes[1].value === strong.attributes[1].nodeValue;
+                // strong.setAttribute('id', 'asdf') === (strong.attributes[1].value = 'asdf') === (strong.attributes[1].nodeValue = 'asdf');
+                
+                
+                
+            // hasChildNodes();         (判断该元素是否有子节点, 返回布尔值);
+                // var div = document.getElementsByTagName('div')[0];
+                // var empty = document.getElementById('empty');
+                //     console.log(div.hasChildNodes());
+                //     console.log(empty.hasChildNodes());
+        
+            
+        
+        // 节点的查询;
+            // 查找元素节点;
+                // document代表整个文档;
+                    // document是页面不可展示的根元素, document是html的父元素; html.parentNode是document, docuemnt.parentNode是null,
+                    // 也就是说document就是顶级父元素;
+                    // document是html标签以外的标签元素, 但是并不会显示出来, html是document中的根标签, 并不能代表整个文档;
+                // 返回通过元素ID名称匹配的元素;
+                // document.getElementById()
+                    // var div = document.getElementById('only');
+                // 返回通过元素标签名称匹配的元素;
+                // document.getElementsByTagName();
+                    // var p = document.getElementsByTagName('p')[0];
+                // 返回通过元素name属性匹配的元素;(需要注意, 理论上只有部分表单标签name可生效, (表单元素, img, iframe), 现在任何标签的name属性都可以获取了);
+                // document.getElementsByName();
+                    // var input =  document.getElementsByName('input')[0];
+                // 返回通过元素类名匹配的元素;(可以多个class放在一起);
+                // document.getElementsByClassName();
+                    // var classp = document.getElementsByClassName('class')[0];
+                // 返回通过css查询选择器匹配的元素;(IE7 以及一下版本中不生效);
+                // document.querySelector();
+                    // var strong = document.querySelector('div > span > strong');
+                    // 但是因为querySelect和querySelectAll不是实时的, 所以导致在用法上特别收局限, 虽然querySelect和All特别强大,
+                    // 但这个致命的缺点导致它并不常用在开发中, 除非特殊情况保存一个DOM元素副本保存起来, 否则很少使用;
+                    // 非实时就是当页面元素删除或者新增时, querySelect并不能同时动态变更查找到的元素, 原来查找到几个元素就定死了,
+                    // 如果再次新增或删除元素, querySelect返回的元素或者元素集合中不会在改变了, 也就是集合储存定死了第一次查找到的一个镜像;
+                    // 但是其他操作都是可以正常施行的;
+                    
+                // 返回通过css查询选择器匹配的元素集合;(IE7 以及一下版本中不生效);
+                // document.querySelectorAll();
+                    // var strong = document.querySelectorAll('div > span > strong');
+                // 返回一个创建的DIV元素;
+                // document.createElement('div');
+                
+            //  遍历节点树;
+                // parentNode          // 父节点(最顶端的parentNode为#document);
+                    // var strong = document.getElementsByTagName('strong')[0];
+                    // console.log(strong.parentNode);
+                    // console.log(strong.parentNode.parentNode.parentNode.parentNode);
+                    
+                // childNodes          // 子节点集合;
+                    // var div = document.getElementsByTagName('div')[0];
+                    // console.log(div.childNodes);
+                    // console.log(div.childNodes.length);
+
+                // firstChild          // 第一个子节点;
+                    // var div = document.getElementsByTagName('div')[0];
+                    // console.log(div.firstChild);
+                
+                // lastChild           // 最后一个子节点;
+                    // var div = document.getElementsByTagName('div')[0];
+                    // console.log(div.lastChild);
+                
+                // nextSibling         // 下一个兄弟节点;
+                    // var strong = document.getElementsByTagName('strong')[0];
+                    // console.log(strong.nextSibling);
+                
+                // previousSibling     // 前一个兄弟节点;
+                    // var strong = document.getElementsByTagName('strong')[0];
+                    // console.log(strong.previousSibling);
+            
+
+            // 基于元素节点树的遍历;(遍历元素节点的方法中除了children以外, 其他方法都是IE9以及IE9以下不兼容);
+                // parentElement           // 返回当前元素的父元素节点(IE不兼容);
+                    // var strong = document.getElementsByTagName('strong')[0];
+                    // console.log(strong.parentElement);
+                    
+                // children                // 返回当前元素的子节点;
+                    // var div = document.getElementsByTagName('div')[0];
+                    // console.log(div.children);
+                    
+                // node.childElementCount  ===  node.children.length;
+                //                         // 返回当前元素节点的子元素个数(后者IE不兼容);
+                    
+                    // var div = document.getElementsByTagName('div')[0];
+                    // console.log(div.children.length);
+                    // console.log(div.childElementCount);
+                    
+                // firstElementChild       // 返回第一个元素节点(IE不兼容);
+                    // var div = document.getElementsByTagName('div')[0];
+                    // console.log(div.firstElementChild)
+                
+                // lastElementChild        // 返回最后一个元素节点(IE不兼容)
+                    // var div = document.getElementsByTagName('div')[0];
+                    // console.log(div.lastElementChild);
+                
+                // nextElementSibling      // 返回下一个兄弟元素节点(IE不兼容);
+                    // var span = document.getElementsByTagName('span')[0];
+                    // console.log(span.nextElementSibling);
+
+                // previousElementSibling  // 返回上一个兄弟元素节点(IE不兼容);
+                    // var span = document.getElementsByTagName('span')[0];
+                    // console.log(span.previousElementSibling);
+                
+                
+                
+        
+    </script>
+</body>
+</html>

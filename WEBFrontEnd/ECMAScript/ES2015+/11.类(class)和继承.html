@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div{
+            width:100px;
+            height:100px;
+            background:red;
+            border:2px solid #000;
+            position: absolute;
+            top:0;
+        }
+        #left{
+            left:0;
+        }
+        #right{
+            right:0;
+        }
+    </style>
+</head>
+<body>
+    <div id="left">
+        left    
+    </div>
+    <div id="right">
+        right
+    </div>
+    <!-- <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script> -->
+    <script type="module"></script>
+    <script type='text/javascript'>
+        // ES5中函数模拟类;
+        
+        // function Person(name,age){
+        //     this.name = name;
+        //     this.age = age;
+        // }
+        // Person.prototype.showName = function(){
+        //     return `person的名字为${this.name}`;
+        // }
+        // Person.prototype.showAge = function(){
+        //     return `person的名字为${this.age}`;
+        // }
+
+        // Object.assign(Person.prototype,{
+        //     showName:function (){
+        //         return `${this.name}`
+        //     },
+        //     showAge: function (){
+        //         return `${this.age}`
+        //     }
+        // })
+
+        // let p1 = new Person('leecs',30);
+        // console.log(p1.showName());
+        // console.log(p1.showAge());
+
+        
+
+
+        // ES6中的类
+            
+            // class Person{
+            //     constructor(name,age){
+            //         this.name = name
+            //     }    
+            //     showName(){
+            //         return `${this.name}`;
+            //     }
+            // }
+            
+            // let p1 = new Person('leecs');
+            // console.log(p1.showName());
+
+            
+
+            // 表达式形式的声明类; (不推荐);
+            // const Person = class{
+            //     constructor(name){
+            //         this.name = name;                    
+            //     }
+            //     showName(){
+            //         return `${this.name}`;
+            //     }
+            // }
+
+            // let p1 = new Person('leecs');
+            // console.log(p1.showName());
+
+            
+
+
+
+            // 第三种方法;
+            // let aaa = 'strive';
+            // let bbb = 'method';
+            // class Person{
+            //     constructor(name){
+            //         this.name = name;
+            //     }
+            //     showName(){
+            //         return `${this.name}`;
+            //     }
+            //     aaa(){
+            //         return `随便了.....`;
+            //     }
+            //     [aaa](){
+            //         return 'aaa随便了....';
+            //     }
+            //     [aaa+bbb](){
+            //         return 'a+b随便le.....';
+            //     }
+            // }
+            
+            // let p1 = new Person('leecs');
+            // console.log(p1.showName());
+            // console.log(p1.aaa());
+            // console.log(p1.strive());
+            // console.log(p1.strivemethod());
+            // console.log(p1[aaa+bbb]);
+
+            // let a = 'strive';
+            // let b = 'method';
+            // let json = {
+            //      [a+b](){
+            //        console.log('这是a+b的结果');
+            //      },
+            //      [b+a]:function(){
+            //          console.log('这是b+a的结果');
+            //      }
+            // }
+            
+            // console.log(json.strivemethod());
+            // console.log(json.methodstrive());
+
+            
+
+            // class 定义类的时候需要注意的地方;
+            
+            // let p1 = new Person();
+            // console.log(p1);
+            
+            // class Person{
+            //     constructor(){
+            //         this.name = 'leecs';
+            //     }
+            // }
+
+            // let p1 = new Person('leecs');
+            // console.log(p1);
+            
+            
+            
+
+            // Person.prototype.showName = function (){
+            //     console.log(this.name);
+            // }
+            
+            // class Person{
+            //     constructor(){
+            //         this.name = 'leecs';
+            //         this.showName = this.showName.bind(this);
+            //     }
+            //     showName(){
+            //         console.log(this.name);
+            //         return `${this.name}`;
+            //     }
+            // }
+
+            // let p1 = new Person();
+            // let {showName} = p1;
+            // // 这样解构出来直接执行会有this问题 this是undefined
+            // // 如果正常通过p1调用showName()是不会有this问题的
+            // // 解构实例对象this问题解决 就需要绑定this
+            // // 在constructor中  this.fnName = this.fnName.bind(this);
+            // console.log(showName());
+            
+            
+
+            // // 存值,取值函数(setter,getter);
+            // class Person{
+            //     constructor(){
+            //         this.name = 'leecs';
+            //     }
+            //     // 当在构造出来的实例对象添加一个值的时候 会默认触发setter函数; 也同样可以操作constructor中内部定义的值;
+            //     set aaa(aaa){
+            //         this.setaaa = `${aaa}           ${this.name}`;
+            //     }
+            //     // getter函数可以重新定义外部实例对象添加的返回值;
+            //     get aaa(){
+            //         return this.setaaa;
+            //     }
+            // }
+            // let p1 = new Person();
+            
+            // // p1是个构造出来的实例对象 我们也可以在外面给他设值;
+            // p1.aaa = 'strive';
+            // console.log(p1.aaa);
+            
+
+
+
+            // 静态方法;
+            // class Person{
+            //     constructor(){
+                    
+            //     }
+            //     showName(){
+            //         return `这是showName方法`;
+            //     }
+            //     static showName(){
+            //         return `这是类的静态方法`;
+            //     }
+            // }
+            
+            // let p1 = new Person();
+            // console.log(p1.showName());
+            // console.log(Person.showName());
+            
+
+            // 父类的静态方法又可以被子类继承;
+            // 类的继承
+                // 父类
+                // class Person{
+                //     constructor(name,skill){
+                //         this.name = name;
+                //         this.skill = skill;
+                //     }
+                //     showName(){
+                //         console.log('父类的showName执行了');
+                //         return `父类的名字是${this.name}`;
+                //     }
+                //     static showName(){
+                //         console.log(`这是父类的静态方法`);
+                //         return `这是父类的静态方法`;
+                //     }
+                // }
+                
+                // // 子类
+                // class Son extends Person{
+                //     // 子类需要声明自己的属性 就需要定义一个constructor; 那么子类定义的constructor就会将父类的覆盖
+                //     // 所以ES6规定的 子类的构造函数中必须执行一个函数就是super(); 所谓super就是父级的构造函数 (super == Person);
+                //     // super执行 就相当于把父级的属性拉过来了 这样就继承了父级的属性; 同时constructor也有arguments;
+                //     // 参数接受 父类的constructor中有几个参数就要在子类的super()中传递几个参数; \
+                //     // 也可以直接传递一个arguments进去;
+                //     // 子类的constructor是不需要传递arguments的; 
+                //     // arguments就是函数中的arguments可以直接 构造函数中获取;
+                    
+                //     constructor(name,skill){
+                //         super(name);
+                //         this.skill = skill;
+                //         // super(arguments);
+                //         // this.name = arguments[0];
+                //         // this.skill = arguments[1]
+                //     }
+                    
+                //     // 父类有showName方法 如果这时候在子级也定义一个showName方法 那么子级的方法就会将父级的方法覆盖掉;
+                //     // 如果必须要在子类调用父类的showName 保证父类的showName方法也执行
+                //     // 就需要super身上的方法 super.showName(); 
+                //     // super可以当函数在constructor中直接调用 也可以当对象来调用他身上的方法;              
+                //     showName(){
+                //         super.showName(); // 父级的showName方法执行;
+                //         // 去做子级的事情;
+                //         console.log('子类showName执行了');
+                //         // 返回值还是会执行子类的; 父类的返回值在子类中并不会执行;
+                //         // 父类的返回值执行可以: return super.showName();
+                //         // return super.showName();
+                //         return `子类中的showName`;
+
+                //     }
+
+                //     showSkill(){
+                //         return `哥们的技能是:${this.skill}`;
+                //     }
+                    
+
+                //     // 静态方法也可以从super调用 子类调用父类的static方法也只能在静态函数中调用
+                //     static showName(){
+                //         super.showName();
+                //         return `这是子类的静态方法`;
+                //     }
+                    
+                // }
+                // let s1 = new Son('leecs','开车');
+                // // console.log(s1.name);
+                // // console.log(s1.skill);
+                // // console.log(s1.showName());
+                // // console.log(s1.showSkill());
+                // // console.log(Son.showName());
+
+            // ES5 的继承
+                // // 父类
+                // function Person(name){
+                //     this.name = name;
+                // }
+
+                // Person.prototype.showName = function (){
+                //     return `父类的名字是${this.name}`;
+                // }
+                
+                // // 子类
+                // function Son(name,skill){
+                //     Person.call(this,name);
+                //     this.skill = skill;
+                // }
+                
+                // Son.prototype = new Person();
+
+                // // 调用
+                // let s1 = new Son('leecs','开车');
+                // console.log(s1.name);
+                // console.log(s1.showName());
+            
+            
+            
+            
+            
+            
+                    
+            
+            
+            // ES6继承的拖拽案例;
+            class Drag{
+                constructor(id){
+                    this.oDiv = document.querySelector(id);
+                    this.disX = 0;
+                    this.disY = 0;
+                    this.init();
+                }
+                init(){
+                    this.oDiv.onmousedown = function(ev){
+                        this.disX = ev.clientX - this.oDiv.offsetLeft;
+                        this.disY = ev.clientY - this.oDiv.offsetTop;
+                        document.onmousemove = this.fnMove.bind(this);
+                        document.onmouseup = this.fnUp.bind(this);
+                        return false;
+                    }.bind(this);
+                }
+                fnMove(ev){
+                    this.oDiv.style.left = ev.clientX - this.disX + 'px';
+                    this.oDiv.style.top = ev.clientY - this.disY + 'px';
+                }
+                fnUp(){
+                    document.onmouseover = null;
+                    document.onmouseup = null;
+                }
+            }
+            
+            // 子类
+            class LimiDrag extends Drag{
+                // 子类中从写父级已经有的方法 就必须定义super.snMove() 否则就会将父级的方法覆盖;
+                fnMove(ev){
+                    // 子类中限制范围;
+                    super.fnMove(ev);
+                    if(this.oDiv.offsetLeft <= 0){
+                        this.oDiv.style.left = 0+'px';
+                    }else if (this.oDiv.offsetTop <= 0){
+                        this.oDiv.style.top = 0+'px';
+                    }else if (this.oDiv.offsetLeft >= (window.innerWidth - this.oDiv.offsetWidth)){
+                        // console.log(window.innerWidth - this.oDiv.offsetWidth)
+                        this.oDiv.style.left = (window.innerWidth - this.oDiv.offsetWidth) + 'px';
+                    }else if (this.oDiv.offsetTop >= (window.innerHeight - this.oDiv.offsetHeight)){
+                        this.oDiv.style.top = (window.innerHeight - this.oDiv.offsetHeight) + 'px';
+                    }
+                }
+            }
+
+            new Drag('#left');
+            new LimiDrag('#right');
+            
+            
+            
+        
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./Plugins/select2-develop/dist/css/select2.min.css">
+    <link rel="stylesheet" href="./Plugins/datetimepicker-2.5.20/build/jquery.datetimepicker.min.css">
+    <link rel="stylesheet" href="./Plugins/fullPage.js-master/dist/fullpage.min.css">
+</head>
+
+<body>
+
+    <!-- select2插件 -->
+    <!-- https://select2.org/ -->
+    <select id="mySelect" name="" id="">
+        <option value="1">上海市</option>
+        <option value="2">云南省</option>
+        <option value="3">内蒙古自治区</option>
+        <option value="4">北京市</option>
+        <option value="5">吉林省</option>
+        <option value="6">四川省</option>
+        <option value="7">天津市</option>
+        <option value="8">宁夏回族自治区</option>
+        <option value="9">安徽省</option>
+        <option value="10">山东省</option>
+        <option value="11">山西省</option>
+        <option value="12">广东省</option>
+        <option value="13">广西壮族自治区</option>
+        <option value="14">新疆维吾尔自治区</option>
+        <option value="15">江苏省</option>
+        <option value="16">江西省</option>
+        <option value="17">河北省</option>
+        <option value="18">河南省</option>
+        <option value="19">浙江省</option>
+        <option value="20">海南省</option>
+        <option value="21">湖北省</option>
+        <option value="22">湖南省</option>
+        <option value="23">甘肃省</option>
+        <option value="24">福建省</option>
+        <option value="25">西藏自治区</option>
+        <option value="26">贵州省</option>
+        <option value="27">辽宁省</option>
+        <option value="28">重庆市</option>
+        <option value="29">陕西省</option>
+        <option value="30">青海省</option>
+        <option value="31">黑龙江省</option>
+    </select>
+
+    <select id="mySelect0" name="" id=""></select>
+    
+    <select id="mySelect1" name="" id=""></select>
+
+
+
+    
+    <br>
+    <!-- 事件日期插件 -->
+    <!-- https://github.com/xdan/datetimepicker -->
+    <input id="dateTime" type="text">
+    <button class="dateTimeBtn">获取时间</button>
+    
+    
+    
+    
+    
+    <!-- fullpage 全屏滚动 -->
+    <!-- https://alvarotrigo.com/fullPage/zh/#page1 -->
+    <style>
+        #wrapper{
+            text-align: center;
+        }
+        .nav{
+            padding: 20px;
+        }
+        .nav a{
+            padding: 5px;
+            text-decoration: none;
+        }
+    </style>
+
+    <div class="nav">
+        <a href="#firstPage">欢迎来到leecsGitHub</a>
+        <a href="#secondPage">two</a>
+        <a href="#thirdPage">three</a>
+        <a href="#forthPage">four</a>
+        <a href="#fivePage">five</a>
+        <a href="#lastPage">lastPage</a>
+    </div>
+    
+    <div id="wrapper">
+        <div class="section"><h1>欢迎来到leecsGitHub</h1></div>
+        <div class="section">
+            <div class="slide">twoOne</div>
+            <div class="slide">twoTwo</div>
+            <div class="slide">twoThree</div>
+        </div>
+        <div class="section">three</div>
+        <div class="section">four</div>
+        <div class="section">five</div>
+        <div class="section">lastPage</div>
+    </div>
+    
+    
+    
+    
+    
+    
+
+
+    <!-- lazyload图片加载 -->
+    <!-- https://github.com/tuupola/lazyload -->
+    <!-- https://appelsiini.net/projects/lazyload/ -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <script src="./jQuery/jquery3.4.1.min.js"></script>
+    <!-- select2插件 -->
+    <script src="./Plugins/select2-develop/dist/js/select2.full.min.js"></script>
+    <!-- 时间日期插件 -->
+    <script src="./Plugins/datetimepicker-2.5.20/build/jquery.datetimepicker.full.min.js"></script>
+    <!-- 全屏滚动插件 -->
+    <script src="./Plugins/fullPage.js-master/dist/fullpage.min.js"></script>
+    
+    
+    
+    
+    
+    
+    
+    <script>
+        $(document).ready(function () {
+            // select2插件
+                // select元素直接调用select2方法即可使用
+                $('#mySelect').select2({
+                    width: '500px',
+                });
+
+                // opation可以使用data参数填充
+                $('#mySelect0').select2({
+                    width: 100,
+                    data: [
+                        {id:1,text:'trump'},
+                        {id:2,text:'xijinping'},
+                        {id:3,text:'pujign'},
+                        {id:4,text:'obama'},
+                        {id:5,text:'linken'},
+                        {id:6,text:'huasd'},
+                    ]
+                })
+
+                // 也可以ajax填充opation;
+                $('#mySelect1').select2({
+                    width: 100,
+                    ajax: {
+                        url:'http://zhouxunwang.cn/data/?id=104&key=VuvO/9VgTt7+h5yJ84oxR2fJOwTgsJeZ/pxz7fk&ske=1',
+                        dataType: 'json',
+                        processResults: function (data){
+                            // 需要把数据return出来, 一个对象形式, 并且对象中有一个results属性, 这个属性是数组, 而数组就是前面data的形式;
+                            // 处理一下返回的数据处理成data需要的规范;
+                            var resList = [];
+                            $.each(data.result, function (ind, item) {
+                                resList.push({id: item.id, text: item.province});
+                            })
+                            return {
+                                results: resList,
+                            }
+                        }
+                    }
+                })
+            
+            
+            // 事件日期插件;
+                // 设置语言为汉字
+                $.datetimepicker.setLocale('zh');
+                $('#dateTime').datetimepicker({
+                    datepicker: true,           // 只显示日期, 不显示当前时间;
+                    timepicker: false,          // 不显示时间, 只显示当前日期;
+                    format: 'Y-m-d H:i',        // 改变显示格式;大写H是二十四小时制,小写是12小时制;
+                    value: '添加默认值',        // 添加默认值
+                });
+                
+                $('.dateTimeBtn').click(function () {
+                    console.log($('#dateTime').val());
+                })
+            
+
+            
+            
+            // 全屏滚动插件
+                // $('#wrapper').fullpage({
+                    // Code...
+                // });
+                
+                var wrapper = new fullpage('#wrapper', {
+                    navigation: true,       // 导航小点点
+                    navigationTooltips: ['firstPage', 'secondPage', 'thirdPage', 'forthPage', 'fivePage', 'lastPage'],   // 设置每一个导航划过时候的提示信息;
+                    sectionsColor: ['orange', 'skyblue', 'pink', 'red', 'yellow', 'green'],     // 设置背景颜色;
+                    showActiveTooltip: true,    // 默认显示导航提示信息;
+                    slidesNavigation: true,     // 横向滚动的导航显示;
+                    anchors: ['firstPage', 'secondPage', 'thirdPage', 'forthPage', 'fivePage', 'lastPage'],     // 设置nav锚点指定信息;
+                    sectionSelector: '.section',    // 自定义选择器 纵向
+                    slideSelector: '.slide',        // 自定义选择器 横向
+                })
+            
+            
+            
+            
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,449 @@
+壹、贰、叁、肆、伍、陆、柒、捌、玖、拾
+        
+    var str = "abcdefg";
+
+    转义字符"\", 这个反斜杠在字符串中, 就会把反斜杠后面的东西强制性变成文本, 并且反斜杠不会输出;
+        console.log('asdfg\'hjkl');
+        console.log('asdfg\\hjkl');
+    多行字符串
+        console.log('');
+    
+    字符串换行符"\n"
+        console.log('asdf\nghjl');
+    
+    系统规定字符串不可以换行, 但是如果加上反斜杠, 就会将换行变成文本格式;
+    var divInnerHTML = '\
+            <div></div>\
+            <span></span>\
+        '
+    console.log(divInnerHTML);
+
+
+正则表达式(RegExp);
+    正则表达式的作用: 匹配特殊字符或有特殊搭配原则的字符的最佳选择;
+    
+    两种创建方式:
+        1.直接量
+            var reg = /abc/i;
+            console.log(reg.test('abcd'))
+        2.new RegExp();
+            var reg1 = new RegExp('abc','i');
+            console.log(reg.test('abcd'));
+            
+            var reg2 = RegExp(reg);
+            console.log(reg2);
+            reg.abc = 123;
+            console.log(reg2.abc);
+            如果不加new返回的就是reg的一个引用;
+            
+            var reg3 = new RegExp(reg);
+            console.log(reg3);
+            reg.abc = 234;
+            console.log(reg3.abc);
+            正常new返回的就是一个新的RegExp对象;
+
+
+    修饰符
+        
+        i, 忽视正则匹配片段的大小写;
+            var reg = /asdf/i;
+            var str = 'ASDFG';
+            console.log(str.match(reg))
+            
+        g, 执行全局匹配;
+            var reg = /ad/g;
+            var str = 'adadadadadadad';
+            console.log(str.match(reg))
+            
+        m, 执行多行匹配;
+            var reg = /^a/gm;
+            \n代表换行之后查找开头的a;
+            var str = 'asdfd\na';
+            console.log(str.match(reg));
+        
+        s, dotAll匹配规则;
+            .代表任何东西但是不会匹配到\n(换行)的, 但是加上s就代表.可以匹配任何东西, *可以匹配零次或者多次;
+            var reg = /a.*l/s;
+            var str = 'asd\nfghjl';
+            console.log(str.match(reg))
+
+    
+    表达式
+        
+        [abc],一个[]就是一个表达式; 一个[] 代表一位, 查找一个字符或是a或是b或是c;
+            查找连续三个从1到9的字符;
+            var reg = /[1234567890][1234567890][1234567890]/g;
+            var str = '12345asdjf20g23r0d203rt389w';
+            console.log(str.match(reg));
+            
+        [^abc], 尖角号在表达式中, 代表非(!), 查找不是a或b或c的一个字符;
+            查找相连的第一个是数字,第二个不是ed的字符;
+            var reg = /[0-9][^ed]/g;
+            var str = 'ab1ced';
+            console.log(str.match(reg));
+            
+        [0-9], 查找一个0到9的字符;
+            查找两位相连的数字;
+            var reg = /[0-9][0-9]/g;
+            var str = '1234';
+            console.log(str.match(reg));
+            
+            
+        [A-Z], 查找一个大写A到Z的字符;    
+            查找两位相连的大写字母;
+            var reg = /[A-Z][A-Z]/g;
+            var str = 'asdZfsGSgs';
+            console.log(str.match(reg));
+        
+        [a-z], 查找一个小写a到z的字符;    
+            查找两位相连的小写字母;
+            var reg = /[a-z][a-z]/g;
+            var str = 'asdf2s';
+            console.log(str.match(reg));
+
+        
+        [A-z], 查找一个字母不论大小写;   
+            查找两位相连的字母;
+            var reg = /[A-z][A-z]/g;
+            var str = 'aHdf2sL';
+            console.log(str.match(reg));
+
+        (red|blue|green), (|, 是正则中的或); 匹配red, 或blue, 或green, 同样只取一位;
+            查找sdf, 或aHd, 或2sL;
+            var reg = /(sdf|aHd|2sL)/g;
+            var str = 'aHdf2sL';
+            console.log(str.match(reg));
+
+    
+    元字符 (其实可表达式差不多, 只不过写法不同);
+        
+        .    等价于    [^\r\n];代表所有东西,除了换行符,和回车符(行结束符), 不能写在[]表达式里面!
+            var reg = /...../g;
+            var str = '阿斯蒂老里头';
+            console.log(str.match(reg));
+
+        \w   等价于    [0-9A-z];    w代表word意思;
+            var reg = /\wcd2/g;
+            var str = 'acd2';
+            console.log(str.match(reg));
+        \W   等价于    [^\w];
+            查找一个[0-9A-z]cd2的字符;
+            var reg = /\Wcd2/g;
+            var str = '*cd2';
+            console.log(str.match(reg));
+        
+        \d   等价于    [0-9];
+            查找三位相连的数字;
+            var reg = /\d\d\d/g;
+            var str = 'aHssa229df2sL';
+            console.log(str.match(reg));
+            
+        \D   等价于    [^\d]
+            查找三位相连的除了数字的任意数字;
+            var reg = /\D\D\D/g;
+            var str = 'aHssa229df汉字2sL';
+            console.log(str.match(reg));
+        
+        
+        \s   空白字符
+            包含: 
+                换行符(\n);   
+                    var reg = /\ncde/g;
+                    var str = 'abc\ncdefgh';
+                    console.log(str.match(reg));
+                换页符(\f);
+                    var reg = /\fcde/g;
+                    var str = 'abc\fcdefgh';
+                    console.log(str.match(reg));
+                回车符(\r)(行结束符);
+                    var reg = /\rcde/g;
+                    var str = 'abc\rcdefgh';
+                    console.log(str.match(reg));
+                制表符(\t);
+                    var reg = /\tcde/g;
+                    var str = 'abc\tcdefgh';
+                    console.log(str.match(reg));
+                垂直制表符(\v);
+                    var reg = /\vcde/g;
+                    var str = 'abc\vcdefgh';
+                    console.log(str.match(reg));
+                空格符;
+                    var reg = / cde/g;
+                    var str = 'abc cdefgh';
+                    console.log(str.match(reg));
+                    
+        \S   非空白字符;
+
+        \b   匹配单词边界;
+            var reg = /\bcde\b/g;
+            var str = 'abc cde fgh';
+            console.log(str.match(reg));
+
+        \B   非单词边界;
+            var reg = /\bcde\B/g;
+            var str = 'abc cdefgh';
+            console.log(str.match(reg));
+            
+        Unicode中国汉字的范围, (/^[\u2E80-\u9FFF]+$/);
+            var reg = /[\u2E80-\u9FFF]/g;
+            var str = 'asd啊手动阀发kasdf2 看多少撒旦发as 的发'
+            console.log(str.match(reg));
+            
+            var reg = /\u6211\u7231\u4f60/g;
+            var str = '我爱你奥巴马';
+            console.log(str.match(reg));
+
+            匹配一切字符, 涵盖了汉字;
+                var reg = /[\u0000-\uffff]/g;
+                var str = '我a爱s你d奥f巴g马';
+                console.log(str.match(reg));
+            
+                var reg = /[\d\D]/g;
+
+                var str = '我爱你奥巴马';
+                console.log(str.match(reg));
+            
+    量词;
+        
+        n+ 表示n可以出现一次到无数次
+            var reg = /\w+/g;
+            var str = 'abc';
+            console.log(str.match(reg));
+
+        n* 表示n可以出现零次到无数次;
+            var reg = /\w*/g;
+            var str = 'abc';
+            console.log(str.match(reg));
+            
+            匹配abc结束后因为是* 所以会出现一个空, 因为*是匹配零次到无数次;
+            如下匹配就会没有数字就会出现四个空; 有多少个光标定位点就会有多少个空;
+
+            var reg = /\d*/g;
+            var str = 'abc';
+            console.log(str.match(reg));
+
+        n? 匹配零个或一个n的字符;
+
+            var reg = /\w?/g;
+            var str = 'abc';
+            console.log(str.match(reg));
+        
+        n{X} 匹配X个为n的字符;
+
+            var reg = /\w{3}/g;
+            var str = 'abcabcabcabc';
+            console.log(str.match(reg));
+            
+        n{X,Y}  匹配X到Y个为n的字符;
+            贪婪模式, 先紧着五个匹配, 没有五个在匹配四个,三个, 没有三个的字符就不会被匹配;
+            var reg = /\w{3,5}/g;
+            var str = 'abcabcabcabcabcabcabc';
+            console.log(str.match(reg));
+            
+        n{X,} 匹配至少X个为n的字符; {1,}和n+没区别, {0,}和n*没区别;
+
+            var reg = /\w{0,}/g;
+            var str = 'abcabcabc';
+            console.log(str.match(reg));
+
+        n$ 匹配任何以n结尾的字符;
+            
+            var reg = /abc$/g;
+            var str = 'abcabcabc';
+            console.log(str.match(reg));
+
+        n^ 匹配任何以n开头的字符;
+
+            var reg = /^abc/g;
+            var str = 'abcabcabc';
+            console.log(str.match(reg));
+        
+            如下: 开头的abc和结尾的abc是同一个字符;所以以下匹配开头和结尾的abc是匹配的两个不同的字符; 结果为Null;
+            所以开头和结尾可以把字符限定死;
+            
+            var reg = /^abc$/g;
+            var str = 'abcabc';
+            console.log(str.match(reg));
+
+        
+
+        
+        
+    RegExp对象属性;
+
+        var reg = /^\d[\s\S]\d$/g;
+
+        global 查看对象是否具有标志g
+            console.log(reg.global);
+        ignoreCase 查看对象是否具有标志i
+            console.log(reg.ignoreCase);
+        lastIndex    这个属性就是为RegExp.exec方法而存在的;
+            console.log(reg.lastIndex);
+        multiline    查看对象是否具有标志m
+            console.log(reg.multiline);
+        source   查看正则表达式的源文本;
+            console.log(reg.source);
+
+
+
+
+    正向预查,正向断言;
+        ?=b; 匹配其后是b的那个a, b不参与选择,只参与修饰,限定;
+            var reg = /a(?=b)/g,
+                str = 'aaaabada';
+            console.log(str.match(reg));
+        ?!b; 匹配其后不是b的那个a, b仍然不参与选择,只参与修饰,限定;
+            var reg = /a(?!b)/g,
+                str = 'aaaabada';
+            console.log(str.match(reg));
+            
+            var reg = /a(?=abc)/g,
+                str = 'aaaaabcasdf';
+            console.log(str.match(reg));
+    
+        
+    RegExp对象方法;
+
+        compile  编译正则表达式;
+
+        exec 检索字符串中指定的值, 返回找到的值, 并确定其位置;
+        lastIndex 方法通过光标的位置, 来进行下一次的匹配, 但是前提是必须是全局模式(//g)的存在;
+            var reg = /ab/g;
+            var str = 'abababab';
+
+            console.log(reg.exec(str));
+            console.log(reg.lastIndex);
+            console.log(reg.exec(str));
+            console.log(reg.lastIndex);
+            console.log(reg.exec(str));
+            console.log(reg.lastIndex);
+            console.log(reg.exec(str));
+            console.log(reg.lastIndex);
+            console.log(reg.exec(str));
+            console.log(reg.lastIndex);
+            console.log(reg.exec(str));
+            console.log(reg.lastIndex);
+
+            并且它的光标匹配位置完全是由lastIndex来控制定位;
+            
+            console.log(reg.exec(str));
+            console.log(reg.exec(str));
+            reg.lastIndex = 0;
+            console.log(reg.exec(str));
+            
+        ()括号还有一种用途是子表达式, 括号会记录里面匹配的内容, 记录完之后可以利用\1来反向引用(就是引用第一个子表达式里面匹配的内容,就相当于复制了一份括号中的内容);
+
+            var reg = /(\w)\1\1\1/g,
+                str = 'aaaabbbb';
+            console.log(str.match(reg));
+
+            如下\1是反向引用第一个表达式中的内容, 如果又第二个就依此类推 \2,\3,\4......\infinity; 数字是没有限制的, 但是匹配前后两个不同的就必须要不用的反向引用\1\2;
+            
+            var reg = /(\w)\1(\w)\2/g,
+                str = 'aabb';
+            console.log(str.match(reg));
+
+        
+        test 检索字符串中指定的值, 返回Boolean;
+            var reg = /^\d|\d$/g;
+            var str = '123abc123';
+            console.log(reg.test(str));
+        
+        
+    String对象的方法
+        
+        search   检索和正则表达式相匹配的值;(返回匹配的相应的字符索引位置, 匹配不到返回-1);
+            var reg = /(\w)\1(\w)\2/g,
+                str = 'asdfaabb';
+            console.log(str.search(reg));
+        match    找到一个或者多个正则表达式的匹配, 非全局模式最多匹配一个或零个, 返回的结果类似于exec把第一个和第二个子表达式引用内容也匹配出来;
+                    如果全局模式下, 只会返回全局中相匹配的结果, 子表达式内容什么的全不会被匹配;
+            var reg = /(\w)\1(\w)\2/g, 
+            var reg = /(\w)\1(\w)\2/,
+                str = 'aabb';
+            console.log(str.match(reg));
+        replace  替换和正则表达式匹配的子串, 主要功能在RegExp上的体现;
+
+            var reg = /a/g,
+                str = 'aa';
+            console.log(str.replace(reg,'b'));
+            注意非全局匹配只会匹配一个a;
+            var str = 'aa';
+            console.log(str.replace('a','b'));
+            
+            正则中的子表达式内容,replace第二个参数使用$可以引用到, $1代表第一个子表达式的内容, $2代表第二个子表达式的内容;
+            同时如果想替换成$的话,就必须在前面再加上一个$, 把$作为转译字符;(str.replace(reg, '$$ $$'));
+            var reg = /(\w)\1(\w)\2/g,
+                str = 'aabb';
+            console.log(str.replace(reg,'$2$2$1$1'));
+            console.log(str.replace(reg,'$$$ $$$'));
+
+            
+            replace的第二个参数为回掉函数, 回掉函数参数为: 正则全局匹配的内容, 第一个子表达式匹配的内容, 第二个子表达式匹配的内容;
+            var reg = /(\w)\1(\w)\2/g,
+                str = 'aabb';
+            str.replace(reg,function ($, $1, $2) {
+                return $2 + $2 + $1 + $1;
+            });
+            
+        split    把字符串分割成数组;
+            var reg = /(\w)\1/g,
+                str = 'asdfghlkjlkwwasvkdss fjalksdjgfsggweoievnzxnvnnciwmkjkl0';
+            console.log(str.split(reg));
+        
+        
+        
+        
+    贪婪匹配, 非贪婪匹配;
+        贪婪匹配,正则表达式的正常匹配原则;
+        var reg = /a+/g,
+            str = 'aaaa';
+        console.log(str.match(reg));
+        
+        非贪婪匹配原则, 理论(能少不多);
+        var reg = /a+?/g,
+            str = 'aaaa';
+        console.log(str.match(reg));
+        
+        var reg = /a{2,4}?/g,
+            str = 'aaaa';
+        console.log(str.match(reg));
+        
+        a? 量词,零个或一个a的字符; a??那只取零,不取一;
+        var reg = /a??/g,
+            str = 'aaaa';
+        console.log(str.match(reg));
+        
+        
+        a*? 量词,零个或多个a的字符; a??那只取零,不取多;
+        var reg = /a*?/g,
+            str = 'aaaa';
+        console.log(str.match(reg));
+        
+        
+习题:
+    写一个正则表达式, 检验字符串首尾是否含有数字;
+        var reg = /^\d|\d$/g;
+        var str = '123abc123';
+        console.log(reg.test(str));
+        console.log(str.match(reg));
+        
+    the-first-name, 经过处理之后改为小驼峰写法, theFirstName;
+        将\w括起来,成为一个子表达式;
+        var reg = /-(\w)/g,
+            str = 'the-first-name';
+        console.log(str.replace(reg, function ($, $1) {
+            return $1.toUpperCase();
+        }));
+    
+    使用正则去重字符串;
+        var str = 'aaaaaaabbbbbbbbbbbccccccccc',
+            reg = /(\w)\1*/g;
+        console.log(str.replace(reg,'$1'));
+
+    100000000, 要求用科学记数法表示, 即从后往前, 每隔三位打个点;
+        空白后面不是单词边界三位数字结尾;
+        var reg = /(?=(\B)(\d{3})*$)/g,
+            str = '100000000000000';
+        console.log(str.match(reg));
+        console.log(str.replace(reg,'.'))

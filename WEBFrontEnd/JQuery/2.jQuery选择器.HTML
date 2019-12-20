@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery选择器</title>
+    <style>
+        img{
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- a标签的 name 属性以及任何标签的id属性都是锚点; -->
+    <!-- 'file:///D:/Course/WEBFrontEnd/JQuery/2.jQuery选择器.html' + '#xxxx'; 就会获取锚点 -->
+    <a name="print"></a>
+    <h1 id="targetEle">jQuery</h1>
+    <hr>
+    <ul id="firstEle">
+        <li>博学之, 笃行之, 慎思之, 明辨之, 审问之</li>
+        <li id="mylist">
+            博学之, 笃行之, 慎思之, 明辨之, 审问之
+            <ul>
+                <li>
+                    <li>
+                        <li>
+                            <li></li>
+                        </li>
+                    </li>
+                </li>
+                <li></li>
+            </ul>
+        </li>
+        <li class="nextEle">博学之, 笃行之, 慎思之, 明辨之, 审问之</li>
+        <li>博学之, 笃行之, 慎思之, 明辨之, 审问之</li>
+        <li>博学之, 笃行之, 慎思之, 明辨之, 审问之</li>
+    </ul>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <!-- 点击a锚点标签时,会在url后加href属性的值所以页面锚点会找到name或者id为print的元素 -->
+    <a href="#print">print</a>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <ul class="secondEle">
+        <li class="item">博学之, 笃行之, 慎思之, 明辨之, 审问之</li>
+        <li class="item">博学之, 笃行之, 慎思之, 明辨之, 审问之</li>
+        <li lang="zh" class="seleteItem">博学之, 笃行之, 慎思之, 明辨之, 审问之</li>
+        <li class="item">博学之, 笃行之, 慎思之, 明辨之, 审问之</li>
+        <li class="item">博学之, 笃行之, 慎思之, 明辨之, 审问之</li>
+        <p>哦抱歉是P元素不好意思</p>
+    </ul>
+    <div class="animated"></div>
+    <!-- autofocus会和锚点冲突,所以先注释掉 -->
+    <!-- <input type="text" autofocus> -->
+    <input type="text">
+
+
+    <ul id="contain">
+        <li>hello world</li>
+        <li>hello world 世界</li>
+        <li>hello world</li>
+    </ul>
+    <ul id="has">
+        <li >hello world</li>
+        <li class="current">
+            hello world 世界
+            <a class="current"></a>
+        </li>
+        <li >hello world</li>
+    </ul>
+    <ul class="empty"></ul>
+    
+    <div class="hidden" style="display:none;"></div>
+
+    <img src="./images/0.jpg" alt="hello world">
+    <img src="./images/0.jpg" alt="hellow you">
+    <img src="./images/0.jpg">
+    <img src="./images/0.jpg" alt="what the fuck" title='asdf'>
+    
+    <ul class="first-child">
+        <li>就在线学习而言，重要的不是你花了多少钱，而是你投入了多少时间和精力</li>
+        <li>就在线学习而言，重要的不是你花了多少钱，而是你投入了多少时间和精力</li>
+        <li>
+            就在线学习而言，重要的不是你花了多少钱，而是你投入了多少时间和精力
+            <ol>
+                <li>asdf</li>
+                <li>asdf</li>
+                <li>asdf</li>
+            </ol>
+        </li>
+        <li>就在线学习而言，重要的不是你花了多少钱，而是你投入了多少时间和精力</li>
+        <li>就在线学习而言，重要的不是你花了多少钱，而是你投入了多少时间和精力</li>
+    </ul>
+    <hr>
+    <ul class="first-of-type">
+        <li>就在线学习而言，重要的不是你花了多少钱，而是你投入了多少时间和精力</li>
+        <p>就在线学习而言，重要的不是你花了多少钱，而是你投入了多少时间和精力</p>
+        <li>就在线学习而言，重要的不是你花了多少钱，而是你投入了多少时间和精力</li>
+        <p>就在线学习而言，重要的不是你花了多少钱，而是你投入了多少时间和精力</p>
+        <li>就在线学习而言，重要的不是你花了多少钱，而是你投入了多少时间和精力</li>
+        <p>就在线学习而言，重要的不是你花了多少钱，而是你投入了多少时间和精力</p>
+        <li>就在线学习而言，重要的不是你花了多少钱，而是你投入了多少时间和精力</li>
+    </ul>
+    
+    <!-- 表单选择器 -->
+    <form action="">
+        <table>
+            <tr>
+                <td>Text:</td>
+                <td><input type="text"/></td>
+            </tr>
+            <tr>
+                <td>Pwd:</td>
+                <td><input type="password" name="pwd" id=""/></td>
+            </tr>
+            <tr>
+                <td>radio:</td>
+                <td>
+                    <input type="radio" name="sex" value="m" id="">男
+                    <input type="radio" name="sex" value="w" id="">女
+                </td>
+            </tr>
+            <tr>
+                <td>checkbox</td>
+                <td>
+                    <input type="checkbox" name="" id="">
+                    <input type="checkbox" name="" id="">
+                    <input type="checkbox" checked name="" id="">
+                    <input type="checkbox" name="" id="">
+                    <input type="checkbox" name="" id="">
+                </td>
+            </tr>
+            <tr>
+                <td>file</td>
+                <td><input type="file"></td>
+            </tr>
+            <tr>
+                <td>button</td>
+                <td><input type="button" value="普通"></td>
+                <td><input type="submit" value="提交"></td>
+                <td><input type="reset" value="重置"></td>
+                <!-- button标签的默认值就是submit -->
+                <!-- <button type="submit"></button> -->
+            </tr>
+            <tr>
+                <td>textarea</td>
+                <td><textarea disabled></textarea></td>
+            </tr>
+            <tr>
+                <td>select</td>
+                <td>
+                    <select name="" id="">
+                        <option value="1">A</option>
+                        <option value="2" disabled>B</option>
+                        <option value="3">C</option>
+                        <option value="4">D</option>
+                        <option value="5">E</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div id="#escapeSelector">escapeSelector</div>
+    <script src="./jQuery/jquery3.4.1.min.js"></script>
+    <script>
+        // 1.基础选择器
+            // // ID选择器
+            // console.log($('#firstEle'));
+            // // 类选择器
+            // console.log($('.secondEle'));
+            // // 标签选择器
+            // console.log($('li'));
+            // // 全局选择器
+            // console.log($('*'));
+            // // 组合选择器
+            // console.log($('li.item'));
+            // // 多个选择器
+            // console.log($('li,p'));
+        // 2.层级选择器
+            // 后低选择器
+            // console.log($('#firstEle li'));
+            // 子元素选择器(> ul下的li下的li会被选中(无论嵌套几层), 但是ul下的li下的ul下的li这种结构就不会被选中);
+            // console.log($('#firstEle>li'));
+            // 其后比邻一个兄弟选择器
+            // console.log($('#mylist+li'));
+            // 其后比邻所有兄弟选择器
+            // console.log($('#mylist~li'));
+        // 3.筛选选择器(jQuery特有的选择器), 一定分开理解 : 冒号前面是一部分(获取一个集合), 冒号后面又是一部分(条件); $(':first') === $('*:first');
+            // :last 查找集合中的第一个元素;
+            // console.log($('.secondEle li:first'));
+            // :first 查找集合中的最后一个元素;
+            // console.log($('.secondEle li:last'));
+            // :eq() 指定索引选择,从零开始;
+            // console.log($('.secondEle li:eq(1)'));
+            // :gt(2) 指定索引大于2的元素
+            // console.log($('.secondEle li:gt(2)'));
+            // :lt(2) 指定索引小于2的元素 
+            // console.log($('.secondEle li:lt(2)'));
+            // :odd 索引是奇数(指定奇数行);
+            // console.log($('.secondEle li:odd'));
+            // :even 索引是偶数(指定偶数行);
+            // console.log($('.secondEle li:even'));
+            // :not(selete) 从集合中过滤掉指定选择器的元素;
+            // console.log($('.secondEle li:not(.seleteItem)'));
+            // :lang() 指定语言选择器, html上的lang="en"就声明了html中的所有元素的lang都是en
+            // console.log($('.secondEle li:lang(zh)'));
+            // :header 选中所有的标题元素, h1-h6的元素;
+            // console.log($(':header'));console.log($('*:header'))
+            // :animated 选中正在执行动画的元素;
+            // console.log($(':animated'));
+            // :focus 选中获取焦点的元素;
+            // $(':focus').css('border', '2px solid red');console.log($(':focus'));
+            // :root 选中根元素, 单独针对html选择的一个选择器;
+            // console.log($(':root'));
+            // :target 过滤出锚点指向的元素;
+            // $('a:last').click(function() {console.log($(':target'))})
+        // 4.内容选择器
+            // :contains() 选中包含指定内容的元素, 也可以查到包含符合内容的孙子元素;
+            // console.log($('li:contains(世界)'));
+            // :has() 选中后代元素中的current类名的父元素, 谁的下面有.current的元素就选中谁;
+            // console.log($(':has(.current)'));
+            // :empty 选中空元素;
+            // console.log($('ul:empty'));
+            // :parent 和empty刚好相反, 选中非空元素;
+            // console.log($('ul:parent'));
+        // 5.可见性选择器
+            // :visible 获取所有可见的元素;
+            // console.log($(':visible'))
+            // :hidden 获取所有不可见的元素;
+            // console.log($(':hidden'));
+        // 6.属性选择器
+            // 选中有属性alt的img标签
+            // console.log($('img[alt]'))
+            // 选中有属性alt='what the fuck'的img标签
+            // console.log($('img[alt="what the fuck"]'))
+            // 选中属性alt不是what the fuck的img标签
+            // console.log($('img[alt!="what the fuck"]'))
+            // 选中属性alt是以hello开头的img标签
+            // console.log($('img[alt^="hello"]'))
+            // 选中属性alt是以hello结尾的img标签
+            // console.log($('img[alt$="world"]'))
+            // 选中属性alt有包含you字符的img标签
+            // console.log($('img[alt*="you"]'))
+            // 选中属性alt有包含fuck字符的img标签和有title属性的标签;
+            // console.log($('img[alt*="fuck"][title]'))
+        // 7.子元素选择器(和C3的子元素选择器是一样的);
+            // 选中所有兄弟元素的第一个
+            // console.log($('.first-child li:first-child'))
+            // 选中所有兄弟元素的最后一个
+            // console.log($('.first-child li:last-child'))
+            // 选中指定的元素nth是从1开始,eq是从0开始
+            // console.log($('.first-child li:nth-child(3)'))
+            // 选中指定的元素的从后向前数
+            // console.log($('.first-child li:nth-last-child(2)'))
+            // 选中没有兄弟元素的元素
+            // console.log($(':only-child'));
+            // 
+            // 
+            // 选中指定标签的第一个元素, 非p元素不考虑,同样也是从1开始计;
+            // console.log($('.first-of-type p:first-of-type'))
+            // 选中所有兄弟元素第一个; 选中了p元素但是:后条件过滤p并不是兄弟元素中的第一个;
+            // console.log($('.first-of-type p:first-child'))
+            // 选中指定标签的最后一个;
+            // console.log($('.first-of-type p:last-of-type'))
+            // 选中指定标签的指定位数的倒数的元素;
+            // console.log($('.first-of-type p:nth-last-of-type(1)'))
+            // 选中指定标签的指定位数的元素;
+            // console.log($('.first-of-type p:nth-of-type(1)'));
+            // 选中没有兄弟元素并且是唯一标签名的元素,所以head和body会选中;
+            // console.log($(':only-of-type'));
+        // 8.表单选择器
+            // 选中所有表单控件(input,select,textarea,button等等);
+            // console.log($(':input'));
+            // 选中所有的文本框
+            // console.log($(':text'));
+            // 选中所有的密码框
+            // console.log($(':password'));
+            // 选中所有的单选框
+            // console.log($(':radio'));
+            // 选中所有的复选框
+            // console.log($(':checkbox'));
+            // 选中所有的文件框
+            // console.log($(':file'));
+            // 选中所有的提交按钮,包括button,因为button默认值事submit;
+            // console.log($(':submit'));
+            // 选中所有的重置按钮
+            // console.log($(':reset'));
+            // 选中所有的普通按钮,包括input类型是button的标签;
+            // console.log($(':button'));
+        // 9.表单对象选择器
+            // 选中禁用的表单控件;
+            // console.log($(':disabled'));
+            // 选中没有禁用的表单控件;
+            // console.log($(':enabled'));
+            // 选中选中的复选框,和下拉框中的option;
+            // console.log($(':checked'));
+            // 选中下拉框选中的一项;
+            // console.log($(':selected'));
+        // 10.混淆选择器
+            // 用来处理特殊的基础选择ID,class等有特殊符号;
+            // console.log($('#' + $.escapeSelector('#escapeSelector')));
+    </script>
+</body>
+</html>

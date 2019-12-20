@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <ul class="myList">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+
+    <form action="">
+        姓名: <input type="text" name="name"><br>
+        年龄: <input type='text' name='age'>
+        <input type="button" class='btn_form'>
+    </form>
+    
+    <script src="./jQuery/jquery3.4.1.min.js"></script>
+    <script>
+        // 数组对象的方法
+            
+            // $.each(arr, fn(ind,item));   遍历数组,类数组等;
+                // var arr = [1,2,3,4,5];
+                // $.each(arr, function (ind, item) {
+                //     console.log(ind);
+                //     console.log(item);
+                // })
+                // $.each($('.myList li'), function (ind, item) {
+                //     console.log(ind);
+                //     console.log(item);
+                // })
+
+            // $.grep(arr, fn(item, ind));   过滤数组, 回掉函数参数和each相反;
+                // var result = $.grep($('.myList li'), function (item, ind) {
+                //     return $(item).html() % 2 == 0;
+                // })
+                // console.log(result);
+                
+            // $.map(arr, fn(item, ind)); 返回一个新的数组;
+                // var result = $.map($('.myList li'), function (item, ind) {
+                //     return $(item).html() % 2 == 0;
+                // })
+                // var result = $.map($('.myList li'), function (item, ind) {
+                //     return $(item).html();
+                // })
+                // console.log(result);
+            
+            // $.makeArray(arr);   把类数组转换成纯数组;
+                // var result = $.makeArray($('.myList li'));
+                // console.log($('.myList li'))
+                // console.log(document.querySelectorAll('.myList li'));
+                // console.log(result);
+                
+            // $.inArray(ele, arr);     判断一个元素在数组中的位置(返回ele在arr中的位置), 如果ele不存在与arr中,则返回-1;
+                // var list = [1,2,3,4,5];
+                // console.log($.inArray(4,list));
+
+            // $.merge(arr, newArr);   合并数组;
+                // var list = [1,2,3,4,5];
+                // var newArr = ['trump', 'leecs', 'obama'];
+                // var newList = $.merge(list, newArr)
+                // console.log(newList);
+
+            // toArray();   jQueryDOM直接转为纯数组, 功能和makeArray相似;
+                // var arr = $('.myList li').toArray();
+                // console.log(arr);
+                
+            
+        // 函数方法
+            // $.proxy(fn, context);   比较相似原生中的bind()方法;
+            // function test() {
+            //     console.log(this);
+            // }
+            // var res = $.proxy(test, {name: 'leecs'});
+            // res();
+            
+        // 类型判断
+            // $.type();
+                // console.log($.type(100))
+                // // 原生中的typeof [] 返回的是object, 而$.type检测[] 返回的就是array;
+                // console.log($.type([1,2,3]))
+                // // jQueryDOM 返回的还是一个object
+                // console.log($.type($('.myList')))
+                
+            // $.isFunction();  判断是不是一个function
+                // function test() {};
+                // var a = 10;
+                // console.log($.isFunction(test));
+                // console.log($.isFunction($))
+                // console.log($.isFunction($.isFunction))
+                // console.log($.isFunction(a))
+                
+            // $.isEmptyObject();   判断是不是一个空对象;
+                // console.log($.isEmptyObject({}));
+                // console.log($.isEmptyObject({name:'leecs'}));
+            
+            // $.isPlainObject();   判断是不是一个纯对象;
+                // console.log($.isPlainObject({}));
+                // console.log($.isPlainObject([]));
+                // console.log($.isPlainObject($('.myList')));
+
+            // $.isWindow();    判断是不是window对象;
+                // console.log($.isWindow(window));
+                // console.log($.isWindow($(window)));
+            
+            // $.isNumeric();   判断是不是数字, 而并非判断数字类型; NaN返回false, 因为他是数字类型,而不是数字;
+                // console.log($.isNumeric(123))
+                // console.log($.isNumeric(NaN))
+                
+        
+        // 字符串
+            // $.trim();    去除两边的空格
+                // var str = ' hello 同志 ';
+                // console.log('|' + str + '|');
+                // console.log('|' + $.trim(str) + '|');
+            
+            // $.param();   序列化成字符串
+                // console.log($.param({name: 'leecs', age: 19}));
+                // 将一个表单DOM进行序列化, 自动获取里面的值进行序列化, 只能获取表单;
+                // $('.btn_form').click(function () {
+                //     console.log($.param($('input[type=text]')));
+                // })
+                
+                
+        // 版本
+            // $.fn.jquery;     查看jQuery版本
+                // console.log($.fn.jquery);
+            // $.browser.    查看浏览器信息;    
+                // console.log($.browser);
+            
+                
+                
+    </script>
+</body>
+</html>

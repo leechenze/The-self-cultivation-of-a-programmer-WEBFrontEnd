@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            font:16px 'Microsoft yahei',sans-serif;
+        }
+        .nav-list ul{
+            list-style:none;
+            padding: 0;
+            margin: 0;
+        }
+        .nav-list ul a{
+            text-decoration: none;
+        }
+
+        .nav-list{
+            width:200px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .nav-list ul {
+            display: none;
+        }
+        
+        .nav-list h3{
+            margin: 0;
+            padding: 10px 20px;
+            color: #fff;
+            font-size: 20px;
+            line-height: 18px;
+            background-color: #333;
+        }
+
+        .nav-list h3:hover{
+            background-color: #222;
+        }
+        
+        .nav-list li a{
+            display: block;
+            padding: 10px 20px;
+            background-color: #f5f5f5;
+            border:1px solid #ccc;
+            border-bottom: none;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .nav-list li a:hover {
+            background-color: #ccc;
+        }
+        
+    </style>
+</head>
+<body>
+    <ul class="my-list">
+        <li>特朗普</li>
+        <li>
+            克林顿
+            <ul>
+                <li id="item">老布什</li>
+                <li>小布什</li>
+            </ul>
+        </li>
+        <li>富兰克林</li>
+        <li>尼克松</li>
+        <li class="lincoln">
+            林肯
+            <span class="kennedy">肯尼迪</span>
+        </li>
+        <p>华盛顿</p>
+    </ul>
+
+
+
+
+
+
+
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1>案例</h1>
+    <!-- 案例 -->
+    <div class="nav-list" id="here">
+        <h3>select</h3>
+        <ul>
+            <li><a href="#">基本</a></li>
+            <li><a href="#">层级</a></li>
+            <li><a href="#">过滤</a></li>
+            <li><a href="#">属性</a></li>
+            <li><a href="#">内容</a></li>
+            <li><a href="#">子元素</a></li>
+            <li><a href="#">表单</a></li>
+            <li><a href="#">可见性</a></li>
+            <li><a href="#">表单对象</a></li>
+        </ul>
+        <h3>筛选</h3>
+        <ul>
+            <li><a href="#">过滤</a></li>
+            <li><a href="#">查找</a></li>
+            <li><a href="#">关联</a></li>
+            <li><a href="#">DOM操作</a></li>
+        </ul>
+        <h3>样式</h3>
+        <ul>
+            <li><a href="#">CSS操作</a></li>
+            <li><a href="#">位置</a></li>
+            <li><a href="#">尺寸</a></li>
+        </ul>
+        <h3>属性</h3>
+        <ul>
+            <li><a href="#">代码</a></li>
+            <li><a href="#">文本</a></li>
+            <li><a href="#">值</a></li>
+            <li><a href="#">CSS类</a></li>
+            <li><a href="#">属性操作</a></li>
+        </ul>
+    </div>
+
+    <!-- 串联 -->
+    <ul id="my-list">
+        <li>博学之</li>
+        <li>博学之</li>
+        <li>博学之</li>
+        <li>博学之</li>
+        <li>博学之</li>
+    </ul>
+    <hr>
+    <p class="test">
+        博学之, 审问之, 慎思之, 明辨之, 笃行之;
+    </p>
+
+    <contents>
+        <p></p>
+        <!-- asdf -->
+        asdf
+    </contents>
+    
+    
+    
+    <script src="./jQuery/jquery3.4.1.min.js"></script>
+    <script>
+        $(function () {
+            // 过滤
+                // 返回元素集合中的第零个元素;
+                // console.log($('.my-list').first());
+                // 返回元素集合中的最后一个元素;
+                // console.log($('.my-list').last());
+                // 返回元素集合中指定索引的元素;
+                // console.log($('.my-list li').eq(0));
+                // 返回集合中除去指定条件的其他元素集合;
+                // console.log($('.my-list li').not('.lincoln'));
+                // 返回集合中指定条件的元素;
+                // console.log($('.my-list li').filter('.lincoln'));
+                // 和数组中的slice方法相同, 返回截取集合中的元素 参数(第一位开始,第三位结束);
+                // console.log($('.my-list li').slice(1,3));
+                // 选中集合li中, 子元素有span.Kennedy的元素;
+                // console.log($('.my-list li').has('span.kennedy'));
+                // 选中集合li中, 子元素有span.Kennedy的元素;
+                // console.log($('.my-list li').has('span.kennedy'));
+                
+            // 查找
+                // 获取ul中为li的子元素, 不加参数,返回所有的子元素;
+                // console.log($('.my-list').children('li'));
+                // 获取ul中的所有为li的后代元素, 必须要指定一个参数;
+                // console.log($('.my-list').find('li:contains("老布什")'));
+                
+                // 获取父元素, 返回最近的父元素;
+                // console.log($('#item').parent());
+                // 获取祖先元素, 返回父元素集合;
+                // console.log($('#item').parents());
+                // 获取所有的祖先元素, 查到body, 但是如果ul,就会查到ul为止,并且不包含ul;
+                // console.log($('#item').parentsUntil('ul'));
+                // 返回第一个有定位的祖先元素;
+                // console.log($('#item').offsetParent());
+                // 获取后面的一个兄弟元素;
+                // console.log($('li:contains("特朗普")').next())
+                // 获取后面所有的兄弟元素;
+                // console.log($('li:contains("特朗普")').nextAll())
+                // 获取后面所有的兄弟元素,查到p元素为止, 不在向后查, 如果是li就查到li为止不在向后查,所以为空;
+                // console.log($('li:contains("特朗普")').nextUntil('p'));  
+                // 获取前面的一个兄弟元素
+                // console.log($('li:contains("林肯")').prev());
+                // 获取后面所有的兄弟元素
+                // console.log($('li:contains("林肯")').prevAll());
+                // 获取前面所有的兄弟元素, 同nextUntil同理;
+                // console.log($('li:contains("林肯")').prevUntil());
+                // 获取所有的兄弟元素;
+                // console.log($('li:contains("林肯")').siblings());
+                // 获取所有祖先元素中和自身中,第一个满足条件的元素;
+                // console.log($('ul.my-list :nth-child(2):last').closest('ul'));
+            
+            
+            // 串联
+                // add(select): 把选中的元素加入到当前集合, $('#my-list').find('li') 是一个jQueryDOM集合, 
+                // 在这个DOM集合后调用add就会将add中选中的DOM元素, 添加到这个集合中;
+                    // console.log($('#my-list').find('li').add('.test'));
+                    // console.log($('#my-list').add('.test'));
+                
+                // addBack(): 把调用该方法的元素, 添加到当前集合; 返回调用的这个集合和上一个集合
+                    // console.log($('body').find('#my-list').find('li').addBack());
+                    // console.log($('body').find('#my-list li').addBack());
+
+                // end(): 返回最后一次破坏性操作之前的DOM;
+                    // 破坏性操作:   会改变DOM的返回结果的,如: children(), find(), parent(), parents(), next(), prev();
+                    // 非破坏性操作: 不会改变DOM的返回结果,如: css(), addClass(), toggleClass();
+                    // console.log($('#my-list').find('li').end());
+                
+                // contents(): 返回所有子节点的集合
+                    // console.log($('contents').contents());
+        })
+        
+        
+
+
+
+        
+        // 案例
+            // 菜单收缩展开
+                // window.onload = function () {
+                //     $('.nav-list').click(function (ev) {
+                //         var ev = ev || window.event,et = ev.target || ev.srcElement;
+                //         var $et = $(et);
+                //         // 简化写法
+                //         // $(et).next().slideToggle();
+                
+                //         if($(et).next().is(':visible')){
+                //             $(et).next().slideUp();
+                //         }else{
+                //             $(et).next().slideDown();
+                //         }
+                //     })
+                // }
+            
+            // 手风琴菜单
+                // window.onload = function () {
+                //     // window.location.href += '#' + $('#here')[0].id;
+                //     $('#here h3').on('click', function () {
+                //         $(this).next().slideToggle().siblings('ul').slideUp();
+                //     })
+                // }
+    </script>
+</body>
+</html>

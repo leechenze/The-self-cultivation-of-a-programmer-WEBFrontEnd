@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        // let a = 10;
+        // let promise = new Promise(function(resolve,reject){
+        //     if(a!==10){
+        //         resolve('成功');
+        //     }else{
+        //         reject('失败');
+        //     }
+        // });
+
+        // promise.then(function (res){
+        //     console.log(res);
+        // },function(rel){
+        //     console.log(rel);
+        // })
+
+        // promise.catch(function (err) {
+        //     console.log(err);
+        // })
+
+
+
+
+        // let resolve = Promise.resolve('aaa');
+        // console.log(resolve);
+        // resolve.then((res)=>{
+        //     console.log(res);
+        // })
+        // // 等价于这样写
+        // new Promise((resolve)=>{
+        //     resolve('aaa');
+        // }).then((res)=>{
+        //     console.log(res);
+        // })
+
+
+
+        // let reject = Promise.reject('aaa');
+        // console.log(reject);
+        // reject.catch((err)=>{
+        //     console.log(err);
+        // })
+        //  // 等价于这样写
+        // new Promise((resolve,reject)=>{
+        //     reject('aaa');
+        // }).catch((err)=>{
+        //     console.log(err);
+        // })
+
+
+
+        // let p1 = Promise.resolve('aaa');
+        // let p2 = Promise.reject('bbb');
+        // let p3 = Promise.resolve('ccc');
+
+        // Promise.all([p1,p2,p3]).then((resolve)=>{
+        //     let [res1,res2,res3] = resolve;
+        //     console.log(res1);
+        //     console.log(res2);
+        //     console.log(res3);
+        // })
+
+
+        // let p1 = Promise.resolve('aaa');
+        // let p2 = Promise.reject('bbb');
+        // let p3 = Promise.resolve('ccc');
+
+        // Promise.race([p1,p2,p3]).then((resolve)=>{
+        //     console.log(resolve);
+        // })
+
+
+
+
+
+        // 模拟用户登陆
+        // let status = 1;
+        // let userLogin = (resolve,reject) => {
+        //     setTimeout(()=>{
+        //         if(status == 1){
+        //             resolve({user:'leecs',msg:'登陆成功',token:'sdsfw23rsd'});
+        //         }else{
+        //             reject('失败了');
+        //         }
+        //     },2000)
+        // }
+
+        // let getUserInfo = (resolve,reject) => {
+        //     setTimeout(()=>{
+        //         if(status == 1){
+        //             resolve({data:'获取用户信息成功',msg:'登陆中',token:'sdfgk2398j'});
+        //         }else{
+        //             reject('失败了');
+        //         }
+        //     },1000)
+        // }
+
+
+        // let p1 = new Promise((userLogin)).then((res)=>{
+        //     console.log('用户登陆成功');
+        //     // 用户登陆成功之后获取用户信息;
+        //     return new Promise((getUserInfo))
+        // }).then((res)=>{
+        //     console.log('获取用户信息成功');
+        //     console.log(res);
+        // })
+
+        // let p1 = new Promise(userLogin).then((res)=>{
+        //     console.log('用户登陆成功');
+        //     return new Promise(getUserInfo).then((res)=>{
+        //         console.log('获取用户信息成功')
+        //         console.log(res);
+        //     })
+        // })
+    </script>
+</body>
+
+</html>

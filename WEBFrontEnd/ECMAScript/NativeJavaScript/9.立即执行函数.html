@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>立即执行函数</title>
+</head>
+
+<body>
+    <script>
+        // 0.铺垫
+        // a执行完把执行上下文销毁, a的执行期上下文中产生了b, a执行完了销毁b
+        // 但是销毁之前b被保存在了外部, a的执行就是将b函数的引用赋给demo;
+        // a这个时候销毁执行期上下文, demo执行, b定义的地点是a.AO, 但是要在外部执行b函数(demo);
+        // 那么现在从视觉来看console.log(aaa);好像是不成立的, 但是根据作用域链的图解是实际上可以执行的;
+        // 这个过程就叫做闭包, 
+        // 抽象的来说: 但凡内部的函数保存到了外部, 就一定会形成闭包;
+        // b函数被保存到外部以后, a函数执行完毕销毁, b.[[scope]] 仍然还会有a.AO的执行上下文;
+
+            // function a() {
+            //     function b() {
+            //         var bbb = 234;
+            //         console.log(aaa);
+            //     }
+            //     var aaa = 123;
+            //     return b;
+            // }
+
+            // var global = 100,
+            //     demo = a();
+            // demo();
+
+            // a doing    ==>     0 : a.AO {
+            //                              this : window,
+            //                              arguments : [],
+            //                              aaa : 123,
+            //                              b : function b () {....};
+            //                          }
+            //                      1 : GO {
+            //                              this : window,
+            //                              window : (object),
+            //                              document : (object),
+            //                              a : function a () {....},
+            //                              global : 100,
+            //                              demo : function b () {....},
+            //                          }
+            // b defiend      ==>     0 : a.AO {
+            //                              this : window,
+            //                              arguments : [],
+            //                              aaa : 123,
+            //                              b : function b () {....};
+            //                          }
+            //                      1 : GO {
+            //                              this : window,
+            //                              window : (object),
+            //                              document : (object),
+            //                              a : function a () {....},
+            //                              global : 100,
+            //                              demo : function b () {....},
+            //                          }
+            // b doing        ==>   0 : b.AO {
+            //                              this : window,
+            //                              arguments : [],
+            //                              bbb : 234,
+            //                          }
+            //                      1 : a.AO {
+            //                              this : window,
+            //                              arguments : [],
+            //                              aaa : 123,
+            //                              b : function b () {....};
+            //                          }
+            //                      2 : GO {
+            //                              this : window,
+            //                              window : (object),
+            //                              document : (object),
+            //                              a : function a () {....},
+            //                              global : 100,
+            //                              demo : function b () {....},
+            //                          }
+
+            
+        // 闭包的小应用;
+        
+            // function a () {
+            //     var num = 100;
+            //     function b () {
+            //         num ++;             
+            //         console.log(num);
+            //     }
+            //     return b;
+            // }
+            
+            // var demo = a();
+            // demo();                     // 101
+            // demo();                     // 102
+            
+
+            // 详情请见以下图解;
+            // a doing    ==>     0 : a.AO {
+            //                              this : window,
+            //                              arguments : [],
+            //                              num : 100,
+            //                              b : function b () {....};
+            //                          }
+            //                      1 : GO {
+            //                              this : window,
+            //                              window : (object),
+            //                              document : (object),
+            //                              a : function a () {....},
+            //                              demo : function b () {....},
+            //                          }
+            // b defiend      ==>     0 : a.AO {
+            //                              this : window,
+            //                              arguments : [],
+            //                              num : 100,
+            //                              b : function b () {....};
+            //                          }
+            //                      1 : GO {
+            //                              this : window,
+            //                              window : (object),
+            //                              document : (object),
+            //                              a : function a () {....},
+            //                              global : 100,
+            //                              demo : function b () {....},
+            //                          }
+            // b doing        ==>   0 : b.AO {
+            //                              this : window,
+            //                              arguments : [],
+            //                          }
+            //                      1 : a.AO {
+            //                              this : window,
+            //                              arguments : [],
+            //                              num : 100,                              从这里开始 num + 1  那么a.AO的num就成了101, 下次在执行num++ 仍然是从101开始计算++的;
+            //                              b : function b () {....};
+            //                          }
+            //                      2 : GO {
+            //                              this : window,
+            //                              window : (object),
+            //                              document : (object),
+            //                              a : function a () {....},
+            //                              demo : function b () {....},
+            //                          }
+
+
+
+
+        // 1.闭包
+            // 当内部函数被保存到外部时, 将会生成闭包, 闭包会导致原有作用域链不释放, 造成内存泄漏(内存占用);
+            // 闭包的作用:
+                // 1.实现共有变量
+                    // 1.闭包函数实现累加器;
+                        // function add () {
+                        //     var count = 0;
+                        //     function demo () {
+                        //         count ++;
+                        //         console.log(count);
+                        //     }
+                        //     return demo();
+                        // }
+                        // var counter = add();s
+                        // counter();
+                        // counter();
+                        // counter();
+                        
+                        // // 调用几次就累加几次;
+                    
+                // 2.可以做缓存(存储结构);
+                    // 缓存是外部不可见的, 但是他确实有存储结构;
+                    // eater;
+                        // 第二种方法;
+                        // function test () {
+                        //     var num = 100;
+                        //     function a () {
+                        //         num ++;
+                        //         console.log(num);
+                        //     }
+                        //     function b () {
+                        //         num --;
+                        //         console.log(num);
+                        //     }
+                        //     return [a,b];
+                        // }
+                        
+                        // var myArr = test();
+                        // myArr[0]();
+                        // myArr[1]();
+
+
+                        // 第二种方法;
+                        // function test () {
+                        //     var num = 100;
+                        //     function a () {
+                        //         num ++;
+                        //         console.log(num);
+                        //         function b () {
+                        //             num --;
+                        //             console.log(num);
+                        //         }
+                        //         b();
+                        //     }
+                        //     return a;
+                        // }
+                        
+                        // var myArr = test();
+                        // myArr();
+                        
+                        // function eater () {
+                        //     var food = '';
+                        //     // 对象里面可以有属性可以有方法, 这个方法其实就是函数的另一种表示形式;
+                        //     var obj = {
+                        //         eat : function () {
+                        //             console.log('i am eating  ' + food);
+                        //             food = '';
+                        //         },
+                        //         push : function (myFood) {
+                        //             food = myFood;
+                        //         }
+                        //     }
+                        //     return obj;
+                        // }
+                        
+                        // var implement = eater();
+                        // // 由于food 是一个obj中的eat和push的作用域链上共有的一个变量一个属性; 同时他们也可以操作food;
+                        // // 而eat中的food 就相当于一个隐式的存储结构一样, 虽然没表现出来, 但是food在这里是作为一个存储结构来使用的;
+                        // implement.push('banans');
+                        // implement.eat();
+                        
+                        
+                // 3.可以实现封装, 属性私有化;
+                    // 在闭包应用中var一个变量; 对于leecs对象来说会形成一个私有的属性;
+                    // 只有对象自己通过自己的方法可以操作, 在外部查看leecs.prepareWife(私有属性)查看为undefined;
+                    // 因为他不是对象的东西, 但是他是这个对象和原有空间形成闭包时var的私有属性; 
+                    // function Leecs(name, wife) {
+                    //     // 这个prepareWife 就是私有化变量;
+                    //     var prepareWife = '小张';
+                    //     this.name = name;
+                    //     this.wife = wife;
+                    //     this.divorce = function () {
+                    //         this.wife = prepareWife;
+                    //     };
+                    //     this.chagePrepareWife = function (target) {
+                    //         this.prepareWife = target;
+                    //     }
+                    //     this.sayPrepareWife = function () {
+                    //         console.log(prepareWife);
+                    //     }
+                    // }
+
+                    // var leecs = new Leecs('leecs', '小刘');
+                    
+                    
+                // 4.模块化开发, 防止污染全局变量;
+                    
+            
+            
+        // 2.立即执行函数
+            
+            //如果页面中有太多函数;这些函数如果不等到JavaScript执行完; 那这些函数永远都不会得到释放;
+            // 一直在等待被调用, 等待被调用就会占内存空间;
+            // 很多时候不想让这么多的内存空间被占用; 因为会浪费效率;
+            // 有些函数从定义到执行完毕就只执行了一次; 不会得到多次调用;
+            // 页面中这种函数比比皆是, 到处都有
+            // 如果想让一个只会执行一次的函数执行完毕就销毁, 不要占用内存空间;
+            // 那么就用立即执行函数; 主要针对初始化功能的函数 function init () {}; 页面初始化的等等, 但是除了这些, 其他的都是处理数据的立即执行函数都是需要返回值的, 详情见后
+            // 立即执行函数是JavaScript提供的唯一一个能立即销毁函数的东西, 函数体(函数引用)不被保存; 其他函数都不能手动销毁; 
+            // 立即执行函数 匿名函数, 形式如下:
+            //     (function () {
+            //         var a = 123;
+            //         var b = 234;
+            //         console.log(a + b);
+            //     }());
+            //     // 这个函数写完就再也找不到了 马上执行, 马上销毁;
+                
+            //     (function abc () {
+            //         // 即使是个命名函数 在执行完毕后也不会找到; abc 没有的;
+            //     }());
+            
+            // // 立即执行函数和普通函数没有任何区别; 除了执行完毕就被释放; 
+            // // 函数能有的东西立即执行函数都能有
+            // // 比如说参数;
+            //     (function (a, b, c) {
+            //         console.log(a + b + c * 2);
+            //     }(10, 10, 10));
+            // // 比如说返回值;
+            //     var num = (function (a, b, c) {
+            //         return a + b + c * 2;
+            //     }(10, 10, 10));
+            // // 比如说arguments
+            //     (function (a, b, c) {
+            //         console.log(arguments);
+            //     }(10, 10, 10));
+            // // 立即执行函数内部也会经历预编译的环节, 执行期上下文;
+            //     (function (d, e, f) {
+            //         console.log(a);
+            //         console.log(b);
+            //         console.log(c);
+            //         console.log(d);
+            //         console.log(e);
+            //         console.log(f);
+            //         var a = 10;
+            //         var b = function () {}
+            //         function c () {};
+            //     }(1, 2, 3));
+
+                // 预编译如下;
+                    // AO : {
+                    //     a : undefined,
+                    //     b : undefined,
+                    //     c : function c () {}
+                    //     d : 1,
+                    //     e : 2,
+                    //     f : 3,
+                    // }
+                
+            
+
+            // 拓展: 立即执行函数其实并不是铭文规定的语法;
+            // 其实是开发者试验经验积累出来的一个新的发现;
+                // 立即执行函数的写法;
+                    // 1. (function () {})();       // W3C推荐的规范写法;
+                    // 2. (function () {}());
+                    // 只有表达式才能被执行符号执行; 但是函数声明并不是表达式;
+                    // 所以说 function test () {...}() 是不能被执行的; 因为他是函数声明;
+                    // 同理函数表达式就能执行
+                    // var test = function () {...}(); 就一定可以被执行, 因为他是函数表达式;
+                    // var test = function () {console.log('ss')}();
+                    // 另外, 能被执行符号执行的表达式, 这个函数的名字就会被自动忽略;
+                    // 比如 var test = function () {}(); 此时打印 test引用 他就是undefined;
+                    // 也就是说能被执行符号执行的表达式, 基本上就成了立即执行函数;
+                    // 比如: 能够有转换成数字表达式的 正负 +/-运算符;
+                    //     + function test () {console.log('aaa')}() 
+                    //     // 一个表达式被执行之后, 他就会自动忽略这个函数的名字;
+                    //     // 也就演变成了 + function () {console.log('aaa')}();
+                    // // 同样由此可以演变出很多种类型的立即执行函数;
+                    //     - function () {console.log('ss')}();
+                    //     // 非号
+                    //     ! function () {console.log('sss')}();
+                    //     // 或, 和 两个符号前面必须要加东西的; 不然语法解析不会通过;
+                    //     '' || function () {console.log('ssss')}();
+                    //     ' ' && function () {console.log('sssss')}();
+                    
+
+
+
+                    // 以下是阿里巴巴题库的一道面试题;
+                        // function test (a, b, c, d) {
+                        //     console.log(a + b + c + d);
+                        // }(1, 2, 3, 4);
+                    // 其实这样是不报错的 因为立即执行函数是由参数的; 而且实参写入执行符号() 里面的时候 就不会被当成 执行符号了
+                    // 那么JavaScript引擎就会将这种语法识别为:
+                        // // 第一句    
+                        // function test (a, b, c, d) {
+                        //     console.log(a + b + c + d);
+                        // }
+                        // // 第二句   , 逗号其实也是一种正常语法;
+                        // (1, 2, 3, 4);
+                
+            
+            
+    </script>
+</body>
+
+</html>

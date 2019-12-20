@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>浏览器发展史</title>
+</head>
+
+<body>
+    <script>
+        // 壹.JavaScript浏览器发展史
+        // web发展史
+        // Mosaic, 是互联网历史上第一个获普遍使用和能够显示图片的网页浏览器.于1993年问世;
+
+        // 1994 年4月, 马克.安德森和Silicon Graphics(简称为SGI, 中译为 '视算科技'
+        //     和 '硅图')
+        // 公司的创始人 吉姆.克拉克(jim Clark) 在美国加州设立了 "Mosaic Communication Corporation".
+        // Mosaic 公司成立后, 由于伊利诺大学拥有Mosaic的商标权, 且伊利诺大学已将技术转让给 'Say Glass'
+        // 公司,
+        // 开发团队必须彻底撰写浏览器程式码, 且浏览器名称更改为 'Netscape Navigator', 公司名字于1994年11月改名为 'Netscape Communication Corporation'.
+        // 此后沿用至今, 中译为 '网景'.微软的Internet Explorer '以及 '
+        // Mozilla firefox '等等,其早期版本皆以Mosaic为基础开发.
+        // 微软随后买下 'Spy Glass'
+        // 公司的技术开发出 'Internet Explorer'
+        // 浏览器, 而mozill firefox 则是网景通讯家开放源代码后所衍生出的版本;
+
+        // 现在很多大型浏览器的源头都是 Mosaic的基础上开发的 可以理解为是他们的第一个版本 第一个雏形;
+
+        // JavaScript 发展史
+        // JavaScript作为Netspace Navigator 浏览器的一部分首次出现在1996年.
+        // 他的设计初衷是改善网页的用户体验;
+
+        // 作者是: Brendan Eich
+
+        // 期初: JavaScript被命名为 LiveScript, 后来因为和Sun公司合作, 因市场宣传需要改名为 JavaScript.
+        // 后来Sun公司被Oracle公司收购, JavaScript版权归Oracle所有;
+
+        // 浏览器组成:
+        //     1. shell部分:
+        //     (外壳) 部分 就是用户能操作的部分被称为shell(外壳部分);
+        // 包括: 文件, 修改, 试图, 历史记录, 书签, 窗口, 帮助, 设置等等...
+
+        //     2. 内核部分:
+        //     渲染引擎(语法规则和渲染);
+
+        // JS引擎(JavaScript的渲染);
+
+        // JS的特点:
+        //     1. JavaScript 是一种解释性语言;
+        // 系统只认识机械码 所以js代码需要编译成机械码来供浏览器解析;
+        // 编译语言: (java先通篇翻译, 翻译完了的结果为一个class文件, 然后解析整个文件);
+        // c, c++,
+        // 优点:
+        //     通篇编译就会快
+        // 不足:
+        //     因为是整篇解析所以移植性不好(不跨平台 {
+        //         windows下面编译的.exe 文件在linux下不能用
+        //     });
+
+
+        // java 既不是解释性语言也不是编译性语言;
+        // .java文件通过一个javac的指令编译成.class文件在通过java虚拟机jvm解释执行;
+        // .java == > javac == > 编译 == > .class == > jvm == > 解释执行;
+
+
+        // 解释性语言: (读取一行, 翻译一行, 执行一行, 不生成特定的文件);
+        // JavaScript, python, PHP,
+        // 优点:
+        //     因为是解释性语言, 不需要生成编译文件所以能够跨平台;
+        // 不足:
+        //     浏览器解析因为是一行一行的读取, 所以会稍微慢一点;
+
+        // 2. JS引擎是单线程, 同步.
+        // JS执行队列:
+        //     task1, 1 ms <= = task2, 1 ms <= = task3, 1. ms <= = task4, 1 ms <= = task5, 1 ms;
+        // 轮转时间片;
+
+        // JS引擎发展历史:
+        //     2001 年发布IE6, 首次实现对js引擎的优化和分离;
+
+        // 2008 年谷歌发布最新浏览器chrome, 他是采用优化后的JavaScript的引擎, 引擎代号v8,
+        // 因能直接把JavaScript转换成010100101二进制的机械码来执行, 进而以速度快而闻名
+
+        // 后来firefox也推出了具备强大功能的JS引擎;
+
+        // firefox 3.5 TraceMonkey(对频繁操作的代码做了路径优化);
+
+        // firefox 4.0 leagerMonkey
+
+        // ECMA(European Computer Manufacturers Association) 欧洲计算机制造商协会;
+        // ECMA === = 标准 为了取得技术优势, 微软推出了JScript, CEnvi推出ScriptEase,
+        //     与JavaScript同样可在浏览器上运行;
+        // 为了统一规格;
+        // JavaScript兼容于ECMA标准,
+        // 因为也成为ECMAScript.更专业的称呼;
+
+        // JavaScript 经历了很长时间的变化, 刚开始很简陋, 后来推出了DOM, 和BOM部分;
+        // ECMAScript
+        // 是JS最原始的一些东西;
+        // DOM
+        // 操作文档元素的html, css;
+        // BOM
+        // 操作浏览器的;
+
+        // 其他模块
+
+        // 浏览器内核:
+        //     主流浏览器: (在市场上有一定的市场份额, 必须有独立研发的内核);
+        // IE: Trident
+        // Chrome: WebKit / Blink
+        // FireFox: Gecko
+        // Opera: Presto
+        // Safari: Webkit
+    </script>
+</body>
+
+</html>

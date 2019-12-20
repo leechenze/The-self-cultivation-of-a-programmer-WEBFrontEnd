@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 习题
+            // 第一题
+            // var x = 1, y = z = 0;
+            // function add(n) {
+            //     return n = n + 1;
+            // }
+
+            // y = add(x);     // -2
+            
+            // function add(n) {
+            //     return n = n - 3;
+            // }
+                
+            // z = add(x);     // -2
+
+
+
+
+            // 第二题
+            // function foo() {
+            //     // bar.apply(null,argumnets);
+            //     // 等同于
+            //     // bar(arguments);
+            // }
+            // function bar() {
+            //     console.log(arguments);
+            // }
+
+            // foo(1,2,3,4,5);
+            
+
+
+
+            
+            // if后面的括号中是条件判断 会隐式类型转换 类型转换function并不是 为false的六个值, 就能够往下执行;
+            // 但是括号会把里面的函数变成表达式的; 变成函数表达式了就不是函数定义了;
+            // 就好像()立即执行函数的括号一样 变成表达式了, 这个函数名称 f 自然也就消失了;
+            // 好比(function f() { console.log(f)}());
+            // var a = (function f() { console.log(f)}());   a 是undefined
+            // 但是 f 消失了之后, 如果被typeof检测的话就会返回字符串的undefined;
+            // 所以最后的结果是 1undefined;
+            // var x = 1;
+            // if(function f(){}){
+            //     x = typeof f;
+            // }
+            // typeof(x);          // 1undefined;
+            
+            
+
+            
+            
+            
+            
+        // 1.进制数
+            // 满足一个数, 它从各位变成十位之后, 就叫进制;
+            // 十进制数就是满十, 就向前进一位, 十分位就是1, 个分位就是0;
+            // 十六进制就是满十六, 向前进一位, 十分位就是1, 个分位就是0; 
+            // 十进制(9, 10, 11, 12, 13, 14, 15) === (9, 10, 11, 12, 13, 14, 15);
+            
+            
+            // 十六进制中10不叫作十, 叫做十六进制的一零;
+            // 十六进制的 1f === 16 + 15 === 31;(十分位的1代表十六, 个分位的f代表十五);
+            // 十六进制 (9, a, b, c, d, e, f, 10) === (9, 10, 11, 12, 13, 14, 15, 16);
+                
+
+            // 二进制(就是满二进一, 个分位满二了, 十分位就会变成1, 10 === 2, 11 === 3);
+            
+
+
+            // 计算进制数规律;
+                // 十进制(十进制 首位后面有几个零, 就是十的多少次方);
+                    // 1 == 1;
+                    // 10 == 10;
+                    // 100 == 10 ^ 2;(十的平方 or 十的二次方)
+                    // 100 == 10 ^ 2;(十的三次方)
+                    // 1000 == 10 ^ 4;(十的四次方)
+
+                
+                // 二进制(二进制 首位后面有几个零, 就是二的多少次方);
+                    // 1 == 1;
+                    // 10 == 2;
+                    // 100 == 2 ^ 2;
+                    // 1000 == 2 ^ 3;
+                    // 10000 == 2 ^ 4;
+                    
+                
+                
+        // 2.this
+            // 1.函数预编译过程 this ==> window;
+            // 2.全局作用域里this ==> window;
+            // 3.call/apply可以改变函数运行时this指向;
+            // 4.obj.fn(); fn()里面的this指向obj;
+
+            
+                // 1.函数预编译过程 this ==> window;
+                    // function show(p) {
+                    //     var a = 123;
+                    //     function b() {
+                    //         console.log(this);
+                    //     }
+                    //     b();
+                    // }
+                    // show(1);
+                    // 在函数预编译过程中形成的AO, 有一个与生俱来的arguments 指向的是实参列表;
+                    // 还有一个生来就有的就是this 指向的是 window(全局GO); 
+                    // 如果有new操作符: 就会有一个隐式的this转换;
+                        // var this = Object.create(show.prototype);
+                    // 就会将原来的this指向的window替换掉;
+                    
+                    // A0 : {
+                    //     arguments : [1],
+                    //     this : window,
+                    //     a : undefined,
+                    //     b : function () {},
+                    //     p : 1,
+                    // }
+                    
+                // 2.全局作用域里this ==> window;
+                    // console.log(this);
+                    // 就是在全局中打印 this 理所当然就是指向全局GO(也就是window);
+
+                // 3.call/apply可以改变函数运行时this指向;
+                    // function foo() {
+                    //     bar.apply(foo);
+                    // }
+                    // function bar() {
+                    //     console.log(this);
+                    // }
+
+                    // foo(1,2,3,4,5);
+                    
+                    // var obj = {
+                    //     name : 'abc',
+                    //     a : function () {
+                    //         console.log(this.name);
+                    //     }
+                    // }
+                    // obj.a();
+                    
+                    // var obj1 = {
+                    //     name : 'cba',
+                    // }
+                    
+                    // obj.a.apply(obj1);
+
+                    
+                // 4.obj.fn(); fn()里面的this指向obj;
+                    // 意思就是谁调用这个函数, 这个函数的this指向谁;
+                    // var obj = {
+                    //     name : 'abc',
+                    //     a : function () {
+                    //         console.log(this.name);
+                    //     }
+                    // }
+                    // obj.a();
+
+                    
+            // this 习题;
+                
+                // 第一题;
+                // var name = '123',
+                //     a = {
+                //         name : '111',
+                //         say : function () {
+                //             console.log(this.name);
+                //         }
+                //     },
+
+                //     fun = a.say;
+                
+                // fun();          // 123;
+                // a.say();        // 111;
+                // var b = {
+                //     name : '333',
+                //     say : function (fun) {
+                //         console.log(fun);
+                //     }
+                // }
+                
+                // b.say = a.say;          
+                // b.say();            // 333;
+
+
+
+                // 第二题;
+                // var name = '222',
+                //     a = {
+                //         name : '111',
+                //         say : function () {
+                //             console.log(this.name);
+                //         }
+                //     },
+                //     b = {
+                //         name : '333',
+                //         say : function (fun) {
+                //             fun();
+                //             // this ==> b;
+                //             // 然而fun() 执行只是在这个方法体里执行 并没有被调用(this.fun());
+                //             // b.say中是a.say方法; a.say()执行是打印this.name 
+                //             // b.say中this是b, 但是a.say()中this是并不是a, say只是a的say函数引用,一个单独的函数执行; 函数并没有被任何对象调用
+                //         }
+                //     }
+
+                // b.say(a.say);
+                // // 所以b.say执行的是形参传入的a的say方法执行 这个方法打印this.name, 中间并没有被调用, this直到b.say() 执行完毕都是指向window;
+                
+
+                // 第三题
+                // var foo = 123;
+                // function print() {
+                //     this.foo = 234;
+                //     console.log(foo);
+                // }
+
+                // new print();        // 123;
+
+                // var this = Object.create(print.prototype); (隐式变量this 挂到 AO身上, 是AO的this里面有foo,而并不是AO里面有foo);
+                // 所以console.log(foo) AO身上并没有, 向上查找到GO 有一个foo值为123;
+
+                // AO : {
+                //     this : {
+                //         foo : 234;
+                //     }
+                // }
+                // Go : {
+                //     foo : 123;
+                // }
+                
+
+                // 第四题(运行test, 和new test的结果分别是什么);
+                    
+                    // var a = 5; 
+                    // function test() {
+                    //     a = 0;
+                    //     console.log(a);
+                    //     console.log(this.a);
+                    //     var a;
+                    //     console.log(a);
+                    // }
+                
+                    // // new test()      // 0, undefined, 0;
+                    // test()          // 0, 5, 0,
+                
+            
+        // 3.callee, caller;(ES5中的'use Strict'(标准模式)下不允许使用, 而且还会报错);
+            // 1.arguments.callee;
+            // 2.fu.caller;
+                // 1.arguments.callee;(指向当前的函数引用);
+                    // arguments.callee 指向的是test函数的引用;
+                    // function test() {
+                    //     console.log(arguments.callee);
+                    // }
+                    // test();
+                    
+                    // 以下是一个递归求某数阶乘, 如果立执行函数来弥补性能上的不足, 但是函数立执行函数没有函数名称
+                    // 此时想要拿到函数名称(函数引用) 除了arguments.callee别无他法;
+                        // function factorial(num) {
+                        //     if(num == 1){
+                        //         return 1;
+                        //     }
+                        //     return num * factorial(num - 1);
+                        // }
+                        
+                        // var factorial = (function (num) {
+                        //     if(num == 1){
+                        //         return 1;
+                        //     }
+                        //     return num * arguments.callee(num - 1);
+                        // }(10));
+                    
+                // 2.fu.caller;(指向执行环境, 如果在全局调用就为null);
+                    // function test() {
+                    //     console.log(test.caller);
+                    //     demo();
+                    // }
+
+                    // function demo() {
+                    //     console.log(demo.caller);
+                    // }
+                    // test();
+        
+            
+    </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/javascript">
+    // html和css 不能叫做编程语言:编程语言特点:有变量,函数,有数据解构,可以进行计算;
+    // html和css 属于计算机脚本语言;计算机语言的一个小门类;
+    
+    // // 变量声明:
+    //     var a = 100;
+    // //     这段话其实是两个过程: 第一步:var a; 第二部: a = 100;
+    //     var b = 100;
+    //     var c = 100;
+    //     var d = 100;
+    //     var e = 100;
+    // // 这样是很浪费效率的;
+    // var a,b,c,d,e; 
+    // // 这种模式叫做单一var模式; 尽量多个变量这么来写;
+    // var a = 10,
+    //     b = 10,
+    //     c = 10,
+    //     d = 10,
+    //     e;
+    // // a里面只能存一个变量;再来个新的变量就会被覆盖;
+    // var a = 10;
+    // a = 20;     // 此时a就会被覆盖;
+
+
+
+
+    
+    
+    // 值,数据类型;分为两大类型;
+        // 1.原始值(分为五大类) A值赋到B值里面去,更改A值后B值不会改变;
+            // Number,Boolean,String,Undefined,Null;
+            // var a = undefine;
+            // 如果var a; 没有赋值的话就会打印undefined 这是个系统的默认值; 告诉开发者 声明了a但是没有定义没有赋值;
+            // var a = null;
+            // null 和 undefined 是不一样的 null是一种占位的; 
+            // 比如: 写一个方法,把这个方法赋值到一个变量fn里面; 忽然有一天这个变量fn里面不应该装这个方法了, 是删不掉的
+            // 可以用123覆盖等等.. 但是最好使用fn = null 来覆盖掉; 一个空值来覆盖以便以后在利用;
+                
+        // 2.引用值(很多类型); arr值赋到arr1值里面去,更改arr值,arr1值跟着变更;
+            // Array,Object,function...date,RegExp;
+        
+        // 如下: 
+            // var a = 10;
+            // var b = a;
+            // a = 20;
+            // console.log(b);
+            // debugger;
+            // var arr = [1];
+            // var arr1 = arr;
+            // arr.push('s');
+            // console.log(arr1);
+
+        
+    // JS 运算符
+        // '+'
+        // var a = 1 + 1 + 'a' + 1 + 1;
+        // console.log(a);
+
+        
+    // 小练习
+        // var a = (10 * 3 - 4 / 2 + 1) % 2,
+        //     b = 3;
+        // b %= a + 3;
+        // document.write(a++);
+        // document.write('<br/>');
+        // document.write(--b);
+
+
+        // var a = 123;
+        // var b = 234;
+        
+        // // 请替换AB的值;
+        // // 第一种方式
+        // var c = a;
+        // a = b;
+        // b = c;
+        
+        // // 第二种方式;
+        // a = a + b;
+        // b = a - b;
+        // a = a - b;
+        
+    </script>
+
+    
+    <!-- <script>
+        // 在此处定义一个a 为 10;
+        var a = 10;
+    </script>
+    <script>
+        // 在第二个代码块是可以获取到这个a为10的;
+        console.log(a);
+    </script> -->
+    
+</body>
+</html>

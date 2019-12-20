@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button class="getRequest">
+        getRequest
+    </button>
+    
+    <form id="myForm" action="">
+        姓名: <input type="text" name="name" value="lili"><br>
+        信息: <input type="text" name="message" value="hello,world;">
+    </form>
+    <button class="serialize">serialize</button>
+    
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+
+    <button class="postRequest">
+        postRequest
+    </button>
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <style>
+        select{
+            min-width: 150px;
+            padding: 10px;
+        }
+    </style>
+    <!-- 地址联动 -->
+    <select name="" id="prov"></select>
+    <select name="" id="city"></select>
+    <select name="" id="district"></select>
+
+    <script src="./jQuery/jquery3.4.1.min.js"></script>
+    <!-- <script src="./Data/citiesList.py"></script> -->
+    <script>
+        // 1.快速请求方法;
+            // get();
+                $(function() {
+                    $('.getRequest').click(function () {
+                        // $.get('http://localhost:8080/server/get-content.json?name=lili&message=hello,world;',function(data) {
+                        //     console.log(data);
+                        // });
+                        // // 通过表单方法 serialize()可以直接这样写, 同时这个方法只会获取有表单中有name属性的input, name的值就是参数中 =(等号) 前面的字段
+                        // $.get('http://localhost:8080/server/get-content.json?'+ $('#myForm').serialize(),function(data) {
+                        //     console.log(data);
+                        // });
+
+
+                        // ajax的get请求;
+                        // $.ajax({
+                        //     url:'http://localhost:8080/server/get-content.json',
+                        //     type: 'get',
+                        //     async: true,
+                        //     // data 就相当于url的?后面拼接的参数;
+                        //     data: {
+                        //         name: $('#myForm input[name=name]').val(),
+                        //         message: $('#myForm input[name=message]').val(),
+                        //     },
+                        //     data: 'name=lili&message=hello,world;',
+                        //     success: function (data) {
+                        //         console.log(data);
+                        //     }
+                        // })
+                    })
+                })
+            // post();
+            $(function () {
+                $('.postRequest').click(function () {
+                    // // $.post() 只能通过$.ajaxSetup来设置content-type, 因为$.post()和$.get() 的参数只有url, data, success, dataType;
+                    // // 第二个传递参数的data可以是个对象{}, 也可以是个字符串'', 这里就直接写入$('#myForm').serialize();
+                    // $.ajaxSetup({heads: {'content-type' : 'application/x-www-form-urlencoded'}});
+                    // $.post("http://localhost:8080/server/post-content.php", $('#myForm').serialize(),function(data){
+                    //     console.log(data);
+                    // }, "php");
+
+                    // $.ajax({
+                    //     url:'http://localhost:8080/server/post-content.php',
+                    //     async: true,
+                    //     type: 'post',
+                    //     data: $('#myForm').serialize(),
+                    //     success: function (data) {
+                    //         console.log(data);
+                    //     },
+                    //     error: function (data){
+                    //         console.log(data);
+                    //     }
+                    // })                    
+                })
+            })
+
+
+            // $.getJSON(url,[data],[fn])
+                // $.getJSON('http://127.0.0.1:8081/server/ajax.json',{name: 'leecs', age: 30}, function (data) {
+                //     console.log(data);
+                // })
+            
+            
+            // $.getScript(url,[callback])  通过 HTTP GET 请求载入并执行 JavaScript 文件
+                // $.getScript('http://127.0.0.1:8081/server/getJS.js', function (data,statu,reqInfo) {
+                //     console.log(data);
+                //     console.log(statu);
+                //     console.log(reqInfo);
+                // })
+
+
+            
+        // 2.ajax方法;
+            // ajax();
+                $(function () {
+                    // $.ajax({
+                    //     url: 'http://localhost:8080/server/ajax.json',
+                    //     type: 'get',
+                    //     async: true,
+                    //     dataType: 'json',
+                    //     success: function (data) {
+                    //         console.log(data);
+                    //     },
+                    //     error: function (err) {
+                    //         console.log(err);
+                    //     }
+                    // })
+                })
+            
+        // 表单方法;
+            // serialize();(非常方便, 不需要从表单中获取每一个input.val()进行麻烦的操作);
+                $(function() {
+                    // $('.serialize').click(function () {
+                    //     console.log($('#myForm').serialize());
+                    // })
+                })
+
+                
+                
+                
+        // 案例 
+            // 地址联动案例
+                $(function () {
+                    // 州讯网提供API接口;
+                    var addressAPI = 'http://zhouxunwang.cn/data/?id=104&key=VuvO/9VgTt7+h5yJ84oxR2fJOwTgsJeZ/pxz7fk&ske=1',
+                        result = null;
+                    // 获取省信息;
+                    $.ajax({
+                        url:addressAPI,
+                        type: 'get',
+                        dataType:'json',
+                        success: function (data) {
+                            result = data.result;
+                            $.each(result, function (ind, item) {
+                                $('<option>').html(item.province).val(item.id).appendTo('#prov');
+                            })
+                            $('select#prov').trigger('change');
+                        },
+                    })
+                    // 获取市信息
+                    $('select#prov').on('change', function () {
+                        var that = this;
+                        $.ajax({
+                            url:addressAPI,
+                            type: 'get',
+                            dataType:'json',
+                            success: function (data) {
+                                $.each(result, function (ind, item) {
+                                    switch (that.value) {
+                                        case  item.id:
+                                            // 省级改变后市级不会改变, 因为后面appendTo一直在追加;所以前面应该清空一下市级信息;
+                                            $(that).next().empty()
+
+                                            // console.log(item);
+                                            $.each(item.city, function (ind,item) {
+                                                // console.log(item)
+                                                $('<option>').html(item.city).val(item.id).appendTo('#city');
+                                            })
+                                            // 自动触发后面的change事件;
+                                            $(that).next().trigger('change');
+                                        break;
+                                    }
+                                })
+                            },
+                        })
+                    });
+
+                    // 获取区县信息;
+                    $('select#city').on('change',function () {
+                        var that = this;
+                        $.ajax({
+                            url:addressAPI,
+                            type:'get',
+                            dataType:'json',
+                            success: function (data) {
+                                // console.log(result);
+                                $.each(result,function (ind,pitem){
+                                    $.each(pitem.city,function (ind,citem) {
+                                        switch(that.value) {
+                                            case citem.id:
+                                                $(that).next().empty()
+                                                // console.log(citem);
+                                                $.each(citem.district, function (ind,ditem) {
+                                                    $('<option>').html(ditem.district).val(ditem.id).appendTo('#district');
+                                                })
+                                                $(that).next().trigger('change');
+                                            break;
+                                        }
+                                    })
+                                })
+                            }
+                        })
+                    })
+                })
+    </script>
+</body>
+</html>
