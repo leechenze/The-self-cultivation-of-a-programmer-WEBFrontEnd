@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="./Plugins/select2-develop/dist/css/select2.min.css">
     <link rel="stylesheet" href="./Plugins/datetimepicker-2.5.20/build/jquery.datetimepicker.min.css">
     <link rel="stylesheet" href="./Plugins/fullPage.js-master/dist/fullpage.min.css">
+    <!-- jQueryUI -->
+    <link rel="stylesheet" href="./Plugins/jquery-ui-1.12.1.custom/jquery-ui.min.css">
+    <!-- jQueryMobile -->
+    <link rel="stylesheet" href="./Plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.css">
+    
 </head>
 
 <body>
@@ -110,9 +115,458 @@
     
 
 
-    <!-- lazyload图片加载 -->
+    <!-- lazyload图片懒加载插件 -->
     <!-- https://github.com/tuupola/lazyload -->
     <!-- https://appelsiini.net/projects/lazyload/ -->
+    <style>
+        .body{
+            background: #aaa;
+        }
+        .content{
+            margin: 0 auto;
+            width:940px;
+        }
+
+        .img-wrapp{
+            font-size: 0;
+        }
+
+        .img-item{
+            display: inline-block;
+            width:400px;
+            padding:20px;
+            background-color: #fff;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+
+        .img-item img{
+            width: 400px;
+            height: 300px;
+        }
+        
+    </style>
+    <!-- <div class="content">
+        <h1>图集</h1>
+        <hr>
+        <div class="img-wrap">
+            <div class="img-item">
+                <img data-src="./images/1.jpg" alt="">
+            </div>
+            <div class="img-item">
+                <img data-src="./images/2.jpg" alt="">
+            </div>
+            <div class="img-item">
+                <img data-src="./images/3.jpg" alt="">
+            </div>
+            <div class="img-item">
+                <img data-src="./images/4.jpg" alt="">
+            </div>
+            <div class="img-item">
+                <img data-src="./images/5.jpg" alt="">
+            </div>
+            <div class="img-item">
+                <img data-src="./images/6.jpg" alt="">
+            </div>
+            <div class="img-item">
+                <img data-src="./images/7.jpg" alt="">
+            </div>
+        </div>
+    </div> -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- layer弹框插件 -->
+    <!-- http://layer.layui.com/?alone -->
+    <!-- http://github.com/sentsin/layer -->
+    <style>
+        button{
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+    </style>
+    <button class="alert">alert</button>
+    <button class="confirm">confirm</button>
+    <button class="msg">msg</button>
+    <button class="tips">tips</button>
+    <button class="load">load</button>
+    <!-- 自定义弹框 -->
+    <button class="open">open</button>
+    <br>
+    <hr>
+    <br>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- 表单验证插件 nice validator -->
+    <!-- http://validator.niceue.com -->
+    <!-- http://github.com/niceue/nice-validator -->
+    <style>
+        input,button{
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+        }
+
+        button{
+            width: 320px;
+            background-color: #f5f5f5;
+            
+        }
+    </style>
+    <form action="./Data/validator.js" method="post" id="regForm">
+        <table>
+            <tr>
+                <td>邮箱:</td>
+                <td><input type="text" name="email" data-rule="required;email"></td>
+            </tr>
+            <tr>
+                <td>密码:</td>
+                <td><input type="password" name="password" data-rule="required;length(6~16)"></td>
+            </tr>
+            <tr>
+                <td>确认密码</td>
+                <td><input type="password" name="repassword"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button class="registered">注 册</button></td>
+            </tr>
+        </table>
+        
+    </form>
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+    <!-- jQuery-easing动画插件扩展 -->
+    <!-- http://gsgd.co.uk/sandbox/jquery/easing -->
+    <!-- httPs://github.com/gdsmith/jquery.easing -->
+    <button class="animateBtn">动画</button>
+    <div class="box"></div>
+    <style>
+        body{
+            padding-bottom:500px;
+        }
+        .box{
+            width: 400px;
+            height: 300px;
+            background-color: orange;
+        }
+    </style>
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <!-- jQuery自定义插件 -->
+    <style>
+        .extend{
+            width: 100px;
+            height: 100px;
+            border: 1px solid #000;
+        }
+    </style>
+    <div class="extend">div</div>
+    <h1 class="extend">h1</h1>
+    <p class="extend">p</p>
+    <span class="extend">span</span>
+    
+    <!-- 自定义插件案例 -->
+    <style>
+        ul{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            overflow: hidden;
+        }
+        .wrapper{
+            margin: 100px auto;
+            width: 800px;
+        }
+        .wrapper li{
+            margin-bottom: 10px;
+            padding: 20px;
+            background: #bbb;
+        }
+    </style>
+    <ul id="wrapList" class="wrapper">
+        <li>第1条消息滚动</li>
+        <li>第2条消息滚动</li>
+        <li>第3条消息滚动</li>
+        <li>第4条消息滚动</li>
+        <li>第5条消息滚动</li>
+        <li>第6条消息滚动</li>
+    </ul>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- jQueryUI不是jQuery插件, 是一个综合的解决方案, 但是说白了也是jQuery插件的集合, 里面也包含了很多插件 -->
+    <!-- 市场上流行的很多UI框架bootstrap等.. 但是jQuery是出现最早的, 功能齐全, 但是效果比较老, 相比BT使用比较少; -->
+    <!-- https://jqueryui.com/ -->
+    <div class="drapBox"></div>
+    <button class="jQueryUI">按钮</button>
+    <input type="text" class="dateInput">
+    <style>
+        .drapBox{
+            width:200px;
+            height: 200px;
+            background-color: green;
+        }
+        .dateInput{
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- jQueryMobile根jQueryUI有点类似, 只不过它是针对于移动端的解决方案 -->
+    <!-- 和jQueryUI一样, 因为许久不更新, 设计过时, 而导致用户量不是太多; -->
+    <!-- https://jquerymobile.com/ -->
+    <div data-role="page">
+        <div data-role="header" data-theme='b'>
+            <a href="#" class="ui-btn ui-icon-home ui-btn-icon-left">主页</a>
+            <h1>我的主页</h1>
+            <a href="#" class="ui-btn ui-icon-search ui-btn-icon-left">搜索</a>
+        </div>
+        <div data-role="main" class="ui-content">
+            <p>欢迎使用jQueryMobile</p>
+            <a href="#anylink" class="ui-btn ui-icon-search ui-btn-icon-left">Search</a>
+        </div>
+        <div data-role="footer" data-position="fixed">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#anylink">首页</a></li>
+                    <li><a href="#anylink">页面二</a></li>
+                    <li><a href="#anylink">搜索</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <!-- Sizzle -->
+    <!-- 将jQuery的选择器独立出来的一个插件 -->
+    <!-- https://github.com/jquery/sizzle -->
+    <style>
+        .my-list{
+            margin: 0;
+            padding: 0;
+            width: 600px;
+            list-style: none;
+        }
+        .my-list li{
+            margin-bottom: 10px;
+            padding: 20px;
+            background-color: #ddd;
+            border: 1px solid #aaa;
+        }
+    </style>
+    <ul class="my-list">
+        <li>lorem ipsum dolor sit amet.</li>
+        <li>lorem ipsum dolor sit amet.</li>
+        <li>lorem ipsum dolor sit amet.</li>
+        <li>lorem ipsum dolor sit amet.</li>
+        <li>lorem ipsum dolor sit amet.</li>
+    </ul>
+    <hr>
+    <br>
+    <hr>
+    <br>
+    <hr>
+    <br>
+    <hr>
+    <br>
+    <hr>
+    <br>
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Zepto和jQuery相同, 只不过是针对移动段解决方案 -->
+    <!-- 非常小巧,生产版只有9.6k大小, 源码去掉了jQuery的动画, 同时也不能完全支持jQuery的选择器, 也没有兼容处理; -->
+    <style>
+        #box{
+            width: 400px;
+            height: 300px;
+            background-color: pink;
+        }
+    </style>
+    <div id="box">
+    </div>
+    <div class="main">
+        <ul class="my-list">
+            <li>lorem ipsum dolor sit amet.</li>
+            <li>lorem ipsum dolor sit amet.</li>
+            <li>lorem ipsum dolor sit amet.</li>
+            <li>lorem ipsum dolor sit amet.</li>
+            <li>lorem ipsum dolor sit amet.</li>
+        </ul>
+    </div>
+    
+    
+    
+    
+    
     
     
     
@@ -143,6 +597,40 @@
     <script src="./Plugins/datetimepicker-2.5.20/build/jquery.datetimepicker.full.min.js"></script>
     <!-- 全屏滚动插件 -->
     <script src="./Plugins/fullPage.js-master/dist/fullpage.min.js"></script>
+    <!-- lazyload图片懒加载插件 -->
+    <script src="./Plugins/lazyload-2.x/lazyload.min.js"></script>
+    <!-- layer弹出框插件 只需要引入JS即可,css文件会自动引入 -->
+    <script src="./Plugins/layer-v3.1.1/layer/layer.js"></script>
+    <!-- niceValidator表单验证  注意这个插件的引入路径后面要指定以下语言?local=zh-CN -->
+    <script src="./Plugins/nice-validator-1.1.4/dist/jquery.validator.min.js?local=zh-CN"></script>
+    <!-- jqueryEasing动画扩展插件 -->
+    <script src="./Plugins/jQueryEasing/jquery.easing.min.js"></script>
+    <!-- jQuery自定义插件案例消息滚动 -->
+    <script src="./Plugins/jQueryCustomize/jquery.scrollList.js"></script>
+    <!-- jQueryUI -->
+    <script src="./Plugins/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <!-- jQueryMobile插件, jQueryMobile对jQuery2.1以上的版本不支持,所以需要从新引入1.12.4的版本 -->
+    <!-- <script src="./jQuery/jquery.1.12.4.min.js"></script>
+    <script src="./Plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
+    <!-- jQuerySizzle -->
+    <script src="./Plugins/sizzle-master/dist/sizzle.min.js"></script>
+    <!-- zepto -->
+    <script src="./Plugins/zepto-master/src/zepto.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -214,20 +702,349 @@
                     // Code...
                 // });
                 
-                var wrapper = new fullpage('#wrapper', {
-                    navigation: true,       // 导航小点点
-                    navigationTooltips: ['firstPage', 'secondPage', 'thirdPage', 'forthPage', 'fivePage', 'lastPage'],   // 设置每一个导航划过时候的提示信息;
-                    sectionsColor: ['orange', 'skyblue', 'pink', 'red', 'yellow', 'green'],     // 设置背景颜色;
-                    showActiveTooltip: true,    // 默认显示导航提示信息;
-                    slidesNavigation: true,     // 横向滚动的导航显示;
-                    anchors: ['firstPage', 'secondPage', 'thirdPage', 'forthPage', 'fivePage', 'lastPage'],     // 设置nav锚点指定信息;
-                    sectionSelector: '.section',    // 自定义选择器 纵向
-                    slideSelector: '.slide',        // 自定义选择器 横向
+                // var wrapper = new fullpage('#wrapper', {
+                //     navigation: true,       // 导航小点点
+                //     navigationTooltips: ['firstPage', 'secondPage', 'thirdPage', 'forthPage', 'fivePage', 'lastPage'],   // 设置每一个导航划过时候的提示信息;
+                //     sectionsColor: ['orange', 'skyblue', 'pink', 'red', 'yellow', 'green'],     // 设置背景颜色;
+                //     showActiveTooltip: true,    // 默认显示导航提示信息;
+                //     slidesNavigation: true,     // 横向滚动的导航显示;
+                //     anchors: ['firstPage', 'secondPage', 'thirdPage', 'forthPage', 'fivePage', 'lastPage'],     // 设置nav锚点指定信息;
+                //     sectionSelector: '.section',    // 自定义选择器 纵向
+                //     slideSelector: '.slide',        // 自定义选择器 横向
+                // })
+            
+            
+
+
+
+            // lazyload图片懒加载插件
+            // 打开network 查看img文件, 初始化只加载能看到的图片, 到后面划到哪张图片哪张图片加载,
+            // 不是一次行全部加载完, 有效的减少对服务器的请求压力;
+            $('.img-wrap img').lazyload();
+            // 不依赖jQuery也可以使用, 给img元素加上class="lazyload" 然后直接调用 lazyload();
+            
+
+
+
+            
+
+
+
+
+            // layer弹框插件
+                // $('.alert').click(function () {
+                //     layer.alert('alert');
+                // })
+                // $('.confirm').click(function () {
+                //     layer.confirm('你确定么');
+                // })
+                // $('.msg').click(function () {
+                //     layer.msg('提示');
+                // })
+                // $('.tips').click(function () {
+                //     layer.tips('小贴士', '.tips');
+                // })
+                // $('.load').click(function () {
+                //     // loadEle就是正在加载的哪个元素;
+                //     var loadEle = layer.load();
+                //     // 两秒以后关闭layer加载;
+                //     setTimeout(function() {
+                //         layer.close(loadEle);
+                //     },1000);
+                // })
+                // // layer.open是核心的方法;
+                // $('.open').click(function () {
+                //     layer.open({
+                //         // type为0, 也是默认值,content必须是一个字符串形式的信息;
+                //         // type: 0,
+                //         // type为1, content必须是一个指定的DOM元素;
+                //         // type: 1,
+                //         // type为2, conent必须是一个字符串的iframe层的连接;
+                //         type: 2,
+                        
+                //         title: '<h3>自定义弹框标题</h3>',
+                //         // content: '<h1>自定义弹框内容<h1>',
+                //         // content: $('div.nav'),
+                //         content: 'http://www.baidu.com',
+                //         area: ['500px', '500px'],
+                //         shadeClose: true,
+                //         // 当设置这个参数时候,会出现最大化和最小化的按钮;
+                //         maxmin: true,
+                //     })
+                // })
+
+
+
+
+
+
+
+
+
+
+
+
+            // niceue validator表单验证插件
+                $('#regForm').validator({
+                    // 首先指定要验证的字段, 键名就是表单的name, 键值就是规则, 规则插件API有自定义规则, 也有内置的规则; 
+                    fields:{
+                        // email之前必须添加一个required表示字段必填, 这是插件的API, 其他API还有length, match, email等等...
+                        email: {
+                            rule: 'required,email',
+                            ok: '邮箱可用',
+                            tip: '请输入邮箱',
+                        },
+                        // length表示设定密码长度;
+                        password: {
+                            rule: 'required,length(6~18)',
+                            // 当密码未输入正确时的提示字段;
+                            msg: '密码必须是留到十八位',
+                            // 当密码输入正确时提示的字段;
+                            ok: '密码可用',
+                            // 获取焦点时的提示信息
+                            tip: '请输入6~18位密码',
+                        },
+                        // match表示验证确认密码和密码是否相同;
+                        repassword: {
+                            rule: 'required, match(password)',
+                            ok: '密码确认成功',
+                            msg: '输入两次密码不一致',
+                            tip: '请确认密码',
+                        },
+                    }
+                });
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // jQueryEasing动画插件扩展;
+            // easing是jQuery提供的一个动画插件扩展, 在jQuery动画的第二个(easing)参数中,是一个动画的运行方式的选择的
+            // 默认jQuery值提供了'swing'和'linear'两种动画运行方式可以选择, 而easing这个插件就使jQuery动画支持更多的动画运行方式;
+            $('.animateBtn').click(function () {
+                $('.box').slideUp(1000, 'easeInBack', function () {
+                    console.log('callback');
+                });
+            })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // jQuery自定义插件, jQuery插件两大部分:
+            // 一. 给jQuery对象本身(类本身)扩展方法, 可以理解为添加静态方法;
+                // 定义插件;
+                $.extend({
+                    sayHello: function (name) {
+                        console.log('hello  ' + name);
+                    }
                 })
+
+                // 调用插件;
+                $.sayHello('leecs');
+                
+                
+            // 二. 给jQueryDOM对象扩展方法;(大部分jQuery插件都是给jQueryDOM扩展方法);
+                // 定义插件;
+                // $.fn.extend({
+                //     changeBGColor: function () {
+                //         $(this).css({
+                //             'background-color': 'red',
+                //         })
+                //     }
+                // })
+                // 以上写法等同于下面的写法;
+                $.fn.changeBGColor = function() {
+                    $(this).css({
+                        'background-color': 'red',
+                    })
+                }
+                // 调用插件;
+                $('.extend').changeBGColor();
+
+
+
+
+
+
+            
+                
+                
+                
+                
+                
+                
+                
+                
+                
+
+
+
+
+
+
+
+            
+            // 自定义插件, 在上方引入自定义插件jQuery.scrollList文件,即可用;
+                $('#wrapList').scrollList({
+                    limit: 4,
+                    speed: 1000,
+                    type: 0,
+                });
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+                
+
+
+
+
+
+
+            // jQueryUI, 类似于bootstrap这些UI框架, 但是jQueryUI是诞生最早的, 功能齐全,可效果比较老,很少使用;
+            $('.drapBox').draggable();
+            $('.jQueryUI').button();
+            $('.dateInput').datepicker();
+                
+                
+                
+                
+                
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // jQueryMobile插件,详见html内容;
+                
+                
+                
+                
+                
+                
+                
+                
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // Sizzle完全独立,并不依赖于jQuery,Sizzle是一个纯javascript CSS选择器引擎, 说白了就是将jQuery的选择器独立出来了;
+                console.log(Sizzle('.my-list'))
+                console.log(Sizzle('.my-list li'))
+                console.log(Sizzle('.my-list li:lt(2)'))
+                console.log(Sizzle('.my-list li:first'))
+            
+                
+
+
+
             
             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // Zepto, 
+                // 因为不支持jQuery的选择器所以不可以$('.main .my-list li:eq(2)')这样获取, 所以zepto需要使用CSS3的选择器;
+                $('.main .my-list li').eq(2).css('background-color','red');
+                // 没有动画操作;
+                $('.main .my-list li').slideUp(1000);
+                // 因为是针对移动端的解决方案, 所以也没有对IE以及其他浏览器低版本的解决方案;
             
             
+                
+                
         })
     </script>
 </body>
