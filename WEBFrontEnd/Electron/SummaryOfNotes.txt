@@ -1,0 +1,30 @@
+﻿博学之, 审问之, 慎思之, 明辨之, 笃行之;
+
+壹. Electron三问(是什么? 做什么? 为什么?);
+    electron是由GitHub开发, 由HTML,CSS,JavaScript构建夸平台桌面应用程序的一个开源库;
+    主要由Node, chrome,组成的electron应用;
+    2013年4月 Atom Shell项目启动;
+    2014年5月 Atom Shell被开源;
+    2015年4月 Atom Shell被命名为Electron;
+    2016年5月 Electron发布了v1.0.0版本;
+    2016年5月 Electron构建的应用程序可上架Mac App Store;
+    2016年8月 Windows Store支持Electron构建的应用程序;
+
+    以windows平台为例,大部分人在做桌面应用的时候首先会想到, 以C++为基础的QT, 或者是C#为基础的WPF, 这些方式开发桌面应用;
+    不可否认的是这些技术已经是非常成熟的开发了, 但是针对前端技术的Web应用就当属Electron, 公司原本在线的web应用, 如果想
+    在桌面直接打开, 同时增加一些与系统的交互功能, 这时就必须用到Electorn;    
+
+
+    Electron的能力: 支持Node的原生API, 包括文件读写, 系统操作, 加减密, 以及可以使用丰富的Node扩展, USB接口,蓝牙等系统应用...
+    Electron的优势: 开发效率高(开发一套代码,可以应用在各种操作系统上), 社区支持好(因为本身是由于Github开发的);
+    Electron成功案例: VSCode, Atom, GitHub桌面端等等....
+    
+贰. 架构实现
+
+    
+    
+
+
+    
+
+叁. 躬行实践

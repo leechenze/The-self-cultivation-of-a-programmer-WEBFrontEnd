@@ -2043,3 +2043,50 @@ jQuery是一个快速的小的功能丰富的JavaScript库. 它使HTML文档遍�
 
 
 
+
+
+
+
+
+
+
+
+
+拾肆.原型原型链;
+
+    jQuery的两种用法
+    jQuery('xxx') 或 new jQuery('xxx')
+    这两种方法都会返回一个实例, 其原型链有一大堆方法;比如: jQuery().css(), jQuery().attr(), jQuery().html();
+    并且这个函数本身返回了一个实例, 本身也是构造函数(new jQuery), 他的原型链也有一大堆方法;
+    
+    console.log(jQuery);
+    var jQuery = function (selector, context) {
+        return new jQuery.fn.init(selector, context);
+    }
+
+    console.log(jQuery.fn.init.prototype);
+    console.log(Object.keys(jQuery.fn.init.prototype))
+    console.log(jQuery.prototype == jQuery.fn.init.prototype);
+    
+    
+    那么jQuery的源码返回的构造函数 jQuery.fn.init(selector, context);
+    同时jQuery.fn.init.prototype中还有一个init方法, 其实他们是相同的
+    console.log(jQuery.fn.init.prototype.init === jQuery.fn.init);
+    console.log(jQuery.fn.init.prototype === jQuery.fn);
+    
+    
+
+    所以从上得出以下结论;
+        jQuery ==> jQuery('xxx') ==> function('xxx'){return new jQuery.fn.init('xxx')} ==> jQuery.fn.init.prototype ==> jQuery.fn ==> {init: function () {...}, add: function () {...}};
+        
+        jQuery ==> new jQuery('xxx') ==> jQuery.prototype ==> {init: function () {...}, add: function () {...}}
+    
+
+    通过以上的展示, jQuery原型链的展示已经非常明了了, 在原型链上的这一堆方法, 都指向了该原型链;
+    console.log(jQuery.fn === jQuery.fn.init.prototype);
+    console.log(jQuery.fn === jQuery.prototype);
+
+    以下结论:
+    1.调用jQuery() 可以返回一个实例;
+    2.jQuery自己也是构造函数, 也可以被显示的构造出来;
+    3.实例方法绑定在原型链上;

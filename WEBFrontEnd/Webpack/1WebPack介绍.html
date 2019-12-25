@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    webpack是前端架构比不可少的打包工具(模块打包器);
+    本章介绍的是webpack4.x的版本;
+    静态页面开发时(H5 + C3)   常用gulp;
+    vue/react开发时脚手架都是基于webpack的;
+    webpack作用
+        1. 打包: 把多个文件打包成一个文件, 请求服务器时就不是多个文件而就只是一个文件了, 减少了会服务器的请求和压力,带宽;
+
+        2. 转化: 浏览器只是别.js,.css,.jpg,.png等静态资源文件, 项目中的scss,.less,.hbs,.vue,.ts等文件需要转换正.js,.css,.jsp,.png文件供浏览器识别;
+        
+        3. 优化: SPA(single page web application)单页面应用越来越盛行, 伴随着前端的复杂度就会增高, 但是有些小细节的重复一些事, 比如说压缩等...手动做就会太麻烦, 所以webpack会承担这部分工作, 对项目进行一些优化;
+
+    webpack构成
+        1. 入口文件:entry
+
+        2. 出口文件:output
+
+        3. 转化器:loaders
+
+        4. 插件: plugins
+
+        5. 开发服务器:devServer(发送Ajax请求必须放到服务器环境, 之前就必须装一些apache, tomcat, PHP等..之类的服务器环境,集成环境);
+
+        6. 模式\环境: mode 开发模式和生产模式
+        
+    
+    安装WebPack
+        web Pack是基于Node环境的;
+
+        npm install webpack-cli -g
+
+        或者
+        
+        yarn add webpack-clid -g
+        
+        
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</body>
+</html>
