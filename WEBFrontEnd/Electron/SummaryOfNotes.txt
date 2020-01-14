@@ -20,11 +20,42 @@
     Electron成功案例: VSCode, Atom, GitHub桌面端等等....
     
 贰. 架构实现
+    Electron运行main.js的进程叫做主进程, 并且只有一个主进程, 和多个渲染期进程, 当主进程销毁之后, 所有的渲染期进程都会被销毁;
 
-    
-    
+    Electron:
 
+        index.html                      ==>  渲染进程
+                <html>
+                    <body>hello world!</body>
+                </html>
+        
+        package.json                    ==>  包体描述
+                {
+                    "name": "electron-app",
+                    "version": "1.0.0",
+                    "main": "main.js"   ==> main指向的文件就是主进程;
+                }
+                
+        main.js                         ==>  主进程
+                const {app, BrowserWindow} = require('electron');
+                let win;
+                
+                app.on('ready', () => {
+                    // 创建一个宽是1000, 高是800的一个窗口;
+                    Win = new BrowserWindow({width: 1000, height: 800});
+                    // 这个窗口加载的是index.html中的内容, 这样主进程创建了一个渲染期进程, 合成了一个electron应用;
+                    Win.loadFile('index.html');
+                })
+                
+                main.js这个主进程, 负责整个应用程序的生命周期, 包括创建和管理渲染期进程, 以及一些系统的事件处理以及一些原生的GUI/API调用;
+        
+        仅支持Chrome/Chromuim浏览器
+            1.没有浏览器兼容问题;
+            2.最新浏览器升级特性;
+            3.开发electron不需要台高配置的机器;
+            4.ES6/7;
 
     
 
 叁. 躬行实践
+    
