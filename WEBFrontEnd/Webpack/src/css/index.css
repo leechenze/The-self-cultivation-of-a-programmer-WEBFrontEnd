@@ -1,0 +1,7 @@
+body{
+    color: red;
+    background-image: url(../images/1.jpg);
+}
+#root{
+    background-color: aqua;
+}

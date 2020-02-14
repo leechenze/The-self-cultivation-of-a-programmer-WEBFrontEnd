@@ -1,0 +1,286 @@
+博学之, 审问之, 慎思之, 明辨之, 笃行之;
+壹、贰、叁、肆、伍、陆、柒、捌、玖、拾;
+
+
+  webpack是前端架构比不可少的打包工具(模块打包器);
+    本章介绍的是webpack4.x的版本;
+    静态页面开发时(H5 + C3)   常用gulp;
+    vue/react开发时脚手架都是基于webpack的;
+    webpack作用
+        1. 打包: 把多个文件打包成一个文件, 请求服务器时就不是多个文件而就只是一个文件了, 减少了会服务器的请求和压力,带宽;
+
+        2. 转化: 浏览器只是别.js,.css,.jpg,.png等静态资源文件, 项目中的scss,.less,.hbs,.vue,.ts等文件需要转换正.js,.css,.jsp,.png文件供浏览器识别;
+        
+        3. 优化: SPA(single page web application)单页面应用越来越盛行, 伴随着前端的复杂度就会增高, 但是有些小细节的重复一些事, 比如说压缩等...手动做就会太麻烦, 所以webpack会承担这部分工作, 对项目进行一些优化;
+
+    webpack构成
+        1. 入口文件:entry
+
+        2. 出口文件:output
+
+        3. 转化器:loaders
+
+        4. 插件: plugins
+
+        5. 开发服务器:devServer(发送Ajax请求必须放到服务器环境, 之前就必须装一些apache, tomcat, PHP等..之类的服务器环境,集成环境);
+
+        6. 模式\环境: mode 开发模式和生产模式
+        
+    
+    安装WebPack
+        webPack是基于Node环境的;
+
+        npm install webpack-cli -g
+
+        或者
+        
+        yarn add webpack-clid -g
+        
+        
+    开发环境(development):
+        --save-dev, -D
+        "devDependencies"
+    生产环境(production):
+        --save,     -S
+        "Dependencies"
+        生产环境(线上环境的文件考虑性能一定要压缩);
+    命令&简写: 
+        i                                       install
+        un                                      uninstall
+        npm init -y                             -y无需设置配置packjson, 一步默认生成;
+        --save-dev                              简写-D, 将依赖安装到开发环境;
+        --save                                  简写-S, 将依赖安装到生产环境;
+        npm i jquery vue react -S               多个包空格隔开;
+        cat                                     在命令中查看文件;
+        
+    
+
+
+
+壹.webpack4.x初探;
+    新建一个src文件夹中新建index.js文件为入口文件, src文件夹都是源文件;
+    新建一个dist打包文件夹, 在其中新建index.html, dist文件夹都是生成文件;
+    dist/index.html中引入一个bundle.js文件,(这个文件目前还没有);
+    
+    启动webpack: 
+    webpack src/index.js --output dist/bundle.js
+
+    webpack.config.js 是webpack的配置文件, 
+    在配置文件中配置较长的命令使其简化;
+    
+    webpack的配置都在这个文件中, webpack采用的是commentJS的规范;
+    整个webpack需要想到处一个模块 module.exports = {};
+
+    webpack主要的配置组成: 
+        1.入口配置 entry            必选项
+        2.出口配置 output           必选项
+        3.规则配置 module           可选项
+        4.插件配置 plugins          可选项
+        5.开发服务器 devServer;     可选项
+
+    在webpack配置文件中把出口和入口配置好, 直接在终端输入webpack即可打包
+    无需在使用webpack src/index.js --output dist/bundle.js繁琐的命令;
+    
+    webpack.config.js文件名字也可以更改, 只是更改完成之后, 在终端执行命令就改为:    webpack --config 文件名;
+    否则默认配置的文件就是main.js而不是配置的bundle.js;
+
+    
+    当然也可以使用npm的命令: npm run build
+    前提是需要在package.json文件中的 script: {} 中设置build键,值为webpack命令;
+    需要npm run什么命令,就需要在script: {}中配置什么键, 值也要对应;
+    npm 运行时候还是会找package.json中的script中的命令进行执行;
+    
+    parcal也是一个新兴的打包工具, parcal的优势就是实现零配置;
+    所谓的零配置就是只需要创建一个src文件夹,输入命令即可自动生成dist文件夹下的文件, 无需webpack.config.js配置文件即可配置;
+    webpack4.x也是实现了零配置, 但是零配置的功能并不完善.
+    
+
+    参数 --mode 可以使webpack不报警告;
+        webpack --mode development              开发环境下打包命令不压缩;
+        webpack --mode production               生产环境下打包压缩的命令;
+    
+    
+    多入口,一出口;
+        entry是数组形式, webpack会根据顺序一次打包到bundle.js文件中,都对的是bundle.js文件;
+    多入口,多出口
+        entry是对象形式, 键对应的就是出口filename的[name]即可;
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    plugins:(html-webpack-plugin)
+
+        HtmlWebpackPlugin: 注(运行时候, 还需要确保webpack, webpack-cli 在项目本地中安装, 只是全局的webpack是不行的);
+            1.可以生成创建html入口文件，比如单页面可以生成一个html文件入口，配置N个html-webpack-plugin可以生成N个页面入口
+            2.为html文件中引入的外部资源如script、link动态添加每次compile后的hash，防止引用缓存的外部文件问题
+
+            参数:
+                模板: template:'./src/index.html';                  源模板位置;
+                标题: title: 'I love china';                        文档标题;
+                    一定注意需要在原模版文件的title标签之间写入模板固定语法, 有点类似于ejs(模板js)
+                    <%= htmlWebpackPlugin.options.title%> 这是全局的一个固定语法; 不容写错;
+                消除缓存:   hash: true,                             
+                    hash设为true,就会在打包后的文件夹中引入的文件js后面加上随机的一个哈希值, 用以清除缓存;
+                    index.bundle.js?d1c90451e25c18f21154
+                
+                压缩输出:   minify:{
+                                collapseWhitespace: true,   压缩空白;
+                                removeAttributeQuotes: true       删除属性引号;
+                            }
+                    压缩dist中的html文件
+                指定引入js文件:  chunks:['entery中的键','entery中的键1','entery中的键2',],
+                    打包不同的html文件后, 在引入不同的js文件;
+
+            ....参数很多自行查找API
+                
+            生成多个页面: 在再plugins中写一个new HttpWebpackPlugin({code...}), 指定参数filename;
+            多页面生成之后, 每个页面分别引入自己的不同的js文件, 就需要指定chunks参数;
+
+            
+
+
+
+
+
+
+
+
+    devServer:
+        cnpm i webpack-dev-server -D
+
+        引入模块, 设置参数:
+            设置服务器访问的基本目录;
+            contentBase:path.resolve(__dirname, 'dist'),
+            设置服务器主机名;
+            host: '127.0.0.1',
+            设置端口
+            port: 8080,
+            热更新
+            hot: true,          配置热更新还需要在piugins中应用一个插件: webpack.HotModuleReplacementPlugin();
+            
+
+
+        配置npm run dev命令为: webpack-dev-server --open --mode development;
+        --open 自动打开浏览器, --mode 选择模式, 开发还是生产;
+        
+        运行之, 然后在浏览器输入, 实现实时更新, 其实从webpack2.x开始就已经实现实时更新,保存文件后, 浏览器端自动变更为保存的内容;
+        HMR即Hot Module Replacement是指当你对代码修改并保存后，webpack将会对代码进行重新打包，
+        并将改动的模块发送到浏览器端，浏览器用新的模块替换掉旧的模块，去实现局部更新页面而非整体刷新页面
+
+        
+
+        
+    loaders: 加载器,转化器
+        比如: .css, .txt...等文件webpack是不会进行转换的, 此时需要loaders帮助webpack
+        webpack常用的loaders:
+            样式：style-loader、css-loader、less-loader、sass-loader等
+            文件：raw-loader、file-loader 、url-loader等
+            编译：babel-loader、coffee-loader 、ts-loader等
+            校验测试：mocha-loader、jshint-loader 、eslint-loader等
+
+        比如: less/scss 转成css
+              ES78      转成js
+              react的JSX语法等都需要转化;
+        
+        处理css文件
+            style-loader
+            css-loader
+
+            cnpm i style-loader css-loader -D
+            
+            在index.js中引入的css文件,(import './css/index.css')    
+            在npm run dev 运行报错, 报错意思是: 需要安装loaders来支持webpack对css文件的识别;
+
+            配置:
+                module: {
+                    需要配一个规则rules,数组类型
+                    rules: [
+                        {
+                            规定文件类型(css文件);
+                            test: /\.css$/,
+                            规定的文件类型用style-loader和css-loader处理;
+                            use:['style-loader', 'css-loader'],
+                            use和loader二选一, 只是名字不同罢了;
+                            loader:['style-loader', 'css-loader'],
+                            配置过多时的第三种写法:
+                            use: [
+                                {loader: 'style-loader'},
+                                {loader: 'css-loader'},
+                            ]
+                        },
+                    ]
+                }
+
+            再次启动服务dev-server, loaders成功;
+        
+
+
+        处理图片文件(png, jpg, git...):
+            url-loader
+            file-loader
+            
+            cnpm i file-loader ulr-loader -D
+
+            配置:
+                module: {
+                    需要配一个规则rules,数组类型
+                    rules: [
+                        {
+                            test:/\.(png|jpg|gif)$/,
+                            use:[{
+                                loader: 'url-loader',
+                                options: {
+                                    限制图片大小, 值是以b为单位;
+                                    当小于这个值时, 转成base64的格式;
+                                    当大于这个值时, 就会变成一个路径;
+                                    limit: 50000,
+                                }
+                            }]
+                        },
+                    ]
+                }
+            
+        
+            
+
+
+    压缩的方法        
+        1.添加命令参数 --mode production
+        2.使用插件压缩: uglifyjs-webpack-plugin
+            cnpm i uglifyjs-webpack-plugin
+            const Unglify = require('uglifyjs-webpack-plugin')
+            new Unglify()即可实现压缩;
+            实际上4.x的版本使用命令压缩即可, 无需使用插件;
+    
+
+    
+
+
+    分离css文件: 打包的文件都放在了dist文件当中, 如果项目过大, 就会非常乱, dist中js,css,html,png,vue等文件鱼龙混杂, 难免有分离文件的需求; 
+
+        extract-text-webpack-plugin
+        
+        cnpm i extract-text-webpack-plugin@next -D
+        @next意为下载下一个版本或者下载最新的版本, 防止和webpack的版本不匹配;
+        
+        在pulgins里面应用:
+        new ExtractTextPlugin(打包的css路径);
+        在css的loaders规则中的use配置 ExtractTextplugin.extract({
+                                                            解析css时,要使用的loader;
+                                                            use: 'css-loader',
+                                                            回滚使用style-loader;
+                                                            fallback: 'style-loader',
+                                                            配置css背景图的路径(打包的时候, 会把backgorund-image: url中的../去掉,如果不配置这项, 就不会在css背景图中有正确的路径)
+                                                            publicPath: '../'
+                                                        })

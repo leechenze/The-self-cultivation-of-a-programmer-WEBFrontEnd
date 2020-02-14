@@ -1,0 +1,1 @@
+document.body.style.cssText = 'color: red';
