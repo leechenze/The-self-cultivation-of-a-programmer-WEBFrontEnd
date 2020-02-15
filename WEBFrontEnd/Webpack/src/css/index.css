@@ -4,4 +4,19 @@ body{
 }
 #root{
     background-color: aqua;
+    transform: rotate(45deg);
+    border-radius: 1em;
+}
+
+
+
+/* 没用的css代码 */
+.adsf{
+    color: #cccccc;
+}
+.fdas{
+    background-color: #acfacf;
+}
+.width{
+    width: 100%;
 }

@@ -284,3 +284,118 @@
                                                             配置css背景图的路径(打包的时候, 会把backgorund-image: url中的../去掉,如果不配置这项, 就不会在css背景图中有正确的路径)
                                                             publicPath: '../'
                                                         })
+
+
+
+
+    
+
+    处理less/scss文件;
+        less
+        less-loader
+        node-sass sass-loader
+
+        cnpm i less less-loader -D
+        cnpm i node-sass sass-loader -D 
+        
+        引入文件后就在module中进行配置roule
+    分离less/scss文件;
+        在less规则配置:
+            use: ExtractTextplugin.extract({
+                use:['css-loader', 'less-loader'],
+                fallback: 'style-loader'
+            })
+        在sass规则配置
+            use: ExtractTextplugin.extract({
+                use:['css-loader', 'sass-loader'],
+                fallback: 'style-loader'
+            })
+        
+    
+
+
+    自动处理前缀:
+        postCss是css预处理器
+        postcss-loader          
+        autoprefixer            是postcss中自动添加前缀的功能插件;
+        cnpm i postcss-loader autoprefixer -D
+
+        在根目录创建postcss.config.css, 写入配置内容
+        配置module.roule, 在css用就配置到css下, less和sass皆可用;
+        
+
+
+
+    消除冗余css代码;
+        purifycss-webpack
+        purify-css
+
+        cnpm i purify-css purifycss-webpack -D
+
+        引入插件 
+        const   PurifyCssWebpack = require('purifycss-webpack');
+        
+        引入一个glob额外的包, 扫描路径;
+        cnpm i glob -D
+        
+        在插件应用purify并且配置路径;
+        注: 虽然配置的是html文件, 但是这个html文件中的所有link的css文件都会被消除冗余代码;
+        在css文件写入一些没被用到的代码运行即消除
+        
+        
+        
+    
+    
+    
+    线上调试的问题:
+        线上调试都是打包的压缩文件, 所以在webpage4.x 只需要 --mode development 即可开启调试;
+        如果改成production的话在chrome控制台的sources中本地代码就会消失; 线上模式就不具备调试的功能了; 
+        这是webpack4.x
+
+        之前webpack3.x开启调试:
+            需要开启sourceMap;
+            
+            devtools: 'source-map',
+            这段代码意在开启调试, 无论是本地开发环境,还是线上打包完成以后,都具备调试功能;
+            也就是说, 在上线之前这段代码是一定要注释的;
+            
+
+        
+
+    babel
+        -babel用来编译ES6的工具;
+        -可以在项目中使用ES@next
+        -JSX语法也是可以被babel解析的;
+
+        babel-core              babel核心
+        babel-loader            loader
+        babel-preset-env        babel预设, 要转换的是哪个版本的ES, 是当前版本, 之前都是babel-preset-2016等.....
+        
+        cnpm i babel-core babel-loader babel-preset-env -D
+        
+        在module.roules中配置js的规则;
+
+        创建一个.babelrc文件用来配置babel-preset这个预设,这个预设或者在js规则中的use配置;
+
+        这里用.babelrc文件创建的方式来进行配置预设;
+
+        但是ES6+的语法都已经被webpack支持, 所以暂时测试不了;
+
+        
+        
+        
+        
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        
