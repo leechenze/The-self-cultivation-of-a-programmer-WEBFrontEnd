@@ -383,6 +383,13 @@
 
         
         
+        测试reactJSCX语法;
+        安装react预设;
+        cnpm i babel-preset-react -D
+        安装react, react-dom;
+        cnpm i react react-dom -D
+
+        
         
         
         

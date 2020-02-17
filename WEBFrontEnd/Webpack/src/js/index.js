@@ -2,11 +2,12 @@ import '../css/index.css';
 import imgSrc from '../images/1.jpg';
 import '../less/index.less'
 import '../scss/index.scss'
-import {a, b} from '../index.js'
+import {a, b, c} from '../index.js'
+import React from 'react'
 
 console.log(a);
 console.log(b);
-console.log(a**b);
+console.log(c);
 
 
 

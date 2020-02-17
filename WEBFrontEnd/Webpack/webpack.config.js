@@ -32,7 +32,7 @@ module.exports = {
         // key随便起名
         index: './src/js/index.js',
         index1: './src/js/index1.js',
-        index2: './src/js/index2.js'
+        index2: './src/js/index2.js',
     },
     // 出口配置;
     output: {
@@ -94,20 +94,18 @@ module.exports = {
                     use:['css-loader', 'sass-loader'],
                     fallback: 'style-loader'
                 })
+            },
+            {
+                test: /\.(js|jsx)$/,
+                use:['babel-loader'],
+                use:[{
+                    loader: 'babel-loader',
+                    // options: {
+                    //     preset: 'env'
+                    // }
+                }],
+                exclude: /node_modules/
             }
-            // {
-            //     test: /\.(js|jsx)$/,
-            //     use:['babel-loader'],
-            //     // babel-preset也可以设置在此处, 不过更建议创建.babelrc文件来配置;
-            //     // use: [{
-            //     //     loader: 'babel-loader',
-            //     //     options: {
-            //     //         preset: 'env'
-            //     //     }
-            //     // }],
-            //     // 检测时不包含node_modules文件夹;
-            //     exclude: /node_modules/
-            // }
         ]
     },
     // 插件, 一般用于生产环境打包;
