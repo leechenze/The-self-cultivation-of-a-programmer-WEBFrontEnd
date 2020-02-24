@@ -1,13 +1,21 @@
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import '../css/index.css';
 import imgSrc from '../images/1.jpg';
-import '../less/index.less'
-import '../scss/index.scss'
-import {a, b, c} from '../index.js'
-import React from 'react'
+import '../less/index.less';
+import '../scss/index.scss';
+import { a, b, c } from '../index.js';
 
-console.log(a);
-console.log(b);
+
 console.log(c);
+
+
+ReactDOM.render( <
+    h2 > react语法 < /h2>,
+    document.querySelector('#root');
+)
+
+
 
 
 
@@ -16,13 +24,8 @@ oRoot.innerHTML += '<br/>www.leechenze.com^_^';
 
 let oimg = new Image();
 
-oimg.onload = function () {
+oimg.onload = function() {
     document.body.appendChild(oimg);
 }
 
 oimg.src = imgSrc;
-
-
-
-
-
