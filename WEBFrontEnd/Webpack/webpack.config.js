@@ -1,5 +1,5 @@
 // node中的全局系统模块, 解决路径问题的;
-const webpack = require('webpack'),
+const Webpack = require('webpack'),
     path = require('path'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
     { CleanWebpackPlugin } = require("clean-webpack-plugin"),
@@ -44,6 +44,7 @@ module.exports = {
         index: './src/js/index.js',
         index1: './src/js/index1.js',
         index2: './src/js/index2.js',
+        jquery: 'jquery'
     },
     // 出口配置;
     output: {
@@ -106,8 +107,30 @@ module.exports = {
             from: path.resolve(__dirname, 'src/assets'),
             // 粘贴到哪里: 粘贴到pubilc文件夹中, 
             to: '../pubilc'
-        }])
+        }]),
+        // 提供全局的第三方库应用;
+        new Webpack.ProvidePlugin({
+            $: 'jquery'
+        })
     ],
+    optimization: {
+        // 分离node_modules文件夹;
+        splitChunks: {
+            cacheGroups: {
+                chunks: 'all',
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name(module) {
+                        // get the name. E.g. node_modules/packageName/not/this/part.js
+                        // or node_modules/packageName
+                        const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+                        // npm package names are URL-safe, but some servers don't like @ symbols
+                        return `npm.${packageName.replace('@', '')}`;
+                    },
+                },
+            },
+        },
+    },
     //开发服务器, 热加载, 代理, 跨域等,都需要在此配置;
     devServer: {
         // 设置服务器访问的基本目录;

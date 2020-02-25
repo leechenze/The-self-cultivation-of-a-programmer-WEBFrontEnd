@@ -434,6 +434,60 @@
                 new CopyWebp......
             ]
         
+
+    使用第三方库jQuery等(性能优化);
         
-    
-    
+        1.jQuery支持模块化, 可以用npm下载;
+            cnpm i jquery -S
+            在index.js文件中引入import $ from 'jquery', 来使用jquery;
+            引入之后, 完全可以使用, 但是这个import引入的方法不推荐;
+        
+        2.ProvidePlugin: (往全局提供一个入口, webpack自带的一个插件, 无需下载);
+            在webpack.config.js文件中使用这个插件, 来保证全局的jquery的使用;
+            const Webpack = require('webpack');
+            plugins: [
+                new Webpack.ProvidePlugin({
+                    $: 'jquery'
+                })
+            ]
+        
+        通过provideplugin引入和import直接引入的区别: 
+            1.通过import $ from 'jquery' 的方式引入, 无论在代码中是否使用jquery
+                当执行打包命令时候, 都会把jquery打包, 这样打包的线上代码就会产生大量的冗余代码(即jquery这个第三方库的代码);
+            2.使用provideplugin, 只有使用到此库时, 才会打包(推荐方式);
+            
+        
+    提取第三方库存(或者需要分离的js文件);
+        之前webpack3.x版本分离js文件方法 (webpack4.x已经不再支持,webpack身上已经没有这个插件了) :
+            CommonsChunkPlugin插件(webpack自带的插件);
+            new Webpack.optimize.CommonsChunkPlugin({
+                name: 'jquery'
+            })
+            
+        
+        webpack4.x版本,分离js文件的方式:
+        optimization是和plugins同级的
+        
+        optimization: {
+            分离第三方库文件;
+            splitChunks: {
+                cacheGrounp是splitChunks中最核心的配置, 它下面有两个缓存组: vendors和default
+                cacheGroups同级设置的约束条件比如说默认配置里面的chunks、 minSize、 minChunks等等都会作用于cacheGroups;
+                cacheGroups: {
+                    进行优化的chunks;
+                    chunks: 'all',
+                    vendors缓存组;
+                    vendors: {
+                        分离jquery文件,对应的是第三方库的入口文件;
+                        name: 'jquery',
+                        enforce: true
+                    }
+                }
+            }
+        },
+        
+
+
+ 
+
+
