@@ -386,7 +386,6 @@
         测试reactJSCX语法;
         安装react预设   cnpm i babel-preset-react -D    但凡是预设都需要配置到babelrc文件中去;
         
-
         
         安装react, react-dom;
         cnpm i react react-dom -D
@@ -394,18 +393,47 @@
         
         
         
+    使用模块化
+
+        webpack中使用模块化和node是一摸一样的, webpack使用的语法都是node的语法;
+        采用的是commentJS的规范
+            导出: module.exports = xxx;
+            引入: require('./xxx');
+                注意require一定要见到./注意路径, 否则require会找第三方或者系统模块的包;
+    
+        在webpack.config.js文件中的module过长我们将他提取成一个另外的文件, 文件名为webpack.module.js
+        这个文件是一个大的json, 在这个文件中把modules导出;
+
+        然后在webpack.config.js文件中引入这个webpack.module.js文件后, 在module后写入定义的moduleConfig即可;
+        
+        
+    webpack中使用json
+        在webpack2.x之前的版本使用json是需要 json-loader的
+        在webpack3.x之后默认识别json了, 就不需要json-loader了
+        
+        新建webpack.config.json文件来验证当前版本(4.x)是识别json文件的;
+        把webpack-dev-server的配置放到这个文件中, 在webpack.config.js文件中引入并且命名为jsonConfig
+        在devServer中使用jsonConfig.xxx;
+        
+        那么使用模块是一种方式, 使用json统一管理也是一种方式;
+        
+    
+    webpack不需要编译assets文件夹(一些静态资源, 接口文档, 图片...等);
+    
+        那么我们就想把不必编译的assets文件夹下的东西扔到某个地方, 但也复制粘贴也可以, 但是架不住文件太多的时候;
+        所以webpack中有个插件, 可以专门做这个事情叫做: 静态资源输出插件;
+        静态资源输出: (说白了就叫做, 复制粘贴插件);
+        copy-webpack-plugin
+        
+        下载
+            cnpm i copy-webpack-plugin -D
+        引入
+            const CopyWebpackPlugin = require('copy-webpack-plugin');
+        使用
+            plugins:[
+                new CopyWebp......
+            ]
+        
         
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        

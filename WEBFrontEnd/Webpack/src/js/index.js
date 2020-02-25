@@ -7,16 +7,10 @@ import '../scss/index.scss';
 import { a, b, c } from '../index.js';
 
 
-console.log(c);
-
-
-ReactDOM.render( <
-    h2 > react语法 < /h2>,
-    document.querySelector('#root');
-)
-
-
-
+// ReactDOM.render( <
+//     h2 > react语法 < /h2>,
+//     document.querySelector('#root');
+// )
 
 
 var oRoot = document.querySelector('#root');
