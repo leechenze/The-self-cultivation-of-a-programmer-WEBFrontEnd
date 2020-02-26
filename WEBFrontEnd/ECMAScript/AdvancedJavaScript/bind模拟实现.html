@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn">按钮</button>
+    <script>
+        // 初始bind();
+            // // bind基本使用:
+            // var x = 10;
+
+            // function show() {
+            //     console.log(this.x);
+            // }
+
+
+            // var DuyiO = {
+            //     x: 20
+            // }
+
+            // // bind()方法会返回一个新的函数,新的函数返回的时候this才会改变为传递进去的参数;
+            // var newShow = show.bind(DuyiO);
+
+            // newShow(); // 返回20
+
+            // // call, apply不会返回一个函数, bind会返回一个函数
+            // // 以下例子: 在单对象编程中, bind的应用场景会比较多
+
+
+
+
+        
+
+         // bind参数应用
+            // // bind的底层也是用call和apply来实现的;
+            // var x = 10;
+            // var DuyiO = {
+            //     x: 20
+            // }
+            // function show(a, b) {
+            //     console.log(this.x, a, b);
+            // }
+            // show('a', 'b');
+
+            // var newShow = show.bind(DuyiO, 'a', 'asdf');
+            
+            // // 注意, newShow是show.bind(DuyiO, 'a', 'asdf')的返回值的一个show的函数体, 在返回的时候就已经将参数传入
+            // // 所以在执行的时候就无需在这个newShow新的函数体执行时在添加参数;
+            // newShow();
+            // // 同样, 如下如果bind执行时, 只传入了一个参数, 那么第二个参数就可以在这个newShow新的函数体执行时, 将第二个参数传入;
+            // var newShow = show.bind(DuyiO, 'a');
+            // newShow('asdf');
+            
+            
+            
+            
+            
+
+        // 单对象编程中bind的应用;
+            // var list = {
+            //     init: function () {
+            //         // 这个id为btn的button赋给this.dom;
+            //         this.dom = document.getElementById('btn');
+            //         this.ms = 'duyi';
+            //         this.bindEvent();
+            //     },
+            //     bindEvent: function () {
+            //         // 此时的this指向list,
+            //         this.dom.onclick = this.showMessage.bind(this, 'hello', 'world');
+            //     },
+            //     showMessage: function (info1, info2, e) {
+            //         // 这里的this指向this.dom, 自然不会有this.ms这一项;
+            //         // 所以在bindEvent中用bind改变this的指向为list;
+            //         // 在形参的最后一位e就会传入事件对象;
+            //         alert(this.ms, info1, info2, e);
+            //     }
+            // }
+            
+            // list.init();
+            
+        
+
+        
+
+        // bind模拟实现;
+            // 在函数的原型上写一个newBind的方法, 来模拟bind()的实现;
+            Function.prototype.newBind = function (target) {
+                // target 改变返回函数执行的this指向
+                // 创建一个函数f, 最后返回一个新的函数;
+                
+
+                // self是show(因为当前是show调用的);
+                var self = this;
+                // 获取形参列表的参数, 除了target;
+                var args = [].slice.call(arguments, 1);
+                // 函数f是newShow;
+                var f = function () {
+                    // 执行的是调用newBind的函数是(self == show);
+                    // 如果没有传递this(target)就指向window
+                    // 在newShow()中也会传入参数的, 并且这些参数还要默认追加到show.newBind()的后面;
+                    // 所以还要获取f(newShow)的形参列表拼接到self的参数后面;
+                    var fArgs = [].slice.call(arguments, 0);
+                    // 如果this是temp构造出来的那么他就是被new了, 那么this还是this, 否则this指向target(DuyiO);
+                    self.apply(this instanceof temp ? this : (target || window), args.concat(fArgs));
+                    
+                }
+                // new的时候的构造函数还是newBind()返回的f函数,但是当new的时候构造函数还得是show;
+                // 一下就是建立起一层继承关系;
+                var temp = function () {};
+                temp.prototype = self.prototype;
+                f.prototype = new temp();
+
+                return f;
+
+            }
+            
+
+
+
+            // show函数就是Function原型上的newBind方法的self, 在newBind方法中self.apply()就已经将参数拼接进去了;
+            // 所以console的结果即是show.newBind(DuyiO, 1, 2, 3)执行后的结果;
+            function show(x, y, z, w) {
+                console.log(this, x, y, z, w);
+            }
+
+            var DuyiO = {
+                x: 20
+            }
+
+
+            // 这个DuyiO作为参数对应到newBind的target参数
+            var newShow = show.newBind(DuyiO, 1, 2, 3);
+            
+            newShow(4);
+
+
+
+            // bind()当new的时候构造函数还是指向show的,并且this不能被改变;
+            new newShow();
+
+            
+            
+            
+            
+            
+    </script>
+</body>
+
+</html>
