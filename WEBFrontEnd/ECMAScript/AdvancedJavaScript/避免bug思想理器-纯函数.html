@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 函数式编程之纯函数 -->
+    <!-- 函数f的概念是, y=f(x), y等于什么是由这个x决定的 -->
+
+    <!-- 纯函数是指不依赖, 不修改其作用域之外的变量, 并且有返回值的函数 -->
+    <!-- 如果一个函数,没有返回值的话, 那么这个函数断定不是一个纯函数 -->
+    <!-- 如果一个具有返回值的函数, 有依赖外部的变量, 这个函数断定也不是一个纯函数 -->
+    
+    
+    <script type="text/javascript">
+        // 在函数内部应用了外部变量num, 所以不是纯函数;
+            // var num = 18;
+
+            // function compare(x) {
+            //     return x > num;
+            // }
+
+            // console.log(compare(20));
+        
+        
+
+
+        // 深入理解
+
+            // // 现在它必然不是一个纯函数, 因为他操作了实参的arr; 使得外部的arr追加了的obj, 并且没有返回值;
+            // var arr = [];
+            // function add (_arr) {
+            //     var obj = {
+            //         name: 'lcz'
+            //     };
+                
+            //     _arr.push(obj);
+            // }
+            // add(arr);
+            // console.log(arr);
+            
+
+
+            
+            // 将以上函数变成纯函数
+                // var arr = [{name: 'leecs'}];
+                // function add(_arr) {
+                //     var obj = {name: 'panda'};
+                //     var newArr = [];
+                //     for(var i = 0; i < _arr.length; i++) {
+                //         newArr[i] = deepClone(_arr[i]);
+                //     }
+                //     newArr.push(obj);
+                //     return newArr;
+                // }
+                // var resArr = add(arr);
+                // resArr[0].name = 'hehe';
+                // // 如此即实现了一个纯函数
+                // console.log(arr);
+                // // 但是有个缺陷, 修改这个返回值resArr的第一项的name等于一个hehe,
+                // // 就相当于改变了, name为leecs的值, 所以最好在循环赋值的    newArr[i] = _arr[i]     这一步
+                // // 进行一个对象圣科隆; 就是一个完完整整的纯函数了(这里没写克隆的方式, 只是举了个例子);
+
+                
+                
+            
+                    
+
+                // var gArr = [1,2];
+                
+                // function add(arr) {
+                //     arr.push(1);
+                //     return arr;
+                // }
+
+                // add(gArr);
+                
+
+                // // 也就是说, 在使用的时候是使用的内部的一个变量, 没有使用到外部的变量;
+                // // 但是在执行完以后影响到了外部的gArr变量, 所以就影响了这个函数的纯净度;
+                // console.log(gArr);
+                
+                
+                
+            // 纯函数有什么用处呢;
+                // bug守恒定律:
+                    // 在开发网站的时间, 开发人员做维护时, 修改了是个bug的同时又多出了是个bug(当然这是个玩笑);
+                    // 想要彻底清除这些bug, 就需要通过纯函数应用来预防bug的二次引入; 
+                    // 很多bug都是因为函数和外部变量的太多关联, 没有使用纯函数的原因; 
+                    // 在开发过程中, 经常创建全局变量这些全局变量可以在所有函数中使用到, 
+                    // 一旦无意间修改了这个全局变量, 所有公用这个变量的函数,都会关联性的存在问题; 这就是经常导致bug的原因;
+
+
+                    // 纯函数非常容易进行单元测试, 因为不需要考虑上下文的环境, 只需考虑函数的输入和输出
+        
+                    
+    </script>
+
+</body>
+
+</html>
