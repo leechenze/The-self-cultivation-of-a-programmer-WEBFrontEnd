@@ -1,23 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <script type="text/javascript">
+        var count = 0;
+        var cache = [];
+        // // 当计算阶乘时, 会有一个函数记忆的功能; 定义一个数组形式的cache来验证一下;
+        // function factorial(n) {
 
-        function factorial(n) {
-            if(n == 0 || n == 1) {
-                
-            }
-        }
-    
-    
-    
-    
+        //     // 如果cache中有n这个值, 直接返回这个值, 不需要再计算了;
+        //     if (cache[n]) {
+        //         return cache[n];
+        //     } else {
+        //         // 如果没有这个值, 还需要按照这个规则进行计算;
+        //         if (n == 0 || n == 1) {
+        //             // 如果n是1的话, 就把缓存中的第零位和第一位设为1;
+        //             cache[0] = 1;
+        //             cache[1] = 1;
+        //             return 1;
+        //         } else {
+        //             // 这只缓存中的每一位;
+        //             cache[n] = n * factorial(n - 1);
+        //             return cache[n];
+        //         }
+        //     }
+
+        //     return n * factorial(n - 1);
+        // }
+
+
+        // 有了缓存, 当传入的数越大时, 它们之间的差距会越来越大, 通过缓存执行次数少了, 时间会变得越来越快;
+        // 下面用时间来验证;
+
+        // console.time('first');
+        // console.log(factorial(5));
+        // console.timeEnd('first');
+
+        // console.time('second');
+        // console.log(factorial(5));
+        // console.timeEnd('second');
+
+        // console.time('third');
+        // console.log(factorial(4));
+        // console.timeEnd('third');
+
+        // 通过验证, 有了缓存, 第一次运算时间是第二次和第三次的十倍不止, 第二次之后的运算直接从缓存中拿数据, 运行效率会越来越高,
+
+
+
+
+
+
+
+
+
+        
+        // 封装一个居右函数记忆功能的函数
+        //     // 使用这个函数作为参数来利用下面的函数功能实现函数记忆;
+        //     function factorial(n) {
+        //         if (n == 0 || n == 1) {
+        //             return 1;
+        //         } else {
+        //             return n * factorial(n - 1);
+        //         }
+        //     }
+
+
+        //     function memorize(fn) {
+        //         // 这里使用对象,是因为对象的查找功能是比数组要快, 这里的cache定义成了返回函数的一个私有化变量;
+        //         var cache = {};
+        //         // 这里使用闭包;
+        //         return function () {
+        //             // key作为传参的唯一标识(利用的就是对象的key值不能重复的特性);
+        //             var key = arguments.length + Array.prototype.join.call(arguments)
+        //             if(cache[key]){
+        //                 // 在缓存中寻找这个key标识的值, 如果有就直接从缓存中拿取, 没有就走下面规则进行往key这个键中添加对应的值;
+        //                 return cache[key];
+        //             } else { 
+        //                 // this不用改变, 这里应用的只是apply的第二个参数, 因为fn(arguments);是不行的, fn()括号中的参数必须是逗号分割的;
+        //                 // 然后函数的运行结果放到缓存中;
+        //                 cache[key] = fn.apply(this, arguments);
+        //                 return cache[key];
+        //             }
+        //         }
+        //     }
+
+        // var newF = memorize(factorial);
+
+        // 输出结果也是对的, 下面用时间来衡量下;
+        // console.log(newF(5));
+
+
+        // 结果可以证明原生的阶乘方法运算速度确实比封装过后的耗时多得多, 并且, 越到后面的运算耗时还会越少, 而这一点,原生的阶乘方法就没有体现了,
+        // 因为封装的方法有了缓存, 从缓存中取得了数据;
+        // console.time('one');
+        // console.log(factorial(5));
+        // console.timeEnd('one');
+
+        // console.time('one');
+        // console.log(newF(5));
+        // console.timeEnd('one');
+
+        // console.time('one');
+        // console.log(newF(5));
+        // console.timeEnd('one');
+        
         
     </script>
 </body>
+
 </html>
