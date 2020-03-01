@@ -6,8 +6,12 @@
     <title>Document</title>
 </head>
 <body>
+    <!-- 节流应用 -->
     <div id="show">0</div>
     <button id="btn">按钮</button>
+    <br>
+    <!-- 防抖应用 -->
+    <input type="text" id="inp">
     <script type="text/javascript">
 
         // 节流&防抖;
@@ -69,10 +73,28 @@
             // 函数防抖就是在函数需要频繁触发情况时, 只有足够的空闲时间, 才能触发一次, 好比如公交车司机等乘客都上车之后在出发一样;
             // 应用场景: 实时搜索(keyup),拖拽(mousemove);
             // 比如百度实时搜索, 当把最后一个字输完之后, 在进行页面的更新;
-                    
-                // 应用实例;
                 
-            
+                // // 应用实例;
+                // var oInp = document.getElementById('inp');
+
+                // // 防抖函数(事件函数, 延迟时间);
+                // function debounce(handler, delay){
+                //     var timer = null;
+                //     return function (e) {
+                //         var self = this,args = arguments;
+                //         clearTimeout(timer);
+                //         timer = setTimeout(function() {
+                //             handler.apply(self, args);
+                //         },delay);
+                //     }
+                // }
+                
+                // function ajax(e) {
+                //     console.log(this.value);
+                // }
+                
+                // // 当每次输入一个字符时, 都会出发这个函数, 防抖的需求就是当输入到最后一个字时, 才出发这个事件;
+                // oInp.oninput = debounce(ajax, 2000);
             
 
     

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学之美</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    #box{
+        width: 100px;
+        height: 100px;
+        background-color: #f40;
+        position: absolute;
+        left: 0;
+        top: 0;
+        cursor: move;
+    }
+</style>
+<body>
+    <div id="box"></div>
+    <script type="text/javascript">
+        var oBox = document.getElementById('box');
+        var oBody = document.getElementsByTagName('body')[0];
+    
+        function bindEvent(ele, wrap) {
+            var mouseX,
+                mouseY,
+                eleL,
+                eleT,
+                elemouseX,
+                elemouseY,
+                event,
+                drag = false;
+            ele.onmousedown = function (e) {
+                drag = true;
+                
+                // 鼠标位置
+                event = e || window.event,
+                mouseX = event.clientX,
+                mouseY = event.clientY,
+                // 元素边距;
+                eleL = ele.offsetLeft,
+                eleT = ele.offsetTop,
+                // 鼠标在元素内的位置;
+                elemouseX = mouseX - eleL,
+                elemouseY = mouseY - eleT;
+            };
+
+            wrap.onmousemove = function (e) {
+                // console.log(e);
+                if(drag) {
+                    event = e || window.event;
+                    ele.style.left = event.clientX - elemouseX + 'px';
+                    ele.style.top = event.clientY - elemouseY + 'px';
+                }
+            };
+            
+            ele.onmouseup = function (e) {
+                drag = false;
+            };
+        }
+    
+        
+    
+    
+        
+    
+    
+    
+        bindEvent(oBox, oBody);
+        
+        
+        
+    </script>
+</body>
+</html>

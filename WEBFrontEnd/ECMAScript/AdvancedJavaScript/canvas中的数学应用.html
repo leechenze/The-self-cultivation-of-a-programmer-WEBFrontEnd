@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+
+</style>
+<body>
+    <canvas id="can" height="500px" width="500px"></canvas>
+    <div id="box"></div>
+    <script type="text/javascript">
+        var can = document.getElementById('can');
+        var box = document.getElementById('box');
+        // 声明画布的上下文为(2d类型);
+        var ctx = can.getContext('2d');
+
+        // 在这个对象原型上创建一个方法为sector(扇形), 参数为sector(横轴坐标, 纵轴坐标, 半径, 开始角度, 结束角度);
+        CanvasRenderingContext2D.prototype.sector = function (x, y, r, sDeg, eDeg) {
+            // 圆心点, 半径, 角度, 起始角度;
+
+            // 保存当前画布的状态;
+            this.save();
+
+            // 初始路径;
+            this.beginPath();
+            
+            // 落笔,开始的落笔坐标(圆的中心);
+            this.moveTo(x,y);
+            
+            // 最后参数false顺时针, true为逆时针;
+            // 角度转弧度的公式
+            this.arc(x, y, r, sDeg*Math.PI/180, eDeg*Math.PI/180, false);
+
+            // 结束路径;
+            this.closePath();
+
+            // 恢复(保存)当前画布状态;
+            this.restore();
+            
+            return this;
+            
+        }
+
+        
+
+        var Timer, 
+            angle = 0,
+            per;
+        ctx.fillStyle = 'red';
+
+        // angle / 360  ==  per / 100;
+        // angle / 360
+        timer = setInterval(function () {
+            angle += 1;
+            ctx.sector(250, 250, 100, 0, angle).fill();
+            per = ((angle / 360) * 100).toFixed(2);
+            box.innerHTML = '加载中: ' + per;
+            if(angle == 360) {
+                clearInterval(timer);
+            }
+        },1);
+        
+        
+        
+        
+    </script>
+</body>
+</html>
