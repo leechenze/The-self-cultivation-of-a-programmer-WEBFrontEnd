@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+
+    
+    /* 浮动布局 */
+    ul.float li{
+        width: calc(25% - 2px);
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        color: #fff;
+        background-color: #ccc;
+        float:left;
+        list-style: none;
+        border: 1px solid #000;
+        /* box-sizing: border-box; */
+    }
+
+
+
+    /* 弹性布局 */
+    ul.flex{
+        display: flex;
+    }
+    ul.flex li{
+        width: calc(25% - 2px);
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        color: #fff;
+        background-color: #ccc;
+        /* float:left; */
+        list-style: none; 
+        border: 1px solid #000;
+        /* box-sizing: border-box; */
+    }
+
+
+    /* 弹性布局水平垂直剧中 */ 
+    .box{
+        width: 500px;
+        height: 500px;
+        border: 1px solid #000;
+        margin: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column-reverse;
+    }
+
+    .div{
+        width: 100px;
+        height: 100px;
+        background-color: #f00;
+        font-size: 40px;
+        color: #fff;
+        text-align: center;
+        line-height: 100px;
+
+    }
+    
+
+    /* flex-wrap */
+    .box1{
+        width: 500px;
+        height: 500px;
+        border: 1px solid #000;
+        margin: 20px;
+        display: flex;
+        flex-wrap:wrap;
+        justify-content: space-around;
+        align-content:space-around;
+        /* flex-flow: wrap; */
+    }
+    .box1Child{
+        width: 100px;
+        height: 100px;
+        background-color: #f00;
+        font-size: 40px;
+        color: #fff;
+        text-align: center;
+        line-height: 100px;
+    }
+
+
+
+    /* 子级属性 */
+    .box2{
+        width: 500px;
+        height: 500px;
+        border: 1px solid #000;
+        margin: 20px;
+        display: flex;
+    }
+    .box2Child{
+        width: 100px;
+        height: 100px;
+        background-color: #f00;
+        font-size: 40px;
+        color: #fff;
+        text-align: center;
+        line-height: 100px;
+        /* flex: 1; */
+    }
+    .item{
+        flex: 1;
+    }
+    .item2{
+        flex: 2;
+    }
+
+
+    /* 模拟淘宝 */
+    .taobao{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+    }
+    .taobao .nav{
+        display: flex;
+        list-style: none;
+        border: ;
+    }
+
+
+
+
+
+    
+</style>
+<body>
+    
+    <!-- 浮动布局 -->
+    <!-- <ul class="flost">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul> -->
+    
+    <!-- 弹性布局 -->
+    <!-- <ul class="flex">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul> -->
+    
+
+    <!-- 弹性布局水平垂直居中 -->
+    <!-- <div class="box">
+        <div class="div">1</div>
+        <div class="div">2</div>
+    </div> -->
+    
+    
+    <!-- flex-wrap -->
+    <!-- <div class="box1">
+        <div class="box1Child">1</div>
+        <div class="box1Child">2</div>
+        <div class="box1Child">3</div>
+        <div class="box1Child">4</div>
+        <div class="box1Child">5</div>
+        <div class="box1Child">6</div>
+    </div> -->
+    
+    
+    
+    <!-- 子级属性 -->
+    <!-- <div class="box2">
+        <div class="box2Child item1">1</div>
+        <div class="box2Child item2">2</div>
+    </div> -->
+    
+
+    <!-- 模拟淘宝底部导航栏 -->
+    <div class="taobao">
+        <!-- 注意弹性盒和定位不可以在同一个元素身上一块使用, 在这里之所以多包一层taobao的div元素是因为要用这个元素进行定位 -->
+        <ul class="nav">
+            <li class="home">首页</li>
+            <li class="buy">购物</li>
+            <li class="more">更多</li>
+        </ul>
+    </div>
+    
+    
+    
+    
+</body>
+</html>

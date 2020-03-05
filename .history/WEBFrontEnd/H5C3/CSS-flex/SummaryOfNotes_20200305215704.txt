@@ -1,0 +1,108 @@
+    padding
+    border
+
+    盒模型:
+        content-box: padding, border, 盒子会变大(向内扩展);
+        border-box: 盒模型,padding, border, 盒子模型不变大(向外扩展);
+        
+
+    
+    calc(公式);
+        css中的计算函数;
+        
+        calc(100px-2px)         ×
+        calc(100px - 2px)       √
+        
+        要注意语法格式, 中间的哪个空格;
+        
+        
+
+
+
+    弹性盒:
+        display: flex;
+        开发中使用webpack的postCss插件,添加前缀处理兼容;
+        如果是弹性布局, 子元素不需要添加浮动了;
+        
+    
+        父级属性;
+            定义弹性盒
+            display: flex;
+            
+            定义水平排列方式;
+            justify-content: center;                居中
+                            flex-start;             居左
+                            flex-end;               居右
+                            space-between;          两端对齐
+                            space-around            围绕分布(体操双手展开分布)
+                            space-evenly            均匀分布
+
+
+
+            定义垂直排列方式;
+            align-items: center;                    垂直居中;
+                        flex-start;                 顶部;
+                        felx-end;                   底部;
+
+
+            flex-direction: row;                    横向排列;
+                            row-reverse             横向反转排列;
+                            cloumn                  纵向排列
+                            cloumn-reverse          纵向反转排列
+
+            规定子元素是否在一行显示;
+            flex-wrap: nowrap                       不换行显示(默认值);
+                        wrap                        换行显示
+                        wrap-reverse                反转换行显示;
+                        
+
+            多行时的垂直排列;
+            align-content: center;                  居中排列
+                            flex-start              顶部排列
+                            flex-end                底部排列
+                            space-between           两端对齐
+                            space-around            围绕分布
+
+            flex-direction和flex-wrap的简写
+            flex-flow: 值包含flex-direction和flex-wrap的所有值(值可以写多个, 用空格分开);
+            flex-flow: cloumn wrap;(意为: 纵向排列并且换行);    ==  flex-direction: cloumn; flex-wrap: wrap;
+            
+
+
+
+
+        子级属性:
+            平分长度:
+            flex: 1;                                1指的是一个系数,相当于把父元素的宽度分为两份, 每个子元素一份; 如果是二效果一样, 相当于父元素的宽度分为四份,每个子元素两份平分;
+            子元素在划分父元素宽度时, 先抛出固定宽度, 剩下的宽度就会加给具有flex属性值的子元素;
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
