@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root{
+            color: green;
+        }
+        main{
+            border: 2px solid #000;
+            height: 1000px;
+        }
+
+        #target:target{
+            color: red;
+        }
+
+        
+    </style>
+</head>
+<body>
+    通配符选择          *
+    标签选择器          tagName
+    群组选择器          tagName, tagName
+    兄弟选择器          tagName~tagName(所有后面的兄弟元素);
+    兄弟选择器          tagName+tagName(紧邻后面的兄弟元素);
+    类选择器            .
+    ID选择器            #(唯一值,一般不作用于样式);
+    结构选择器          div p选择div中的所有p元素;
+    子元素选择器        > 只选择子级元素;不会选择子级下的元素;
+    属性选择器          div[title][id]  既有title又有id的div元素, div[title="titleValue"]   title="titleValue"的div元素;
+                       div[title^='titleValue'] title的属性值是以titleValue开始的div元素,
+                       div[title$='titleValue'] title的属性值是以titleValue结束的div元素,
+                       div[title*='titleValue'] title的属性值中有titleValue内容的div元素,
+                       div[title~='titleValue'] title的属性值中有titleValue内容并且是独立的单词的div元素,
+    伪类选择器          :link   默认时的状态
+                        :visited    访问过的状态
+                        :acive      点击时的状态
+                        :hover      划过时的状态
+                        :focus      获取到焦点时
+                        :target     当前活动锚点触发元素(点击URL时候包含锚的id名字元素)
+                        :root       最顶级的选择器,根元素(html);
+                        :empty      内容为空的元素
+                        等等...     自信查阅文档    https://www.runoob.com/css/css-pseudo-classes.html#table13
+                        结构伪类选择器:                     :first-child            选中第一个元素
+                                                            :first-of-type          选中同类型中的第一个元素
+                                                            :last-child             选中最后一个元素
+                                                            :last-of-type           选中同类型中的最后一个元素
+                                                            :only-child             选中唯一的元素
+                                                            :only-of-type           选中同类型的唯一元素
+                                                            :nth-child(2)           选中是第2个的元素
+                                                            :nth-child(2n)          选中偶数行
+                                                            :nth-child(odd)         选中偶数行
+                                                            :nth-child(odd)         选中奇数行
+                                                            :nth-child(even)        选中奇数行
+
+
+
+
+
+                        
+                        
+                        
+                        
+    <main>
+        <a href="#target">targetElementlink</a>
+    </main>
+    <div id="target">targetElement</div>
+    
+
+
+                        
+                        
+                        
+                        
+                        
+
+    
+</body>
+</html>

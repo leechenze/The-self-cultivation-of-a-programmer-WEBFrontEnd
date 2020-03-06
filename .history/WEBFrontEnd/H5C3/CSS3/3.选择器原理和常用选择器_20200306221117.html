@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        main{
+            display: block;
+            border: 1px solid #000;
+        }
+        main a:link{
+            color: red;
+        }
+        main a:visited{
+            color: blue;
+        }
+        main a:active{
+            color: yellow;
+        }
+        main a:hover{
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    通配符选择          *
+    标签选择器          tagName
+    群组选择器          tagName, tagName
+    兄弟选择器          tagName~tagName(所有后面的兄弟元素);
+    兄弟选择器          tagName+tagName(紧邻后面的兄弟元素);
+    类选择器            .
+    ID选择器            #(唯一值,一般不作用于样式);
+    结构选择器          div p选择div中的所有p元素;
+    子元素选择器        > 只选择子级元素;不会选择子级下的元素;
+    属性选择器          div[title][id]  既有title又有id的div元素, div[title="titleValue"]   title="titleValue"的div元素;
+                       div[title^='titleValue'] title的属性值是以titleValue开始的div元素,
+                       div[title$='titleValue'] title的属性值是以titleValue结束的div元素,
+                       div[title*='titleValue'] title的属性值中有titleValue内容的div元素,
+                       div[title~='titleValue'] title的属性值中有titleValue内容并且是独立的单词的div元素,
+    伪类选择器          :link   选择所有未被访问的链接
+                        :visited    选择所有已被访问的链接
+                        :acive      选择的点击链接
+                        :hover      选择鼠标划过的链接
+                        
+                       
+
+    <main>
+        <a href="" class="link">link</a>
+        <a href="" class="visited">visited</a>
+        <a href="" class="active">active</a>
+        <a href="" class="hover">hover</a>
+    </main>
+
+    
+    
+    
+</body>
+</html>
