@@ -1,8 +1,0 @@
-/* 在css文件中引入公共的样式表 */
-@import url("1.common.css");
-
-
-
-body{
-    background: 33px;
-}
