@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @font-face{
+            font-family: leechenze;
+            font-weight: bolder;
+            src: url("Sansation_Light.ttf") format("opentype"),
+                url('Sansation_Light.ttf') format("opentype");
+        }
+        :root{
+            /* font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif; */
+            font-family: leechenze;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    font-family 这个属性可以设置多个字体, 中间用逗号分隔, 如果用户电脑上没有一个而字体, 就会展示逗号之后的下一个字体;
+    
+    <!-- 自定义字体或者图标 -->
+    @font-face{
+        <!-- 定义字体名字 -->
+        font-family: 'leechenze';
+        <!-- 定义字体来源url()字体路径, 和format()字体格式; -->
+        src: url("C:/Windows/Fonts/楷体 常规") format("opentype"),
+            url('C:/Windows/Fonts/webdings.ttf') format("opentype");
+    }
+    
+
+    font-famiy: 'Courier New', Courier, monospace;
+    font-size: 40px;
+    line-height: 1.5em;
+    font-weight: bolder;
+    font-style: italic;
+
+    简写方式如下:(中间使用空格分开, size和family属性值必须要有, 否则全不会生效), 然后行高加载字体大小后面使用/分割;
+    
+    font: bold italic 45px/1.5em 'Courier New', Courier, monospace;
+    先后循序为(weight, style, size/lineHeight, family);
+    
+
+
+    text-transform: capitalize;                 文本的首字母大写;
+    text-transform: lowercase;                  文本设置小写
+    text-transform: uppercase;                  文本设置大写
+
+
+    text-decoration: underline;                 添加下划线
+    text-decoration: overline;                  添加上划线
+    text-decoracion: line-through;              添加中划线
+    text-decoration: none;                      删除线条样式
+    
+
+    text-shadow: #ddd 5px 5px 5px;              颜色, x轴偏移, y轴偏移, 模糊值;
+    text-overflow: ellipsis;                    文本溢出显示省略号
+    text-indent: 2em;                           首行文本缩进
+    text-align: center;                         文本的对齐方式;
+    vertical-align: 10px;                       内联元素的垂直对齐方式;
+
+    white-space: pre;                           空白处理, 可以保留标签之前的空格, 等同于pre标签的功能;
+    white-space: pre-wrap;                      空白处理, 保留空白和换行;
+    white-space: pre-line;                      空白处理, 删除空白但保留换行;
+    white-space: nowrap;                        空白处理, 空白处强制不换行
+    
+
+    letter-spacing: 2px;                        字符之间的间隔;
+    word-spacing: 2px;                          单词之间的间隔;
+    
+
+    writing-mode: horizontal-tb;                排版模式: 水平排列(默认模式);
+    writing-mode: vertical-rl;                  垂直排列(从右到左排列);
+    writing-mode: vertical-lr;                  垂直排列(从左到右排列);
+    
+    
+    
+    
+    
+</body>
+</html>

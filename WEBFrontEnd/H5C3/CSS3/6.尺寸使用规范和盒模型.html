@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        article{
+            border: 2px solid #000;
+        }
+        article div{
+            border: 1px solid #f00;
+            padding: 30px;
+            margin: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 盒模型: -->
+    <article>
+        <div>leechenze.com</div>
+    </article>
+    两个元素之间如果都有margin, 会涉及到边距合并, 也就是这两个元素之间的margin只会取一个, margin值比较大的元素来进行覆盖另一个margin值小的元素,
+    也就是说俩元素之间margin值小的会被覆盖;
+
+    
+
+
+    border-style: double;               定义边框样式为双线;
+                    none	            定义无边框。
+                    dotted	            定义点状边框。在大多数浏览器中呈现为实线。
+                    dashed	            定义虚线。在大多数浏览器中呈现为实线。
+                    solid	            定义实线。
+                    double	            定义双线。双线的宽度等于 border-width 的值。
+                    groove	            定义 3D 凹槽边框。其效果取决于 border-color 的值。
+                    ridge	            定义 3D 垄状边框。其效果取决于 border-color 的值。
+                    inset	            定义 3D inset 边框。其效果取决于 border-color 的值。
+                    outset	            定义 3D outset 边框。其效果取决于 border-color 的值。
+    
+    border-top-style:double;            定义顶部边框样式;
+    
+    border-width:10px;                  定义边框宽度;
+
+    border-color: red;                  定义边框颜色;
+    
+    border-radius: 30px 30px 30px 30px; 定义边框角度:参数为(上右下左), 也可以设置百分比,50%就是一个圆形;
+    
+    border-top-left-radius              定义边框左上角
+    border-top-right-radius             定义边框右上角
+    border-bottom-left-radius           定义边框左下角
+    border-bottom-right-radius          定义边框右下角
+    
+    outline-style: double;              定义轮廓样式;
+    outline-width: 10px;                定义轮廓宽度;
+    outline-color: red;                 定义轮廓颜色;
+    outline: 1px solid #000;            轮廓线的简写形式;
+    
+
+    display: none;                      隐藏元素(隐藏元素空间位);
+    display: block;                     设置元素为块级元素;
+    display: inline-block;              设置元素为内联块元素(内联块元素可以设置宽高, 但是不会独占一行);
+    display: inline;                    设置元素为内联元素;
+    diaplay: flex;                      定义弹性盒;
+    
+
+    visibility: hidden;                 隐藏元素(不隐藏元素空间位);
+    visibility: visible;                显示元素(显示元素);
+    opacity: 0;                         设置元素的透明度为0, 取值为0-1, 0为透明, 1为不透明;
+    
+
+    overflow: scroll;                   溢出显示滚动条;
+    overflow: hidden;                   溢出内容隐藏;
+    
+
+    min-width: 10%;                     定义最小宽度
+    max-width: 10%;                     定义最大宽度
+    
+    width: -webkit-fill-available;      定义宽度填充可用空间;
+    height: -weikit-fill-available;     定义高度填充可用空间;
+    width: fit-content;                 定义元素宽度根据内容占据;
+    height: fit-content;                定义元素高度根据内容占据;
+    width: min-content;                 自适应内部元素为最小的内容区域
+    width: max-content;                 自适应内部元素为最大的内容区域
+    
+    
+</body>
+</html>

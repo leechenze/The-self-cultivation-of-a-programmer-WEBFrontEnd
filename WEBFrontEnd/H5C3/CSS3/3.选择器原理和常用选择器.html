@@ -58,9 +58,22 @@
                                                                 这个n其实是一个变量(当前是第几个,n就是几), 2n就是2*n, 所以就是偶数, 2n-1就是奇数来实现奇数行和偶数行;
                                                             :nth-child(-n+2)        选中前两个元素
                                                             :nth-of-type(2)         选中同类型的第二个元素;
+                                                            :nth-last-child(2)      选中倒数第二个的元素;
+                                                            :nth-last-of-type(2)    选中同类型的倒数第二个元素;
+                                                            :not(p)                 排除p元素
+                                                                                
+                        表单选择器                          :disabled   选择被禁用的表单元素
+                                                            :enabled    选中可用的表单元素
+                                                            :checked    选中被选择的元素(radio, checkbox)
+                                                            :optional   选中非必填的表单元素
+                                                            :required   选中必填的表单元素
+                                                            :valid      选中当验证有效时的表单元素
+                                                            :invalid    选中验证无效时的表单元素
+                        文本伪类操作                        ::first-letter              选中每个段落的第一个字;
+                                                            ::first-line                选中每个段落的第一行;
+                                                            ::after                     在元素之后添加内容(配合content: '内容',这个属性);
+                                                            ::before                    在元素之前添加内容(配合content: '内容',这个属性);
                                                             
-
-
 
 
                         
