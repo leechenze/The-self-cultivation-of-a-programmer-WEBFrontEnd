@@ -6,6 +6,56 @@
     <title>Document</title>
 </head>
 <body>
+    background-color: rgba();                 定义背景颜色
+
+    background-image: url(路径),url(路径);      定义背景图片(可以定义多个, 使用逗号分割, 定义多个时候, 其他设置也一样, 使用逗号来分割);
+    
+    background-clip: content-box;               规定内容区域背景;
+    background-clip: padding-box;               规定content和padding区域背景;
+    background-clip: border-box;                规定content, padding, border区域背景;
+    
+    background-repeat: no-repeat;               规定背景图片不重复;
+    background-repeat: space;                   规定重复的背景图平均分布;
+    
+    background-attachment: fixed;               背景图固定在元素上;
+    background-attachment: scroll;              背景图跟随元素滚动;
+    
+    background-position: center;                设置背景图片居中;
+    background-position: 50% 50%;               设置背景图片居中(也可以以数值的方式进行设置);
+    
+    background-size: 100px auto;               设置背景图的大小, 后面的auto意为: 根据图片大小定义,设置宽度, 高度自动, 防止图片变形;
+    background-size: contain;                   保证图片会完全显示;
+    
+    background: red url(src) no-repeat center   background多个属性的缩写形式, 参数依次为: color, image, repeat, position;
+    
+
+    box-shadow: 10px 10px rgba(100, 100, 100, 1);
+    规定盒子阴影, 参数分别为:  x轴方向, y轴方向, 模糊度, 阴影颜色;
+    
+    background: linear-gradient(45deg, red 50%, green 30%, blue 20%);
+    background: linear-gradient(to top left, red 50%, green 30%, blue 20%);
+    设置背景线性渐变色, linear-gradient的参数依次为: 渐变方向, 渐变色1, 渐变色2, 渐变色3;
+    他们之间的参数由于逗号分割, 参数中还有多位, 就使用空格分割
+    参数渐变色1,2,3 后面的50%, 30%, 20%分别是标识位, 表示每个颜色所占的面积比, 如果都是33.3%时候, 就没有渐变的效果了
+    也就是说这三个标识位不把100占满了就会有渐变的效果;
+    同理渐变色参数如果有两个的话, 每个是50%, 也不会有渐变效果;
+
+    background: linear-gradient(45deg, red, 30% green, 70% blue);
+    中间的这个百分比这个参数是: 中间阈值, 和标识位不同, 阈值是一个独立的参数, 阈值只写在两个渐变色参数之间
+    表示的是: 头一个渐变色和后一个渐变色中间的临界值;
+    
+    background: radial-gradient(100px 100px, red 50%, green 30%, blue 20%);
+    background: radial-gradient(at top left, red 50%, green 30%, blue 20%);
+    background: radial-gradient(at 50% 50%, red 50%, green 30%, blue 20%);
+    设置别进圆角渐变色, radial-gradient的参数依次为: 渐变方向, 渐变色1, 渐变色2, 渐变色3;
+    
+    background: repeating-linear-gradient(90deg, black 15px, red 30px);
+    重复线性渐变, 参数和linear-gradient相同;
+    
+    background: repeating-radial-gradient(100px 100px, black, red 15px);
+    重复圆角渐变, 参数和radial-gradient相同;
+    
+    
     
 </body>
 </html>
