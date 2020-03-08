@@ -192,6 +192,10 @@
     border-bottom-left-radius           定义边框左下角
     border-bottom-right-radius          定义边框右下角
     
+    border-spacing: 30px;               定义边框边距
+    border-collapse: collapse;          合并边框(两个紧挨着的元素的边框合并为一个边框);
+    
+    
     outline-style: double;              定义轮廓样式;
     outline-width: 10px;                定义轮廓宽度;
     outline-color: red;                 定义轮廓颜色;
@@ -288,5 +292,39 @@
     
 
 
+捌.数据表格设计与表格定义
+    display: table;                 定义为块级表格元素;
+            table-row-group	        此元素会作为一个或多个行的分组来显示（类似 <tbody>）。
+            table-header-group	    此元素会作为一个或多个行的分组来显示（类似 <thead>）。
+            table-footer-group	    此元素会作为一个或多个行的分组来显示（类似 <tfoot>）。
+            table-row	            此元素会作为一个表格行显示（类似 <tr>）。
+            table-column	        此元素会作为一个单元格列显示（类似 <col>）
+            table-cell	            此元素会作为一个表格单元格显示（类似 <td> 和 <th>）
+            table-caption	        此元素会作为一个表格标题显示（类似 <caption>）
+    caption-size: top;              定义标题位置;
 
+    
+    table标签下对于td,th的样式属性: 
+        empty-cells: hide;                  隐藏没有内容的(空的)单元格;
+    
+
+    list-style-type: lower-roman;           设置列表样式为小写的罗马符,
+    list-style-image: url(src);             设置列表样式为背景图片;
+    list-style-image: linear-gradient();    设置列表样式为镜像渐变;
+    list-style-image: radial-gradient();    设置列表样式为镜像圆角渐变;
+    
+
+    div::after                                 之后追加属性;
+        content: "内容"                              content这个属性用来定义向前添加的内容;
+        content: attr(data-link)                    attr()这个方法就是用来读取标签上的属性, 也可以读取自定义属性(data-link), 会读取这个元素(div)属性的值作为内容;
+    div::before                                之前追加属性;
+    
+
+
+
+
+
+
+
+玖.布局方式和BFC
     

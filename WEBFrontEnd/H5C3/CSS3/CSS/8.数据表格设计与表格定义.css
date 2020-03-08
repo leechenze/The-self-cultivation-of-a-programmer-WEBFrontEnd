@@ -1,0 +1,71 @@
+article.table {
+  display: table;
+  width: 300px;
+}
+article.table nav {
+  display: table-caption;
+  caption-side: top;
+  border: 2px solid #ccc;
+  text-align: center;
+  vertical-align: middle;
+}
+article.table section:nth-of-type(1) {
+  display: table-header-group;
+  background-color: #555;
+  color: #ccc;
+}
+article.table section:nth-of-type(2) {
+  display: table-header-group;
+}
+article.table section:nth-of-type(3) {
+  display: table-header-group;
+  background-color: #ccc;
+}
+article.table section ul {
+  display: table-row;
+}
+article.table section ul li {
+  display: table-cell;
+  border: 1px solid #ddd;
+  text-align: center;
+  vertical-align: middle;
+}
+table {
+  margin-top: 30px;
+}
+table thead caption {
+  border: 1px solid #ddd;
+  background-color: red;
+}
+table thead tr th {
+  text-align: center;
+}
+table tbody {
+  border: 1px solid #aaa;
+}
+table tbody tr {
+  border: 1px solid #aaa;
+}
+table tbody tr td {
+  text-align: center;
+  border: 1px solid #aaa;
+}
+ul.listStyle {
+  list-style-image: radial-gradient(blue, red, green 4px);
+}
+ul.afterandbefore {
+  display: table-row;
+}
+ul.afterandbefore li {
+  position: relative;
+  display: table-cell;
+  width: 100px;
+}
+ul.afterandbefore li:hover::after {
+  content: attr(data-title);
+  position: absolute;
+  bottom: 20px;
+  left: 0px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}

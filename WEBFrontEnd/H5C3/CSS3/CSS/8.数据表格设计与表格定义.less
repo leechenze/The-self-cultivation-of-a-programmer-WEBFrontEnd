@@ -1,0 +1,109 @@
+article.table{
+    display: table;
+    width: 300px;
+    nav{
+        display: table-caption;
+        caption-side: top;
+        border: 2px solid #ccc;
+        text-align: center;
+        vertical-align: middle;
+    }
+    section{
+        &:nth-of-type(1){
+            display: table-header-group;
+            background-color: #555;
+            color: #ccc;
+        }
+        &:nth-of-type(2){
+            display: table-header-group;
+        }
+        &:nth-of-type(3){
+            display: table-header-group;
+            background-color: #ccc;
+        }
+        ul{
+            display: table-row;
+            li{
+                display: table-cell;
+                border: 1px solid #ddd;
+                text-align: center;
+                vertical-align: middle;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+// 原生表格
+table{
+    margin-top: 30px;
+    thead{
+        caption{
+            border: 1px solid #ddd;
+            background-color: red;
+        }
+        tr{
+            th{
+                text-align: center;
+            }
+        }
+    }
+    tbody{
+        border: 1px solid #aaa;
+        tr{
+            border: 1px solid #aaa;
+            td{
+                text-align: center;
+                border: 1px solid #aaa;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+// 列表样式;
+ul.listStyle{
+    list-style-image: radial-gradient(blue, red, green 4px);
+}
+
+
+
+
+
+
+
+// after&before
+ul.afterandbefore{
+    display: table-row;
+    li{
+        position: relative;
+        display: table-cell;
+        width: 100px;
+        
+        &:hover::after{
+            content: attr(data-title);
+            position: absolute;
+            bottom: 20px;
+            left: 0px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+    }
+}
+
