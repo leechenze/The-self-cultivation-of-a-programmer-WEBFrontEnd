@@ -7,14 +7,156 @@
     <link rel="stylesheet" href="./CSS/9.布局方式和BFC.css">
 </head>
 <body>
-    <article>
-        <div></div>
-        <div></div>
-    </article>
+    <!-- <article>
+        <span></span>
+        <span></span>
+    </article> -->
+
+    <!-- 清除浮动 -->
+    <!-- <article class="clear">
+        <div class="red"></div>
+        <div class="green"></div>
+        <div class="blue"></div>
+    </article> -->
+
+    <!-- 清除浮动clearfix -->
+    <!-- <article class="clearOne">
+        <div class="red"></div>
+        <div class="green"></div>
+        <article class="clearfix"></article>
+    </article> -->
+    
+    <!-- 通过after为元素清除浮动 -->
+    <!-- <article class="clearAfter">
+        <div class="red"></div>
+        <div class="green"></div>
+    </article> -->
+    
+    <!-- 环绕距离控制 -->
+    <!-- <div class="shapeOutside">
+        <span></span>
+        <p>
+            浮动元素会脱离文档流对后面元素产生影响, 被浮动的元素不在占据原有的位置;
+        文档流定义的块级元素进行进行竖着流动(排列), 行元素横着流动(排列);
+        
+        如果一个元素使用了浮动, 他会对后面的元素有影响, 而不会影响到前面的元素;
+        行内元素在脱离文档流后可以设置宽高;
+        
+
+
+        清除浮动
+            clear: left;                    清除左边浮动;
+            clear: right;                   清除右边浮动;
+            clear: both;                    清除两边浮动;
+        
+        
+        
+        第二种方式
+            清除浮动clearfix(clearOne)
+            这种方法也很好理解, 在浮动元素之后添加一个元素清除左右浮动, 父元素不能检测到浮动元素的宽高, 但是可以检测到添加清除浮动的元素的宽高;
+        
+        
+        第三种方式
+            使用after伪类, 在元素之后添加一个空的内容的元素(content: "";), 然后清除浮动: clear: both; 最后:设置display: bolck;或者display: table;
+            和第二种方式其实是一样的, 只不过是使用after伪类添加了这个元素而已;
+
+
+        第四种方式
+            在父元素添加overflow: hidden, 即可清除浮动;
+            使用overflow: hidden;或者overflow: scroll;或者overflow: auto;都是可以清除浮动的;
+            原理: 使用overflow来触发BFC机制; BFC机制会使父级元素在计算高度时, 仍然不会忽视里面的浮动元素的浮动空间(元素原有占位), 这样即可达到了清除浮动的效果;
+            使用overflow方法处理是兼容时, 应该是height: auto; overflow: hidden;
+        </p>
+    </div> -->
+
+    <!-- 定义元素形状 -->
+    <!-- <div class="clipPath"></div> -->
+    
+    
+    <!-- 定义文本根据元素形状环绕 -->
+    <div class="shapeOutsideClipPath">
+        <span></span>
+        <p>
+            浮动元素会脱离文档流对后面元素产生影响, 被浮动的元素不在占据原有的位置;
+        文档流定义的块级元素进行进行竖着流动(排列), 行元素横着流动(排列);
+        
+        如果一个元素使用了浮动, 他会对后面的元素有影响, 而不会影响到前面的元素;
+        行内元素在脱离文档流后可以设置宽高;
+        
+
+
+        清除浮动
+            clear: left;                    清除左边浮动;
+            clear: right;                   清除右边浮动;
+            clear: both;                    清除两边浮动;
+        
+        
+        
+        第二种方式
+            清除浮动clearfix(clearOne)
+            这种方法也很好理解, 在浮动元素之后添加一个元素清除左右浮动, 父元素不能检测到浮动元素的宽高, 但是可以检测到添加清除浮动的元素的宽高;
+        
+        
+        第三种方式
+            使用after伪类, 在元素之后添加一个空的内容的元素(content: "";), 然后清除浮动: clear: both; 最后:设置display: bolck;或者display: table;
+            和第二种方式其实是一样的, 只不过是使用after伪类添加了这个元素而已;
+
+        </p>
+    </div>
+    
 
     <pre>
-        浮动元素会对后面元素产生影响, 被浮动的元素不在占据原有的位置;
+        
+        浮动元素会脱离文档流对后面元素产生影响, 被浮动的元素不在占据原有的位置;
+        文档流定义的块级元素进行进行竖着流动(排列), 行元素横着流动(排列);
+        
+        如果一个元素使用了浮动, 他会对后面的元素有影响, 而不会影响到前面的元素;
+        行内元素在脱离文档流后可以设置宽高;
+        
 
+
+        清除浮动
+            clear: left;                    清除左边浮动;
+            clear: right;                   清除右边浮动;
+            clear: both;                    清除两边浮动;
+        
+        
+        第二种方式
+            清除浮动clearfix(clearOne)
+            这种方法也很好理解, 在浮动元素之后添加一个元素清除左右浮动, 父元素不能检测到浮动元素的宽高, 但是可以检测到添加清除浮动的元素的宽高;
+        
+        
+        第三种方式
+            使用after伪类, 在元素之后添加一个空的内容的元素(content: "";), 然后清除浮动: clear: both; 最后:设置display: bolck;或者display: table;
+            和第二种方式其实是一样的, 只不过是使用after伪类添加了这个元素而已;
+
+
+        第四种方式
+            在父元素添加overflow: hidden, 即可清除浮动;
+            使用overflow: hidden;或者overflow: scroll;或者overflow: auto;都是可以清除浮动的;
+            原理: 使用overflow来触发BFC机制; BFC机制会使父级元素在计算高度时, 仍然不会忽视里面的浮动元素的浮动空间(元素原有占位), 这样即可达到了清除浮动的效果;
+            使用overflow方法处理是兼容时, 应该是height: auto; overflow: hidden;
+        
+        
+        
+        环绕距离控制
+        shape-ouside: border-box;                   定义文本碍着元素的边框;
+                        margin-box;                 定义文本碍着元素的margin;
+                        padding-box;                定义文本碍着元素的padding;
+                        content-box;                定义文本碍着元素的content;
+                        url();                      定义图片路径, 文本可以根据图片进行环绕, 但是图片必须是png格式的透明状态才可以, jpg或jpeg是不生效的;             
+
+        定义元素形状
+            clip-path: circle(50% at 50% 50%);              定义圆形, 参数为(大小 at 圆心x轴位置 圆心y轴位置);
+            clip-path: ellipse(50% 50%);                    定义椭圆, 参数为(以x轴宽度的圆形 以y轴为高度的圆形)
+            clip-path: polygon(x y, x y, x y, x y, x y)     定义多边形, 参数为(x y, x y, x y, x y, x y);
+        
+        定义文本根据元素形状环绕
+            clip-path: circle(50% at 50% 50%)               定义元素形状为圆形;
+            shape-ouside: circle(50% at 50% 50%);           定义文本环绕方式是根据元素形状环绕;
+                需要注意: 为了保证环绕效果, clip-path和shape-outside必须是作用在同一个元素上, 且两个属性的值必须相同才会生效;
+
+        
         
     </pre>
     

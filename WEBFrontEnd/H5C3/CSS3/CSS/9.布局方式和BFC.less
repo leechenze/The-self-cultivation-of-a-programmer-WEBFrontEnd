@@ -1,6 +1,6 @@
 article{
     border: 1px solid #000;
-    div{
+    span{
         width: 200px;
         height: 200px;
         &:nth-of-type(1) {
@@ -13,3 +13,164 @@ article{
         }
     }
 }
+
+// 清除浮动
+article.clear{
+    div{
+        width: 200px;
+        height: 200px;
+        &.red{
+            border: 5px solid red;
+            box-sizing: border-box;
+            float: left;
+        }
+        &.green{
+            border: 10px solid green;
+            box-sizing: border-box;
+            float: right;
+        }
+        &.blue{
+            border: 15px solid blue;
+            box-sizing: border-box;
+            clear: both;
+        }
+    }
+}
+
+// 清除浮动One
+.clearfix{
+    clear: both;
+}
+
+article.clearOne{
+    width: 500px;
+    border: 1px solid #000;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 10px;
+    div{
+        width: 200px;
+        height: 200px;
+        box-sizing: border-box;
+        &.red{
+            border: 5px solid red;
+            float: left;
+        }
+        &.green{
+            border: 10px solid green;
+            float: right;
+        }
+    }
+}
+
+
+
+// 清除浮动Two, 通过after元素清除浮动;
+
+article.clearAfter{
+    width: 500px;
+    border: 1px solid #000;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 10px;
+    // overflow: hidden;
+    div{
+        width: 200px;
+        height: 200px;
+        box-sizing: border-box;
+        &.red{
+            border: 5px solid red;
+            float: left;
+        }
+        &.green{
+            border: 10px solid green;
+            float: right;
+        }
+    }
+    &:after{
+        content: "";
+        clear: both;
+        display: table;
+    }
+}
+
+// 环绕距离控制
+.shapeOutside{
+    width:100%;
+    border: 1px solid #000;
+    overflow: hidden;
+    span{
+        border: 1px solid #f40;
+        width: 100px;
+        height: 100px;
+        float: left;
+        margin: 10px;
+        padding: 10px;
+        border-width: 10px;
+        shape-outside: content-box;
+    }
+}
+
+
+
+// 定义元素形状
+.clipPath{
+    width: 200px;
+    height: 200px;
+    background-color: #00f;
+    margin: 0 auto;
+    // 定义为圆形, 参数为(circle大小 at 圆心位置);
+    // clip-path: circle(50% at 100% 0%);
+    // 定义为椭圆形, 参数为(以x轴宽度的圆形 以y轴为高度的圆形);
+    // clip-path: ellipse(50% 20%);
+    // 定义为多边形, 参数为(x y, x y, x y, x y, x y, x y);
+    // clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    // clip-path: polygon(50% 0%, 65% 25%, 100% 25%, 75% 60%, 100% 100%, 50% 75%, 0% 100%, 25% 60%, 0% 25%, 35% 25%, 50% 0%);
+}
+
+
+
+
+
+
+// 定义文本根据元素形状环绕
+.shapeOutsideClipPath{
+    span{
+        width: 200px;
+        height: 200px;
+        background-color: #00f;
+        margin: 0 auto;
+        clip-path: ellipse(50% 40%);
+        shape-outside: ellipse(50% 40%);
+        float: left;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

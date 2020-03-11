@@ -1,15 +1,112 @@
 article {
   border: 1px solid #000;
 }
-article div {
+article span {
   width: 200px;
   height: 200px;
 }
-article div:nth-of-type(1) {
+article span:nth-of-type(1) {
   border: 3px solid #f00;
   float: left;
 }
-article div:nth-of-type(2) {
+article span:nth-of-type(2) {
   background-color: #0f0;
+  float: left;
+}
+article.clear div {
+  width: 200px;
+  height: 200px;
+}
+article.clear div.red {
+  border: 5px solid red;
+  box-sizing: border-box;
+  float: left;
+}
+article.clear div.green {
+  border: 10px solid green;
+  box-sizing: border-box;
+  float: right;
+}
+article.clear div.blue {
+  border: 15px solid blue;
+  box-sizing: border-box;
+  clear: both;
+}
+.clearfix {
+  clear: both;
+}
+article.clearOne {
+  width: 500px;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 10px;
+}
+article.clearOne div {
+  width: 200px;
+  height: 200px;
+  box-sizing: border-box;
+}
+article.clearOne div.red {
+  border: 5px solid red;
+  float: left;
+}
+article.clearOne div.green {
+  border: 10px solid green;
+  float: right;
+}
+article.clearAfter {
+  width: 500px;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 10px;
+}
+article.clearAfter div {
+  width: 200px;
+  height: 200px;
+  box-sizing: border-box;
+}
+article.clearAfter div.red {
+  border: 5px solid red;
+  float: left;
+}
+article.clearAfter div.green {
+  border: 10px solid green;
+  float: right;
+}
+article.clearAfter:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.shapeOutside {
+  width: 100%;
+  border: 1px solid #000;
+  overflow: hidden;
+}
+.shapeOutside span {
+  border: 1px solid #f40;
+  width: 100px;
+  height: 100px;
+  float: left;
+  margin: 10px;
+  padding: 10px;
+  border-width: 10px;
+  shape-outside: content-box;
+}
+.clipPath {
+  width: 200px;
+  height: 200px;
+  background-color: #00f;
+  margin: 0 auto;
+}
+.shapeOutsideClipPath span {
+  width: 200px;
+  height: 200px;
+  background-color: #00f;
+  margin: 0 auto;
+  clip-path: ellipse(50% 40%);
+  shape-outside: ellipse(50% 40%);
   float: left;
 }
