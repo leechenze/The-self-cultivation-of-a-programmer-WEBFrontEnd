@@ -263,7 +263,7 @@
     background: red url(src) no-repeat center   background多个属性的缩写形式, 参数依次为: color, image, repeat, position;
     
 
-    box-shadow: 10px 10px rgba(100, 100, 100, 1);
+    box-shadow: 10px 10px 10px rgba(100, 100, 100, 1);
     规定盒子阴影, 参数分别为:  x轴方向, y轴方向, 模糊度, 阴影颜色;
     
     background: linear-gradient(45deg, red 50%, green 30%, blue 20%);
