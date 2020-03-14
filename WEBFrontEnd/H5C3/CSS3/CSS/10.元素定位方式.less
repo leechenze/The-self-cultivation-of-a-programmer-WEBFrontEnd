@@ -1,6 +1,6 @@
 body{
     main{
-        margin: 100px;
+        // margin: 100px;
         padding: 100px;
         border: 1px solid #000;
         p{
@@ -182,6 +182,40 @@ body{
             }
             &:hover div:nth-of-type(2){
                 display: block;
+            }
+        }
+        // 固定定位
+        article.fixedBox{
+            position: fixed;
+            right: 0;
+            top: 50%;
+            margin-top: -50px;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+        // 粘性定位
+        article.stickyBox{
+            width: 300px;
+            height: 300px;
+            border: 2px solid blueviolet;
+            overflow: scroll;
+            margin: 0 auto;
+            section{ 
+                padding-bottom: 180px;
+                h2{
+                    background-color: red;
+                    color: white;
+                    padding: 0;
+                    margin: 0;
+                    position: sticky;
+                    top: 0px;
+                }
+                &:nth-of-type(even) h2{
+                    h2{
+                        background-color: green;
+                    }
+                }
             }
         }
     }
