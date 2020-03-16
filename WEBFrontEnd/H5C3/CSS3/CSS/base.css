@@ -1,0 +1,119 @@
+/* baseCss */
+
+@charset "utf-8";
+
+/* CSS Document */
+
+body,
+ul,
+ol,
+dl,
+li,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+input {
+    margin: 0
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    /*font-size: 100%;*/
+    font-weight: normal;
+    font-family: "Microsoft YaHei";
+}
+
+img {
+    border: none
+}
+
+input,
+button,
+textarea,
+select {
+    *font-size: 100%;
+    border: none;
+}
+
+body {
+    /*background: #fff;*/
+    color: #5e5e5e;
+    font: 14px/24px Microsoft YaHei, SimSun, Arial;
+}
+
+ul,
+ol {
+    list-style: none;
+    padding: 0
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+/*默认a标签样式*/
+
+a:link,
+a:visited {
+    color: #5e5e5e;
+    text-decoration: none;
+}
+
+a:hover {
+    /*color:#999;*/
+}
+
+a:hover {
+    color: #c9394a;
+    /*text-decoration: underline;*/
+}
+
+a:active {
+    color: #666;
+}
+
+
+/*浮动和清除浮动*/
+
+.fl {
+    float: left
+}
+
+.fr {
+    float: right
+}
+
+.clear {
+    zoom: 1;
+    white-space: nowrap;
+    width: auto;
+}
+
+.clear:after {
+    content: "";
+    display: block;
+    height: 0;
+    visibility: visible;
+    clear: both
+}
+
+
+/*显示隐藏*/
+
+.hide {
+    display: none
+}
+
+.show {
+    display: block
+}
