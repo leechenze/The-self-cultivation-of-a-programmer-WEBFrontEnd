@@ -57,7 +57,7 @@
     </main> -->
 
 
-    <article class="xiaomiLayout">
+    <!-- <article class="xiaomiLayout">
         <header>header</header>
         <nav>nav</nav>
         <main>main</main>
@@ -67,6 +67,26 @@
             <div>3</div>
             <div>4</div>
         </footer>
+    </article> -->
+
+
+    <!-- <article class="flowLayout">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+        <div>7</div>
+        <div>8</div>
+        <div>9</div>
+    </article> -->
+
+    <article class="alignjustify">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
     </article>
 
 
@@ -112,7 +132,7 @@
             
             grid-template-rows: repeat(3, [r-start] 1fr [r-end]);
             grid-template-columns: repeat(3, [c-start] 1fr [c-end]);
-            grid-columns-start: 命名名称;           这种方式和上面的方式无异, 只不过是grid-template-rows: repeat(3, [r-start] 1fr [r-end])的改变;
+            grid-column-start: 命名名称;           这种方式和上面的方式无异, 只不过是grid-template-rows: repeat(3, [r-start] 1fr [r-end])的改变;
             
 
             加行span的思维方式就应该是以珊格为基准而不是以珊格线为基准;
@@ -123,11 +143,14 @@
             grid-direction-start/end, 的简写形式如下:
 
             grid-row: start/end;                     
-            grid-colmun: start/end;                          
+            grid-column: start/end;                          
             如果设置偏移量如下: 
-            grid-row: start/span 3;                          
-            grid-colmun: start/span 3;                          
-                
+            grid-row: start/span 3;                 等同于以下写法;    
+                grid-row-start: start;
+                grid-row-end: span 3;
+            grid-column: start/span 3;              等同于以下写法;        
+                grid-column-start: start;
+                grid-column-end: span 3;
 
 
         以上方式都是通过珊格线进行定位, 以下使用珊格区域进行定位;
@@ -137,6 +160,12 @@
         父级元素:
             规定珊格布局的区域
             grid-template-areas: "header header" "nav main" "footer footer";
+            grid-remplate-areas: '. .' '. .' 'footer footer';
+                如果之前的两个不想是一体的话, 可以使用. .来进行占位; 占位是必须的, 否则就是给上面header和nav和main命名
+                而不是给footer命名了, 给每个部位进行命名就是就是给他们划分区域而变成一组, 如果变成一组则必须命名而不能占位了;
+                
+                
+                
 
         
         子级元素:
@@ -152,11 +181,65 @@
                 所以当对子元素进行珊格定位时可以:
                 grid-area: header-start/header-start/header-end/header-end
                 这里只是用header为例子, 当定位时肯定用其他元素进行定位:main-start或footer-start或nav-start等等;
-                
-                
+            
         
-            
-            
+        排列方向, 对齐方式,
+            父级元素:
+                grid-auto-flow: row;                规定布局流动方向为横向;
+                grid-auto-flow: column;             规定布局流动方向为纵向;
+                grid-auto-flow: dense;              强制填满布局中的预留空白区域;
+                grid-auto-flow: row dense;          强制填满布局中的预留空白区域,并且为横向流动的布局;
+                
+                justify-content: space-between;     规定珊格横轴排列方式
+                justify-content: space-around;
+                justify-content: space-evenly;
+                justify-content: start;
+                justify-content: end;
+                justify-content: center;
+                
+                align-content: space-between;       规定珊格纵轴排列方式;
+                align-content: space-around;
+                align-content: space-evenly;
+                align-content: start;
+                align-content: end;
+                align-content: center;
+
+                分清楚一点不论是弹性布局还是珊格布局, items和content区别在于前者是控制盒子内的子元素的属性, content是控制盒子本身的属性;
+                
+                justify-items: stretch;             规定珊格横轴子元素的排列方式;默认值, 拉抻;注意如果子元素设置了固定宽高,那么justify-items属性将不会生效,
+                justify-items: start;
+                justify-items: end;
+                justify-items: center;
+                justify-items: space-around;
+                justify-items: space-evenly;
+                justify-items: space-between;
+
+                align-items: stretch;               规定珊格纵轴子元素的排列方式;默认值, 拉抻;注意如果子元素设置了固定宽高,那么align-items属性将不会生效;
+                align-items: start;
+                align-items: end;
+                align-items: center;
+                align-items: space-around;
+                align-items: space-evenly;
+                align-items: space-between;
+                
+                place-items: justify align;         为justity-items和align-items的简写方式;
+                place-content: justify align;       为justify-content和align-content的简写方式;
+
+            子级元素:
+
+                justify-self: stretch;             规定珊格横轴子元素的排列方式;默认值, 拉抻;
+                justify-self: start;
+                justify-self: end;
+                justify-self: center;
+
+                align-self: stretch;               规定珊格纵轴子元素的排列方式;默认值, 拉抻;
+                align-self: start;
+                align-self: end;
+                align-self: center;
+
+                place-self: justify align;       为justify-self和align-self的简写方式;
+
+
             
             
             

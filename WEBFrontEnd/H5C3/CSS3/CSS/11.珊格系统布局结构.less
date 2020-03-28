@@ -108,11 +108,18 @@ body{
     }
     // 以上都是使用珊格线进行设置珊格元素, 下面使用区域来定位珊格元素
     .gridArea{
+        width: 300px;
+        height: 300px;
+        border: 1px solid #000;
         display: grid;
         grid-template-columns: repeat(3, 100px);
         grid-template-rows: repeat(3, 100px);
+        // grid-template-rows: repeat(3, [r] 100px);
+        // grid-template-columns: repeat(3,[c] 100px);
         div{
-            grid-area: 1/1/2/2;
+            // grid-area: 2/2/3/3;
+            // grid-area: r 1/c 1/r 4/c 4;
+            border: 1px solid #000;
         }
     }
     // 小米官网布局
@@ -123,7 +130,8 @@ body{
         grid-template-rows: 60px 1fr 60px;
         grid-template-columns: 60px 1fr;
         // 规定珊格布局的区域;
-        grid-template-areas: "header header" "nav main" "footer footer";
+        // grid-template-areas: "header header" "nav main" "footer footer";
+        grid-template-areas: '. .' '. .' 'footer footer';
         gap: 5px;
         header,nav,main,footer{
             background-color: blueviolet;
@@ -134,14 +142,17 @@ body{
             color: #fff;
         }
         header{
-            grid-area: header;
+            // grid-area: header;
+            // grid-area: header-start/header-start/header-end/header-end;
+            // grid-area: header-start/nav-start/nav-end/main-start;
+            // grid-area: nav-start/nav-start/main-start/main-end;
         }
-        nav{
-            grid-area: nav;
-        }
-        main{
-            grid-area: main;
-        }
+        // nav{
+        //     grid-area: nav;
+        // }
+        // main{
+        //     grid-area: main;
+        // }
         footer{
             grid-area: footer;
             display: grid;
@@ -156,4 +167,62 @@ body{
             }
         }
     }
+    // 珊格布局流动机制;
+    article.flowLayout{
+        margin: 0 auto;
+        display: grid;
+        width: fit-content;
+        grid-template-rows: repeat(3, 100px);
+        grid-template-columns: repeat(3, 100px);
+        border: 1px solid #000;
+        box-sizing: border-box;
+        // 规定布局为横向流动,并且填满所有空白位置;
+        // grid-auto-flow: row dense;
+        grid-auto-flow: dense;
+        gap: 5px;
+        padding: 5px;
+        div{
+            border: 1px solid #000;
+            box-sizing: border-box;
+            text-align: center;
+            line-height: 100px;
+            background-color: blue;
+            &:nth-of-type(1){
+                // grid-column-start: 1;
+                // grid-column-end: span 2;
+                grid-column:1/span 2;
+                
+            }
+            &:nth-of-type(2){
+                grid-column: 2;
+            }
+        }
+    }
+    // 排列方式
+    article.alignjustify{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        padding: 5px;
+        gap: 5px;
+        width: 400px;
+        height: 100px;
+        border: 1px solid #000;
+        box-sizing: border-box;
+        // justify-content: space-evenly;
+        // align-content: center;
+        // justify-items: stretch;
+        // align-items: center;
+        div{
+            border: 1px solid #000;
+            box-sizing: border-box;
+            background-color: red;
+            width: 50px;
+            height: 50px;
+            &:nth-of-type(1){
+                justify-self: end;
+                align-self: end;
+            }
+        }
+    }
+
 }
