@@ -4,28 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.bootcss.com/font-awesome/5.13.0/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/12.transform转换二维三维.css">
 </head>
 <body>
-    <main class="translate">
+    <!-- <main class="translate">
         <div></div>
-    </main>
+    </main> -->
+    
+    <!-- <main class="translatecase">
+        <div class="field">
+            <input type="text">
+        </div>
+        <div class="field">
+            <input type="text">
+        </div>
+    </main> -->
+    
+    <!-- 移动端试图切换 -->
+    <!-- <main class="translatemobile">
+        <main>
+            <div id="home">
+                <i class="fa fa-home"></i>
+            </div>
+            <div id="video">
+                <i class="fa fa-video"></i>
+            </div>
+            <div id="live">
+                <i class="fa fa-bug"></i>
+            </div>
+        </main>
+        <nav>
+            <a href="#home">home</a>
+            <a href="#video">video</a>
+            <a href="#live">live</a>
+        </nav>
+    </main> -->
     
     
-
+    
+    
+    
+    
     <section style="display: none;">
         transform:
-            transform: translateX(50px);                                规定横轴偏移可以是px也可是%, 正数向后偏移,负数向前偏移;
-            transform: translateY(50px);                                规定纵轴偏移可以是px也可是%, 正数向后偏移,负数向前偏移;
-            transform: translateZ(50x);                                 规定Z轴偏移必须是px像素值, 因为Z轴设置百分比是没有参考的, 从平面穿过可以无限延伸
-                                                                        所以不像是X,Y轴可以设置百分比,X,Y轴都是可以设置固定值的,Z轴则不然;
-            transform: translateY(50px) translateY(50px);               同时可以应用多个属性值;
-            transform: translate(50px 50px);                            以上的简写方式;
+            transform: translateX(50px);                                    规定横轴偏移可以是px也可是%, 正数向后偏移,负数向前偏移;
+            transform: translateY(50px);                                  规定纵轴偏移可以是px也可是%, 正数向后偏移,负数向前偏移;
+            transform: translateZ(50x);                                     规定Z轴偏移必须是px像素值, 因为Z轴设置百分比是没有参考的, 从平面穿过可以无限延伸
+                                                                            所以不像是X,Y轴可以设置百分比,X,Y轴都是可以设置固定值的,Z轴则不然;
+            transform: translateY(50px) translateY(50px);                   同时可以应用多个属性值;
+            transform: translate(50px 50px);                                以上的简写方式;
 
+            transform: translateY(50%) translateY(50%) translateZ(50px);    同时可以应用多个属性值;
+            transform: translate3d(50%, 50%, 50px);                         以上的简写方式: 这是X轴,Y轴,Z轴的简写,translate3d;
+            
+                
+        
             
             
             
             
+            
+        
             
 
     </section>
