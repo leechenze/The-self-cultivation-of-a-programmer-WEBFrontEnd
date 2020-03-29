@@ -41,6 +41,38 @@
         </nav>
     </main> -->
     
+    <!-- <main class="scale">
+        <div></div>
+        <div></div>
+    </main> -->
+    
+    <!-- <main class="scaleimg">
+        <div><img src="../images/1578047015207.jpg" alt=""></div>
+        <div><img src="../images/1578048766313.jpg" alt=""></div>
+        <div><img src="../images/8b74-hyrtarw7206928.jpg" alt=""></div>
+    </main> -->
+
+    <!-- <main class="rotate">
+        <div></div>
+    </main> -->
+    
+
+    <!-- <main class="skew">
+        <div></div>
+    </main> -->
+    
+    
+    <main class="skewbtn">
+        <a href="">
+            leechenze
+        </a>
+    </main>
+    
+    
+    
+    
+    
+    
     
     
     
@@ -48,18 +80,68 @@
     
     <section style="display: none;">
         transform:
-            transform: translateX(50px);                                    规定横轴偏移可以是px也可是%, 正数向后偏移,负数向前偏移;
-            transform: translateY(50px);                                  规定纵轴偏移可以是px也可是%, 正数向后偏移,负数向前偏移;
-            transform: translateZ(50x);                                     规定Z轴偏移必须是px像素值, 因为Z轴设置百分比是没有参考的, 从平面穿过可以无限延伸
-                                                                            所以不像是X,Y轴可以设置百分比,X,Y轴都是可以设置固定值的,Z轴则不然;
-            transform: translateY(50px) translateY(50px);                   同时可以应用多个属性值;
-            transform: translate(50px 50px);                                以上的简写方式;
+            转换属性是针对块级元素, 行内元素不生效就转换为块级元素;
 
-            transform: translateY(50%) translateY(50%) translateZ(50px);    同时可以应用多个属性值;
-            transform: translate3d(50%, 50%, 50px);                         以上的简写方式: 这是X轴,Y轴,Z轴的简写,translate3d;
+            transform-style: flat;                                              定义所有子元素是在2d平面呈现;
+            transform-style: preserve-3d;                                       定义所有子元素是在3d空间呈现;
+            transform-origin: x y z;                                            定义元素的基点位置, 多用于rotate,scale等...
+                            
+
+            translate
+                transform: translateX(50px);                                    规定横轴偏移可以是px也可是%, 正数向后偏移,负数向前偏移;
+                transform: translateY(50px);                                    规定纵轴偏移可以是px也可是%, 正数向后偏移,负数向前偏移;
+                transform: translateZ(50x);                                     规定Z轴偏移必须是px像素值, 因为Z轴设置百分比是没有参考的, 从平面穿过可以无限延伸
+                                                                                所以不像是X,Y轴可以设置百分比,X,Y轴都是可以设置固定值的,Z轴则不然;
+                transform: translateY(50px) translateY(50px);                   同时可以应用多个属性值;
+                transform: translate(50px 50px);                                以上的简写方式;
+
+                transform: translateY(50%) translateY(50%) translateZ(50px);    同时可以应用多个属性值;
+                transform: translate3d(50%, 50%, 50px);                         以上的简写方式: 这是X轴,Y轴,Z轴的简写,translate3d;
             
+
+            scale 
+                transform: scaleX(2);                                           横轴放大两倍;
+                transform: scaleY(2);                                           纵轴放大两倍;
+                transform: scaleZ(1);                                           Z轴拉长或变短(放大或缩小);
+                transform: scale(x, y);
+                transform: scale3d(x, y, z);                           
+
+            
+
+            rotate
+                transform: rotateX(45deg);                                      横轴旋转45deg;
+                transform: rotateY(45deg);                                      纵轴旋转45deg;
+                transform: rotateZ(90deg);                                      Z轴旋转90deg;
+                transform: rotate3d(x, y, z, deg);                              旋转的3d参数不同, 四个参数前三个分别是轴向,最后一个是角度,
+                                                                                比如transform: rotate3d(1, 1, 1, 90deg);
+                                                                                并且注意xyz轴向添的不是具体值而是比例值;
+                注意:
+                    transform: rotateX(45deg) rotateY(45deg);
+                    transform: rotateY(45deg) rotateX(45deg);
+                    先操作横轴,还是先操作纵轴结果是不同的;可以思考一下,先旋转横轴就是在横轴的基础上旋转Y轴;
+                    先旋转Y轴就是在原来的基础上操作Y轴所以结果肯定不同;
+                    
                 
-        
+            skew
+                transform: skewX(deg);                                          横轴倾斜角度
+                transform: skewY(deg);                                          纵轴倾斜角度
+                transform: skew(xdeg, ydeg);                                    
+                
+                注意: 
+                    transform: skewX(-45deg) skewY(45deg);
+                    transform: skew(-45deg, 45deg);
+                    结果是不同的, 思考一下, 第一中是分为两步横轴倾斜-45deg的基础上再倾斜纵轴的45deg;
+                    第二部则是X和Y轴同时进行,倾斜操纵;
+
+            
+
+            
+            
+            
+
+
+            
+            
             
             
             
