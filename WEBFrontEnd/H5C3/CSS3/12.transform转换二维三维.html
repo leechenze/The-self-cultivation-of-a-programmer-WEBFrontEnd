@@ -62,17 +62,22 @@
     </main> -->
     
     
-    <main class="skewbtn">
+    <!-- <main class="skewbtn">
         <a href="">
             leechenze
         </a>
+    </main> -->
+    
+    <!-- 3d立体盒子 -->
+    <!-- <main class="boxskew">
+        <div>leechense.com</div>
+    </main> -->
+    
+    
+    <main class="transformorigin">
+        <div></div>
+        <div></div>
     </main>
-    
-    
-    
-    
-    
-    
     
     
     
@@ -85,6 +90,9 @@
             transform-style: flat;                                              定义所有子元素是在2d平面呈现;
             transform-style: preserve-3d;                                       定义所有子元素是在3d空间呈现;
             transform-origin: x y z;                                            定义元素的基点位置, 多用于rotate,scale等...
+                                                                                左边值:[left center right 0-999..%]
+                                                                                右边值:[top center bottom 0-999..%]
+                                                                                数值是百分比 0 - 99999% 无限大;
                             
 
             translate
@@ -132,6 +140,7 @@
                     transform: skew(-45deg, 45deg);
                     结果是不同的, 思考一下, 第一中是分为两步横轴倾斜-45deg的基础上再倾斜纵轴的45deg;
                     第二部则是X和Y轴同时进行,倾斜操纵;
+                    目前skew倾斜属性没有Z轴的操作,  所以只有这两个参数;
 
             
 

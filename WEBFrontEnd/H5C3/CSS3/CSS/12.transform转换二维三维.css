@@ -287,3 +287,81 @@ body main.skewbtn a:hover::after {
   transform-origin: center center;
   transition: 0.5s;
 }
+body main.boxskew {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 2px solid #ccc;
+  box-sizing: border-box;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+body main.boxskew div {
+  width: 150px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  background-color: #fff;
+  position: relative;
+  color: #34495e;
+  font-weight: bolder;
+  text-transform: uppercase;
+  transform: skew(25deg, 0) rotate(-20deg);
+}
+body main.boxskew div::before {
+  content: '';
+  width: 10px;
+  height: 100%;
+  background-color: #ddd;
+  position: absolute;
+  left: -10px;
+  transform: skewY(-45deg) translate(0, 5px);
+}
+body main.boxskew div::after {
+  content: '';
+  width: 100%;
+  height: 10px;
+  background-color: #aaa;
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  transform: skewX(-45deg) translate(-5px, 0);
+}
+body main.transformorigin {
+  width: 300px;
+  height: 300px;
+  border: 2px solid #aaa;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+  transform: translate(-50%, -50%) perspective(900px) rotateY(45deg) rotateX(45deg);
+}
+body main.transformorigin div {
+  width: 100px;
+  height: 100px;
+  background-color: blue;
+  transition: 1s;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+  transform-origin: right bottom 200px;
+}
+body main.transformorigin div:nth-of-type(1) {
+  background-color: red;
+}
+body main.transformorigin:hover div:nth-of-type(1) {
+  background-color: green;
+  transform: rotateY(245deg);
+}
