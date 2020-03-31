@@ -392,4 +392,177 @@ body{
             }
         }
     }
+    main.happynewyear{
+        width: 500px;
+        height: 250px;
+        background-color: yellowgreen;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        font-size: 3em;
+        color: blueviolet;
+        font-weight: bolder;
+        transform-style: preserve-3d;
+        transform: translate(-50%, -50%) perspective(1000px) rotateX(25deg);
+        &::before,&::after{
+            width: 50%;
+            height: 100%;
+            background-color: brown;
+            transition: 1s;
+            color: yellowgreen
+        }
+        &::before{
+            content: '新年';
+            position: absolute;
+            left: 0;
+            top: 0;
+            transform-origin: left;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            border-right: 2px solid orange;
+            box-sizing: border-box;
+        }
+        &::after{
+            content: '快乐';
+            position: absolute;
+            right: 0;
+            top: 0;
+            transform-origin: right;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            border-left: 2px solid orange;
+            box-sizing: border-box;
+        }
+        &:hover::before{
+            transform: rotateY(-120deg);
+        }
+        &:hover::after{
+            transform: rotateY(120deg);
+        }
+    }
+
+    
+    &:hover main.clock .second{
+        transform: translateX(-50%) rotate(7200deg);
+    }
+    main.clock{
+        width: 500px;
+        height: 500px;
+        background: linear-gradient(to right top, yellowgreen, blueviolet, brown);
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        &::before{
+            content: '';
+            width: 90%;
+            height: 90%;
+            background-color: #2d495c;
+            border-radius: 50%;
+        }
+        div.line{
+            width: 80%;
+            height: 80%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+
+            &::before{
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 90%;
+                height: 90%;
+                background-color: #2d495c;
+                border-radius: 50%;
+                z-index: 1;
+            }
+            &::after{
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 15px;
+                height: 15px;
+                background-color: #fff;
+                border-radius: 50%;
+                z-index: 9;
+            }
+            div{
+                width: 5px;
+                height: 100%;
+                background-color: #fff;
+                position: absolute;
+                left: 50%;
+                top: 0;
+                &:nth-child(1){
+                    transform: translateX(-50%) rotate(0deg);
+                }
+                &:nth-child(2){
+                    transform: translateX(-50%) rotate(30deg);
+                }
+                &:nth-child(3){
+                    transform: translateX(-50%) rotate(60deg);
+                }
+                &:nth-child(4){
+                    transform: translateX(-50%) rotate(90deg);
+                }
+                &:nth-child(5){
+                    transform: translateX(-50%) rotate(120deg);
+                }
+                &:nth-child(6){
+                    transform: translateX(-50%) rotate(150deg);
+                }
+            }
+        }
+        .hour{
+            width: 5px;
+            height: 15%;
+            background-color: #fff;
+            position: absolute;
+            left: 50%;
+            bottom: 50%;
+            transform-origin: bottom;
+            transform: translateX(-50%) rotate(0deg);
+        }
+        .minute{
+            width: 3px;
+            height: 25%;
+            background-color: #fff;
+            position: absolute;
+            left: 50%;
+            bottom: 50%;
+            transform: translateX(-50%);
+            transform-origin: bottom;
+            transform: translateX(-50%) rotate(30deg);
+        }
+        .second{
+            width: 1px;
+            height: 30%;
+            background-color: #fff;
+            position: absolute;
+            left: 50%;
+            bottom: 50%;
+            transform: translateX(-50%);
+            transform-origin: bottom;
+            transform: translateX(-50%) rotate(60deg);
+            transition: 120s;
+        }
+    }
 }
