@@ -536,3 +536,121 @@ body main.clock .second {
   transform: translateX(-50%) rotate(60deg);
   transition: 120s;
 }
+body main.rotatemenu {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+body main.rotatemenu nav {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(to bottom, #2ecc71, #3498db, #9b59b6, #e74c3c);
+  list-style: none;
+  position: absolute;
+  border-radius: 50%;
+  transition: 0.5s;
+}
+body main.rotatemenu nav ul {
+  width: 300px;
+  height: 300px;
+  list-style: none;
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+}
+body main.rotatemenu nav ul li {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(to top, #2ecc71, #3498db, #9b59b6, #e74c3c);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3em;
+  color: #fff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: 1s;
+  transform-origin: 150px 150px;
+}
+body main.rotatemenu nav ul li span {
+  transition: 1s;
+}
+body main.rotatemenu nav:hover ul {
+  transform: scale(1);
+}
+body main.rotatemenu nav:hover ul li:nth-child(1) {
+  transform: rotate(40deg);
+}
+body main.rotatemenu nav:hover ul li:nth-child(1) span {
+  transform: rotate(calc(360deg - 40deg));
+}
+body main.rotatemenu nav:hover ul li:nth-child(2) {
+  transform: rotate(80deg);
+}
+body main.rotatemenu nav:hover ul li:nth-child(2) span {
+  transform: rotate(calc(720deg - 80deg));
+}
+body main.rotatemenu nav:hover ul li:nth-child(3) {
+  transform: rotate(120deg);
+}
+body main.rotatemenu nav:hover ul li:nth-child(3) span {
+  transform: rotate(calc(1080deg - 120deg));
+}
+body main.rotatemenu nav:hover ul li:nth-child(4) {
+  transform: rotate(160deg);
+}
+body main.rotatemenu nav:hover ul li:nth-child(4) span {
+  transform: rotate(calc(1440deg - 160deg));
+}
+body main.rotatemenu nav:hover ul li:nth-child(5) {
+  transform: rotate(200deg);
+}
+body main.rotatemenu nav:hover ul li:nth-child(5) span {
+  transform: rotate(calc(1800deg - 200deg));
+}
+body main.rotatemenu nav:hover ul li:nth-child(6) {
+  transform: rotate(240deg);
+}
+body main.rotatemenu nav:hover ul li:nth-child(6) span {
+  transform: rotate(calc(2160deg - 240deg));
+}
+body main.rotatemenu nav:hover ul li:nth-child(7) {
+  transform: rotate(280deg);
+}
+body main.rotatemenu nav:hover ul li:nth-child(7) span {
+  transform: rotate(calc(2520deg - 280deg));
+}
+body main.rotatemenu nav:hover ul li:nth-child(8) {
+  transform: rotate(320deg);
+}
+body main.rotatemenu nav:hover ul li:nth-child(8) span {
+  transform: rotate(calc(2880deg - 320deg));
+}
+body main.rotatemenu nav:hover ul li:nth-child(9) {
+  transform: rotate(360deg);
+}
+body main.rotatemenu nav:hover ul li:nth-child(9) span {
+  transform: rotate(calc(3240deg - 360deg));
+}
+body main.rotatemenu nav::after {
+  content: 'leechenze.com';
+  width: 250px;
+  height: 250px;
+  background-color: #2d495c;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 8em;
+  font-size: 32px;
+  font-weight: bolder;
+  color: #aaa;
+  text-shadow: #fff 0px 0px 20px;
+}
