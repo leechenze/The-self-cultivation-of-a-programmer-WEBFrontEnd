@@ -117,6 +117,30 @@
     </main> -->
     
     
+    <!-- <main class="persepctive">
+        <div></div>
+        <div></div>
+    </main> -->
+    
+
+    <!-- <main class="preserve">
+        <div></div>
+        <div></div>
+    </main>-->
+    
+    <!-- <article class="picturebox">
+        <main class="picture3drotate">
+            <div><img src="../images/1.jpg" alt=""></div>
+            <div><img src="../images/2.jpg" alt=""></div>
+            <div><img src="../images/3.jpg" alt=""></div>
+            <div><img src="../images/4.png" alt=""></div>
+        </main>
+    </article> -->
+    
+    
+    
+    
+    
     
     <section style="display: none;">
         transform:
@@ -180,9 +204,24 @@
             
             
             
-            
-            
+            透视    
+            perspective
+                子元素上加: 
+                    transfrom: perspective(500px);
 
+                    给子元素单个设置, 可以每一个设置不同的值, 展示效果不同;
+                    
+                父元素上加:
+                    perspective: 500px;
+
+                    给所有子元素整体设置, 每一个设置的值都是相同的, 展示效果都相同;
+                    如果给父元素添加transfrom: perspective(500px), 子元素是不会透视的;
+                    
+            三维空间:
+                transfrom-style: preserve-3d;
+                透视可以呈现的是元素的积淀, 但是没办法呈现三位空间, 所谓三位空间就是有Z轴参与的空间;
+                所以如果操作元素的Z轴就必须添加这个三位的属性, 否则三维的效果是不会呈现的; 只会呈现X轴和y轴的二维效果;
+                
 
             
             
