@@ -755,3 +755,135 @@ body main.picture3drotate div:nth-child(4) {
   transform-origin: center center -200px;
   transform: rotateY(360deg);
 }
+body main.perspective-origin {
+  width: 200px;
+  height: 200px;
+  border: 3px solid #000;
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  flex-direction: row;
+  perspective: 500px;
+  transition: 1s;
+  transform-style: preserve-3d;
+  transform: perspective(500px) translate(-50%, -50%);
+}
+body main.perspective-origin:hover {
+  transform: perspective(500px) translate(-50%, -50%) rotateY(90deg);
+  perspective-origin: right top;
+}
+body main.perspective-origin div {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+body main.perspective-origin div:nth-child(1) {
+  background-color: cyan;
+  transform: translate(-50%, -50%) rotateY(45deg);
+}
+body main.perspective-origin div:nth-child(2) {
+  background-color: chartreuse;
+  transform: translate(-50%, -50%) rotateY(45deg);
+}
+body main.square3d {
+  width: 300px;
+  height: 300px;
+  border: 3px solid #000;
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  flex-direction: row;
+  transition: 1s;
+  transform-style: preserve-3d;
+  transform: translate(-50%, -50%) perspective(500px) rotate3d(-1, 0, 0, 45deg);
+}
+body main.square3d:hover {
+  transform: translate(-50%, -50%) perspective(500px) rotateX(90deg) rotateY(90deg);
+}
+body main.square3d div {
+  width: 200px;
+  height: 200px;
+  background-color: blueviolet;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 4em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transform-origin: center center 100px;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+}
+body main.square3d div:nth-child(1) {
+  background-color: cyan;
+  transform: translate(-50%, -50%) rotateY(0deg);
+}
+body main.square3d div:nth-child(2) {
+  background-color: darkgreen;
+  transform: translate(-50%, -50%) rotateY(90deg);
+}
+body main.square3d div:nth-child(3) {
+  background-color: crimson;
+  transform: translate(-50%, -50%) rotateY(180deg);
+}
+body main.square3d div:nth-child(4) {
+  background-color: chartreuse;
+  transform: translate(-50%, -50%) rotateY(270deg);
+}
+body main.square3d div:nth-child(5) {
+  background-color: yellow;
+  transform-origin: top;
+  transform: translate(-50%, -50%) rotateX(90deg) translateY(-100px);
+}
+body main.square3d div:nth-child(6) {
+  background-color: blue;
+  transform-origin: bottom;
+  transform: translate(-50%, -50%) rotateX(90deg) translateY(100px);
+}
+body main.backface {
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+}
+body main.backface div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-size: 4em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  color: #fff;
+  backface-visibility: hidden;
+}
+body main.backface div:nth-child(1) {
+  background-color: yellowgreen;
+}
+body main.backface div:nth-child(2) {
+  background-color: blueviolet;
+}
+body main.backface nav {
+  position: absolute;
+  width: 80%;
+  bottom: 60px;
+  text-align: center;
+}
+body main.backface nav a {
+  padding: 10px 20px;
+  margin-left: 50px;
+  text-align: center;
+  text-decoration: none;
+  background-color: cornflowerblue;
+  color: #fff;
+}
