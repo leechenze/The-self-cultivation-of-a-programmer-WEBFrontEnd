@@ -849,41 +849,54 @@ body main.square3d div:nth-child(6) {
   transform-origin: bottom;
   transform: translate(-50%, -50%) rotateX(90deg) translateY(100px);
 }
-body main.backface {
+body main.backface .signin {
+  transform: perspective(500px) rotateY(180deg);
+}
+body main.backface .register {
+  transform: perspective(500px) rotateY(0deg);
+}
+body main.backface main {
   width: 100vw;
   height: 100vh;
   background-color: #000;
+  transform-style: preserve-3d;
+  transition: 1s;
+  transform: perspective(500px);
 }
-body main.backface div {
+body main.backface main div {
   position: absolute;
   width: 100%;
   height: 100%;
-  font-size: 4em;
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: center;
-  text-transform: uppercase;
-  color: #fff;
+  align-items: center;
   backface-visibility: hidden;
+  font-size: 3em;
+  font-weight: bolder;
+  color: #2c3e50;
 }
-body main.backface div:nth-child(1) {
-  background-color: yellowgreen;
+body main.backface main div:nth-child(1) {
+  background-color: #2980b9;
 }
-body main.backface div:nth-child(2) {
-  background-color: blueviolet;
+body main.backface main div:nth-child(2) {
+  background-color: #e74c3c;
+  transform: rotateY(180deg);
 }
 body main.backface nav {
   position: absolute;
+  left: 50%;
+  bottom: 30px;
+  transform: translate(-50%, 0);
   width: 80%;
-  bottom: 60px;
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
 }
 body main.backface nav a {
-  padding: 10px 20px;
-  margin-left: 50px;
-  text-align: center;
   text-decoration: none;
-  background-color: cornflowerblue;
-  color: #fff;
+  font-size: 2em;
+  color: greenyellow;
 }

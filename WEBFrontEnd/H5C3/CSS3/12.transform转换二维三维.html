@@ -6,6 +6,7 @@
     <title>Document</title>
     <link href="https://cdn.bootcss.com/font-awesome/5.13.0/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/12.transform转换二维三维.css">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
     <!-- <main class="translate">
@@ -153,14 +154,28 @@
     </main> -->
     
     
-    <main class="backface">
-        <div>register</div>
-        <div>signin</div>
+    <!-- <main class="backface">
+        <main>
+            <div>register</div>
+            <div>signin</div>
+        </main>
         <nav>
-            <a href="javascript:">register</a>
-            <a href="javascript:">signin</a>
+            <a href="javascript:" onclick="change('register')">register</a>
+            <a href="javascript:" onclick="change('signin')">signin</a>
         </nav>
     </main>
+    <script>
+        function change(t){
+            switch (t) {
+                case 'signin':
+                    $('main.backface main').removeClass().addClass('signin');
+                break;
+                case 'register':
+                    $('main.backface main').removeClass().addClass('register');
+                break;
+            }
+        }
+    </script> -->
     
     
     
@@ -258,6 +273,7 @@
                 属性定义当元素不正面向屏幕时是否可见;
             
 
+            
             
                 
         

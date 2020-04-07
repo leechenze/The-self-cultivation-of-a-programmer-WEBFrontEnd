@@ -588,16 +588,93 @@
 
 拾贰.transform转换二维三维;
     
-    
+    transform:
+            转换属性是针对块级元素, 行内元素不生效就转换为块级元素;
 
+            transform-style: flat;                                              定义所有子元素是在2d平面呈现;
+            transform-style: preserve-3d;                                       定义所有子元素是在3d空间呈现;
+            transform-origin: x y z;                                            定义元素的基点位置, 多用于rotate,scale等...
+                                                                                左边值:[left center right 0-999..%]
+                                                                                右边值:[top center bottom 0-999..%]
+                                                                                数值是百分比 0 - 99999% 无限大;
+                            
 
+            translate
+                transform: translateX(50px);                                    规定横轴偏移可以是px也可是%, 正数向后偏移,负数向前偏移;
+                transform: translateY(50px);                                    规定纵轴偏移可以是px也可是%, 正数向后偏移,负数向前偏移;
+                transform: translateZ(50x);                                     规定Z轴偏移必须是px像素值, 因为Z轴设置百分比是没有参考的, 从平面穿过可以无限延伸
+                                                                                所以不像是X,Y轴可以设置百分比,X,Y轴都是可以设置固定值的,Z轴则不然;
+                transform: translateY(50px) translateY(50px);                   同时可以应用多个属性值;
+                transform: translate(50px 50px);                                以上的简写方式;
 
+                transform: translateY(50%) translateY(50%) translateZ(50px);    同时可以应用多个属性值;
+                transform: translate3d(50%, 50%, 50px);                         以上的简写方式: 这是X轴,Y轴,Z轴的简写,translate3d;
+            
 
+            scale 
+                transform: scaleX(2);                                           横轴放大两倍;
+                transform: scaleY(2);                                           纵轴放大两倍;
+                transform: scaleZ(1);                                           Z轴拉长或变短(放大或缩小);
+                transform: scale(x, y);
+                transform: scale3d(x, y, z);                           
 
+            
 
+            rotate
+                transform: rotateX(45deg);                                      横轴旋转45deg;
+                transform: rotateY(45deg);                                      纵轴旋转45deg;
+                transform: rotateZ(90deg);                                      Z轴旋转90deg;
+                transform: rotate3d(x, y, z, deg);                              旋转的3d参数不同, 四个参数前三个分别是轴向,最后一个是角度,
+                                                                                比如transform: rotate3d(1, 1, 1, 90deg);
+                                                                                并且注意xyz轴向添的不是具体值而是比例值;
+                注意:
+                    transform: rotateX(45deg) rotateY(45deg);
+                    transform: rotateY(45deg) rotateX(45deg);
+                    先操作横轴,还是先操作纵轴结果是不同的;可以思考一下,先旋转横轴就是在横轴的基础上旋转Y轴;
+                    先旋转Y轴就是在原来的基础上操作Y轴所以结果肯定不同;
+                    
+                
+            skew
+                transform: skewX(deg);                                          横轴倾斜角度
+                transform: skewY(deg);                                          纵轴倾斜角度
+                transform: skew(xdeg, ydeg);                                    
+                
+                注意: 
+                    transform: skewX(-45deg) skewY(45deg);
+                    transform: skew(-45deg, 45deg);
+                    结果是不同的, 思考一下, 第一中是分为两步横轴倾斜-45deg的基础上再倾斜纵轴的45deg;
+                    第二部则是X和Y轴同时进行,倾斜操纵;
+                    目前skew倾斜属性没有Z轴的操作,  所以只有这两个参数;
 
+            
+            
+            
+            透视    
+            perspective
+                子元素上加: 
+                    transfrom: perspective(500px);
 
+                    给子元素单个设置, 可以每一个设置不同的值, 展示效果不同;
+                    
+                父元素上加:
+                    perspective: 500px;
 
+                    给所有子元素整体设置, 每一个设置的值都是相同的, 展示效果都相同;
+                    如果给父元素添加transfrom: perspective(500px), 子元素是不会透视的;
+                    
+            三维空间:
+                transfrom-style: preserve-3d;
+                透视可以呈现的是元素的积淀, 但是没办法呈现三位空间, 所谓三位空间就是有Z轴参与的空间;
+                所以如果操作元素的Z轴就必须添加这个三位的属性, 否则三维的效果是不会呈现的; 只会呈现X轴和y轴的二维效果;
+                
 
-
-
+            
+            perspective-origin: left top;
+                详见:main.perspective-origin;
+                解释为平时c3动画都是操作物体在呈现动画, 这个属性则是规定物体不变, 人的视角改变;
+                好比汽车之家的 旋转的车模型, 360deg旋转车来展现给我们, 这个属性则代表车不转了, 人围绕车转360deg看车是类似的;
+                
+            
+            backface-visibility: hidden;
+                属性定义当元素不正面向屏幕时是否可见;
+            
