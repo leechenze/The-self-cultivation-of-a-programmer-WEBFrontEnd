@@ -4,8 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./css/13.css过渡&动画.css">
 </head>
 <body>
+    <!-- <main class="transition-property">
+        <div></div>
+    </main> -->
+
+    <main class="transition-example">
+        <div></div>
+    </main>
+    <script>
+        document.querySelector('.transition-example div').addEventListener('transitionend', function (e) {
+            e.target.className = 'move';
+        })
+    </script>
     
+    
+    
+    
+    <section style="display: none;">
+        transition
+            C3的过渡,对于极少数的属性不生效,比如border-style等...
+            其实每一个元素在hover时都会有一个过渡效果,只不过这个效果是以毫秒为单位时间太短,效果并不明显;
+            这个效果在hover时可以继承, 也可以单另设置值, 比如transition在hover之前是2s, 在hover时
+            可以设置为200ms; 那么当滑过时就会以200ms的时间展示动画, 但如果滑出时就还会以2s的时间呈现动画;
+
+            transitionEnd事件可以被监听动画结束, 动画结束可以设置回掉函数规定结束之后对元素的操作;
+
+            
+            
+            
+                                               
+            transition-property: property;                                      定义元素过渡属性, all为全部属性;
+                                                                                通常这个属性很少用, 因为默认值就是all;
+                transition-property: all;                                       全部属性具有过渡属性;
+                transition-property: background-color, width, height;           背景色, 宽度, 高度,具有过渡属性;
+
+                
+                
+            transition-duration: time;                                          定义元素过渡时间;
+                transition-duration: 1s;                                        过渡时间为1秒;
+                transition-duration: 500ms;                                     过渡时间为500毫秒;
+
+
+            
+
+            
+        
+    </section>
 </body>
 </html>
