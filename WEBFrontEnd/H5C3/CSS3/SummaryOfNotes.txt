@@ -696,4 +696,69 @@
 
 
 拾叁.css过渡&动画
+    transition
+        C3的过渡,对于极少数的属性不生效,比如border-style等...
+        其实每一个元素在hover时都会有一个过渡效果,只不过这个效果是以毫秒为单位时间太短,效果并不明显;
+        这个效果在hover时可以继承, 也可以单另设置值, 比如transition在hover之前是2s, 在hover时
+        可以设置为200ms; 那么当滑过时就会以200ms的时间展示动画, 但如果滑出时就还会以2s的时间呈现动画;
+
+        transitionEnd事件可以被监听动画结束, 动画结束可以设置回掉函数规定结束之后对元素的操作;
+
+        
+        
+        
+                                            
+        transition-property: property;                                      定义元素过渡属性, all为全部属性;
+                                                                            通常这个属性很少用, 因为默认值就是all;
+            transition-property: all;                                       全部属性具有过渡属性;
+            transition-property: background-color, width, height;           背景色, 宽度, 高度,具有过渡属性;
+
+            
+            
+        transition-duration: time;                                          定义元素过渡时间;
+            transition-duration: 1s;                                        过渡时间为1秒;
+            transition-duration: 500ms;                                     过渡时间为500毫秒;
+            transition-duration: 1s, 2s;                                    奇数属性过渡时间为1s, 偶数过渡时间为2s;
+            transition-duration: 1s, 2s, 3s;                                如果perproty的值多于duration时, duration的值就从前到后排列, 第四个值没有就是第一个值开始;
+                                                                            如果duration的值多于property时, 多出来的duration值不会生效;
+            
+        transition-timing-function: cubic-bezier(startX, startY, endX, endY)    定义过渡过程为贝塞尔曲线;
+                                                                                cubic-bezier()参数是开始滑动的x,y坐标和结束滑动时的x,y坐标;
+            ease, linear, ease-in, ease-out, ease-in-out;                       系统定义的这几个值;
+            
+            transition-timing-function: steps(3, start);                            分三步走完动画, 开始就走;
+                等同于
+            transition-timing-function: step-start(3);
+
+            transition-timing-function: steps(3, end);                              分三步走完动画, 当第一帧走完才会开始走;
+                等同于
+            transition-timing-function: step-end(3);
+        
+        
+            transition-delay: time;                                                 动画延迟3秒在执行;
+            transition-delay: time1, time2;                                         延迟属性也和duration一样会根据值的多少应用到property上面;
+                                                                                    delay值多了不会生效, delay值少了就会根据property值的顺序进行排列;
+
+
+        过渡属性综合设置, 值顺序如下: 
+        transition: property timing-function duration delay;
+            transition: all linear 2s 200ms;
+            所有属性linear过程呈现时间2s延迟200ms;
+        过渡属性综合每一个设置不同的值:
+        transition: border-radius linear 1s 200ms,
+                    width linear 1s 200ms,
+                    height linear 1s 200ms,
+                    background-color linear 1s 200ms;
+        
+
+
+
+
+
+
+
+
+
+
+拾肆.C3帧动画animate
     
