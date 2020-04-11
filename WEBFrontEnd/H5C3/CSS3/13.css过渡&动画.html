@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.bootcss.com/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/13.css过渡&动画.css">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
     <!-- <main class="transition-property">
         <div></div>
     </main> -->
 
-    <main class="transition-example">
+    <!-- <main class="transition-example">
         <div></div>
     </main>
     <script>
@@ -19,6 +21,53 @@
             e.target.className = 'move';
         })
     </script>
+     -->
+    
+    <!-- <main class="transition-timing-function">
+        <div></div>
+    </main> -->
+     
+    <!-- <main class="steps">
+        <ul>
+            <li>leechenze</li>
+            <li>leechenze</li>
+            <li>leechenze</li>
+            <li>leechenze</li>
+        </ul>
+    </main> -->
+     
+
+    <!-- <main class="clockone">
+        <div></div>
+    </main> -->
+    
+
+    <!-- <main class="stepsswitchImg">
+        <section>
+            <article>
+                <div><img src="../images/1.jpg" alt=""></div>
+                <div>leechense.com</div>
+            </article>
+        </section>
+    </main> -->
+    
+    <!-- <main class="transition-delay">
+        <div></div>
+    </main> -->
+    
+    
+    <main class="mainheart">
+        <article>
+            <i class="fa fa-heart" aria-hidden="true"></i>
+            <i class="fa fa-heart" aria-hidden="true"></i>
+        </article>
+    </main>
+    <script>
+        $('main.mainheart article').on('click', function () {
+            $(this).toggleClass('heart');
+        })
+    </script>
+    
     
     
     
@@ -46,10 +95,47 @@
             transition-duration: time;                                          定义元素过渡时间;
                 transition-duration: 1s;                                        过渡时间为1秒;
                 transition-duration: 500ms;                                     过渡时间为500毫秒;
+                transition-duration: 1s, 2s;                                    奇数属性过渡时间为1s, 偶数过渡时间为2s;
+                transition-duration: 1s, 2s, 3s;                                如果perproty的值多于duration时, duration的值就从前到后排列, 第四个值没有就是第一个值开始;
+                                                                                如果duration的值多于property时, 多出来的duration值不会生效;
+                
+            transition-timing-function: cubic-bezier(startX, startY, endX, endY)    定义过渡过程为贝塞尔曲线;
+                                                                                    cubic-bezier()参数是开始滑动的x,y坐标和结束滑动时的x,y坐标;
+                ease, linear, ease-in, ease-out, ease-in-out;                       系统定义的这几个值;
+                
+                transition-timing-function: steps(3, start);                            分三步走完动画, 开始就走;
+                    等同于
+                transition-timing-function: step-start(3);
 
-
+                transition-timing-function: steps(3, end);                              分三步走完动画, 当第一帧走完才会开始走;
+                    等同于
+                transition-timing-function: step-end(3);
             
+            
+                transition-delay: time;                                                 动画延迟3秒在执行;
+                transition-delay: time1, time2;                                         延迟属性也和duration一样会根据值的多少应用到property上面;
+                                                                                        delay值多了不会生效, delay值少了就会根据property值的顺序进行排列;
 
+
+            过渡属性综合设置, 值顺序如下: 
+            transition: property timing-function duration delay;
+                transition: all linear 2s 200ms;
+                所有属性linear过程呈现时间2s延迟200ms;
+            过渡属性综合每一个设置不同的值:
+            transition: border-radius linear 1s 200ms,
+                        width linear 1s 200ms,
+                        height linear 1s 200ms,
+                        background-color linear 1s 200ms;
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             
         
     </section>
