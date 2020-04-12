@@ -4,18 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.bootcss.com/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/14.C3帧动画animate.css">
 </head>
 <body>
     
+    <!-- <main class="explore">
+        <div></div>
+    </main> -->
     
+    <!-- <main class="square">
+        <div><span></span></div>
+    </main> -->
+    
+    <!-- <main class="heartBox">
+        <div></div>
+    </main> -->
+
+    <!-- <main class="direction">
+        <ul>
+            <li><i class="fa fa-heart"></i><span>normal</span></li>
+            <li><i class="fa fa-heart"></i><span>reverse</span></li>
+            <li><i class="fa fa-heart"></i><span>alternate</span></li>
+            <li><i class="fa fa-heart"></i><span>alternate</span></li>
+        </ul>
+    </main> -->
+    
+    <!-- <main class="ballJump">
+        <main>
+            <div></div>
+            <section></section>
+        </main>
+    </main> -->
+
+    
+    main.
     
     
     
     
     <section style="display: none;">
-        
+        animate 帧动画使用@keyframes定义每一帧, 形式如下两种;
+            方式一:
+                @keyframes  name {
+                    from{
+                        
+                    }
+                    to{
+                        
+                    }
+                }
+            方式二: 
+                @keyframes  name {
+                    0%{
+                        
+                    }
+                    25%{
+                        
+                    }
+                    50%{
+                    }
+                    75%{
 
+                    }
+                    100%{
+                        
+                    }
+
+                    25%,75%{
+                        25和75有相同的操作和一这样写入, 以上的样式不会被覆盖;
+                    }
+                }
+
+            之前在过渡中有些属性是不会产生过渡效果, 那么动画一样有些属性也是不会有动画效果的;
+            没有中间值的属性是没有效果的: 比如width: auto; 但 widht: 100px;这种具体数值会有属性;
+            
+                
+        animate:
+            
+            animation-name: name,name,name;                                             一个元素可以应用多个帧动画;
+
+            animation-delay:  time;                                                     规定延迟执行时间;
+
+                                                                                        如果在帧动画中的多个动画有属性重叠时,那个动画在后,就会应用哪个, 会覆盖前面的帧动画;
+            animation-duration: 1s, 2s, 3s;                                             值多少的规则会应用哪一个和transition同理;
+
+            animation-fill-mode: forwards;                                              规定动画最后一帧回到初始状态状态的操作;
+                                                                                        fill-mode 由 animation-iteration-count  这个属性决定
+            
+            animation-iteration-count: infinite;                                               规定动画的执行次数;
+                                                                                        应用多个动画时, 规则不变; 值对应animation-name的值以此往背后排列;
+            animation-direction: normal;                                                规定动画从0到100%执行一次;
+            animation-direction: reverse;                                               规定动画从100%到0%执行一次;
+            animation-direciton: alternate;                                             先从0%到100%执行一次动画, 然后在从100%到0%执行一次;
+            animation-direciton: alternate-reverse;                                     先从100%到0%执行一次动画, 然后在从0%到100%执行一次;
+            
+            
+            
+                
+                
+        
     </section>
 </body>
 </html>
