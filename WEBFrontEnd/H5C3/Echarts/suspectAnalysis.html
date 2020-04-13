@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./suspectAnalysis.css">
+    <link rel="stylesheet" href="./font-awesome.min.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- 嫌疑人专题分析 -->
+        <div class="thematic">
+            <div class="thematic_title clear">
+                <h3>
+                    <!-- <i class="fa fa-camera-retro"></i> -->
+                    犯罪嫌疑人专题分析</h3>
+                <div>
+                    <select name="" id="">
+                        <option value="">甘肃省</option>
+                    </select>
+
+                    <select name="" id="">
+                        <option value="">2020年</option>
+                    </select>
+                </div>
+            </div>
+            <div class="thematic_main clear">
+                <p class="clear">截止到2020年二月份, 甘肃省全省案件<span>23455</span>件, 犯罪嫌疑人<span>23945</span>人,其中:
+                    提请逮捕<span>7666</span>人,
+                    移送起诉<span>4578</span>人,
+                    提起公诉<span>3998</span>人,
+                    提起抗诉<span>124</span>人,
+                    上诉<span>88</span>人,
+                    发回重审<span>111</span>人,<br/>
+                    再审<span>101</span>人,
+                    社区矫正<span>432</span>人,
+                    减刑<span>99</span>人,
+                    看守所假释<span>88</span>人,
+                    限制出境<span>77</span>人,
+                </p>
+            </div>
+        </div>
+
+
+        
+        <!-- 嫌疑人趋势分析 -->
+        <div class="trendAnaly clear">
+            <div class="trendAnaly_title">犯罪嫌疑人趋势分析</div>
+            <div class="trendAnaly_main" id="trendAnalyBox" style="width: 100%;height:300px;"></div>
+        </div>
+        
+        
+        <!-- 犯罪现嫌疑人文化程度分析和涉案罪名分析 -->
+        <div class="cultureAndCrimes">
+            <div class="cultureAndCrimes_title">
+                <div class="cultureAnaly_title" style="display: inline-block;">犯罪嫌疑人文化程度分析</div>
+                <div class="crimesAnaly_title" style="display: inline-block;">犯罪嫌疑人涉案罪名分析</div>
+            </div>
+            <div class="cultureAndCrimes_main">
+                <div class="cultureAnaly_main" id="cultureAnalyBox" style="width: 49%;height:300px;display: inline-block;"></div>
+                <div class="crimesAnaly_main" id="crimesAnalyBox" style="width: 49%;height:300px;display: inline-block;"></div>
+            </div>
+        </div>
+        
+
+
+        <!-- 犯罪嫌疑人年龄公布和各地区嫌疑人数量top5 -->
+        <div class="ageAndTop5Analy">
+            <div class="ageAndTop5Analy_title">
+                <div class="ageAnaly_title" style="display: inline-block;">犯罪嫌疑人年龄公布</div>
+                <div class="top5Analy_title" style="display: inline-block;">各地区犯罪嫌疑人数量top5</div>
+            </div>
+            <div class="ageAndTop5Analy_main">
+                <div class="ageAnaly_main" id="ageAnalyBox" style="width: 50%;height:300px;display: inline-block;"></div>
+                <div class="top5Analy_main" id="top5AnalyBox" style="width: 49%;height:300px;display: inline-block;"></div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <script src="./jquery.min.js"></script>
+    <script src="./echarts.min.js"></script>
+    <script src="./highcharts.js"></script>
+    <script src="./highcharts-3d.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            // 嫌疑人趋势分析
+            trendAnaly('trendAnalyBox');
+
+            // 嫌疑人文化程度分析
+            cultureAnaly('cultureAnalyBox');
+
+            // 嫌疑人涉案罪名分析
+            crimesAnaly('crimesAnalyBox');
+
+            // 嫌疑人年龄分布
+            ageAnaly('ageAnalyBox');
+
+            // 地区嫌疑人数量top5
+            top5Analy('top5AnalyBox');
+        })
+
+
+        // 嫌疑人趋势分析
+        function trendAnaly(idname) {
+            var myChart = echarts.init(document.getElementById(idname));
+
+            var option = {
+                // backgroundColor: '#FBFBFB',
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {},
+                calculable: true,
+                xAxis: [{
+                    axisLabel: {
+                        // rotate: 30,
+                        interval: 0
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#000'
+                        }
+                    },
+                    type: 'category',
+                    // boundaryGap : false,
+                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+                }],
+                yAxis: [{
+                    type: 'value',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#000'
+                        }
+                    },
+                    min: 0,
+                    max: 700,
+                    interval: 100
+                }],
+                series: [{
+                        name: '报捕嫌疑人数',
+                        type: 'line',
+                        // symbol:'none',
+                        // smooth: 0.2,
+                        color: ['#4f81bd'],
+                        data: [300, 600, 210, 310, 330, 520, 330, 200, 540, 310, 310, 510]
+                    },
+                    {
+                        name: '报诉嫌疑人数',
+                        type: 'line',
+                        // symbol:'none',
+                        // smooth: 0.2,
+                        color: ['#c0504d'],
+                        data: [340, 430, 190, 290, 280, 380, 410, 295, 305, 370, 200, 340]
+                    }
+                ]
+            };
+
+            myChart.setOption(option);
+        }
+
+
+        // 嫌疑人文化程度分析
+        function cultureAnaly(idname) {
+
+            var myChart = echarts.init(document.getElementById(idname));
+
+            var option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b}: {c} ({d}%)'
+                },
+                legend: {
+                    orient: 'vertical',
+                    right: 60,
+                    top: 80,
+                    // data: ['文盲', '小学', '初中', '高中', '大学']
+                },
+                series: [{
+                    name: '文化程度',
+                    type: 'pie',
+                    radius: ['40%', '90%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center',
+                            formatter: '{b}\n({d}%)',
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }
+
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [{
+                            value: 23,
+                            name: '文盲',
+                        },
+                        {
+                            value: 38,
+                            name: '小学'
+                        },
+                        {
+                            value: 13,
+                            name: '初中'
+                        },
+                        {
+                            value: 18,
+                            name: '高中'
+                        },
+                        {
+                            value: 8,
+                            name: '大学'
+                        }
+                    ]
+                }],
+                color: ['#4bacc6', '#4f81bd', '#c0504d', '#9bbb59', '#8064a2']
+            };
+
+            myChart.setOption(option);
+
+        }
+
+
+        // 嫌疑人涉案罪名分析
+        function crimesAnaly(idname) {
+            var chart = Highcharts.chart(idname, {
+                
+                chart: {
+                    backgroundColor: 'transparent',
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45,
+                        beta: 0
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                title: {
+                    text: null
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        depth: 50,
+                        showInLegend: true,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.name}'
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: '浏览器占比',
+                    data: [
+                        ['强奸罪', 6],
+                        ['危险驾驶罪', 19],
+                        {
+                            name: '盗窃罪',
+                            y: 14,
+                            // sliced: true,
+                            // selected: true
+                        },
+                        ['故意伤害罪', 11],
+                        ['故意杀人罪', 5],
+                        ['非法经营罪', 9],
+                        ['诈骗罪', 11],
+                        ['寻衅滋事罪', 11],
+                        ['交通肇事罪', 10],
+                        ['妨碍公务罪', 4]
+                    ]
+                }]
+            });
+        }
+
+
+        // 嫌疑人年龄分布
+        function ageAnaly(idname) {
+            var myChart = echarts.init(document.getElementById(idname));
+
+            var option = {
+                title: {},
+                tooltip: {},
+                legend: {},
+                xAxis: {
+                    data: ["16-35", "25-35", "35-45", "45-55", "55-65", "65及以上"],
+                },
+                yAxis: {
+                    type: 'value',
+                    min: 0,
+                    max: 1000,
+                    interval: 200
+                },
+                series: [{
+                    type: 'bar',
+                    barWidth: 25,
+                    data: [989, 220, 520, 620, 430, 320],
+                    color: '#4f81bd',
+                }]
+            };
+            myChart.setOption(option);
+        }
+
+
+        // 地区嫌疑人数量top5
+        function top5Analy(idname) {
+            var myChart = echarts.init(document.getElementById(idname));
+
+            var option = {
+                title: {},
+                tooltip: {},
+                legend: {},
+                xAxis: {
+                    data: ['兰州市', '天水市', '张掖市', '庆阳市', '定西市'],
+                },
+                yAxis: {
+                    type: 'value',
+                    min: 0,
+                    max: 2500,
+                    interval: 500
+                },
+                series: [{
+                    type: 'bar',
+                    barWidth: 25,
+                    data: [2000, 1500, 1400, 1250, 900],
+                    color: '#4f81bd',
+                }]
+            };
+            myChart.setOption(option);
+        }
+    </script>
+</body>
+
+</html>

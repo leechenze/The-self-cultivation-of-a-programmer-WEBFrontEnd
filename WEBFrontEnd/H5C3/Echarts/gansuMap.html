@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>甘肃省地图</title>
+
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script src="./echarts.min.js"></script>
+    <script src="./echarts-gl.min.js"></script>
+</head>
+
+<body>
+    <!-- 地图容器 -->
+
+    <div id="gansu_map" style="width: 100%; height: 800px; border: 1px solid #000; background-color: #000;"></div>
+
+    <script>
+        var gansu_map = echarts.init(document.getElementById("gansu_map"), 'infographic');
+
+
+        // function randomData() {
+        //     return Math.round(Math.random() * 500);
+        // }
+
+        var mydata = [{
+                name: '白银市',
+                // value: randomData()
+            }, {
+                name: '定西市',
+                // value: randomData()
+            },
+            {
+                name: '甘南藏族自治州',
+                // value: randomData()
+            }, {
+                name: '嘉峪关市',
+                // value: randomData()
+            },
+            {
+                name: '金昌市',
+                // value: randomData()
+            }, {
+                name: '酒泉市',
+                // value: randomData()
+            },
+            {
+                name: '兰州市',
+                // value: randomData()
+            }, {
+                name: '临夏回族自治州',
+                // value: randomData()
+            },
+            {
+                name: '陇南市',
+                // value: randomData()
+            }, {
+                name: '平凉市',
+                // value: randomData()
+            },
+            {
+                name: '庆阳市',
+                // value: randomData()
+            }, {
+                name: '天水市',
+                // value: randomData()
+            },
+            {
+                name: '武威市',
+                // value: randomData()
+            }, {
+                name: '张掖市',
+                // value: randomData()
+            }
+        ];
+
+
+
+        $.get('./map/json/province/gansu.json', function (geoJson) {
+            gansu_map.hideLoading();
+
+            echarts.registerMap('gansu', geoJson);
+            option = {
+                title: {
+                    text: '犯罪人口来源分析',
+                    textStyle: {
+                        color: '#fff'
+                    },
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                visualMap: {
+                    show: false,
+                    x: 'left',
+                    y: 'bottom',
+                    splitList: [{
+                            start: 500,
+                            end: 600
+                        }, {
+                            start: 400,
+                            end: 500
+                        },
+                        {
+                            start: 300,
+                            end: 400
+                        }, {
+                            start: 200,
+                            end: 300
+                        },
+                        {
+                            start: 100,
+                            end: 200
+                        }, {
+                            start: 0,
+                            end: 100
+                        },
+                    ],
+                    // inRange: {
+                    //     color: ['lightskyblue', 'yellow', 'orangered']
+                    // }
+                },
+                series: [{
+                    name: '犯罪人口来源分析',
+                    type: 'map',
+                    // mapType: '甘肃',
+                    map: 'gansu',
+                    top: '20%',
+                    left: '25%',
+                    roam: true,
+                    label: {
+                        normal: {
+                            show: true
+                        },
+                        emphasis: {
+                            show: false
+                        }
+                    },
+                    itemStyle: {
+                        normal: { //未选中状态
+                            borderWidth: 2, //边框大小
+                            borderColor: '#496b88',
+                            areaColor: '#3f617c', //背景颜色
+                            label: {
+                                show: true //显示名称
+                            }
+                        },
+                        emphasis: { // 也是选中样式
+                            borderWidth: 2,
+                            borderColor: '#496b88',
+                            areaColor: '#142437',
+                            label: {
+                                show: true,
+                                textStyle: {
+                                    color: '#fff'
+                                }
+                            }
+                        }
+                    },
+                    zoom: 0.8,
+                    data: mydata
+                }]
+            };
+
+            gansu_map.setOption(option);
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // var option = {
+
+        //     title: {
+        //         text: '犯罪人口来源分析',
+        //         textStyle: {
+        //             color: '#fff'
+        //         },
+        //         x: 'center'
+        //     },
+        //     tooltip: {
+        //         trigger: 'item'
+        //     },
+        //     visualMap: {
+        //         show: false,
+        //         x: 'left',
+        //         y: 'bottom',
+        //         splitList: [{
+        //                 start: 500,
+        //                 end: 600
+        //             }, {
+        //                 start: 400,
+        //                 end: 500
+        //             },
+        //             {
+        //                 start: 300,
+        //                 end: 400
+        //             }, {
+        //                 start: 200,
+        //                 end: 300
+        //             },
+        //             {
+        //                 start: 100,
+        //                 end: 200
+        //             }, {
+        //                 start: 0,
+        //                 end: 100
+        //             },
+        //         ],
+        //         inRange: {
+        //             color: ['lightskyblue', 'yellow', 'orangered']
+        //         }
+        //     },
+        //     series: [{
+        //         name: '犯罪人口来源分析',
+        //         type: 'map',
+        //         mapType: '甘肃',
+        //         top: '20%',
+        //         left: '25%',
+        //         roam: true,
+        //         label: {
+        //             normal: {
+        //                 show: true
+        //             },
+        //             emphasis: {
+        //                 show: false
+        //             }
+        //         },
+        //         zoom: 0.8,
+        //         data: mydata
+        //     }]
+        // };
+
+        // gansu_map.setOption(option);
+
+
+
+
+
+
+
+
+
+
+
+
+        // 处理点击事件并且跳转到相应的百度搜索页面
+        gansu_map.on('click', function (params) {
+
+            var subSystem = params.name;
+
+            // 根据点击地图区域的名称,跳转到对应页面
+            if (subSystem == '德江县') {
+                console.log(subSystem);
+            } else if (subSystem == '思南县') {
+                console.log(subSystem);
+            } else if (subSystem == '江口县') {
+                console.log(subSystem);
+            } else if (subSystem == '沿河土家自治县') {
+                console.log(subSystem);
+            } else if (subSystem == '万山区') {
+                console.log(subSystem);
+            } else if (subSystem == '碧江区') {
+                console.log(subSystem);
+            } else if (subSystem == '石阡县') {
+                console.log(subSystem);
+            } else if (subSystem == '玉屏侗族自治县') {
+                console.log(subSystem);
+            } else if (subSystem == '松桃苗族自治县') {
+                console.log(subSystem);
+            } else if (subSystem == '印江土家族苗族自治县') {
+                console.log(subSystem);
+            }
+        });
+    </script>
+</body>
+
+</html>

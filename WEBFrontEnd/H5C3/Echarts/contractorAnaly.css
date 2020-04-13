@@ -1,0 +1,372 @@
+/* baseCss */
+
+@charset "utf-8";
+
+/* CSS Document */
+
+body,
+ul,
+ol,
+dl,
+li,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+input {
+    margin: 0
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    /*font-size: 100%;*/
+    font-weight: normal;
+    font-family: "Microsoft YaHei";
+}
+
+img {
+    border: none
+}
+
+input,
+button,
+textarea,
+select {
+    *font-size: 100%;
+    border: none;
+}
+
+body {
+    /*background: #fff;*/
+    color: #5e5e5e;
+    font: 14px/24px Microsoft YaHei, SimSun, Arial;
+}
+
+ul,
+ol {
+    list-style: none;
+    padding: 0
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+
+/*默认a标签样式*/
+
+a:link,
+a:visited {
+    color: #5e5e5e;
+    text-decoration: none;
+}
+
+a:hover {
+    /*color:#999;*/
+}
+
+a:hover {
+    color: #c9394a;
+    /*text-decoration: underline;*/
+}
+
+a:active {
+    color: #666;
+}
+
+
+/*浮动和清除浮动*/
+
+.fl {
+    float: left
+}
+
+.fr {
+    float: right
+}
+
+.clear {
+    zoom: 1;
+    white-space: nowrap;
+    width: auto;
+}
+
+.clear:after {
+    content: "";
+    display: block;
+    height: 0;
+    visibility: visible;
+    clear: both
+}
+
+
+/*显示隐藏*/
+
+.hide {
+    display: none
+}
+
+.show {
+    display: block
+}
+
+
+/*表格table和td有边框*/
+
+.boder_tl {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+}
+
+.boder_tl td {
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+.boder_bl {
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+}
+
+.boder_bl td {
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+.boder_tr {
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+.boder_tr td {
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+}
+
+.boder_br {
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+.boder_br td {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+}
+
+.txt_center {
+    text-align: center;
+}
+
+
+/*表格table和tr有边框*/
+
+.boder_ltr_trborder {
+    border: 1px solid #ccc;
+    border-bottom: none;
+}
+
+.boder_ltr_trborder tr {
+    border-bottom: 1px solid #ccc;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 承办人页面 */
+div.wrapper {
+    margin: 0;
+    padding: 0;
+    background-color: #162440;
+    color: #fff;
+    /* margin-top: 10px; */
+}
+
+
+/* 承办人专题分析 */
+div.thematic {}
+
+div.thematic div.thematic_title {}
+
+div.thematic div.thematic_title h3 {
+    font-size: 16px;
+    font-family: 'microsoft yahei';
+    font-weight: bolder;
+    float: left;
+    height: 45px;
+    line-height: 45px;
+    margin-left: 20px;
+    background-image: url(./images/box_title.png);
+    background-size: 100% 99%;
+    background-position: 0px 1px;
+    padding: 0 20px;
+}
+
+div.thematic div.thematic_title div {
+    float: right;
+    margin: 10px;
+    margin-right: 20px;
+}
+
+div.thematic div.thematic_title div select {
+    background-color: transparent;
+    color: #0595eb;
+    border: 3px solid #0595eb;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+div.thematic div.thematic_main {
+    border: 2px solid #0595eb;
+    border-radius: 10px;
+    margin: 20px;
+    margin-top: 0;
+    padding: 10px;
+    padding-top: 5px;
+}
+
+div.thematic div.thematic_main p {
+    font-size: 18px;
+    line-height: 30px;
+    text-indent: 2em;
+}
+
+
+
+/* 承办人执法质量分析 */
+div.qualityAnaly {
+    padding: 20px;
+}
+
+div.qualityAnaly div.qualityAnaly_title {
+    font-size: 16px;
+    font-family: 'microsoft yahei';
+    font-weight: bolder;
+    height: 45px;
+    line-height: 45px;
+    background-image: url(./images/title_bg01.png);
+    background-size: 15% 100%;
+    background-repeat: no-repeat;
+    margin-bottom: 20px;
+    padding-left: 50px;
+}
+
+div.qualityAnaly div.qualityAnaly_main {
+    background-image: url(./images/border_bg01.png);
+    background-size: 102% 106%;
+    background-position: -15px -8px;
+
+}
+
+
+
+
+/* 承办人执法规范分析 */
+div.standardAnaly {
+    padding: 20px;
+}
+
+div.standardAnaly div.standardAnaly_title {
+    font-size: 16px;
+    font-family: 'microsoft yahei';
+    font-weight: bolder;
+    height: 45px;
+    line-height: 45px;
+    background-image: url(./images/title_bg01.png);
+    background-size: 15% 100%;
+    background-repeat: no-repeat;
+    margin-bottom: 20px;
+    padding-left: 50px;
+}
+
+div.standardAnaly div.standardAnaly_main {
+    background-image: url(./images/border_bg01.png);
+    background-size: 102% 106%;
+    background-position: -15px -8px;
+
+}
+
+
+
+
+
+
+
+/* 承办人文化程度分析和涉案罪名分析 */
+div.workloadAnaly{
+    padding: 20px;
+}
+div.workloadAnaly div.workloadAnaly_title{
+    font-size: 16px;
+    font-family: 'microsoft yahei';
+    font-weight: bolder;
+    height: 45px;
+    line-height: 45px;
+    background-image: url(./images/title_bg01.png);
+    background-size: 15% 100%;
+    background-repeat: no-repeat;
+    margin-bottom: 20px;
+    padding-left: 50px;
+}
+
+
+
+
+div.workloadAnaly div.workloadAnaly_main{
+    
+}
+div.workloadAnaly div.workloadAnaly_main .numCase_main{
+    background-image: url(./images/border_bg01.png);
+    background-size: 102% 106%;
+    background-position: -8px -8px;
+}
+
+div.workloadAnaly div.workloadAnaly_main .perCapitaCase_main{
+    background-image: url(./images/border_bg01.png);
+    background-size: 102% 106%;
+    background-position: -8px -8px;
+    margin-left: 1.5%;
+}
+
+
+

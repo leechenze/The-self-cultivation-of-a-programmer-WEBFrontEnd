@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./contractorAnaly.css">
+    <link rel="stylesheet" href="./font-awesome.min.css">
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <!-- 嫌疑人专题分析 -->
+        <div class="thematic">
+            <div class="thematic_title clear">
+                <h3>
+                    <!-- <i class="fa fa-camera-retro"></i> -->
+                    承办人专题分析</h3>
+                <div>
+                    <select name="" id="">
+                        <option value="">甘肃省</option>
+                    </select>
+
+                    <select name="" id="">
+                        <option value="">2020年</option>
+                    </select>
+                </div>
+            </div>
+            <div class="thematic_main clear">
+                <p class="clear">截止到2020年二月份, 甘肃省全省案件<span>23455</span>件, 案件承办人<span>23945</span>人,其中:
+                    案由变化案件<span>7666</span>人,
+                    退回侦查案件<span>4578</span>人,
+                    超期办理案件数<span>3998</span>人,
+                    纠违通知案件<span>124</span>人,<br />
+                    案件评查<span>88</span>人,
+                    公安机关承办案件<span>111</span>人,
+                    公安机关人均办案数量<span>101</span>人,
+                    检察机关承办案件<span>432</span>人,
+                    检察机关人均办案数量<span>99</span>人,
+                    法院承办案件<span>88</span>人,
+                    法院人均办案数量<span>77</span>人,
+                </p>
+            </div>
+        </div>
+
+
+
+        <!-- 承办人执法质量分析 -->
+        <div class="qualityAnaly clear">
+            <div class="qualityAnaly_title">承办人执法质量分析</div>
+            <div class="qualityAnaly_main" id="qualityAnalyBox" style="width: 100%;height:300px;"></div>
+        </div>
+
+
+
+
+        <!-- 承办人执法规范分析 -->
+        <div class="standardAnaly clear">
+            <div class="standardAnaly_title">承办人执法质量分析</div>
+            <div class="standardAnaly_main" id="specAnalyBox" style="width: 100%;height:300px;"></div>
+        </div>
+
+
+
+
+        <!-- 承办人工作量分析 -->
+        <div class="workloadAnaly">
+            <!-- 承办案件数量 -->
+            <div class="workloadAnaly_title">
+                承办人工作量分析
+            </div>
+            <!-- 人均办案数量 -->
+            <div class="workloadAnaly_main">
+                <div class="numCase_main" id="quantityBox" style="width: 49%;height:350px;display: inline-block;">
+                </div>
+                <div class="perCapitaCase_main" id="capitaBox" style="width: 49%;height:350px;display: inline-block;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="./jquery.min.js"></script>
+    <script src="./echarts.min.js"></script>
+    <script src="./highcharts.js"></script>
+    <script src="./highcharts-3d.js"></script>
+    <script>
+        $(function () {
+            // 承办人执法质量分析;
+            qualityAnaly('qualityAnalyBox');
+
+            // 承办人执法规范分析
+            specAnaly('specAnalyBox');
+
+            // 承办人工作量分析;
+            // 承办案件数量
+            workloadAnaly('quantityBox');
+            // 人均办案数量
+            workloadAnaly('capitaBox');
+
+
+
+        })
+
+
+        // 承办人执法质量分析;
+        function qualityAnaly(idname) {
+
+            var myChart = echarts.init(document.getElementById(idname));
+
+            var option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                legend: {},
+                dataset: {
+                    dimensions: ['product', '案由变化数量', '退回补充侦查案件数量'],
+                    source: [{
+                        product: '兰州市',
+                        '案由变化数量': 300,
+                        '退回补充侦查案件数量': 123,
+                    }, {
+                        product: '嘉峪关市',
+                        '案由变化数量': 586,
+                        '退回补充侦查案件数量': 253,
+                    }, {
+                        product: '金昌市',
+                        '案由变化数量': 235,
+                        '退回补充侦查案件数量': 156,
+                    }, {
+                        product: '白银市',
+                        '案由变化数量': 333,
+                        '退回补充侦查案件数量': 201,
+                    }, {
+                        product: '天水市',
+                        '案由变化数量': 345,
+                        '退回补充侦查案件数量': 237,
+                    }, {
+                        product: '武威市',
+                        '案由变化数量': 456,
+                        '退回补充侦查案件数量': 158,
+                    }, {
+                        product: '张掖市',
+                        '案由变化数量': 543,
+                        '退回补充侦查案件数量': 126,
+                    }, {
+                        product: '酒泉市',
+                        '案由变化数量': 344,
+                        '退回补充侦查案件数量': 167,
+                    }, {
+                        product: '庆阳市',
+                        '案由变化数量': 568,
+                        '退回补充侦查案件数量': 108,
+                    }, {
+                        product: '定西市',
+                        '案由变化数量': 385,
+                        '退回补充侦查案件数量': 168,
+                    }, {
+                        product: '陇南市',
+                        '案由变化数量': 322,
+                        '退回补充侦查案件数量': 107,
+                    }, {
+                        product: '临夏回族自治区',
+                        '案由变化数量': 512,
+                        '退回补充侦查案件数量': 96,
+                    }, {
+                        product: '甘南藏族自治区',
+                        '案由变化数量': 320,
+                        '退回补充侦查案件数量': 68,
+                    }]
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['兰州市', '嘉峪关市', '金昌市', '白银市', '天水市', '武威市', '张掖市', '酒泉市', '庆阳市', '定西市', '陇南市', '临夏回族自治区',
+                        '甘南藏族自治区'
+                    ],
+                    axisLabel: {
+                        interval: 0,
+                        rotate: 40
+                    }
+                },
+                yAxis: [{
+                    type: 'value',
+                    min: 0,
+                    max: 700,
+                    interval: 100
+                }],
+                // grid: {
+                //     // 防止标签溢出
+                //     containLabel: true
+                // },
+                // Declare several bar series, each will be mapped
+                // to a column of dataset.source by default.
+                series: [{
+                    type: 'bar',
+                    barWidth: 30,
+                    itemStyle: {
+                        color: '#000',
+                        normal: {
+                            label: {
+                                show: true, //开启显示
+                                position: 'top', //在上方显示
+                                textStyle: { //数值样式
+                                    color: 'black',
+                                    fontSize: 16
+                                }
+                            },
+                            color: '#4f81bd'
+                        }
+                    }
+                }, {
+                    type: 'bar',
+                    barWidth: 30,
+                    itemStyle: {
+                        normal: {
+                            label: {
+                                show: true, //开启显示
+                                position: 'top', //在上方显示
+                                textStyle: { //数值样式
+                                    color: 'black',
+                                    fontSize: 16
+                                }
+                            },
+                            color: '#c0504d'
+                        }
+                    }
+                }],
+            };
+
+            myChart.setOption(option);
+        }
+
+
+
+        // 承办人执法规范分析;
+        function specAnaly(idname) {
+            var myChart = echarts.init(document.getElementById(idname));
+            var option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                legend: {},
+                dataset: {
+                    dimensions: ['product', '超期办理案件数', '纠违通知案件数', '案评查数量'],
+                    source: [{
+                        product: '兰州市',
+                        '超期办理案件数': 300,
+                        '纠违通知案件数': 123,
+                        '案评查数量': 192
+                    }, {
+                        product: '嘉峪关市',
+                        '超期办理案件数': 586,
+                        '纠违通知案件数': 253,
+                        '案评查数量': 192
+                    }, {
+                        product: '金昌市',
+                        '超期办理案件数': 235,
+                        '纠违通知案件数': 156,
+                        '案评查数量': 192
+                    }, {
+                        product: '白银市',
+                        '超期办理案件数': 333,
+                        '纠违通知案件数': 201,
+                        '案评查数量': 192
+                    }, {
+                        product: '天水市',
+                        '超期办理案件数': 345,
+                        '纠违通知案件数': 237,
+                        '案评查数量': 192
+                    }, {
+                        product: '武威市',
+                        '超期办理案件数': 456,
+                        '纠违通知案件数': 158,
+                        '案评查数量': 192
+                    }, {
+                        product: '张掖市',
+                        '超期办理案件数': 543,
+                        '纠违通知案件数': 126,
+                        '案评查数量': 192
+                    }, {
+                        product: '酒泉市',
+                        '超期办理案件数': 344,
+                        '纠违通知案件数': 167,
+                        '案评查数量': 192
+                    }, {
+                        product: '庆阳市',
+                        '超期办理案件数': 568,
+                        '纠违通知案件数': 108,
+                        '案评查数量': 192
+                    }, {
+                        product: '定西市',
+                        '超期办理案件数': 385,
+                        '纠违通知案件数': 168,
+                        '案评查数量': 192
+                    }, {
+                        product: '陇南市',
+                        '超期办理案件数': 322,
+                        '纠违通知案件数': 107,
+                        '案评查数量': 192
+                    }, {
+                        product: '临夏回族自治区',
+                        '超期办理案件数': 512,
+                        '纠违通知案件数': 96,
+                        '案评查数量': 192
+                    }, {
+                        product: '甘南藏族自治区',
+                        '超期办理案件数': 320,
+                        '纠违通知案件数': 68,
+                        '案评查数量': 192
+                    }]
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['兰州市', '嘉峪关市', '金昌市', '白银市', '天水市', '武威市', '张掖市', '酒泉市', '庆阳市', '定西市', '陇南市', '临夏回族自治区',
+                        '甘南藏族自治区'
+                    ],
+                    axisLabel: {
+                        interval: 0,
+                        rotate: 40
+                    }
+                },
+                yAxis: [{
+                    type: 'value',
+                    min: 0,
+                    max: 700,
+                    interval: 100
+                }],
+                // grid: {
+                //     // 防止标签溢出
+                //     containLabel: true
+                // },
+                // Declare several bar series, each will be mapped
+                // to a column of dataset.source by default.
+                series: [{
+                    type: 'bar',
+                    barWidth: 20,
+                    itemStyle: {
+                        color: '#000',
+                        normal: {
+                            label: {
+                                show: true, //开启显示
+                                position: 'top', //在上方显示
+                                textStyle: { //数值样式
+                                    color: 'black',
+                                    fontSize: 16
+                                }
+                            },
+                            color: '#4f81bd'
+                        }
+                    }
+                }, {
+                    type: 'bar',
+                    barWidth: 20,
+                    itemStyle: {
+                        normal: {
+                            label: {
+                                show: true, //开启显示
+                                position: 'top', //在上方显示
+                                textStyle: { //数值样式
+                                    color: 'black',
+                                    fontSize: 16
+                                }
+                            },
+                            color: '#c0504d'
+                        }
+                    }
+                }, {
+                    type: 'bar',
+                    barWidth: 20,
+                    itemStyle: {
+                        normal: {
+                            label: {
+                                show: true, //开启显示
+                                position: 'top', //在上方显示
+                                textStyle: { //数值样式
+                                    color: 'black',
+                                    fontSize: 16
+                                }
+                            },
+                            color: '#9bbb59'
+                        }
+                    }
+                }],
+            };
+
+            myChart.setOption(option);
+        }
+
+
+
+        // 承办人工作量分析;
+        function workloadAnaly(idname) {
+            var myChart = echarts.init(document.getElementById(idname)),
+                option = null;
+            if (idname == 'quantityBox') {
+                option = {
+                    title: {
+                        text: '承办案件数量'
+                    },
+                    tooltip: {},
+                    legend: {},
+                    xAxis: {
+                        data: ['兰州市', '嘉峪关市', '金昌市', '白银市', '天水市', '武威市', '张掖市', '酒泉市', '庆阳市', '定西市', '陇南市',
+                            '临夏回族自治区',
+                            '甘南藏族自治区'
+                        ],
+                        axisLabel: {
+                            interval: 0,
+                            rotate: 40
+                        }
+                    },
+                    // grid: {
+                    //     // 防止标签溢出
+                    //     containLabel: true
+                    // },
+                    yAxis: {
+                        type: 'value',
+                        min: 0,
+                        max: 2000,
+                        interval: 500
+                    },
+                    series: [{
+                        type: 'bar',
+                        barWidth: 20,
+                        data: [1993, 1300, 1823, 1345, 1453, 1123, 1789, 1298, 1530, 1602, 2000, 1456,
+                            1900
+                        ],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: true, //开启显示
+                                    position: 'top', //在上方显示
+                                    textStyle: { //数值样式
+                                        color: 'black',
+                                        fontSize: 12
+                                    }
+                                },
+                                color: '#4f81bd'
+                            }
+                        }
+                    }]
+                };
+            } else {
+                option = {
+                    title: {
+                        text: '人均办案数量'
+                    },
+                    tooltip: {},
+                    legend: {},
+                    xAxis: {
+                        type: 'value',
+                        min: 0,
+                        max: 70,
+                        interval: 10
+                    },
+                    // grid: {
+                    //     // 防止标签溢出
+                    //     containLabel: true
+                    // },
+                    yAxis: {
+                        data: ['兰州市', '嘉峪关市', '金昌市', '白银市', '天水市', '武威市', '张掖市', '酒泉市', '庆阳市', '定西市', '陇南市',
+                            '临夏回族自治区',
+                            '甘南藏族自治区'
+                        ],
+                        axisLabel: {
+                            interval: 0,
+                            rotate: 40
+                        }
+                    },
+                    series: [{
+                        type: 'bar',
+                        barWidth: 10,
+                        data: [65, 21, 52, 39, 35, 34, 29, 38, 35, 32, 45, 31, 22],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: true, //开启显示
+                                    position: 'right', //在上方显示
+                                    textStyle: { //数值样式
+                                        color: 'black',
+                                        fontSize: 12
+                                    }
+                                },
+                                color: '#4f81bd'
+                            }
+                        }
+                    }]
+                };
+            }
+
+            myChart.setOption(option);
+
+
+
+        }
+    </script>
+</body>
+
+</html>

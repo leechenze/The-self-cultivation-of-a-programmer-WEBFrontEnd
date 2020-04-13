@@ -446,6 +446,9 @@
                 绘制三行, 第一行占比1份, 第二行占两份, 第三行占三份;
             grid-template-rows: repeat(2, minmax(50, 100px));
                 绘制两行, 每一行的最小值为50px, 最大值为100px;
+                简写为:
+            grid-template:  row/columns;
+                
             grid-row-gap: 10px;                 简写为: row-gap;
                 每行的间距为10px;
             grid-columns-gap: 10px;             简写为: columns-gap;

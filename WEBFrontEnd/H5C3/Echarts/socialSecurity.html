@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./socialSecurity.css">
+    <link rel="stylesheet" href="./font-awesome.min.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- 社会治安形势专题分析 -->
+        <div class="thematic">
+            <div class="thematic_title clear">
+                <h3>
+                    <!-- <i class="fa fa-camera-retro"></i> -->
+                    社会治安形势专题分析</h3>
+                <div>
+                    <select name="" id="">
+                        <option value="">甘肃省</option>
+                    </select>
+
+                    <select name="" id="">
+                        <option value="">2020年</option>
+                    </select>
+                </div>
+            </div>
+            <div class="thematic_main clear">
+                <p class="clear">截止到2020年二月份, 甘肃省全省案件<span>23455</span>件, 犯罪嫌疑人<span>23945</span>人,其中:
+                    常见的10类案件中占全部案件的38%,嫌疑人占比36%;<br>
+                    刑事案件侦破过程中,破案后未起诉案件<span>231</span>件;
+                    长期未破案件<span>421</span>人,
+                    在对犯罪嫌疑人管理时, 需要对惯犯<span>401</span>人,
+                    涉及团伙犯罪<span>364</span>人,
+                    无业人员<span>601</span>人,<br>
+                    狱内加刑人员<span>321</span>人等共计1687人进行重点关注,
+                    做好犯罪防御工作; 通过对案发信息进行综合分析, 城区和城镇案发概率高,
+                    16:00-24:00案发概率高;
+                </p>
+            </div>
+        </div>
+
+
+
+
+        <!-- 刑事案件趋势分析 -->
+        <div class="trendAnaly clear">
+            <div class="trendAnaly_title">刑事案件趋势分析</div>
+            <div class="trendAnaly_main" id="trendAnalyBox" style="width: 100%;height:300px;"></div>
+        </div>
+
+
+        <!-- 刑事案件侦破和犯罪预防分析 -->
+        <div class="detectAndDefense">
+            <div class="detectAndDefense_title">
+                <div class="detectAnaly_title" style="display: inline-block;">刑事案件侦破分析</div>
+                <div class="defenseAnaly_title" style="display: inline-block;">犯罪预防分析</div>
+            </div>
+            <div class="detectAndDefense_main">
+                <div class="detectAnaly_main" id="detectAnalyBox" style="width: 49%;height:300px;display: inline-block;"></div>
+                <div class="defenseAnaly_main" id="defenseAnalyBox" style="width: 49%;height:300px;display: inline-block;"></div>
+            </div>
+        </div>
+
+
+
+        <!-- 发案地域分析和发案时间分析 -->
+        <div class="areaAndTime">
+            <div class="areaAndTime_title">
+                <div class="areaAnaly_title" style="display: inline-block;">发案地域分析</div>
+                <div class="timeAnaly_title" style="display: inline-block;">发案时间分析</div>
+            </div>
+            <div class="areaAndTime_main">
+                <div class="areaAnaly_main" id="areaAnalyBox" style="width: 50%;height:300px;display: inline-block;"></div>
+                <div class="timeAnaly_main" id="timeAnalyBox" style="width: 49%;height:300px;display: inline-block;"></div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <script src="./jquery.min.js"></script>
+    <script src="./echarts.min.js"></script>
+    <script src="./highcharts.js"></script>
+    <script src="./highcharts-3d.js"></script>
+
+
+    <script>
+        $(function () {
+            // 刑事案件趋势分析
+            trendAnaly('trendAnalyBox');
+
+            // 刑事案件侦破分析
+            detectAnaly('detectAnalyBox');
+
+            // 犯罪防御分析
+            defenseAnaly('defenseAnalyBox');
+
+            // 发案地域分析
+            areaAnaly('areaAnalyBox');
+
+            // 发案时间分析
+            timeAnaly('timeAnalyBox');
+        })
+
+
+
+
+
+
+        // <!-- 刑事案件趋势分析 -->
+        function trendAnaly(idname) {
+            var myChart = echarts.init(document.getElementById(idname));
+
+            var option = {
+                tooltip:{},
+                xAxis: {
+                    type: 'category',
+                    data: ['一月', '二月', '当月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+                },
+                yAxis: {
+                    type: 'value',
+                    min: 0,
+                    max: 700,
+                    interval: 100
+                },
+                series: [{
+                    data: [300, 600, 220, 320, 340, 450, 530, 340, 570, 380, 310, 510],
+                    type: 'line'
+                }],
+                color: '#4f81bd'
+            };
+
+            myChart.setOption(option);
+        }
+
+        // <!-- 刑事案件侦破分析 -->
+        function detectAnaly(idname) {
+            var myChart = echarts.init(document.getElementById(idname));
+
+            var option = {
+                tooltip:{},
+                xAxis: {
+                    type: 'value',
+                    min: 0,
+                    max: 450,
+                    interval: 50
+                },
+                grid: {
+                    // 防止标签溢出
+                    containLabel: true
+                },
+                yAxis: {
+                    data: ['长期未破案数', '破案后未起诉数'],
+                    axisLabel: {
+                        interval: 0,
+                        rotate: 0
+                    }
+                },
+                series: [{
+                    type: 'bar',
+                    barWidth: 30,
+                    data: [421, 231],
+                    itemStyle: {
+                        normal: {
+                            label: {
+                                show: true, //开启显示
+                                position: 'right', //在上方显示
+                                textStyle: { //数值样式
+                                    color: 'black',
+                                    fontSize: 12
+                                }
+                            },
+                            color: '#4f81bd'
+                        }
+                    }
+                }]
+            }
+
+            myChart.setOption(option);
+        }
+
+        // <!-- 犯罪防御分析 -->
+        function defenseAnaly(idname) {
+            var myChart = echarts.init(document.getElementById(idname));
+            var option = {
+                // title: {
+                //     text: '雷达图'
+                // },
+                title: {
+                    text: '预防\n分析',
+                    x: 'center',
+                    y: 'center',
+                    textStyle: {
+                        color: '#333',
+                        fontWeight: 'bolder',
+                        fontSize: 16,
+                    }
+                },
+                tooltip: {},
+                // legend: {
+                //     data: ['惯犯（Allocated Budget）', '团伙犯罪（Actual Spending）']
+                // },
+                radar: {
+                    // shape: 'circle',
+                    show: true,
+
+                    name: {
+                        textStyle: {
+                            color: '#fff',
+                            backgroundColor: '#999',
+                            borderRadius: 1,
+                            padding: [3, 5]
+                        },
+
+                    },
+                    indicator: [{
+                            name: '惯犯',
+                            max: 800
+                        },
+                        {
+                            name: '狱内加刑',
+                            max: 800
+                        },
+                        {
+                            name: '无业人员',
+                            max: 800
+                        },
+                        {
+                            name: '团伙犯罪',
+                            max: 800
+                        }
+                    ]
+                },
+                series: [{
+                    type: 'radar',
+                    // areaStyle: {normal: {}},
+                    data: [{
+                            value: [401, 321, 601, 364],
+                            symbol: 'circle',
+                            symbolSize: 5,
+                            lineStyle: {
+                                type: 'dotted',
+                                color: '#0099ff'
+                            },
+                            label: {
+                                show: true,
+                                color: '#00f',
+                                formatter: function (params) {
+                                    return params.value;
+                                }
+                            },
+                            itemStyle: {
+                                color: '#00f'
+                            }
+                        },
+                        // {
+                        //     value: [5000, 14000, 28000, 31000, 42000, 21000],
+                        //     name: '实际开销（Actual Spending）'
+                        // }
+                    ]
+                }]
+            };
+
+            myChart.setOption(option);
+
+        }
+
+        // <!-- 发案地域分析 -->
+        function areaAnaly(idname) {
+            var myChart = echarts.init(document.getElementById(idname));
+            var option = {
+                title: {
+                    text: '发案地域分析',
+                    left: 30,
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b}: {c} ({d}%)'
+                },
+                legend: {
+                    orient: 'vertical',
+                    right: 10,
+                    top: 100,
+                    data: ['城区', '郊区', '镇', '乡村', '其他']
+                },
+                grid: {
+                    // 防止标签溢出
+                    containLabel: true
+                },
+                series: [{
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: ['30%', '80%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [{
+                            value: 8635,
+                            name: '城区',
+                        },
+                        {
+                            value: 2653,
+                            name: '郊区'
+                        },
+                        {
+                            value: 6810,
+                            name: '镇'
+                        },
+                        {
+                            value: 4213,
+                            name: '乡村'
+                        },
+                        {
+                            value: 1530,
+                            name: '其他'
+                        }
+                    ]
+                }],
+                color: ['#4f81bd', '#c0504d', '#9bbb59', '#8064a2', '#4bacc6']
+            };
+
+            myChart.setOption(option);
+        }
+
+        // <!-- 发案时间分析 -->
+        function timeAnaly(idname) {
+            var myChart = echarts.init(document.getElementById(idname));
+
+            var option = {
+                tooltip: {},
+                xAxis: {
+                    type: 'category',
+                    data: ['0:00-4:00', '4:00-8:00', '8:00-12:00', '12:00-16:00', '16:00-20:00', '20:00-24:00']
+                },
+                yAxis: {
+                    type: 'value',
+                    min: 0,
+                    max: 9000,
+                    interval: 1000,
+                },
+                series: [{
+                    data: [2400, 1100, 3550, 4900, 6900, 8000],
+                    type: 'line',
+                }],
+                color: '#4f81bd'
+            };
+
+            myChart.setOption(option);
+
+        }
+    </script>
+
+</body>
+
+</html>
