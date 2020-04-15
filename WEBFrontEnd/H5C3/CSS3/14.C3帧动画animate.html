@@ -88,8 +88,25 @@
         <div></div>
     </main> -->
     
+
+    <!-- <main class="submitEffect">
+        <button>提交</button>
+    </main> -->
     
     
+
+    <main class="animationsteps">
+        <article>
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div>7</div>
+            <div>8</div>
+        </article>
+    </main>
     
     
     <section style="display: none;">
@@ -157,11 +174,16 @@
             animation-timing-function: ease-in-out;
             animation-timing-function: linear;
             animation-timing-function: cubic-bezier(0,1.5,1,-0.5);                      规定动画方式为贝塞尔曲线(自定义);
+
+            animation-timing-function: steps(4, start);                                 步进动画(走四步, 开始便走);
+            animation-timing-function: steps(4, start);                                 步进动画(走四步, 第一帧走完之后便走);
+            
             
             currentColor特性:
                 border: 1px solid currentColor;                                         currentColor指代的是当前元素的color的值;
                                                                                         color是什么颜色, currentColor就是什么颜色;
             
+
             
 
         
