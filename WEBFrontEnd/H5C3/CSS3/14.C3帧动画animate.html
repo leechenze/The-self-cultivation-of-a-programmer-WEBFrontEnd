@@ -95,7 +95,7 @@
     
     
 
-    <main class="animationsteps">
+    <!-- <main class="animationsteps">
         <article>
             <div>1</div>
             <div>2</div>
@@ -106,7 +106,32 @@
             <div>7</div>
             <div>8</div>
         </article>
+    </main> -->
+
+
+    <!-- 轮换图 -->
+    <main class="carousel">
+        <main>
+            <section>
+                <div><img src="../images/1.jpg" alt=""></div>
+                <div><img src="../images/2.jpg" alt=""></div>
+                <div><img src="../images/3.jpg" alt=""></div>
+                <div><img src="../images/4.png" alt=""></div>
+            </section>
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+            </ul>
+        </main>
     </main>
+    
+    
+    
+    
+    
+    
     
     
     <section style="display: none;">
@@ -145,7 +170,7 @@
             之前在过渡中有些属性是不会产生过渡效果, 那么动画一样有些属性也是不会有动画效果的;
             没有中间值的属性是没有效果的: 比如width: auto; 但 widht: 100px;这种具体数值会有属性;
             
-                
+            
         animate:
             缩写形式如下:
             animation: name duration timing-function delay iteration-count direction fill-mode;
@@ -177,15 +202,21 @@
 
             animation-timing-function: steps(4, start);                                 步进动画(走四步, 开始便走);
             animation-timing-function: steps(4, start);                                 步进动画(走四步, 第一帧走完之后便走);
-            
+            animation-timing-function: steps(1, start);                                 步进动画(走一步, 开始便走);
+                                等同于: step-start;
+            animation-timing-function: steps(1, start);                                 步进动画(走一步, 第一帧走完之后便走);
+                                等同于: step-end;
             
             currentColor特性:
                 border: 1px solid currentColor;                                         currentColor指代的是当前元素的color的值;
                                                                                         color是什么颜色, currentColor就是什么颜色;
             
-
             
 
+            animation-play-state: paused;                                               暂停动画;
+            animation-play-state: running;                                              运行动画;
+            
+            
         
             
                 

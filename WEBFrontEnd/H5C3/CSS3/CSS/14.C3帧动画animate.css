@@ -586,6 +586,10 @@ main.animationsteps article div {
   border: 1px solid #2c3e50;
   position: relative;
 }
+main.animationsteps article div:nth-child(1)::after,
+main.animationsteps article div:nth-child(5)::after {
+  animation-play-state: paused;
+}
 main.animationsteps article div:nth-child(1)::after {
   content: 'START';
   display: flex;
@@ -600,7 +604,7 @@ main.animationsteps article div:nth-child(1)::after {
   background-color: #8e44ad;
   animation-name: animationsteps;
   animation-duration: 1s;
-  animation-timing-function: steps(4, start);
+  animation-timing-function: steps(1, start);
   animation-iteration-count: infinite;
   z-index: 1;
 }
@@ -618,15 +622,111 @@ main.animationsteps article div:nth-child(5)::after {
   background-color: #2ecc71;
   animation-name: animationsteps;
   animation-duration: 1s;
-  animation-timing-function: steps(4, end);
+  animation-timing-function: steps(1, end);
   animation-iteration-count: infinite;
   z-index: 1;
 }
+main.animationsteps article div:nth-child(5):hover::after {
+  animation-play-state: running;
+}
+main.animationsteps article div:nth-child(1):hover::after {
+  animation-play-state: running;
+}
 @keyframes animationsteps {
-  from {
-    transform: translate(0, 0);
+  50% {
+    transform: translate(100px, 0);
   }
   to {
-    transform: translate(400px, 0);
+    transform: translate(0, 0);
+  }
+}
+main.carousel {
+  width: 97.3%;
+  height: 97.3%;
+  margin: auto;
+  border: 10px solid #aaa;
+  display: grid;
+}
+main.carousel main {
+  width: 400px;
+  height: 250px;
+  overflow: hidden;
+  justify-self: center;
+  align-self: center;
+  position: relative;
+}
+main.carousel main section {
+  width: 1600px;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(4, 1fr);
+  animation-name: slide;
+  animation-timing-function: steps(4, end);
+  animation-iteration-count: infinite;
+  animation-duration: 3s;
+  animation-play-state: running;
+}
+main.carousel main section div {
+  width: 400px;
+  height: 250px;
+  overflow: hidden;
+}
+main.carousel main section div img {
+  width: 100%;
+  height: 100%;
+}
+main.carousel main section:hover,
+main.carousel main section:hover + ul::after {
+  animation-play-state: paused;
+}
+main.carousel main ul {
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  transform: translate(-50%, 0);
+  list-style: none;
+  width: 200px;
+  height: 30px;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+}
+main.carousel main ul li {
+  width: 30px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  color: #fff;
+  font-weight: bolder;
+  font-size: 1.5em;
+}
+main.carousel main ul::after {
+  content: '';
+  width: 30px;
+  height: 30px;
+  background-color: red;
+  border-radius: 50%;
+  position: absolute;
+  left: 10px;
+  top: 0;
+  z-index: -1;
+  animation-name: nums;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: steps(4, end);
+}
+@keyframes slide {
+  to {
+    transform: translate(-1600px, 0);
+  }
+}
+@keyframes nums {
+  to {
+    transform: translate(200px, 0);
   }
 }
