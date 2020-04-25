@@ -730,3 +730,56 @@ main.carousel main ul::after {
     transform: translate(200px, 0);
   }
 }
+main.fill-mode {
+  width: 97.3%;
+  height: 97.3%;
+  margin: auto;
+  border: 10px solid #aaa;
+  display: grid;
+}
+main.fill-mode ul {
+  list-style: none;
+  width: 400px;
+  height: 100px;
+  align-self: center;
+  justify-self: center;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(4, 1fr);
+}
+main.fill-mode ul li {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: yellowgreen;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  color: #fff;
+  font-size: 1.5em;
+  animation-duration: 1s;
+  animation-delay: 0.5s;
+  animation-name: fillmode;
+}
+main.fill-mode ul li:nth-of-type(1) {
+  animation-fill-mode: none;
+}
+main.fill-mode ul li:nth-of-type(2) {
+  animation-fill-mode: forwards;
+}
+main.fill-mode ul li:nth-of-type(3) {
+  animation-fill-mode: backwards;
+}
+main.fill-mode ul li:nth-of-type(4) {
+  animation-fill-mode: both;
+}
+@keyframes fillmode {
+  from {
+    transform: scale(0);
+    background-color: red;
+  }
+  to {
+    transform: scale(1);
+    background-color: blueviolet;
+  }
+}

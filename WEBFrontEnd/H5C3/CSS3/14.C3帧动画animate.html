@@ -110,7 +110,7 @@
 
 
     <!-- 轮换图 -->
-    <main class="carousel">
+    <!-- <main class="carousel">
         <main>
             <section>
                 <div><img src="../images/1.jpg" alt=""></div>
@@ -125,10 +125,17 @@
                 <li>4</li>
             </ul>
         </main>
+    </main> -->
+    
+    
+    <main class="fill-mode">
+        <ul>
+            <li>normal</li>
+            <li>forwards</li>
+            <li>backwards</li>
+            <li></li>
+        </ul>
     </main>
-    
-    
-    
     
     
     
@@ -172,7 +179,7 @@
             
             
         animate:
-            缩写形式如下:
+            缩写形式如下:(组合定义);
             animation: name duration timing-function delay iteration-count direction fill-mode;
             
             animation-name: name,name,name;                                             一个元素可以应用多个帧动画;
@@ -184,7 +191,11 @@
 
             animation-fill-mode: forwards;                                              规定动画最后一帧回到100%帧状态的操作;
                                                                                         fill-mode 由 animation-iteration-count  这个属性决定
-            
+            animation-fill-mode: backwards;                                             规定动画从0%状态开始执行而不是初始状态;
+            animation-fill-mode: both;                                                  forwards和backwards的结合;
+                                                                                        即从0%状态开始,到100%结束并且停止在100%状态;                                          
+                                                                                        也就是说和初始状态就没关系了, 只执行帧动画中的属性;
+                                                                                        
             animation-iteration-count: infinite;                                        规定动画的执行次数;
                                                                                         应用多个动画时, 规则不变; 值对应animation-name的值以此往背后排列;
             animation-direction: normal;                                                规定动画从0到100%执行一次;
@@ -210,14 +221,11 @@
             currentColor特性:
                 border: 1px solid currentColor;                                         currentColor指代的是当前元素的color的值;
                                                                                         color是什么颜色, currentColor就是什么颜色;
-            
-            
 
             animation-play-state: paused;                                               暂停动画;
             animation-play-state: running;                                              运行动画;
             
             
-        
             
                 
                 
