@@ -1,0 +1,38 @@
+header {
+  border-bottom: 2px solid #2ecc71;
+  box-shadow: 0 5px 5px 5px rgba(0, 0, 0, 0.5);
+}
+header .navbar {
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+header .navbar .logo {
+  color: #2ecc71;
+  font-weight: bolder;
+  font-size: 1.3rem;
+  margin-right: 20px;
+}
+header .navbar .collapse {
+  display: flex;
+  flex: 1;
+}
+header .navbar .collapse .links {
+  margin-right: auto;
+  display: flex;
+}
+header .navbar .collapse .links li a {
+  color: #ddd;
+  margin: 0 10px;
+  font-weight: bolder;
+}
+header .navbar .collapse .links li a:hover {
+  color: #fff;
+  cursor: pointer;
+}
+header .navbar .collapse .form a {
+  border: 1px solid #2ecc71;
+  border-radius: 0.3rem;
+  padding: 0.3rem;
+  color: #2ecc71;
+}

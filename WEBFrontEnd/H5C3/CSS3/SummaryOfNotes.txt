@@ -947,8 +947,9 @@
         子级属性:
             平分长度:
             flex: 1;                                1指的是一个系数,相当于把父元素的宽度分为两份, 每个子元素一份; 如果是二效果一样, 相当于父元素的宽度分为四份,每个子元素两份平分;
-            子元素在划分父元素宽度时, 先抛出固定宽度, 剩下的宽度就会加给具有flex属性值的子元素;
-            值一定是1以上的数值才会生效;
+                                                    子元素在划分父元素宽度时, 先抛出固定宽度, 剩下的宽度就会加给具有flex属性值的子元素;
+                                                    flex是flex-grow,flex-shrink,flex-basis三个属性值的缩写,值一定是1以上的数值才会生效;
+                                                    深入解读flex这个缩写属性: https://zhuanlan.zhihu.com/p/39052660;
 
             
             定义子元素的放大比例(即换行之后的元素的宽度排行方式);
@@ -980,5 +981,203 @@
 
 
 拾陆.media响应式媒体查询
+
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> -->
+        width = device-width：宽度等于当前设备的宽度
+        initial-scale：初始的缩放比例（默认设置为1.0）
+        minimum-scale：允许用户缩放到的最小比例（默认设置为1.0）
+        maximum-scale：允许用户缩放到的最大比例（默认设置为1.0）
+        user-scalable：用户是否可以手动缩放（默认设置为no，因为我们不希望用户放大缩小页面）
+        
+        
+        在css中一般都会分类很多设备, 比如: tv, tty, screen, print;
+        但是随着新版本发布之后, 很多设备被废弃掉了, 没有处理这些设备的必要; 日常生活中常用的设备就只有screen;
+        media的默认值就是all;
+        
+
+        嵌入式声明设备类型:
+            <!-- <style media="all and (...) and (...)">
+                h1 {
+                    color: red;
+                }
+            </style>
+            <style media="screen and (...) and (...)">
+                h1 {
+                    color: red;
+                }
+            </style>
+            <style media="print and (...) and (...)">
+                h1 {
+                    color: green;
+                }
+            </style> -->
+
+
+        外链式设置媒体类型:
+            屏幕设备使用screen;
+            <link rel="stylesheet" href="xxxxxxx/.screen.css" media="screen">
+            打印机设备使用print;
+            <link rel="stylesheet" href="xxxxxxx/print.css" media="print">
+            公用的公公文件:
+            <link rel="stylesheet" href="xxxxxxx/common.css" media="all">
+
+        
+        @import url()样式表中引入组件样式;
+            @import url(./common.css) all;
+            @import url(./screen.css) screen;
+            @import url(./print.css) print;
+            url() 之后的参数用来指定设备类型的;
+        
+        样式表中的声明媒体类型;
+            @media screen and (max-width: 600px)
+            
+            
+        
+
+
+
+
+
+
+
+
+        media条件判断and:
+            and 既 &;
+            @media screen and (min-width: 768px)  and (max-width: 1360px){ ..code.. }
+            如果有很多条件可以使用多个and 进行条件判断;
+            screen and (...) and (...) and (...) and (...);
+            一般情况下也就是使用两个判断条件;
+
+
+        media条件判断,:
+            , 既 or,||;
+            @media screen and (orientation: landscape),screen and (min-width: 900px) { ...code... }
+            如果屏幕是横屏时 或者 屏幕大于900px时;
+            @media screen and (orientation: portrait),screen and (min-width: 900px) { ...code... }
+            如果屏幕是竖屏时 或者 屏幕大于900px时;
+            或判断同样也可以是多个判断条件, 规则如下:
+            @media screen and (...) , screen and (...) , screen and (...);
+            
+
+        media条件判断not:
+            not 既 !;
+            @media not screen and (min-width: 320px) and (max-width: 768px) { ...code... }
+            如果屏幕是320px - 768px 这个范围则不应用的一套样式;
+
+        
+        media条件判断only;
+            @media only screen and (min-width: 320px) and (max-width: 768px) { ...code... }
+            only用来指定某种特定的媒体类型
+            很多时候是用来对那些不支持媒体特性但却支持媒体类型的设备
+
+            
+        
+        常见的几种屏幕宽度设定;
+            @media screen and (min-width: 1200px) {
+                css-code;
+            }
+            @media screen and(min-width: 960px) and (max-width: 1199px) {
+                    css-code;
+            }
+            @media screen and(min-width: 768px) and (max-width: 959px) {
+                    css-code;
+            }
+            @media screen and(min-width: 480px) and (max-width: 767px) {
+                    css-code;
+            }
+            @media screen and (max-width: 479px) {
+                    css-code;
+            }
+        
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+拾柒.圣杯布局&双飞翼布局
+
+    三栏布局:
+        圣杯布局:
+            主题部分两边固定, 中间自适应,且要优先加载;
+
+            <main class="grailLayout">
+                <header>头部</header>
+                <div class="center">主区域</div>
+                <div class="left">左区域</div>
+                <div class="right">右区域</div>
+                <footer>底部</footer>
+            </main>
+
+            如上所示:
+                因为主区域的内容需要优先加载;所以主区域要放在左右区域的前面;
+                
+            具体思路:
+                将center,left,right外面包一层父元素用来清浮, 然后三个元素进行浮动, 这时可以避免浮动的乱版;
+                然后再在wrapper父元素设置padding: 0 100px;  用来处理左右元素留有该有的空间;
+                center进行设置width: 100%, 这时left,right就会跑到第二行;
+                left设置margin-left: -100%; 就会回到原有的左边位置上;
+                right设置margin-right: -100px; 就会回到原来右边位置;
+                这时想要左右元素不覆盖到center元素上, 就是用定位属性
+                left元素设置position: relative; left: 0;
+                right元素设置position: relative; right: 0;
+                此时即可使左右元素不会覆盖到center元素上, 并回到原位;
+
+            
+            
+        双飞翼布局:
+            主题部分两边固定, 中间自适应,且要优先加载;
+            
+            <main class="doubleWingsLayout">
+                <header>头部</header>
+                <div class="wrapper">
+                    <div class="center">主区域</div>
+                </div>
+                <div class="left">左区域</div>
+                <div class="right">右区域</div>
+                <footer>底部</footer>
+            </main>
     
-    
+            如上所示:
+                因为主区域的内容需要优先加载;所以主区域要放在左右区域的前面;
+                但和圣杯布局的异同就是wrapper只是包裹了center元素, 并没有包裹left和right元素;
+                
+                
+            具体思路:
+                将center外面包一层父元素用来和left,right一起浮动, 但是清浮要添加到footer元素上;
+                然后再在center元素设置margin: 0 100px;  用来处理左右元素留有该有的空间;
+                wrapper进行设置width: 100%, 这时left,right就会跑到第二行;
+                left设置margin-left: -100%; 就会回到原有的左边位置上;
+                right设置margin-right: -100px; 就会回到原来右边位置;
+                此时即可使左右元素不会覆盖到center元素上, 并回到原位;
+
+
+
+
+        圣杯和双飞翼布局的对比:
+            圣杯布局:
+                结构一目了然;  wrapper包裹的是center,left,right;
+                样式上圣杯布局代码量比较多, 使用了相对定位进行实现三栏对称;
+            双飞翼布局:
+                结构不太直观;  wrapper包裹的只是center;
+                样式上双飞翼布局代码量比较少, 没有使用定位实现三栏对称;
+            
+            总结:
+                个人爱好更推荐使用圣杯: 只因为结构清晰明了, 所以清浮原理也变得容易理解, 使得这种布局结构比较稳定;
+                双飞翼布局看个人喜好效果都相同;
+

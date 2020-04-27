@@ -1,0 +1,23 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+    color: #fff;
+}
+
+ul{
+    list-style: none;
+}
+
+:root{
+    font-size: 15px;
+}
+
+.container{
+    width: 1000px;
+    margin: 0 auto;
+}
