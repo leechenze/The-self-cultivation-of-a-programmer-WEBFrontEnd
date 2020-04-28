@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./module1.js"></script>
+</head>
+<body>
+    <h1>全局function模式</h1>
+    <script>
+        foo();
+        bar();
+
+        msg = 'other.com';
+        //  开发周期长了, 容易忘记先前定义的全局变量, 导致全局变量冲突;
+        foo();
+    </script>
+</body>
+</html>

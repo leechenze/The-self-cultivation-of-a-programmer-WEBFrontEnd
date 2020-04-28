@@ -1,0 +1,112 @@
+﻿博学之, 审问之, 慎思之, 明辨之, 笃行之;
+壹、贰、叁、肆、伍、陆、柒、捌、玖、拾;
+
+
+
+壹.modular
+
+    1.一个页面引入多个js文件;
+    2.问题:
+        请求过多;
+        依赖模糊;
+        难以维护;
+    3.这些问题可以通过现代模块化代码和项目构建来解决;
+
+    首先我们要依赖多个模块就会发送多次请求, 导致服务器大的压力;
+    然后依赖关系模式, 不明确如上文件哪个依赖哪个;
+
+    如上所示假定: 
+        modules3.js依赖mosules1.js
+        modules5.js依赖modules3.js
+        那么这些文件的引入顺序就必须是: modules1.js > modules3.js > modules5.js
+        如果一个文件引入顺序变动就会牵一发动全身全部错乱;
+        而针对这个问题就是需要模块化规范来解决的;
+    
+
+
+
+
+
+贰.commonJS-Node
+    
+    目录结构:
+
+        modules
+            modules1.js
+            modules2.js
+            modules3.js
+        app.js
+        package.json
+            {
+                "name": "commonJS-node",
+                "version": "1.0.0"
+            }
+
+    下载第三方模块;
+        uniq数组去重的包, npm官网自行搜索;
+        npm install uniq --save
+
+        然后在modules1.js中暴露模块;
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+总结:
+
+    CommonJS
+
+        node就是基于commonJS这个模块化规范来编写的;
+        
+        每个文件都可作为一个模块;
+        在服务器端: 模块的加载运行是同步的;
+            同步导致的一个后果等待前面文件的请求完成, 阻塞加载;
+        在浏览器端: 模块需要提前编译打包处理
+            commonJS中的require语法是浏览器不认识的, 所以需要编译环节;
+
+
+        commonJS暴露模块:
+            exports.xxx = value;
+            modules.exports = value;
+
+            暴露的本质都是exprts这个对象;
+        
+        commonJS引入模块:
+            
+            require(xxx);
+                第三方模块:
+                    直接引入模块的名字(包名);
+                自定义模块:
+                    引入模块的路径(文件路径);
+            
+        实现:
+            服务器端实现: node;
+            浏览器端实现: browserify(commonJS的浏览器端的打包工具), 现在ES6中也有应用了;
+        
+            
+        
+        
+    
+
+    AMD
+        
+    CMD
+        CMD规范google下做个了解即可, 其余三种必须清楚;
+        CMD规范是一个阿里人写的, 外面应用不广泛, 阿里一部分内部人在应用, 现已卖给国外了;
+    ES6
+

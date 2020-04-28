@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>load-script</h1>
+    <script src="./modules1.js">1</script>
+    <script src="./modules2.js">2</script>
+    <script src="./modules3.js">3</script>
+    <script src="./modules4.js">4</script>
+    <script src="./modules5.js">5</script>
+
+    <!-- 
+
+        1.一个页面引入多个js文件;
+        2.问题:
+            请求过多;
+            依赖模糊;
+            难以维护;
+        3.这些问题可以通过现代模块化代码和项目构建来解决;
+
+        首先我们要依赖多个模块就会发送多次请求, 导致服务器大的压力;
+        然后依赖关系模式, 不明确如上文件哪个依赖哪个;
+
+        如上所示假定: 
+            modules3.js依赖mosules1.js
+            modules5.js依赖modules3.js
+            那么这些文件的引入顺序就必须是: modules1.js > modules3.js > modules5.js
+            如果一个文件引入顺序变动就会牵一发动全身全部错乱;
+            而针对这个问题就是需要模块化规范来解决的;
+        
+     -->
+     
+    
+</body>
+</html>

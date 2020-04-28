@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./modules2.js"></script>
+</head>
+<body>
+    <h1>namespace</h1>
+    <script>
+        obj.foo();
+
+        // 缺点显而易见还是可以操作msg这个全局变量, 所以不安全;
+        obj.msg = 'other.com';
+        obj.foo();
+    </script>
+</body>
+</html>
