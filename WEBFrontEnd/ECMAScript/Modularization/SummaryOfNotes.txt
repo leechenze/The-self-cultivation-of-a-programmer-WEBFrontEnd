@@ -27,6 +27,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
 贰.commonJS-Node
     
     目录结构:
@@ -49,6 +58,59 @@
         然后在modules1.js中暴露模块;
         
         
+    在 app.js模块中引入 uniq 插件依赖;
+    然后再引入 自定义模块  modules(1, 2, 3).js;
+    注意插件依赖项要在自定义模块之前引入;
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+叁.commonJS-Browserify
+    
+    目录结构:
+        js
+            dist    打包目录;
+            src     源码目录;
+                modules1.js
+                modules2.js
+                modules3.js
+                app.js      应用主源文件;
+        index.html
+        package.json
+            {
+                "name": "commonJS-Browserify",
+                "version": "1.0.0"
+            }
+
+
+    app.js模块都引入之后, 在浏览器打开index.html之后, 会报错 Can't find variable: require
+    
+    原因在于: 浏览器不能解析require这个方法, 此时就需要用browserify来进行编译打包这些语法使得能被浏览器识别;
+    
+    browserify js/src/app.js -o js/dist/bundle.js
+    -o 这个参数意为 output      基本可webpack操作差不多;
+    
+    通过browserify编译打包完成之后输出文件bundle.js,  再在 index.html中引入bundle.js编译打包之后的, 而不是 app.js
+    打包为浏览器识别的代码,  这时 Can't find variable: require 错误即可解决;
+
+
+
+
+
+
 
 
 

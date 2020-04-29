@@ -1,7 +1,8 @@
+// module.exports = {};
+
 module.exports =  {
-    msg: 'leechense.com',
+    msg: 'leechenseone.com',
     foo(){
-        console.log('foo', msg);
-        
+        console.log('foo', this.msg);
     }
 }
