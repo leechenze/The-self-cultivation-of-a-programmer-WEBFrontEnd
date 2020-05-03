@@ -21,7 +21,7 @@
         那么这些文件的引入顺序就必须是: modules1.js > modules3.js > modules5.js
         如果一个文件引入顺序变动就会牵一发动全身全部错乱;
         而针对这个问题就是需要模块化规范来解决的;
-    
+
 
 
 
@@ -121,8 +121,28 @@
 
 
 
+肆.AMD-RequireJS
+    01_NoAMD
+        没有没用AMD规范的演示;
+
+        结构目录:
+            01_NoAMD
+                js
+                    alerter.js
+                    dataService.js
+                app.js
+                test1.html
 
 
+        因为app.js 依赖于 alerter.js,
+        alerter.js 又依赖于 dataService.js;
+        所以可以看到test1.html中引入的文件是: dataService.js > alerter.js > app.js
+        不实用AMD规范的不足很明显就是 每个文件都要引入一次, 也就是要发送三次请求;
+        第二点就是每一个文件的引入顺序必须是这样, 不可以随便改动;
+        
+    02_RequireJS 官网: https://requirejs.org/;
+        使用了AMD规范的JS;
+        下载require.js并引入;
 
 
 
@@ -165,6 +185,25 @@
     
 
     AMD
+        AMD模块规范用于浏览器端,模块加载是异步的;
+        而且AMD规范要比CommonJS的browserify规范要早;
+        
+        定义暴露模块: 
+            define(['modole2', 'module2', funciton (m1, m2) {
+                return 模块;
+            })
+        
+        引入使用模块:
+            require(['module1','module2',function (m1, m2) {
+                使用m1m2;
+            })
+        
+        
+        实现:
+            01_NoAMD
+                没有使用AMD规范演示;
+            02_RequireJS
+                使用AMD规范的演示;
         
     CMD
         CMD规范google下做个了解即可, 其余三种必须清楚;
