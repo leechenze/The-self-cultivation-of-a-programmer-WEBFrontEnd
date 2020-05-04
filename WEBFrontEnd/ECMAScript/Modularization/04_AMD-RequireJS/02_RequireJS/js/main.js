@@ -8,11 +8,20 @@
             // alerter: "js/modules/alerter",
             dataService: "./modules/dataService",
             alerter: "./modules/alerter",
+            jquery : "./libs/jquery.min",
         }
     });
-
+    
+    
     require(['alerter'], function (alerter) {
         alerter.showMsg();
     })
+
+
+
+    define(['jquery'], function($) {
+        $('body').css('background-color', 'green');
+    });
+    
     
 })()

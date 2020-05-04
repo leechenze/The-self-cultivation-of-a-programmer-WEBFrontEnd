@@ -141,8 +141,97 @@
         第二点就是每一个文件的引入顺序必须是这样, 不可以随便改动;
         
     02_RequireJS 官网: https://requirejs.org/;
-        使用了AMD规范的JS;
-        下载require.js并引入;
+        使用了AMD规范的JS的演示
+        下载require.js并在index2.html引入;
+        
+        目录结构:
+            02_RequireJS
+                js
+                    libs
+                        require.js
+                    modules
+                        alerter.js
+                        dataService;
+                index2.html
+        
+        <script src="./js/libs/require.js" data-main="./js/main.js"></script>
+        引入require.js后, dadta-main用来指定应用require.js的主模块的路径(app.js or main.js);
+
+        主模块代码:(main.js)
+            
+            (function () {
+                
+                require.config({
+                    // baseUrl: 'http://127.0.0.1:8080/',                       指定根路径;
+                    paths: {                                                    指定依赖的文件路径;
+                        // dataService: "js/modules/dataService",
+                        // alerter: "js/modules/alerter",
+                        dataService: "./modules/dataService",
+                        alerter: "./modules/alerter",
+                    }
+                });
+
+                require(['alerter'], function (alerter) {                       引入依赖,进行操作;
+                    alerter.showMsg();
+                })
+                
+            })()
+        
+
+        alerter.js模块代码;
+        
+            define(['dataService'], function(dataService) {                     定义依赖, 向外部暴露操作;
+                let msg = 'alerter';
+                function showMsg()  {
+                    console.log(msg + '=======>' + dataService.getName());
+                }
+
+                // 暴露模块
+                return {"showMsg": showMsg};  
+            });
+        
+        
+    细节:
+
+        注意自定义依赖jquery, 在require config.paths时, 定义jquery是需要小写的, 
+        因为在jquery源码中判断define是amd时, 定义的依赖名是 jquery 而非 jQuery;
+
+        同时配置有些诸如: angular库时, 就配置shim,
+        angular不想jquery 在 paths中定义了即可使用, 
+        所以需要shim 进行 exports 来进行暴露, 并且angular路径也同样需要在paths配置;
+        
+        require.config中
+            shim: {
+                angular:  {
+                    exports: 'angular'
+                }
+            }
+
+
+
+
+
+
+伍.CMD-SeaJS
+
+    
+    
+
+    
+
+
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
 
 
