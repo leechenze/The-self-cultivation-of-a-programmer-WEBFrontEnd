@@ -3,6 +3,7 @@ define(function () {
     let name = 'dataService';
     function getName() {
         console.log(name);
+        return name;
     }
 
     // 暴露模块;
