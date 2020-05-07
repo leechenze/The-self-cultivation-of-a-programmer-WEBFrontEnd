@@ -268,11 +268,27 @@
 
 
 陆.ES6-Babel-Browserify
-
+    定义package.json文件;
+        {
+            "name": "es6_babel-browserify",
+            "version": "1.0.0"
+        }
     
+    安装babel-cli, babel-preset-es2015和browserify;                 cli ==> command line interface;
+        cnpm install babel-cli browserify -g
+        cnpm install babel-preset-es2015 --save-dev
+        preset 预设(将es6转换es5的所有插件打包);
+        
+    定义.babelrc文件;                                               rc ==> run control
+        {
+            "presets": ["es2015"],
+        }
 
+    编译:
+        使用babel将ES6编译为ES5代码(包含CommonJS语法): babel ./js/src -d ./js/build             转换es6为es5但是还有commonjs语法不能被浏览器识别;
+        使用browserify编译js: browserify ./js/build/main.js -o js/dist/bundle.js              转换commonjs语法;
 
-
+    引入最终babel编译后的文件 .js/dist/bunble.js 输出成功;
 
 
 
@@ -399,4 +415,11 @@
             https://www.zhangxinxu.com/sp/seajs/
 
     ES6
+        ES6的模块化是最常用的;
+        规范: 依赖模块需要编译打包处理;
+        
+        导出模块: export;
+        引入模块: import;
 
+        实现浏览器端: 使用babel将ES6编译为ES5代码;
+        使用browserify编译打包js;
