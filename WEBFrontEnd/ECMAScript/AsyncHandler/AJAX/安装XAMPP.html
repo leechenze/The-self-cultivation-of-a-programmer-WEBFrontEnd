@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <section style="display: none;">
+        AJAX: Asynchronous Javascript And XML;
+        翻译: js异步请求xml的技术, 但目前json格式数据使用更广泛;
+        
+        客户端发送请求, 服务端将就收的请求再响应给客户端;
+        客户端通过XMLHttpRequest对象跟服务器进行对接, 之间会有状态码表示当前请求状态;
+        对接成功后服务器会通过XML或json数据返回代码中的HTMLResponse的响应数据;
+        
+        能够实现类似技术的库
+        jquery,
+        axios,
+        fetch,
+        node HTTP,
+        等....
+
+
+        下载安装xampp(php运行时环境);
+        
+        安装完成选择manageServers全部启动, 即可开启本机服务;
+        浏览器舒服localhost会默认打开xampp的Guide地址;
+        下面修改我们指定的打开地址;
+        
+        mac在应用程序中找到
+        xampp/xamppfiles/htdocs/  这是本机一个服务器的路径;
+        touch index.php文件即可
+        默认会访问index.php;
+
+        继续访问localhost/phpmyadmin就会进入本地的数据库管理的页面;
+
+        在htdocs中创建ajaxsandbox文件夹, 在ajaxsandbox中开始ajax的hello world !!!~~
+
+            core结构:
+                ajaxRequestText
+                ajaxRequestJSON
+                ajaxRequestGithub
+                ajaxRequestPHP
+        
+        最后一节ajaxRequestPHP的数据库操作, 都是在 localhost/phpmyadmin 中进行;
+        
+    </section>
+    
+</body>
+</html>

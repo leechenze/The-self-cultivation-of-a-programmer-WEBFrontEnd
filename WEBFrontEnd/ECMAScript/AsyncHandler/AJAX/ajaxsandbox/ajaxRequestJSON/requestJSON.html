@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax ==> 请求纯文本</title>
+</head>
+
+<body>
+    <button id="buttonone">请求单个用户</button>
+    <button id="buttontwo">请求所有用户</button>
+    <br>
+    <br>
+    <br>
+    <h1>单个用户</h1>
+    <div id="user"></div>
+    <h1>所有用户</h1>
+    <div id="users"></div>
+    <script>
+        (function (widnow) {
+            var xhr = new XMLHttpRequest();
+            function loadUser() {
+                xhr.open('GET', './user.json', true);
+                xhr.send();
+                xhr.onreadystatechange = function () {
+                    if(this.status == 200 & this.readyState == 4){
+                        var user = JSON.parse(this.responseText);
+                        document.getElementById('user').innerHTML = 
+                            "<ul>" +
+                                "<li>" + user.id  + "</li>" +
+                                "<li>" + user.name  + "</li>" +
+                                "<li>" + user.email  + "</li>" +
+                            "</ul>";
+                    }
+                }
+            }
+            function loadUsers() {
+                xhr.open('GET', './users.json', true);
+                xhr.send();
+                xhr.onreadystatechange = function () {
+                    if(this.status == 200 & this.readyState == 4){
+                        var users = JSON.parse(this.responseText),output = '';
+                        for(var i in users){
+                            output +=
+                                "<ul>" +
+                                    "<li>" + users[i].id  + "</li>" +
+                                    "<li>" + users[i].name  + "</li>" +
+                                    "<li>" + users[i].email  + "</li>" +
+                                "</ul>";
+                        }
+                        document.getElementById('users').innerHTML = output;
+                    }
+                }
+            }
+
+            window.customFunction = {
+                loadUser: loadUser,
+                loadUsers: loadUsers,
+            }
+        })(window)
+
+
+
+        document.getElementById('buttonone').addEventListener('click', window.customFunction.loadUser);
+        document.getElementById('buttontwo').addEventListener('click', window.customFunction.loadUsers);
+        
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax ==> 请求纯文本</title>
+</head>
+<body>
+    <button id="button">请求文本</button>
+    <br>
+    <br>
+    <br>
+    <div id="textbox"></div>
+    <script>
+        document.getElementById('button').addEventListener('click', loadText)
+        function loadText() {
+            // 创建XMLHttpRequest对象;
+            var xhr = new XMLHttpRequest();
+            // 打印查看XMLHttpRequest身上的所有方法和属性;
+            console.log(xhr);
+            
+            // 开始设定请求: 请求类型,地址,同异步
+            // open(requestType, url, async)
+            // 如果请求一个地址只是把数据拿到, 就是用get
+            // 如果需要发送一些数据使用post, 当然get也可以做;
+            xhr.open('GET', 'sample.txt', true);
+            console.log('READYSTATE:  ',xhr.readyState);
+
+
+            // 如果当页面加载不出来, 需要给一个加载中的动画, 需要在状态3中进行动画;
+            // onprogress则可以监听到状态3;
+            xhr.onprogress = function () {
+                console.log('READYSTATE:  ', this.readyState);
+            }
+            
+            
+            
+            // onload 或 onreadyStatechange来监听请求结果;
+            // onload 和 onreadyStatechange的区别在于 readyStatechange能监听到2,3,4的状态, 而load只能监听4的状态;
+            // xhr.onload = function() {
+            //     // 如果进入到这个状态就已经到状态四了, 监听不到2,3; 言外之意就是当所有的请求都走完才会走到这一步;
+            //     console.log('READYSTATE:  ',this.readyState);
+            //     console.log(this.responseText);
+            //     document.getElementById('textbox').innerHTML = this.responseText;
+            // }
+            xhr.onreadystatechange = function () {
+                console.log('READYSTATE:  ',this.readyState);
+                // 如果不做这个判断当成功时在请求处理中(3)时,就会执行一次;
+                if(this.status == 200 & this.readyState == 4){
+                    console.log(this.responseText);
+                    document.getElementById('textbox').innerHTML = this.responseText;
+                } else if (this.status == 404) {
+                    console.log('请求的地址不存在');
+                    document.getElementById('textbox').innerHTML = 'Not Found';
+                }
+            }
+            
+            
+            // 发送请求;
+            // 发送后会对服务器连接;
+            xhr.send();
+
+            
+        }
+    </script>
+</body>
+</html>

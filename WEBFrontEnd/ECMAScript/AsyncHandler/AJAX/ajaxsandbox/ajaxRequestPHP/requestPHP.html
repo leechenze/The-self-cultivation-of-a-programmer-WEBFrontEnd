@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>requestPHP</title>
+</head>
+<body>
+    <button id="button">获取PHP</button>
+    <br><br>
+
+    <h1>表单提交请求PHP</h1>
+    <form action="process.php" method="get">
+        <input type="text" name="name">
+        <input type="submit" value="提交">
+    </form>
+
+    <h1>ajax请求PHP</h1>
+    <form id="getForm">
+        <input type="text" name="name" id="getFormName">
+        <input type="submit" value="提交">
+    </form>
+    
+
+    <h1>表单提交请求PHP  ===  post</h1>
+    <form action="process.php" method="post">
+        <input type="text" name="name">
+        <input type="submit" value="提交">
+    </form>
+
+    <h1>ajax请求PHP  ===  post</h1>
+    <form id="postForm">
+        <input type="text" name="name" id="postFormName">
+        <input type="submit" value="提交">
+    </form>
+
+
+
+    <h1>ajax请求PHP数据库数据</h1>
+    <h1>所有用户</h1>
+    <div id="users"></div>
+    <button id="requestPHPMyAdmin">获取数据库数据</button>
+    
+    
+    <script>
+        (function (widnow) {
+            var xhr = new XMLHttpRequest();
+            function getData() {
+                xhr.open('GET', './process.php?name=leecz', true);
+                xhr.send();
+                xhr.onreadystatechange = function () {
+                    if(this.status == 200 & this.readyState == 4){
+                        console.log(this.response);
+                    }
+                }
+            }
+
+            function getForm(event) {
+                event.preventDefault();
+                var getFormName = document.getElementById('getFormName');
+                //  get请求的参数拼接到url中发送;
+                xhr.open('GET', './process.php?name=' + getFormName.value, true);
+                xhr.onreadystatechange = function () {
+                    if(this.status == 200 & this.readyState == 4){
+                        console.log(this.responseText);
+                    }
+                }
+                xhr.send();
+            }
+
+            function postForm(event) {
+                event.preventDefault();
+                var postFormName = document.getElementById('postFormName'),
+                    params = 'name=' + postFormName.value;
+                xhr.open('POST', './process.php', true);
+                xhr.onreadystatechange = function () {
+                    if(this.status == 200 & this.readyState == 4){
+                        console.log(this.responseText);
+                    }
+                }
+                // post请求还需要设置请求头;
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                // post请求的参数添加到xhr的send(‘’)中请求;
+                xhr.send(params);
+            }
+
+            // 请求PHPMyAdmin数据;
+            function requestPHPMyAdmin() {
+                xhr.open('GET', 'process.php', true);
+                xhr.send();
+                xhr.onreadystatechange = function () {
+                    if(this.status == 200 & this.readyState == 4){
+                        var users = JSON.parse(this.responseText),output = '';
+                        for(var i in users){
+                            output +=
+                                "<ul>" +
+                                    "<li>" + users[i].name  + "</li>" +
+                                "</ul>";
+                        }
+                        document.getElementById('users').innerHTML = output;
+                    }
+                }
+            }
+
+            
+            window.customFunction = {
+                getData: getData,
+                getForm: getForm,
+                postForm: postForm,
+                requestPHPMyAdmin: requestPHPMyAdmin
+            }
+        })(window)
+
+
+        document.getElementById('button').addEventListener('click', window.customFunction.getData);
+        document.getElementById('getForm').addEventListener('submit', window.customFunction.getForm);
+        document.getElementById('postForm').addEventListener('submit', window.customFunction.postForm);
+        // 请求PHPMyAdmin数据;
+        document.getElementById('requestPHPMyAdmin').addEventListener('click', window.customFunction.requestPHPMyAdmin);
+        
+        
+    </script>
+</body>
+</html>

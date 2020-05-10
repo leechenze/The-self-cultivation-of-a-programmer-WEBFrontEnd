@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>request github api</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #users{
+            width: 500px;
+            height: 100px;
+        }
+        .user{ 
+            
+        }
+        .user img{
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="button">获取Github用户信息</button>
+    <br>
+    <br>
+    <br>
+    <h1>GitHub用户信息</h1>
+    <div id="users"></div>
+
+    <script>
+        (function (widnow) {
+            var xhr = new XMLHttpRequest();
+            function loadUsers() {
+                xhr.open('GET', 'https://api.github.com/users', true);
+                xhr.send();
+                xhr.onload = function () {
+                    if (this.status == 200 & this.readyState == 4) {
+                        var users = JSON.parse(this.responseText),output = '';
+                        for(var i in users){
+                            output +=
+                                "<dl class='user'>" +
+                                    "<dt>" + 
+                                        "<img src='"+ users[i].avatar_url +"'>" + 
+                                    "</dt>"  + 
+                                    "<dd>" +
+                                        "<p>" + users[i].id  + "</p>" +
+                                        "<p>" + users[i].login  + "</p>" +
+                                    "</dd>"
+                                "</dl>";
+                        }
+                        console.log(output);
+                        document.getElementById('users').innerHTML = output;
+                    }
+                }
+            }
+
+            window.customFunction = {
+                loadUsers: loadUsers,
+            }
+        })(window)
+
+        document.getElementById('button').addEventListener('click', window.customFunction.loadUsers);
+
+    </script>
+</body>
+
+</html>

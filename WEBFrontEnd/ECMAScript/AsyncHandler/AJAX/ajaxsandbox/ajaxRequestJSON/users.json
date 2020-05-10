@@ -1,0 +1,19 @@
+[
+    {
+        "id": 1,
+        "name":  "leecz",
+        "email": "leeczyc@gmail.com"
+    },
+    
+    {
+        "id": 2,
+        "name":  "trump",
+        "email": "trump@gmail.com"
+    },
+    {
+        "id": 3,
+        "name":  "obama",
+        "email": "obama@gmail.com"
+    }
+
+]
