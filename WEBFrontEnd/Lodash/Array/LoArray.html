@@ -7,6 +7,244 @@
     <script src="../lodash.min.js"></script>
 </head>
 <body>
-    
+    <script>
+        
+        // 拆分数组;
+        // _.chunk(array, size)                                                         将array拆分成为size长度的区块;
+            var arr = [1,2,3,4,5,6,7];
+            var result = _.chunk(arr,2);                                                    // [[1,2],[3,4],[5,6],[7]]
+        
+
+
+        // 排除为假的值;
+        // _.compact(array);                            
+            var arr = [0, 1, 2, '', false, 3];
+            var result = _.compact(arr);                                                    // [1,2,4]
+
+
+
+        // 连接数组
+        // _.concat(array0, array1)
+            var array = [1];
+            var other = _.concat(array, 2, [3], [[4]]);                                     // [1, 2, 3, [4]]
+            
+
+
+        // 第一个数组不能出现第二个数组中的值;
+        // _.difference(arr, arr);
+        _.difference([3, 2, 1, 5], [4, 2, 1]);                                          // [3, 5]
+        
+
+        // differenceBy比difference多接受一个iteratee参数;
+        // _.differenceBy()
+            _.differenceBy([2.1, 1.2], [2.3, 3.4], Math.floor);                             // [1.2, 5.4, 1.1];
+                // 思路过程一：迭代(Math.floor)元素后结果：         [2.1, 1.2]=> [２, １],                      [2.3, 3.4] => [2, 3])
+                // 思路过程二：进行_.difference([2, 1], [2, 3])                                         过滤值  ==>   [1];
+            _.differenceBy([{ 'x': 2 }, { 'x': 1 }], [{ 'x': 1 }], 'x');                    // [{'x': 2}]
+                // 思路过程一：迭代(x)元素后结果：                  [{ 'x': 2 }, { 'x': 1 }]=> [２, １],        [{ 'x': 1 }] => [1])
+                // 思路过程二：进行_.difference([{ 'x': 2 }, { 'x': 1 }], [{ 'x': 1 }], 'x')            过滤值  ==>   { 'x': 2 }     
+
+        
+
+        // 与difference相比，多了一个compare(我这里叫他比较器);
+        // differenceWith(arr);
+            var arr = [1,2];
+            _.differenceWith(arr, [1], _.isEqual);                                              // [2];
+            
+            var obj = [{'x': 1, 'y': 2},{'x': 2, 'y': 1}];                                      
+            _.differenceWith(obj, [{'x': 1, 'y': 2}]);                                          // [{'X': 2, 'y': 1}];
+        
+
+        
+        // 开头丢掉n个数值;
+            _.drop([1, 2, 3]);
+            // => [2, 3]
+
+            _.drop([1, 2, 3], 2);
+            // => [3]
+
+            _.drop([1, 2, 3], 5);
+            // => []
+
+            _.drop([1, 2, 3], 0);
+            // => [1, 2, 3]
+            
+        
+
+        
+        // 结尾丢掉n个数值;
+            _.dropRight([1, 2, 3]);
+            // => [1, 2]
+
+            _.dropRight([1, 2, 3], 2);
+            // => [1]
+
+            _.dropRight([1, 2, 3], 5);
+            // => []
+
+            _.dropRight([1, 2, 3], 0);
+            // => [1, 2, 3]
+        
+            
+        
+
+        // 填充数组值;          
+        // _.fill(arr, 填充值, 开始位, 结束位);
+            var array = [1,2,3,4,5];
+            _.fill(array, 'a');
+            // ==> ['a','a','a','a','a'];
+            _.fill(Array(3), 2);
+            // ==> [2,2,2];
+            _.fill(array, '*', 1, 3);
+            // ==> [1,'*','*', 4,5];
+            
+            
+            
+
+            
+        // 查找数组中对象索引值
+        // _.findIndex(array, 迭代函数, 开始搜索的索引值);
+            var users = [
+                { 'user': 'barney',  'active': false },
+                { 'user': 'fred',    'active': false },
+                { 'user': 'pebbles', 'active': true }
+            ];
+            _.findIndex(users, function(o) { return o.user == 'barney'; });
+            // ==> 0;
+            _.findIndex(users, { 'user': 'fred', 'active': false });
+            // ==> 1
+        
+
+
+
+
+        // 查找数组中对象的索引值;
+        // _.findLastIndex(array, 迭代函数, 开始搜索的索引值);
+            var users = [
+                { 'user': 'barney',  'active': false },
+                { 'user': 'fred',    'active': false },
+                { 'user': 'pebbles', 'active': true }
+            ];
+            _.findLastIndex(users, { 'user': 'fred',    'active': false })
+            // ==> 1;
+            _.findLastIndex(users, function (o){return o.user == 'pebbles'})
+            // ==> 2;
+
+            
+
+
+
+        // 获取数组第一个元素;
+        // _head(arr);
+            var array = [1,2,3];
+            _.head(array);
+            // ==> 1
+            _.head([]);
+            // ==> undefined;
+
+
+
+        // 减少一层嵌套;(数组降维);
+        // _.flatten(array);
+            var array = [1,[2,[3,[4]],5]];
+            _.flatten(array);
+            // ==> [1,2,[3,[4]],5];
+        
+
+
+        // 递归为一堆数组;(数组降维);
+        // _.flattenDeep(arr);
+            var array = [1,[2,[3,[4]],5]];
+            _.flattenDeep(array);
+            // ==> [1,2,3,4,5]; 
+
+
+
+        // 减少depth层嵌套;
+        // _.flattenDepth(arr, custom);
+            var array = [1,[2,[3,[4]],5]];
+            _.flattenDepth(array, 3);
+            // ==> [1,2,3,4,5];
+            var array = [1,[2,[3,[4]],5]];
+            _.flattenDepth(array, 2);
+            // ==> [1, 2, 3, [4], 5];
+
+
+
+        // 返回键值对对象;
+        // _.fromPairs(array);
+            var array = [['a',1], ['b',1]];
+            _.fromPairs(array);
+            // ==> {a: 1, b: 1}
+            
+
+
+
+        // 获取元素的索引值;
+        // _.indexOf(array, 查找值, 开始查询位);
+            _.indexOf([1,2,1,2],2);
+            // ==> 1;
+            _.indexOf([1, 2,1,2],2,2);
+            // ==> 3;
+
+        
+
+        // 去除最后一个元素;
+        // _.initial(array);
+            _.initial([1,2,3,4,5]);
+            // ==> [1,2,3,4];
+
+
+
+        // 数组交集(返回两个数组有交集的元素的一个新数组);
+        // _.intersection(arr1, arr2);
+            _.intersection([1,2],[2,3]);
+            // ==> [2];
+
+
+
+        // 数组交集(同intersection类同, 多接受一个过滤迭代参数);
+        // _.intersectionBy(arr1, arr2, iteratee);
+            _.intersectionBy([1.2,2.1], [1,4,3.2], Math.floor);
+            // ==> [1.2];
+            _.intersectionBy([{'x': 1}, {'x': 2,}], [{'x': 1}], 'x');
+            // ==> [{'x':1}];
+
+
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        
+    </script>
 </body>
 </html>
