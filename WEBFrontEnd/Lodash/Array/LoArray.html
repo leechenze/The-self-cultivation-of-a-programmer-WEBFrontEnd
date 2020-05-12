@@ -210,41 +210,314 @@
             _.intersectionBy([{'x': 1}, {'x': 2,}], [{'x': 1}], 'x');
             // ==> [{'x':1}];
 
-
         
         
+        // 数组交集(同intersection类同, 多接受一个比较参数);
+        // _.intersectionWith(array, array, comparator);
+            var obj = [{'x': 1, 'y': 2}, {'x': 2, 'y': 1}];
+            var others = [{'x': 1,'y': 1}, {'x':1, 'y':2}];
+            _.intersectionWith(obj, others, _.isEqual);
+            // ==> [{'x':1, 'y':2}
+        
+        
+
+
+        // 数组分割转为字符串;
+        // _.join(array, 分割的元素);
+            _.join([1,2,3], '');
+            // ==> '123';
+            _.join([1,2,3], '@');
+            // ==> '1@2@3'
+
+
+
+        // 获取最后一个元素;
+        // _.last(arr);
+            _.last([1,2,3]);
+            // ==> 3;
         
 
 
+        // 获取元素的索引;
+        // _.lastIndexOf(arr,ind);
+            _.lastIndexOf([1,2,3,4,5], 5);
+            // ==> 0;
+
+
+        // 获取元素中的值;
+        // _.nth(array, ind);
+            _.nth([1,2,3,4,5], 1);
+            // ==> 2;
+            _.nth([1,2,3,4,5], -2);
+            // ==> 4;
+
+
+        // 删除数组中元素;
+        // _.pull(array, 要删除的值, 要删除的值);
+            _.pull([1,2,3,4,5], 2,4);
+            // ==> [1,3,5];
+            
+        
+
+        // 删除数组中的元素;
+        // _.pullAll(array, 要移除的数组(中的值)), 和_.pull的不同之处在于pullAll第二个参数接收的是一个数组
+            _.pullAll([1,2,3,4,5], [2,4]);
+            // ==> [1,3,5];
+
+        
+
+        // 删除数组中的元素;
+        // _.pullAllBy(array, 要移除的数组(中的值), iteratee(迭代器));
+            var arr = [{'x':1}, {'x':2}, {'x':3}, {'x':1}];
+            _.pullAllBy(arr, [{'x': 1}, {'x': 3}], 'x');
+            // ==> [{'x': 2}];
+            _.pullAllBy([1.2, 2.1, 3.4, 1.1], [1.5, 2.2, 1.4], Math.floor);
+            // ==> [3.4];
+
+            
+
+        // 删除数组中的元素;
+        // _.pullAllWith(array, 要移除的数组(中的值), comparator(比较器));
+            var array = [1,2,3];
+            _.pullAllWith(array,[1,3], _.isEqual);
+            // ==> [2];
+
+        
+
+        // 删除数组中的元素;
+        // _.pullAt(array, 要移除的元素的索引);
+            var arr = [1,2,3,4,5]; 
+            _.pullAt(arr, [1,3]);
+            // ==> [2,4];
+            console.log(arr);
+            // ==> [1,3,5];
+
+
+
+        // 删除数组中的元素;
+        // _.remove(array, 迭代函数);
+            var arr =  [1,2,3,4,5];
+            var evens = _.remove(arr, function (n) {
+                return n % 2 == 0;
+            })
+            console.log(arr);
+            // ==> [1,3,5];
+            console.log(evens);
+            // ==> [2,4];
+
+
+        // 元素位置反转;
+        // _.reverse(array);
+            _.reverse([1,2,3]);
+            // ==> [3,2,1];
+            
+
+        
+        // 数组截取;
+        // _.slice(array, 开始位, 结束位);
+            _.slice(arr, 1, 3);
+            // ==> [2,3];
+        
+        
+
+        // 获取索引值;
+        // _.sortedIndex(array, 要评估的值), 像一个有序的数组中插入一个值,返回它的应该所在的索引位;
+            _.sortedIndex([30, 50], 40);
+            // ==> 1;
+            _.sortedIndex([30, 50], 30);
+            // ==> 0;
+            _.sortedIndex([30, 50], 51);
+            // ==> 2;
+            
+
+        // 获取索引值;
+        // _.sortedIndexBy(array, 要评估的值, 迭代函数);
+            _.sortedIndexBy([{'x': 4},{'x': 5}], {'x': 4.5}, function (o) {
+                console.log(o);
+                return o.x;
+            });
+            
+
+
+        // 获取索引值;
+        // _.sortedIndexOf(array, 搜索的值);
+            _.sortedIndexOf([4, 5, 5, 5, 6], 5);
+            // ==> 1
+            _.sortedIndexOf([4, 5, 1, 5, 6], 5);
+            // ==> 3
 
 
 
 
+        // 获取索引值;
+        // _.sortedLastIndex(array, 要评估的值);
+            _.sortedLastIndex([4,5,5,5,6], 5);
+            // ==> 5
+            _.sortedLastIndex([4,5,1,5,6], 5);
+            // ==> 4
+        
+
+
+        // 获取索引值
+        // _.sortedLastIndex(array, 要评估的值, 迭代函数);
+            _.sortedLastIndexBy([{'x': 4}, {'x': 5}], {'x': 4}, function (o) {
+                return o.x;
+            })
+            // ==> 1;
+            _.sortedLastIndexBy([{'x': 4}, {'x': 5}], {'x': 4}, 'x');
+            // ==> 1;
 
 
 
 
+        // 获取索引值
+        // _.sortedLastIndexOf(array, 搜索的值);
+            _.sortedLastIndexOf([4,5,5,5,6], 5);
+            // ==> 3;
 
 
 
 
+        // 数组去重;
+        // _.sortedUniq(array);
+            _.sortedUniq([1,2,1,2,3]);
+            // ==> [1,2,1,2,3];
+            _.sortedUniq([1,1,2]);
+            // ==> [1,2];
+            
+
+        // 数组去重;
+        // _.sortedUniqBy(array, iteratee函数);
+            _.sortedUniqBy([1.1, 1.2, 1.3, 2.1, 1.2, 2.6, 3], Math.floor);
+            // ==> [1.1, 2.1, 1.2, 2.1, 3]
+        
+
+        // 截取数组的第一位,返回截取后的数组;
+        // _.tail(array);
+            _.tail([1, 2, 3]);
+            // ==> [2,3];
+
+        
+
+        // 数组截取;
+        // _.take(array, 要截取的个数);
+            _.take([1,2,3]);
+            // ==> [1];
+            _.take([1,2,3],2);
+            // ==> [1,2];
+            _.take([1, 2, 3], 5);
+            // ==> [1, 2, 3]
+            _.take([1, 2, 3], 0);
+            // ==> []
+            
 
 
 
-
-
-
-
-
-
-
-
-
-
+        // 数组截取
+        // _.takeRight(array, 要截取的个数)(所有带有right的方法都是表示从右向开始);
+            _.takeRight([1,2,3]);
+            // ==> [3];
+            _.takeRight([1, 2, 3], 2);
+            // ==> [2,3]
+            _.takeRight([1, 2, 3], 5);
+            // ==> [1,2,3]
+            _.takeRight([1, 2, 3], 0);
+            // ==> [];
 
 
         
+        // 数组截取
+        // _.takeRightWhile(array, iteratee函数);
+            var users = [
+                { 'user': 'barney',  'active': true },
+                { 'user': 'fred',    'active': false },
+                { 'user': 'pebbles', 'active': false }
+            ];
+            _.takeRightWhile(users, function (o) {
+                return !o.active;
+            })
+            // ==> [{ 'user': 'fred',    'active': false },{ 'user': 'pebbles', 'active': false }];
+
+            
         
+        // 数组截取;
+        // _.takeWhile(array, iteratee函数);
+            var users = [
+                { 'user': 'barney',  'active': false },
+                { 'user': 'fred',    'active': false },
+                { 'user': 'pebbles', 'active': true }
+            ];
+            _.takeWhile(users, function (o) {
+                return !o.active;
+            })
+            // ==> [{ 'user': 'barney',  'active': false },{ 'user': 'fred',    'active': false }]
+            
+
+        
+
+
+        // 数组合并
+        // _.union(arr, arr1), 返回的数组每一个元素都是一个唯一值;
+            _.union([2], [1, 2]);
+            // => [2, 1]
+        
+
+        
+
+        // 数组合并;
+        // _.unionBy(array, array1, iteratee);
+            _.unionBy([2.1], [1.2, 2.3])
+            // ==> [2.1, 1.2];
+            _.unionBy([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x');
+            // ==> [{ 'x': 1 }, { 'x': 2 }]
+
+
+        
+        // 数组合并;
+        // _.unionWith(array1, array2, comparator);
+            var objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }];
+            var others = [{ 'x': 1, 'y': 1 }, { 'x': 1, 'y': 2 }];
+            _unionWith(objects, others, _.isEqual);
+            // ==> [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }, { 'x': 1, 'y': 1 }];
+        
+        
+        // 数组去重;
+        // _.uniq(arr);
+            _.uniq([1,2,1,2,3]);
+            // ==> [1,2,3];
+        
+
+        // 数组去重;
+        // _.uniqBy(arr, iteratee);
+            _.uniqBy([2.1, 1.2, 2.3], Math.floor);
+            // ==> [2.1, 1.2];
+            
+
+        // 数组去重;
+        // _.uniqWith(array, comparator);
+            _.uniqWith([{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }, { 'x': 1, 'y': 2 }], _.isEqual);
+            // ==> [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]
+
+
+        // 数组重组
+        // _.unzip(arr1, arr2);
+            _.unzip([['a', 1, true], ['b', 2, false]])
+            // ==> [['a', 'b'], [1,2], [true,false]];
+            
+        // 数组重组;
+        // _.unzipWith(array, array1, comparator);
+            _.unzipWith([[1, 10, 100], [2, 20, 200]], _.add);
+            // ==> [[3, 30, 300]];
+        
+
+
+            
+            
+            
+            
+            
+            
+            
     </script>
 </body>
 </html>
