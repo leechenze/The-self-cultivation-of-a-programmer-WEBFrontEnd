@@ -100,4 +100,4 @@ Axios:
     })
     .then(response => console.log(response))
     .catch(err => console.error(err));
-    axios也是一个promise对象, 所以有.then和.catch的回掉;
+    axios是一个promise对象;
