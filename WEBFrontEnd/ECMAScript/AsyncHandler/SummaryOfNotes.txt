@@ -91,3 +91,13 @@ Ajax:
         505:        HTTP Version not supported
 
     
+
+
+Axios:
+    axios({
+        method: 'get',                  方式
+        url: 'ur';                      地址
+    })
+    .then(response => console.log(response))
+    .catch(err => console.error(err));
+    axios也是一个promise对象, 所以有.then和.catch的回掉;
