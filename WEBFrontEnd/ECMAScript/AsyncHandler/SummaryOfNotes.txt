@@ -94,10 +94,83 @@ Ajax:
 
 
 Axios:
-    axios({
-        method: 'get',                  方式
-        url: 'ur';                      地址
-    })
-    .then(response => console.log(response))
-    .catch(err => console.error(err));
-    axios也是一个promise对象, 所以有.then和.catch的回掉;
+     axios()
+     .then(response => console.log(response))
+     .catch(err => console.error(err));
+     axios是一个promise对象, 有.then和.catch的回掉;
+
+    get请求:
+
+        axios("http://jsonplaceholder.typicode.com/todos?timeout=5000",{             axios默认是get请求方式;
+            _limit: 5,
+        })
+    
+        axios({
+            method: 'get',                                                          方式
+            url: 'http://jsonplaceholder.typicode.com/todos';                       地址
+            params: {};                                                             参数
+        })
+
+
+        axios.get("http://jsonplaceholder.typicode.com/todos",{
+            _limit: 5,
+        });
+
+        axios.get("http://jsonplaceholder.typicode.com/todos?timeout=5000",{
+            _limit: 5,
+        });
+
+        axios.get("http://jsonplaceholder.typicode.com/todos?_limit=5");
+        
+        
+    post请求:
+        axios({
+            method: 'post',                                                          方式
+            url: 'http://jsonplaceholder.typicode.com/todos';                       地址
+            params: {};                                                             参数
+        })
+
+
+        axios.post("http://jsonplaceholder.typicode.com/todos",{
+            _limit: 5,
+        });
+
+        axios.post("http://jsonplaceholder.typicode.com/todos?timeout=5000",{
+            _limit: 5,
+        });
+
+        axios.post("http://jsonplaceholder.typicode.com/todos?_limit=5");
+    
+
+
+
+     put/patch请求:
+        axios({
+            method: 'post',                                                             方式
+            url: 'http://jsonplaceholder.typicode.com/todos';                           地址
+            params: {};                                                                 参数
+        })
+
+
+        axios.post("http://jsonplaceholder.typicode.com/todos",{
+            _limit: 5,
+        });
+
+        axios.post("http://jsonplaceholder.typicode.com/todos?timeout=5000",{
+            _limit: 5,
+        });
+
+        axios.post("http://jsonplaceholder.typicode.com/todos?_limit=5");
+
+
+        
+
+
+
+
+     
+
+
+    jsonplaceholder 参数API;
+        _limit=5                                        只请求5条数据;
+        timeout=5000                                    等待5秒如果未能请求成功,就不在请求;     

@@ -5,22 +5,53 @@
 // GET 请求
 function getTodos() {
     // console.log('GET 请求');
-    axios({
-      method: "get",
-      url: "http://jsonplaceholder.typicode.com/todos",
-    })
-      .then(res => console.info(res))
-      .catch(err => console.error(err));
+    // axios({
+    //   method: "get",
+    //   url: "http://jsonplaceholder.typicode.com/todos",
+    //   params: {
+    //     _limit: 5,
+    //     timeout: 5000,
+    //   }
+    // })
+    //   .then(res => showOutput(res))
+    //   .catch(err => console.error(err));
+
+     //  axios("http://jsonplaceholder.typicode.com/todos?_limit=5",{
+     //    // timeout: 5,
+     //  })
+     //  .then(res => showOutput(res));
+
+      axios.get("http://jsonplaceholder.typicode.com/todos?_limit=5",{
+        // timeout: 5,
+      })
+      .then(res => showOutput(res));
+      
 }
 
 // POST 请求
 function addTodo() {
-    console.log('POST 请求');
+     // axios({
+     //      method: 'post',
+     //      url: 'http://jsonplaceholder.typicode.com/todos',
+     //      params: {
+     //           _limit: 5,
+     //           timeout: 5000,
+     //      }
+     // }).then( res => showOutput(res));
+
+     axios.post('http://jsonplaceholder.typicode.com/todos', {
+          _limit: 5,
+          timeout: 5000,
+     }).then( res => showOutput(res));
 }
+
+
+
+
 
 // PUT/PATCH 请求
 function updateTodo() {
-    console.log('PUT/PATCH 请求');
+     
 }
 
 // DELETE 请求
