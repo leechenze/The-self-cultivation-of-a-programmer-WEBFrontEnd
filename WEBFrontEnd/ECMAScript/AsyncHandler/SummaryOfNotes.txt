@@ -99,7 +99,7 @@ Axios:
      .catch(err => console.error(err));
      axios是一个promise对象, 有.then和.catch的回掉;
 
-    get请求:
+    get请求:    
 
         axios("http://jsonplaceholder.typicode.com/todos?timeout=5000",{             axios默认是get请求方式;
             _limit: 5,
