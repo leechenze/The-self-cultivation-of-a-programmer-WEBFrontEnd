@@ -145,32 +145,181 @@ Axios:
 
 
      put/patch请求:
-        axios({
-            method: 'post',                                                             方式
-            url: 'http://jsonplaceholder.typicode.com/todos';                           地址
-            params: {};                                                                 参数
-        })
 
+        axios.put('http://jsonplaceholder.typicode.com/todos/1', {
+            title: 'leechenze.com',
+            completed: false
+        }).then( res => showOutput(res));
 
-        axios.post("http://jsonplaceholder.typicode.com/todos",{
-            _limit: 5,
-        });
+        axios.patch('http://jsonplaceholder.typicode.com/todos/1', {
+            title: 'leechenze.com',
+            completed: false
+        }).then( res => showOutput(res));
 
-        axios.post("http://jsonplaceholder.typicode.com/todos?timeout=5000",{
-            _limit: 5,
-        });
-
-        axios.post("http://jsonplaceholder.typicode.com/todos?_limit=5");
-
-
+        put和patch的区别在于
+            put只会返回原来的请求参数;
+            patch会返回所有的请求参数;
         
 
 
 
+    delete请求;
 
-     
+        axios.delete('http://jsonplaceholder.typicode.com/todos/1')
+        .then( res => showOutput(res));
 
+        删除请求的todos/1数据, 返回空对象;
+
+
+    
+
+    批量请求数据:
+        axios.all([
+            axios.get('http://jsonplaceholder.typicode.com/todos?_limit=5'),
+            axios.get('http://jsonplaceholder.typicode.com/posts?_limit=5')
+        ])
+        .then(axios.spread((todos, posts) => showOutput(todos)))
+        .catch( err => console.log(err));
+
+        axios.spread()方法是结构响应参数(response)的一个方法;
+
+
+
+    自定义请求(请求配置设置);
+        
+        axios.post('http://jsonplaceholder.typicode.com/todos', {
+            title: 'leechenze.com',
+            completed: false
+        },{
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "sometoken"
+            }
+        }).then( res => showOutput(res))
+        .catch( err => console.log(err));
+
+        设置之后返回的config就会新增 headers 的设置;
+
+    
+    
+    TRANSFORM:
+        const options = {
+            method: "post",
+            url: "http://jsonplaceholder.typicode.com/todos",
+            data: {
+                title: 'hello world'
+            },
+            transformResponse: axios.defaults.transformResponse.concat(data => {
+                data.title = data.title.toUpperCase();
+                return data;
+            })
+        }
+        axios(options).then( res => showOutput(res));
+
+        transformResponse就是对发送给后台的响应数据的一个转换;
+    
+    
+
+    ERROR:
+
+        axios.get("http://jsonplaceholder.typicode.com/todoss")
+        .then(res => showOutput(res))
+        .catch(err => {
+            if(err.response) {
+                console.log(err.response.data);
+                console.log(err.response.status);
+                console.log(err.response.headers);
+
+                if(err.response.status == 404){
+                    alert('客户端请求出现问题');
+                }else if(err.response.status == 500) {
+                    alert('服务端接口出现问题');
+                }
+                
+            }else if(err.request) {
+                console.log(err.request);
+            }else{
+                // 请求既没有发起又没有响应;
+                console.error(err.message);
+            }
+        
+        });
+    
+        err.request: 请求已经发起但是没有响应时;
+        err.response: 请求已发起并且已经响应;
+        err.message: 当请求既没有发起又没有响应时的信息;
+    
+
+
+    CANCEL TOKEN
+        // 全局设置token
+        axios.defaults.headers.common['X-Auth-Token'] = 'token值'
+
+
+        const source = axios.CancelToken.source();
+        source.cancel("请求取消");
+        axios.get("http://jsonplaceholder.typicode.com/todos?_limit=5",{
+            cancelToken: source.token
+        })
+        .then(res => showOutput(res))
+        .catch(thrown => {
+            if(axios.isCancel(thrown)){
+                console.log('request canceld', thrown.message);
+            }
+        })
+        
+
+
+    
+
+    请求拦截/响应拦截:
+
+        axios.interceptors.request.use(
+            config => {
+                console.log(
+                    `${config.method.toUpperCase()}
+                    request sent to 
+                    ${config.url}
+                    at
+                    ${new Date().getTime()}`
+                )
+                return config;
+            },
+            error => {
+                return Promise.reject(error);
+            }
+        )
+
+        axios.interceptors.request.use(function (config) {
+            以上步骤需要注意的是回掉中必须return config这一步;
+            return config;
+        })
+        
+        列举应用场景:
+        请求拦截时的开始加载中动画,
+        响应拦截时表明请求成功,即取消加载动画;
+
+        
+
+
+    AXIOS实例化:
+        const axiosInstance = axios.create({
+            baseURL: 'http://jsonplaceholder.typicode.com',
+        });
+        axiosInstance.get('/comments?_limit=5').then(res => showOutput(res));
+        
+        axios实例一个对象;
+        这个对象可以进行get,post等所有请求方式;
+
+    
+        
+
+
+    
 
     jsonplaceholder 参数API;
         _limit=5                                        只请求5条数据;
         timeout=5000                                    等待5秒如果未能请求成功,就不在请求;     
+
+
+    
