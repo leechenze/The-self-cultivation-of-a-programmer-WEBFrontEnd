@@ -1,5 +1,8 @@
 // 请求接口:
-// http://jsonplaceholder.typicode.com/users
+// http://jsonplaceholder.typicode.com/...
+
+axios.defaults.headers.common['X-Auth-Token'] = 
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 
 
 // GET 请求
@@ -23,25 +26,24 @@ function getTodos() {
 
       axios.get("http://jsonplaceholder.typicode.com/todos?_limit=5",{
         // timeout: 5,
-      })
-      .then(res => showOutput(res));
+      }).then(res => showOutput(res));
       
 }
 
 // POST 请求
 function addTodo() {
-     // axios({
-     //      method: 'post',
-     //      url: 'http://jsonplaceholder.typicode.com/todos',
-     //      params: {
-     //           _limit: 5,
-     //           timeout: 5000,
-     //      }
-     // }).then( res => showOutput(res));
+    //  axios({
+    //       method: 'post',
+    //       url: 'http://jsonplaceholder.typicode.com/todos',
+    //       params: {
+    //            _limit: 5,
+    //            timeout: 5000,
+    //       }
+    //  }).then( res => showOutput(res));
 
      axios.post('http://jsonplaceholder.typicode.com/todos', {
-          _limit: 5,
-          timeout: 5000,
+        title: 'leechenze.com',
+        completed: false
      }).then( res => showOutput(res));
 }
 
@@ -51,43 +53,149 @@ function addTodo() {
 
 // PUT/PATCH 请求
 function updateTodo() {
-     
+
+    //  axios.put('http://jsonplaceholder.typicode.com/todos/1', {
+    //     title: 'leechenze.com',
+    //     completed: false
+    //  }).then( res => showOutput(res));
+
+     axios.patch('http://jsonplaceholder.typicode.com/todos/1', {
+        title: 'leechenze.com',
+        completed: false
+     }).then( res => showOutput(res));
+
 }
 
 // DELETE 请求
 function removeTodo() {
-    console.log('DELETE 请求');
+    axios.delete('http://jsonplaceholder.typicode.com/todos/1')
+    .then( res => showOutput(res));
 }
 
 // 批量请求数据
 function getData() {
-    console.log('批量请求数据');
+    axios.all([
+        axios.get('http://jsonplaceholder.typicode.com/todos?_limit=5'),
+        axios.get('http://jsonplaceholder.typicode.com/posts?_limit=5')
+    ])
+    // .then( res => showOutput(res[0]))
+    .then(axios.spread((todos, posts) => showOutput(todos)))
+    .catch( err => console.log(err));
 }
 
 // 自定义请求头
 function customHeaders() {
-    console.log('自定义请求头');
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "sometoken"
+        }
+    }
+
+    axios.post('http://jsonplaceholder.typicode.com/todos', {
+        title: 'leechenze.com',
+        completed: false
+     },config).then( res => showOutput(res))
+     .catch( err => console.log(err));
+    
 }
 
 // TRANSFORMING 请求 & 响应
 function transformResponse() {
-    console.log('Transform Response 对响应的数据进行转换');
+    // console.log('Transform Response 对响应的数据进行转换');
+    const options = {
+        method: "post",
+        url: "http://jsonplaceholder.typicode.com/todos",
+        data: {
+            title: 'hello world'
+        },
+        transformResponse: axios.defaults.transformResponse.concat(data => {
+            data.title = data.title.toUpperCase();
+            return data;
+        })
+    }
+    axios(options).then( res => showOutput(res));
 }
 
 // ERROR 处理
 function errorHandling() {
-    console.log('Error Handling');
+
+    axios.get("http://jsonplaceholder.typicode.com/todoss")
+    .then(res => showOutput(res))
+    .catch(err => {
+        if(err.response) {
+            console.log(err.response.data);
+            console.log(err.response.status);
+            console.log(err.response.headers);
+
+            if(err.response.status == 404){
+                alert('客户端请求出现问题');
+            }else if(err.response.status == 500) {
+                alert('服务端接口出现问题');
+            }
+            
+        }else if(err.request) {
+            console.log(err.request);
+        }else{
+            // 请求既没有发起又没有响应;
+            console.error(err.message);
+        }
+    
+    });
 }
 
 // CANCEL TOKEN
 function cancelToken() {
-    console.log('Cancel Token');
+    // console.log('Cancel Token');
+
+    const source = axios.CancelToken.source();
+    source.cancel("请求取消");
+    axios.get("http://jsonplaceholder.typicode.com/todos?_limit=5",{
+        cancelToken: source.token
+    }).then(res => showOutput(res))
+    .catch(thrown => {
+        if(axios.isCancel(thrown)){
+            console.log('request canceld', thrown.message);
+        }
+    })
 }
 
+
+
+
 // 请求拦截
+    axios.interceptors.request.use(
+        config => {
+            console.log(
+                `${config.method.toUpperCase()}
+                request sent to 
+                ${config.url}
+                at
+                ${new Date().getTime()}`
+            )
+            return config;
+        },
+        error => {
+            return Promise.reject(error);
+        }
+    )
+// 响应拦截
+    axios.interceptors.response.use();
+
+
+
+
+
 
 // AXIOS 实例化
+    const axiosInstance = axios.create({
+        baseURL: 'http://jsonplaceholder.typicode.com',
+    });
+    axiosInstance.get('/comments?_limit=5').then(res => showOutput(res));
 
+
+
+    
 // 数据展示
 function showOutput(res) {
     document.getElementById('res').innerHTML = `
