@@ -4,8 +4,912 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="../lodash.min.js"></script>
 </head>
 <body>
-    
+    <script>
+        // 强转成数组;
+        // _.castArray(要处理的值);  
+            _.castArray(1);
+            // => [1]
+
+            _.castArray({ 'a': 1 });
+            // => [{ 'a': 1 }]
+
+            _.castArray('abc');
+            // => ['abc']
+
+            _.castArray(null);
+            // => [null]
+
+            _.castArray(undefined);
+            // => [undefined]
+
+            _.castArray();
+            // => []
+
+            var array = [1, 2, 3];
+            console.log(_.castArray(array) === array);
+            // => true
+
+        
+
+        // 数据的浅克隆;
+        // _.cline(要是克隆的值);
+            var objects = [{ 'a': 1 }, { 'b': 2 }];
+
+            var shallow = _.clone(objects);
+            console.log(shallow[0] === objects[0]);
+            // => true
+        
+
+        // 数据的深克隆;
+        // _.cloneDeep(要克隆的值);
+            var objects = [{ 'a': 1}, {'b': 2}];
+            
+            var deep = _.cloneDeep(objects);
+            console.log(deep[0] === objects[0]);
+            console.log(deep[0] == objects[0]);
+            // => false;
+            // => false;
+
+
+        
+        // 数据的深克隆;
+        // _.cloneDeepWith(克隆的值, 自定义克隆的函数);
+            (function () {
+                function customizer(value) {
+                    if (_.isElement(value)) {
+                        return value.cloneNode(true);
+                    }
+                }
+
+                var el = _.cloneDeepWith(document.body, customizer);
+
+                console.log(el === document.body);
+                // => false
+                console.log(el.nodeName);
+                // => 'BODY'
+                console.log(el.childNodes.length);
+                // => 3
+            }());
+                
+
+
+
+        // 数据的浅克隆;
+        // _.cloneWith(要克隆的值, 自定义克隆的函数);
+            (function () {
+                function customizer(value) {
+                    if (_.isElement(value)) {
+                        return value.cloneNode(false);
+                    }
+                }
+
+                var el = _.cloneWith(document.body, customizer);
+
+                console.log(el === document.body);
+                // => false
+                console.log(el.nodeName);
+                // => 'BODY'
+                console.log(el.childNodes.length);
+                // => 0
+            }())
+            
+
+        
+
+        // 对象断言判断;
+        // _.conformTo(检查的对象, 要断言属性是否符合的对象);
+        // 返回值: 如果 object 符合,返回 true,否则 false
+            var object = { 'a': 1, 'b': 2 };
+
+            _.conformsTo(object, { 'b': function(n) { return n > 1; } });
+            // => true
+
+            _.conformsTo(object, { 'b': function(n) { return n > 2; } });
+            // => false
+            
+            _.conformsTo(object, { 'b': function(n) { return n == 2; } });
+            // => true
+
+
+
+        // 判断两值是否相等
+        // _.eq(value1, value2);
+        // 返回值: boolean;
+            var object = {'a': 1};
+            var object1 = {'a': 1};
+
+            _.eq(object, object);
+            // => true
+
+            _.eq(object, object1);
+            // => false
+
+            _.eq('a', 'a');
+            // => true
+
+            
+
+            
+        // 是否大于某值;
+        // _.gt(value1, value2);
+        // 返回值: 如果value1大于value2 返回true, 否则返回false;
+            _.gt(3, 1);
+            // => true
+
+            _.gt(3, 3);
+            // => false
+
+            _.gt(1, 3);
+            // => false
+
+
+
+
+
+        // 是否大于等于某值;
+        // _.gte(value1, value2);
+        // 返回值: 如果value1 大于等于 value2 返回true, 否则返回false;
+            _.gte(3, 1);
+            // => true
+
+            _.gte(3, 3);
+            // => true
+
+            _.gte(1, 3);
+            // => false
+            
+
+
+        // 是否是arguments对象;
+        // _.isArguments(value);
+        // 返回值:  如果value是一个 arguments 对象 返回 true，否则返回 false
+            
+            _.isArguments(function() { return arguments; }());
+            // => true
+
+            _.isArguments([1, 2, 3]);
+            // => false
+
+
+        // 是否是array数组;
+        // _.isArray(value);
+        // 返回值: boolean, 纯数组返回true, 其他包括类数组返回false;
+            _.isArray([1, 2, 3]);
+            // => true
+
+            _.isArray(document.body.children);
+            // => false
+
+            _.isArray('abc');
+            // => false
+
+            _.isArray(_.noop);
+            // => false
+
+
+
+
+        // 是否是ArrayBuffer对象;
+        // _.isArrayBuffer(value);
+        // 返回值: (boolean): 如果value是一个数组 buffer 返回 true，否则返回 false;
+            _.isArrayBuffer(new ArrayBuffer(2));
+            // => true
+            _.isArrayBuffer(new Array(2));
+            // => false
+            
+
+        
+
+
+        // 是否是类数组;
+        // _.isArrayLike(value);
+        // 返回值: 如果value是一个类数组，那么返回 true，否则返回 false。
+            _.isArrayLike([1, 2, 3]);
+            // => true
+
+            _.isArrayLike(document.body.children);
+            // => true
+
+            _.isArrayLike('abc');
+            // => true
+
+            _.isArrayLike(_.noop);
+            // => false
+            
+
+
+        
+        // 是否是类对象数组;
+        // _.isArrayLikeObject(value);
+        // 返回值:如果 value 是一个类数组对象，那么返回 true，否则返回 false。
+            _.isArrayLikeObject([1, 2, 3]);
+            // => true
+
+            _.isArrayLikeObject(document.body.children);
+            // => true
+
+            _.isArrayLikeObject('abc');
+            // => false
+
+            _.isArrayLikeObject(_.noop);
+            // => false
+        
+
+
+
+        // 是否是boolean类型;
+        // _.isBoolean(value)
+        // 返回值: boolean 如果 value 是一个布尔值，那么返回 true，否则返回 false。
+            _.isBoolean(false);
+            // => true
+
+            _.isBoolean(null);
+            // => false
+            
+        
+
+        // 是否是个buffer()
+        // _.isBuffer(value);
+        // 返回值: boolean 如果 value 是一个buffer，那么返回 true，否则返回 false。
+            // _.isBuffer(new Buffer(2));
+            // => true
+
+            _.isBuffer(new Uint8Array(2));
+            // => false
+        
+        
+        
+        
+        // 是否是个Date对象;
+        // _.isDate(value);
+        // 返回值: 如果 value 是一个日期对象，那么返回 true，否则返回 false。
+            _.isDate(new Date);
+            // => true
+
+            _.isDate('Mon April 23 2012');
+            // => false
+        
+        
+
+
+        // 是否是DOM元素;
+        // _.isElement(value);
+        // 返回值: 如果 value 是一个DOM元素，那么返回 true，否则返回 false。
+            _.isElement(document.body);
+            // => true
+
+            _.isElement('<body>');
+            // => false
+        
+        
+
+
+        // 是否为空;
+        // _.isEmpty(value);
+        // 返回值:  如果 value 为空，那么返回 true，否则返回 false。
+            _.isEmpty(null);
+            // => true
+
+            _.isEmpty(true);
+            // => true
+
+            _.isEmpty(1);
+            // => true
+
+            _.isEmpty([1, 2, 3]);
+            // => false
+
+            _.isEmpty({ 'a': 1 });
+            // => false
+        
+        
+
+
+        // 两值是否相等;
+        // _.isEqual(value1, value2);
+        // 返回值: 如果 两个值完全相同，那么返回 true，否则返回 false。
+            var object = { 'a': 1 };
+            var other = { 'a': 1 };
+
+            _.isEqual(object, other);
+            // => true
+
+            object === other;
+            // => false
+        
+        
+        
+        
+        // 两值是否相等;
+        // _.isEqualWith()
+        // 返回值: 如果 两个值完全相同，那么返回 true，否则返回 false。
+
+            function isGreeting(value) {
+                return /^h(?:i|ello)$/.test(value);
+            }
+
+            function customizer(objValue, othValue) {
+                if (isGreeting(objValue) && isGreeting(othValue)) {
+                    return true;
+                }
+            }
+
+            var array = ['hello', 'goodbye'];
+            var other = ['hi', 'goodbye'];
+
+            _.isEqualWith(array, other, customizer);
+            // => true
+            
+            
+
+        
+        
+        // 是否是error相关对象;
+        // _.Error(value);
+        // 返回值: 如果 value 是一个错误（Error）对象，那么返回 true，否则返回 false。
+        
+            _.isError(new Error);
+            // => true
+
+            _.isError(Error);
+            // => false
+        
+        
+        
+
+
+        // 是否是有限数值;
+        // _.isInfinite(value);
+        // 返回值: 如果 value 是一个有限数值，那么返回 true，否则返回 false。
+            _.isFinite(3);
+            // => true
+
+            _.isFinite(Number.MIN_VALUE);
+            // => true
+
+            _.isFinite(Infinity);
+            // => false
+
+            _.isFinite('3');
+            // => false
+            
+            
+            
+
+        // 是否是Function对象;
+        // _.isFunction(value);
+        // 返回值: 如果 value 是一个函数，那么返回 true，否则返回 false。
+            _.isFunction(_);
+            // => true
+
+            _.isFunction(/abc/);
+            // => false
+            
+            
+        // 是否是整数;
+        // _.isInteger(value)
+        // 返回值: 如果 value 是一个整数，那么返回 true，否则返回 false。
+            _.isInteger(3);
+            // => true
+
+            _.isInteger(3.1);
+            // => false
+
+            _.isInteger(Number.MIN_VALUE);
+            // => false
+
+            _.isInteger(Infinity);
+            // => false
+
+            _.isInteger('3');
+            // => false
+            
+
+
+
+        // 是否为有效的类数组长度;
+        // _.isLength(value);
+        // 返回值: : 如果 value 是一个有效长度，那么返回 true，否则返回 false。
+            _.isLength(3);
+            // => true
+
+            _.isLength(Number.MIN_VALUE);
+            // => false
+
+            _.isLength(Infinity);
+            // => false
+
+            _.isLength('3');
+            // => false
+            
+            
+            
+            
+            
+        // 是否是map对象;
+        // _.isMap(value);
+        // 返回值:  如果 value 是一个 Map 对象，那么返回 true，否则返回 false。
+            _.isMap(new Map);
+            // => true
+
+            _.isMap(new WeakMap);
+            // => false
+            
+        
+
+
+        // 是否匹配给定的值;
+        // _.isMatch(value);
+        // 返回值: 如果object匹配，那么返回 true，否则返回 false。
+            var object = { 'a': 1, 'b': 2 };
+
+            _.isMatch(object, { 'b': 2 });
+            // => true
+
+            _.isMatch(object, { 'b': 1 });
+            // => false
+            
+
+
+
+        // 是否匹配给定的值;
+        // _.isMatchWith(obj, source, customizer);
+        // 返回值: 如果object匹配，那么返回 true，否则返回 false。
+            function isGreeting(value) {
+                return /^h(?:i|ello)$/.test(value);
+            }
+
+            function customizer(objValue, srcValue) {
+                if (isGreeting(objValue) && isGreeting(srcValue)) {
+                    return true;
+                }
+            }
+
+            var object = { 'greeting': 'hello' };
+            var source = { 'greeting': 'hi' };
+
+            _.isMatchWith(object, source, customizer);
+            // => true
+        
+        
+        
+        
+        
+        
+        // 是否是NaN值;
+        // _.isNaN(value);
+        // 返回值: 如果 value 是一个 NaN，那么返回 true，否则返回 false
+            _.isNaN(NaN);
+            // => true
+
+            _.isNaN(new Number(NaN));
+            // => true
+
+            isNaN(undefined);
+            // => true
+
+            _.isNaN(undefined);
+            // => false
+        
+        
+        
+        
+        
+        // 是否是原生函数;
+        // _.isNative(fn);
+        // 返回值:  如果 value 是一个 原生函数，那么返回 true，否则返回 false
+            _.isNative(Array.prototype.push);
+            // => true
+        
+            _.isNative(_.isNative);
+            // => false
+
+        
+
+
+
+
+
+        // 是否是null或者undefined;
+        // _.isNil(value);
+        // 返回值:  如果value为null或undefined，那么返回true，否则返回false。
+            _.isNil(null);
+            // => true
+
+            _.isNil(void 0);
+            // => true
+
+            _.isNil(NaN);
+            // => false
+        
+        
+
+
+        // 是否为null;
+        // _.isNull(value);
+        // 返回值: : 如果value为null，那么返回true，否则返回false
+            _.isNull(null);
+            // => true
+
+            _.isNull(void 0);
+            // => false
+        
+        
+        
+        
+        // 是否是数组;
+        // _.isNumber(value);
+        // 返回值:  如果value为一个数值，那么返回true，否则返回false。
+            _.isNumber(3);
+            // => true
+
+            _.isNumber(Number.MIN_VALUE);
+            // => true
+
+            _.isNumber(Infinity);
+            // => true
+
+            _.isNumber('3');
+            // => false
+        
+        
+        
+        
+        // 是否是对象;
+        // _.isObject(value);
+        // 返回值: 如果value为一个对象，那么返回true，否则返回false。
+            _.isObject({});
+            // => true
+
+            _.isObject([1, 2, 3]);
+            // => true
+
+            _.isObject(_.noop);
+            // => true
+
+            _.isObject(null);
+            // => false
+        
+        
+        
+
+
+        // 是否是类对象;
+        // _.isObjectLike(value);
+        // 返回值:  如果 value 为一个类对象，那么返回 true，否则返回 false。
+            _.isObjectLike({});
+            // => true
+
+            _.isObjectLike([1, 2, 3]);
+            // => true
+
+            _.isObjectLike(_.noop);
+            // => false
+
+            _.isObjectLike(null);
+            // => false
+            
+            
+            
+        
+
+        // 是否是普通对象;
+        // _.isPlainObject(value);
+        // 返回值:  如果 value 为一个普通对象，那么返回 true，否则返回 false。
+            function Foo() {
+                this.a = 1;
+            }
+
+            _.isPlainObject(new Foo);
+            // => false
+
+            _.isPlainObject([1, 2, 3]);
+            // => false
+
+            _.isPlainObject({ 'x': 0, 'y': 0 });
+            // => true
+
+            _.isPlainObject(Object.create(null));
+            // => true
+        
+            
+            
+        
+        // 是否是正则对象;
+        // _.isRegExp(value);
+        // 返回值: 如果 value 为一个正则表达式，那么返回 true，否则返回 false。
+            _.isRegExp(/abc/);
+            // => true
+
+            _.isRegExp('/abc/');
+            // => false
+            
+            
+            
+        
+
+        // 是否是安全整数;
+        // _.isSafeInteger(value);
+        // 返回值: 如果 value 为一个安全整数，那么返回 true，否则返回 false。
+            _.isSafeInteger(3);
+            // => true
+
+            _.isSafeInteger(Number.MIN_VALUE);
+            // => false
+
+            _.isSafeInteger(Infinity);
+            // => false
+
+            _.isSafeInteger('3');
+            // => false
+        
+        
+        
+        
+        // 是否是Set对象;
+        // _.isSet(value);
+        // 返回值:  如果 value 为一个 set 对象，那么返回 true，否则返回 false。
+            _.isSet(new Set);
+            // => true
+
+            _.isSet(new WeakSet);
+            // => false
+        
+        
+        
+            
+
+        // 是否是字符串;
+        // _.isString(value);
+        // 返回值: 如果 value 为一个字符串，那么返回 true，否则返回 false。
+            _.isString('abc');
+            // => true
+
+            _.isString(1);
+            // => false
+            
+            
+            
+        
+
+        
+        // 是否是Symbol对象;
+        // _.issymbol(value);
+        // 返回值: 如果 value 为一个symbol，那么返回 true，否则返回 false。
+            _.isSymbol(Symbol.iterator);
+            // => true
+
+            _.isSymbol('abc');
+            // => false
+            
+            
+
+
+            
+            
+        // 是否是TypedArray对象;
+        // _.isTypedArray(value);
+        // 返回值: 如果 value 为一个typed array，那么返回 true，否则返回 false。
+            _.isTypedArray(new Uint8Array);
+            // => true
+
+            _.isTypedArray([]);
+            // => false
+            
+            
+            
+            
+        // 是否为undefined
+        // _.isUndefined(value);
+        // 返回值:  如果 value 是 undefined ，那么返回 true，否则返回 false。
+            _.isUndefined(void 0);
+            // => true
+
+            _.isUndefined(null);
+            // => false
+            
+            
+            
+            
+            
+        // 是否为weakMap对象;
+        // _.isWeakMap(value);
+        // 返回值: 如果 value 为一个 WeakMap 对象 ，那么返回 true，否则返回 false。
+            _.isWeakMap(new WeakMap);
+            // => true
+
+            _.isWeakMap(new Map);
+            // => false
+            
+            
+
+
+        // 是否为weakSet对象;
+        // _.isWeakSet(value);
+        // 返回值: 如果 value 为一个 WeakSet 对象 ，那么返回 true，否则返回 false。
+            _.isWeakSet(new WeakSet);
+            // => true
+
+            _.isWeakSet(new Set);
+            // => false
+            
+            
+        // 两个值比较小于
+        // _.lt(value, other);
+        // 返回值: 如果value 小于 other 返回 true，否则返回 false。
+            _.lt(1, 3);
+            // => true
+
+            _.lt(3, 3);
+            // => false
+
+            _.lt(3, 1);
+            // => false
+            
+            
+            
+            
+        
+        // 两个值比较小于等于;
+        // _.lte(value, other);
+        // 返回值: 如果value 小于等于 other 返回 true，否则返回 false。
+            _.lte(1, 3);
+            // => true
+
+            _.lte(3, 3);
+            // => true
+
+            _.lte(3, 1);
+            // => false
+            
+            
+            
+            
+
+        // 强转为数组;
+        // _.toArray(value);
+        // 返回值: 返回转换后的数组。
+            _.toArray({ 'a': 1, 'b': 2 });
+            // => [1, 2]
+
+            _.toArray('abc');
+            // => ['a', 'b', 'c']
+
+            _.toArray(1);
+            // => []
+
+            _.toArray(null);
+            // => []
+            
+            
+            
+        
+        // 强转为有限数字;
+        // _.toFinite(value);
+        // 返回值: 返回转换后的数字。
+            _.toFinite(3.2);
+            // => 3.2
+
+            _.toFinite(Number.MIN_VALUE);
+            // => 5e-324
+
+            _.toFinite(Infinity);
+            // => 1.7976931348623157e+308
+
+            _.toFinite('3.2');
+            // => 3.2
+
+
+
+
+            
+        // 强转为整数;
+        // _.toInteger(value);
+        // 返回值: 返回转换后的整数。整数转换是向下取整;
+            _.toInteger(3.2);
+            // => 3
+
+            _.toInteger(Number.MIN_VALUE);
+            // => 0
+
+            _.toInteger(Infinity);
+            // => 1.7976931348623157e+308
+
+            _.toInteger('3.2');
+            // => 3
+        
+            
+
+
+
+        // 强转为整数;
+        // _.toLength(value);
+        // 返回值: 返回转换后的整数
+            _.toLength(3.2);
+            // => 3
+
+            _.toLength(Number.MIN_VALUE);
+            // => 0
+
+            _.toLength(Infinity);
+            // => 4294967295
+
+            _.toLength('3.2');
+            // => 3
+            
+
+
+        // 强转为数字
+        // _.toNumber(value);
+        // 返回值: 返回数字;
+            _.toNumber(3.2);
+            // => 3.2
+
+            _.toNumber(Number.MIN_VALUE);
+            // => 5e-324
+
+            _.toNumber(Infinity);
+            // => Infinity
+
+            _.toNumber('3.2');
+            // => 3.2
+            
+
+            
+            
+        // 强转为普通对象
+        // _.toPlainObject(value);
+        // 返回值: 返回转化后的普通对象;
+            function Foo() {
+                this.b = 2;
+            }
+
+            Foo.prototype.c = 3;
+
+            _.assign({ 'a': 1 }, new Foo);
+            // => { 'a': 1, 'b': 2 }
+
+            _.assign({ 'a': 1 }, _.toPlainObject(new Foo));
+            // => { 'a': 1, 'b': 2, 'c': 3 }
+
+        
+
+
+        // 强转为安全整数;
+        // _.toSafeInteger(value);
+        // 返回值: 返回转换后的安全整数;
+            _.toSafeInteger(3.2);
+            // => 3
+
+            _.toSafeInteger(Number.MIN_VALUE);
+            // => 0
+
+            _.toSafeInteger(Infinity);
+            // => 9007199254740991
+
+            _.toSafeInteger('3.2');
+            // => 3
+
+
+        
+            
+
+        // 强转为字符串;
+        // _.toString(value);
+        // 返回值: 返回字符串;
+            _.toString(null);
+            // => ''
+
+            _.toString(-0);
+            // => '-0'
+
+            _.toString([1, 2, 3]);
+            // => '1,2,3'
+
+        
+    </script>
 </body>
 </html>
