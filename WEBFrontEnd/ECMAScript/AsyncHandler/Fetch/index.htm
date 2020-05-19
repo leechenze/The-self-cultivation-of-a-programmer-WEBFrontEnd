@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    用户<input type="text" id="user"><br/>
+    密码<input type="text" id="pass"><br/>
+    <div id="root"></div>
+    <button id="login">登录</button>
+    <script>
+        document.getElementById('login')['onclick'] = p => {
+            // http://localhost:9999/login
+            // console.log(user.value);
+            // console.log(pass.value);
+            fetch(`http://localhost:9999/login?user=${user.value}&pass=${pass.value}`, {
+                method: 'GET',
+            }).then( res => {
+                res.json( () => {
+                    
+                }).then( (res) => {
+                    if(res.ok) {
+                        document.body.style.backgroundColor = 'green';
+                    }else{
+                        document.body.style.backgroundColor = 'red';
+                    }
+                }).catch( () => {
+                    console.log('服务器错误');
+                })
+            })
+        }
+        
+    </script>
+</body>
+</html>

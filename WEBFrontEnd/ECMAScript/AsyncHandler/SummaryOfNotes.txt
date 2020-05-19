@@ -323,3 +323,22 @@ Axios:
 
 
     
+
+
+
+
+Fetch:
+    fetch是原生的JS的一个库, 不是第三方的;
+    fetch(url, {
+        method: 'GET',
+    }).then((response) => {
+        // 响应成功;
+        response.json(() => {
+            
+        }).then(() => {
+            
+        }).catch(() => {
+
+        })
+    })
+    
