@@ -329,16 +329,47 @@ Axios:
 
 Fetch:
     fetch是原生的JS的一个库, 不是第三方的;
-    fetch(url, {
-        method: 'GET',
-    }).then((response) => {
-        // 响应成功;
-        response.json(() => {
-            
-        }).then(() => {
-            
-        }).catch(() => {
-
+    get:
+        
+        fetch(`http://localhost:9999/login?user=${user.value}&pass=${pass.value}`, {
+            method: 'GET',
+        }).then((response) => {
+            response.json(() => {
+                
+            }).then(() => {
+                // 响应成功;
+            }).catch(() => {
+                // 响应失败;
+            })
         })
-    })
-    
+
+        node安装express
+        cnpm install express;
+        app.js中引入express使用;
+        直接在根目录下node运行 node app.js即可开启http服务监听9999接口;
+
+
+    post: 
+
+        fetch(`http://localhost:9999/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `user=${user.value}&pass=${pass.value}`
+        }).then((response) => {
+            response.json(() => {
+                
+            }).then(() => {
+                // 响应成功;
+            }).catch(() => {
+                // 响应失败;
+            })
+        })
+
+        node安装body-parser;
+        cnpm install body-parser;
+        app.js中引入使用
+        通过中间件使用body-parser;
+        server.use(bodyParser.urlencoded({}))里面先不放参数, 没参数代表什么参数都接;
+        参数可以放置limit这些...
