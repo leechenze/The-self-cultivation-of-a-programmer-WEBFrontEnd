@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lodash.min.js"></script>
+</head>
+<body>
+    <script>
+        // 迭代处理数组或对象中的值;
+        // _.countBy(迭代集合, iteratee);
+        // 返回值: 返回组成集合对象;
+            _.countBy([6.1, 4.2, 6.3], Math.floor);
+            // => {'4': 1, '6': 2}
+            _.countBy([6.1, 4.2, 6.3, 6.4], Math.floor);
+            // => {'4': 1, '6': 3}
+            _.countBy(['one', 'two', 'three'], 'length');           // one和two的length为3, three的length为5;
+            // => {'3': 2, '5': 1}
+            
+
+
+        // 遍历数组或对象;
+        // _.forEach(迭代集合, iteratee);
+        // 返回值: 返回集合
+
+            _([1, 2]).forEach(function(value) {
+                console.log(value);
+            });
+            // => 1 2
+            
+            _.forEach({ 'a': 1, 'b': 2 }, function(value, key) {
+                console.log(key);
+                console.log(value);
+            });
+            // => a 1 b 2
+
+
+
+        
+        // 遍历数组和对象;
+        // _.forEachRight(迭代集合, iteratee);
+        // 返回值: 返回集合;
+            _.forEach([1,2], function (value, ind) {
+                console.log(value, ind);
+            })
+            // => 1 0, 2 1;
+
+        
+
+        // 断言数组或对象中的值;
+        // _.every(迭代的集合, predicate);
+        // 返回值: boolean 如果所有元素经 predicate（断言函数） 检查后都都返回真值，那么就返回true，否则返回 false 。
+            _.every([true, 1, null, 'yes'], Boolean);
+            // => false
+        
+            var users = [
+                { 'user': 'barney', 'age': 36, 'active': false },
+                { 'user': 'fred',   'age': 40, 'active': false }
+            ];
+
+            // The `_.matches` iteratee shorthand.
+            _.every(users, { 'user': 'barney', 'active': false });
+            // => false
+
+            // The `_.matchesProperty` iteratee shorthand.
+            _.every(users, ['active', false]);
+            // => true
+
+            // The `_.property` iteratee shorthand.
+            _.every(users, 'active');
+            // => false
+
+            
+            
+        
+        // 过滤数组或对象;
+        // _.filter(迭代的集合, predicate);
+        // 返回值: 返回一个新的过滤后的数组;
+            var users = [
+                { 'user': 'barney', 'age': 36, 'active': true },
+                { 'user': 'fred',   'age': 40, 'active': false }
+            ]
+            
+            _.filter(users, function(o) { return !o.active; });
+            // => objects for ['fred']
+
+            // The `_.matches` iteratee shorthand.
+            _.filter(users, { 'age': 36, 'active': true });
+            // => objects for ['barney']
+
+            // The `_.matchesProperty` iteratee shorthand.
+            _.filter(users, ['active', false]);
+            // => objects for ['fred']
+
+            // The `_.property` iteratee shorthand.
+            _.filter(users, 'active');
+            // => objects for ['barney']
+            
+            
+            
+        
+
+        // 查找对象或者数组中符合条件的值;
+        // _.find(迭代的值, predicate, 开始搜索的下标);
+        // 返回值: 返回匹配元素，否则返回 undefined;
+            var users = [
+                { 'user': 'barney',  'age': 36, 'active': true },
+                { 'user': 'fred',    'age': 40, 'active': false },
+                { 'user': 'pebbles', 'age': 1,  'active': true }
+            ];
+
+            _.find(users, function(o) { return o.age < 40; });
+            // => object for 'barney'
+
+            // The `_.matches` iteratee shorthand.
+            _.find(users, { 'age': 1, 'active': true });
+            // => object for 'pebbles'
+
+            // The `_.matchesProperty` iteratee shorthand.
+            _.find(users, ['active', false]);
+            // => object for 'fred'
+
+            // The `_.property` iteratee shorthand.
+            _.find(users, 'active');
+            // => object for 'barney'
+            
+            
+        
+
+        // 查找对象或者数组中符合条件的值;
+        // _.findLast(迭代的集合, predicate, 开始搜索的下标);
+        // 返回值: 返回匹配元素，否则返回 undefined。
+            _.findLast([1, 2, 3, 4], function(n) {
+                return n % 2 == 1;
+            });
+            // => 3
+
+
+
+
+
+        // 创建同阶数组;
+        // _.flatMap(迭代的集合, iteratee);
+        // 返回值: 返回新扁平化数组;
+            function duplicate(n) {
+                return [n, n];
+            }
+            
+            _.flatMap([1,2], duplicate);
+            // => [1,1,2,2];
+
+            
+
+
+        
+
+        // 创建同阶数组;
+        // _.flatMapDeep(迭代的集合, iteratee)
+        // 返回值: 返回新扁平化数组;
+            function duplicate(n) {
+                return [[[n, n]]];
+            }
+
+            _.flatMapDeep([1, 2], duplicate);
+            // => [1, 1, 2, 2]
+            
+            
+
+        // 创建同阶数组;
+        // _.flatMapDepth(迭代的集合, iteratee, 最大的递归深度);
+        // 返回值: 返回新的扁平化的数组;
+            function duplicate(n) {
+                return [[[n, n]]];
+            }
+
+            _.flatMapDepth([1, 2], duplicate, 2);
+            // => [[1, 1], [2, 2]]
+        
+        
+        
+        
+        // 便利数组或对象的元素值;
+        // _.groupBy(迭代的集合, iteratee);
+        // 返回值: 返回一个组成聚合的对象;
+            _.groupBy([6.1, 4.2, 6.3], Math.floor);
+            // => { '4': [4.2], '6': [6.1, 6.3] }
+
+            // The `_.property` iteratee shorthand.
+            _.groupBy(['one', 'two', 'three'], 'length');
+            // => { '3': ['one', 'two'], '5': ['three'] }
+        
+
+
+
+
+        // 检查值是否在数组/对象/字符串中;
+        // _.includes(要是检索的集合, 要是检索的值, 要检索的索引位置);
+        // 返回值: 如果找到 value 返回 true， 否则返回 false。
+            _.includes([1, 2, 3], 1);
+            // => true
+
+            _.includes([1, 2, 3], 1, 2);
+            // => false
+
+            _.includes({ 'a': 1, 'b': 2 }, 1);
+            // => true
+
+            _.includes('abcd', 'bc');
+            // => true
+
+            // 需要注意:
+                _.includes({ 'a': 1, 'b': 2 }, { 'a': 1});
+                // => false
+                _.includes({ 'a': 1, 'b': 2 }, 1);
+                // => true
+            
+
+
+
+
+
+        // 引用处理数组;
+        // _.invokeMap(迭代的集合, path, arguments);
+        // 返回值: 返回结果数组;
+            _.invokeMap([[5, 1, 7], [3, 2, 1]], 'sort');
+            // => [[1, 5, 7], [1, 2, 3]]
+
+            _.invokeMap([123, 456], String.prototype.split, '');
+            // => [['1', '2', '3'], ['4', '5', '6']]
+        
+        
+
+        
+        // 遍历处理数组或对象元素值;
+        // _.keyBy(迭代的集合, iteratee);
+        // 返回值: 返回一个组成聚合的对象;
+            var array = [
+                { 'dir': 'left', 'code': 97 },
+                { 'dir': 'right', 'code': 100 }
+            ];
+
+            _.keyBy(array, function(o) {
+            return String.fromCharCode(o.code);
+            });
+            // => { 'a': { 'dir': 'left', 'code': 97 }, 'd': { 'dir': 'right', 'code': 100 } }
+
+            _.keyBy(array, 'dir');
+            // => { 'left': { 'dir': 'left', 'code': 97 }, 'right': { 'dir': 'right', 'code': 100 } }
+
+
+
+
+
+
+
+
+        // 迭代便利处理数组或对象;
+        // _.map(迭代的集合, iteratee);
+        // 返回值: 返回新的映射后的数组;
+            function square(n) {
+                return n * n;
+            }
+
+            _.map([4, 8], square);
+            // => [16, 64]
+
+            _.map({ 'a': 4, 'b': 8 }, square);
+            // => [16, 64] (iteration order is not guaranteed)
+
+            var users = [
+                { 'user': 'barney' },
+                { 'user': 'fred' }
+            ];
+
+            // The `_.property` iteratee shorthand.
+            _.map(users, 'user');
+            // => ['barney', 'fred']
+
+
+
+
+
+
+
+        // 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        
+            
+    </script>
+</body>
+</html>
