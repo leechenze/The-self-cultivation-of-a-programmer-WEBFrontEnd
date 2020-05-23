@@ -1,0 +1,72 @@
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+html {
+  overflow: hidden;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  perspective: 100px;
+  transform-style: preserve-3d;
+  overflow-y: auto;
+}
+body .main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+body .main .list-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 45vh;
+  overflow: hidden;
+}
+body .main .list-item:hover .item-image::before {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+body .main .list-item .item-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  transform: translateZ(-50px) scale(2.4);
+}
+body .main .list-item .item-image::before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: all 0.5s ease;
+}
+body .main .list-item .item-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+body .main .list-item .item-text {
+  color: #fff;
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
+}
+body .main .list-item .item-text .text-title {
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+body .main .list-item .item-text .text-desc {
+  font-size: 1em;
+}
