@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+    <script>
+        
+    </script>
+    
+    <section style="display: none;">
+        在HTML5规范中增加了获取用户地理信息的API,
+        方便了我们基于用户地理位置开发互联网应用;
+
+        1.获取当前位置信息;
+            navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+        2.重复获取当前地理位置信息;
+            navigator.geolocation.watchPosition(successCallback, errorCallback);
+
+        属性:
+            position.coords.latitude;
+            位置纬度;
+            position.coords.longitude;
+            位置经度;
+            position.coords.accuracy
+            位置精度;
+            position.coords.altitude
+            海拔高度;
+        当获取地理位置信息失败后, 会调用errorCallback, 返回错误信息error;
+        
+        
+        
+            
+            
+            
+        
+        
+    </section>
+</body>
+</html>

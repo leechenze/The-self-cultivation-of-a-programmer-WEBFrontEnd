@@ -5,10 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./css/01.网络状态.css">
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+            background-color: #f7f7f7;
+        }
+        p{
+            width: 200px;
+            height: 40px;
+            text-align: center;
+            line-height: 50px;
+            margin: 100px auto;
+            color: #fff;
+            font-size: 24px;
+            background-color: #000;
+        }
+    </style>
 </head>
 <body>
-    <div>
-        
-    </div>
+
+    <p class="tips"></p>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+    <script>
+        window.onload = function () {
+            $('.tips').hide();
+            // 监听网络连接;
+            window.addEventListener('online', function () {
+                $('.tips').text('网络已连接').fadeIn(500).delay(1000).fadeOut(500);
+            })
+            // 监听网络断卡;
+            window.addEventListener('offline', function () {
+                $('.tips').text('网络已经断开').fadeIn(500).delay(1000).fadeOut(500);
+            })
+        }
+
+    </script>
+    
+    <section style="display: none;">
+        通过window.navigator.online检测网络状态;
+        返回布尔值; 但不同浏览器之间会存在差异;
+        所以H5提供了两个事件online和offline;
+        online用户网络连接时被调用
+        offline用户网络断开时被调用;
+        监听的都是window对象;
+    </section>
 </body>
 </html>

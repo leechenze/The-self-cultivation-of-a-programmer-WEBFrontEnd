@@ -4,4 +4,43 @@
 
 
 壹.网络状态
+    通过window.navigator.online检测网络状态;
+    返回布尔值; 但不同浏览器之间会存在差异;
+    所以H5提供了两个事件online和offline;
+    online用户网络连接时被调用
+    offline用户网络断开时被调用;
+    监听的都是window对象;
+
+
+
+贰.全屏
+
+    全屏显示可以是任意元素, 取消全屏只能是document;
+    IE9+才会支持, 高版本浏览器也会有兼容问题, 所以根据不同的浏览器需要添加不同的前缀 moz == ms == webkit == o;
+    1.Node.requestFullScreen()  开启全屏显示;
+    2.Node.cancelFullScreen()   关闭全屏显示;
+        webkit内核:     (chrome,safari...);
+            webkitRequestFullScreen();
+            webkitCancelFullScreen();
+        Gecko内核:
+            mozRequestFullScreen(); 
+            mozCancelFullScreen(); 
+
+        注意微软的坑: ms;       screen开头小写;
+            msRequestFullscreen();
+            msCancelFullscreen();
+    
+
+    3.是否全屏;
+        检测当前是否状态, 同样根据不同的浏览器需要添加不同的前缀;
+        document.webkitIsFullScreen()
+        全屏伪类选择器:
+            :full-screen;
+            :moz-full-screen;
+            :webkit-full-screen;
+            
+
+
+
+叁.文件读取
     

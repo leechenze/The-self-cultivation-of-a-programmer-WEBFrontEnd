@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .btn-group{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 99;
+        }
+    </style>
+</head>
+<body>
+    <div class="cancelfullbox">
+        <img src="../images/2.jpg" alt="">
+        <div class="btn-group">
+            <button class="full">full</button>
+            <button class="cancelfull">cancelfull</button>
+            <button class="isfull">isfull</button>
+        </div>
+    </div>
+    <img src="../images/1.jpg" alt="" class="img" width="100" height="100">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+    <script>
+        var img = $('.img')[0],
+            cancelfullbox = $('.cancelfullbox')[0];
+        $('.full').click(function () {
+            if(img.requestFullscreen){
+                // img.requestFullscreen();
+                cancelfullbox.requestFullscreen();
+            }else if(img.webkitRequestFullScreen){
+                // img.webkitRequestFullScreen();
+                cancelfullbox.webkitRequestFullScreen();
+            }else if(img.mozRequestFullScreen){
+                // img.mozRequestFullScreen();
+                cancelfullbox.mozRequestFullScreen();
+            }else{
+                alert('浏览器不支持全屏');
+            }
+        })
+        $('.cancelfull').click(function () {
+            if(document.CancelFullscreen){
+                document.CancelFullscreen();
+            }else if(document.webkitCancelFullScreen){
+                document.webkitCancelFullScreen();
+            }else if(document.mozCancelFullScreen){
+                document.mozCancelFullScreen();
+            }else{
+                alert('浏览器不支持全屏');
+            }
+        })
+        $('.isfull').click(function () {
+            alert(document.webkitIsFullScreen);
+        })
+    </script>
+    
+    <section style="display: none;">
+        全屏显示可以是任意元素, 取消全屏只能是document;
+        IE9+才会支持, 高版本浏览器也会有兼容问题, 所以根据不同的浏览器需要添加不同的前缀 moz == ms == webkit == o;
+        1.Node.requestFullScreen()  开启全屏显示;
+        2.Node.cancelFullScreen()   关闭全屏显示;
+            webkit内核:     (chrome,safari...);
+                webkitRequestFullScreen();
+                webkitCancelFullScreen();
+            Gecko内核:
+                mozRequestFullScreen(); 
+                mozCancelFullScreen(); 
+
+            注意微软的坑: ms;       screen开头小写;
+                msRequestFullscreen();
+                msCancelFullscreen();
+        
+
+        3.是否全屏;
+            检测当前是否状态, 同样根据不同的浏览器需要添加不同的前缀;
+            document.webkitIsFullScreen()
+            全屏伪类选择器:
+                :full-screen;
+                :moz-full-screen;
+                :webkit-full-screen;
+                
+                
+                
+    </section>
+</body>
+</html>

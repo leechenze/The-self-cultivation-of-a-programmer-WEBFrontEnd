@@ -1,0 +1,64 @@
+构造函数
+
+FileReader()
+返回一个新构造的FileReader。
+有关详细信息和示例，请参阅如何在web应用程序中使用文件。
+
+属性
+
+FileReader.error 只读
+一个DOMException，表示在读取文件时发生的错误 。
+FileReader.readyState 只读
+表示FileReader状态的数字。取值如下：
+常量名	值	描述
+EMPTY	0	还没有加载任何数据.
+LOADING	1	数据正在被加载.
+DONE	2	已完成全部的读取请求.
+FileReader.result 只读
+文件的内容。该属性仅在读取操作完成后才有效，数据的格式取决于使用哪个方法来启动读取操作。
+事件处理
+FileReader.onabort
+处理abort事件。该事件在读取操作被中断时触发。
+FileReader.onerror
+处理error事件。该事件在读取操作发生错误时触发。
+FileReader.onload
+处理load事件。该事件在读取操作完成时触发。
+FileReader.onloadstart
+处理loadstart事件。该事件在读取操作开始时触发。
+FileReader.onloadend
+处理loadend事件。该事件在读取操作结束时（要么成功，要么失败）触发。
+FileReader.onprogress
+处理progress事件。该事件在读取Blob时触发。
+因为 FileReader 继承自EventTarget，所以所有这些事件也可以通过addEventListener方法使用。
+方法
+
+FileReader.abort()
+中止读取操作。在返回时，readyState属性为DONE。
+FileReader.readAsArrayBuffer()
+开始读取指定的 Blob中的内容, 一旦完成, result 属性中保存的将是被读取文件的 ArrayBuffer 数据对象.
+FileReader.readAsBinaryString() 
+开始读取指定的Blob中的内容。一旦完成，result属性中将包含所读取文件的原始二进制数据。
+FileReader.readAsDataURL()
+开始读取指定的Blob中的内容。一旦完成，result属性中将包含一个data: URL格式的Base64字符串以表示所读取文件的内容。
+FileReader.readAsText()
+开始读取指定的Blob中的内容。一旦完成，result属性中将包含一个字符串以表示所读取的文件内容。
+规范
+
+Specification	Status	Comment
+File API
+FileReader	Working Draft	Initial definition
+浏览器兼容
+
+We're converting our compatibility data into a machine-readable JSON format. This compatibility table still uses the old format, because we haven't yet converted the data it contains. Find out how you can help!
+Desktop Mobile
+Feature	Firefox (Gecko)	Chrome	Edge	Internet Explorer	Opera	Safari
+Basic support	3.6 (1.9.2)[1]	7	(Yes)	10	12.02[2]	6.0
+Support in Web Workers	46 (46)	(Yes)	(Yes)	未实现	(Yes)	未实现
+error property uses DOMException, not DOMError	58 (58)	(Yes)	(Yes)	未实现	(Yes)	未实现
+Feature	Firefox Mobile (Gecko)	Android	Edge	IE Mobile	Opera Mobile	Safari Mobile
+Basic support	32	3	(Yes)	10	11.5	6.1
+Support in Web Workers	46.0 (46)	(Yes)	(Yes)	未实现	(Yes)	未实现
+error property uses DOMException, not DOMError	58.0 (58)	?	(Yes)	未实现	(Yes)	未实现
+[1] Prior to Gecko 2.0 beta 7 (Firefox 4.0 beta 7), all Blob parameters below were File parameters; this has since been updated to match the specification correctly. Prior to Gecko 13.0 (Firefox 13.0 / Thunderbird 13.0 / SeaMonkey 2.10) the FileReader.error property returned a FileError object. This interface has been removed and FileReader.error is now returning the DOMError object as defined in the latest FileAPI draft.
+
+[2] Opera has partial support in 11.1.
