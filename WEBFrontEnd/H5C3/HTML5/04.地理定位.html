@@ -7,9 +7,54 @@
     
 </head>
 <body>
+    <p class="demo">获取当前坐标</p>
+    <button onclick="getLocation()">获取坐标</button>
     
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
     <script>
+        var demo = $('.demo')[0];
+        function getLocation() {
+            if(navigator.geolocation){
+                // 如果支持geolocation 地理定位;
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+                // showPosition调用成功
+                // showError调用失败;
+            }else{
+                // 如果不支持用户提示信息;
+                demo.innerHTML = 'Geolocation is not supported by this browser';
+            }
+        }
+
+
+        // 成功回掉;
+        function showPosition(position) {
+            debugger;
+            demo.innerHTML = `
+                latitude${position.coords.latitude}<br/>
+                longitude${position.coords.longitude}
+            `
+        }
+
+        // 失败回掉;
+        function showError(error) {
+            debugger;
+            switch(error.code){
+                case error.PERMISSION_DENIED:
+                    x.innerHTML="User denied the request for Geolocation."
+                break;
+                case error.POSITION_UNAVAILABLE:
+                    x.innerHTML="Location information is unavailable."
+                break;
+                case error.TIMEOUT:
+                    x.innerHTML="The request to get user location timed out."
+                break;
+                case error.UNKNOWN_ERROR:
+                    x.innerHTML="An unknown error occurred."
+                break;
+            }
+        }
+        
+        
         
     </script>
     
@@ -22,7 +67,7 @@
         2.重复获取当前地理位置信息;
             navigator.geolocation.watchPosition(successCallback, errorCallback);
 
-        属性:
+        成功回掉属性:
             position.coords.latitude;
             位置纬度;
             position.coords.longitude;
@@ -31,9 +76,13 @@
             位置精度;
             position.coords.altitude
             海拔高度;
-        当获取地理位置信息失败后, 会调用errorCallback, 返回错误信息error;
-        
-        
+            
+        失败毁掉属性:
+            Permission denied           用户不允许地理定位
+            Position unavailable        无法获取当前位置
+            Timeout                     操作超时
+            unknown error               未知错误
+
         
             
             

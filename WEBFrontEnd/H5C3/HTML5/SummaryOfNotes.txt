@@ -43,4 +43,63 @@
 
 
 叁.文件读取
+
+    上传文件的内容显示到页面上或上传完毕显示略缩图等应用;
+
+    input[type=file]的multiple属性是H5新增的, 用来指定多个文件进行上传;
+    通过FileReader对象可以读取本地文件,使用file对象来指定所要读取的文件或数据.
+    其中file文件可以是来自用户在一个元素上选择文件后返回的FileList对象,
+    也可以是来自拖放操作生成的datatransfer;
+
+
+    Files对象;
+        由于html5中可以通过 multiple指定多个文件,
+        因此通过input[file]上传后得到的是一个Files对象(一个伪数组);
+    
+
+    FileReader对象;
+        html5新增内置对象; 可读取本地文件内容;
+        var reader = new FileReader();
+        可实例化一个对象, 实例方法:
+        1. readAsDataURL();
+            以DataURL形式读取文件;
+            事件监听:
+                onload      当文件读取完成时调用;
+                onerror     当读取操作错误时调用;
+                onabort     当读取操作中止时调用;
+                
+            属性:
+                result  文件读取结果;
+                error   再读取文件时发生错误;
+                readyState  表明FileReader当前状态;
+                    EMPTY	0	还没有加载任何数据.
+                    LOADING	1	数据正在被加载.
+                    DONE	2	已完成全部的读取请求.
+                
+            方法:
+                readAsArrayBuffer()
+                    开始读取文件内容, 成功之后: result 属性中保存的将是被读取文件的 ArrayBuffer 数据对象.
+                readAsBinaryString() 
+                    开始读取文件内容, 成功之后: result属性中将包含所读取文件的原始二进制数据。
+                readAsDataURL()
+                    开始读取文件内容, 成功之后: result属性中将包含一个data: URL格式的Base64字符串以表示所读取 文件的内容。
+                readAsText()
+                    开始读取文件内容, 成功之后: result属性中将包含一个字符串以表示所读取的文件内容。
+                   
+
+
+
+
+
+
+
+
+
+
+
+
+
+肆.地理定位;
+
+    
     
