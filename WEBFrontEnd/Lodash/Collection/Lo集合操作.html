@@ -230,8 +230,8 @@
             // => [['1', '2', '3'], ['4', '5', '6']]
         
         
-
         
+
         // 遍历处理数组或对象元素值;
         // _.keyBy(迭代的集合, iteratee);
         // 返回值: 返回一个组成聚合的对象;
@@ -283,18 +283,67 @@
 
 
 
-        // 
+        // 数组或对象元素值排序;
+        // _.orderBy(迭代集合, 排序的迭代函数);
+        // 返回值: 排序后的新数组;
+            var users = [
+                { 'user': 'fred',   'age': 48 },
+                { 'user': 'barney', 'age': 34 },
+                { 'user': 'fred',   'age': 40 },
+                { 'user': 'barney', 'age': 36 }
+            ];
+
+            // Sort by `user` in ascending order and by `age` in descending order. （user升序，age降序）
+            _.orderBy(users, ['user', 'age'], ['asc', 'desc']);
+            // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 40]]
+
+
+
+
+
+        // 数组和对象断言分组;
+        // _.partition(迭代集合, 迭代函数);
+        // 返回值: 返回元素分组后的元素;
+            var users = [
+                { 'user': 'barney',  'age': 36, 'active': false },
+                { 'user': 'fred',    'age': 40, 'active': true },
+                { 'user': 'pebbles', 'age': 1,  'active': false }
+            ];
+
+            _.partition(users, function(o) { return o.active; });
+            // => objects for [['fred'], ['barney', 'pebbles']]
+
+            // The `_.matches` iteratee shorthand.
+            _.partition(users, { 'age': 1, 'active': false });
+            // => objects for [['pebbles'], ['barney', 'fred']]
+
+            // The `_.matchesProperty` iteratee shorthand.
+            _.partition(users, ['active', false]);
+            // => objects for [['barney', 'pebbles'], ['fred']]
+
+            // The `_.property` iteratee shorthand.
+            _.partition(users, 'active');
+            // => objects for [['fred'], ['barney', 'pebbles']]
 
 
 
 
 
 
+        // 数组或对象迭代累加
+        // _.reduce(迭代集合, 迭代函数, 初始值);
+        // 返回值: 返回累加后的值;
+            _.reduce([1, 2], function(sum, next) {
+                return sum + next;
+            }, 0);
+            // => 3
 
-
-
-
-
+            _.reduce({ 'a': 1, 'b': 2, 'c': 1 }, function(result, value, key) {
+                (result[value] || (result[value] = [])).push(key);
+                return result;
+            }, {});
+            // => { '1': ['a', 'c'], '2': ['b'] } (iteration order is not guaranteed)
+            
 
 
 
