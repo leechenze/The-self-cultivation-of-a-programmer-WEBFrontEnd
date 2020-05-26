@@ -1,23 +1,244 @@
-<!DOCTYPE html>
+<!-- 普通地图 -->
+<!-- <!DOCTYPE html>
 <html>
+
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-	<style type="text/css">
-	body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
-	</style>
-	<script type="text/javascript" src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=hMHCR6nWIaT8EpBqpGHGZ2QQTIwCq8IG&__ec_v__=20062208"></script>
-	<title>地图展示</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body,
+        html,
+        #allmap {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+    </style>
+    <script type="text/javascript"
+        src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=hMHCR6nWIaT8EpBqpGHGZ2QQTIwCq8IG&__ec_v__=20062208"></script>
+    <title>地图展示</title>
 </head>
+
 <body>
-	<div id="allmap"></div>
+    <div id="allmap"></div>
 </body>
+
 </html>
 <script type="text/javascript">
+
     // GL版命名空间为BMapGL
     // 按住鼠标右键，修改倾斜角和角度
-	var map = new BMapGL.Map("allmap");    // 创建Map实例
-	map.centerAndZoom(new BMapGL.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
-	map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
-</script>
+    var map = new BMapGL.Map("allmap");    // 创建Map实例
+    map.centerAndZoom(new BMapGL.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+</script> -->
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 全景地图 -->
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body,
+        html,
+        #panoramamap {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+    </style>
+    <script type="text/javascript"
+        src="http://api.map.baidu.com/api?v=3.0&ak=1aWBxNKUrmwscZ6P3163QPz0o7E1s6TL&__ec_v__=20079022"></script>
+    <title>地图展示</title>
+</head>
+
+<body>
+    <div id="panoramamap"></div>
+</body>
+
+</html>
+<script type="text/javascript">
+
+    var map = new BMap.Map('panoramamap');
+    map.centerAndZoom(new BMap.Point(120.305456, 31.570037), 12);
+    map.enableScrollWheelZoom(true);
+    // 覆盖区域图层测试
+    map.addTileLayer(new BMap.PanoramaCoverageLayer());
+
+    var stCtrl = new BMap.PanoramaControl(); //构造全景控件
+    stCtrl.setOffset(new BMap.Size(20, 20));
+    map.addControl(stCtrl);//添加全景控件
+
+</script> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 普通地图&全景地图 -->
+<!-- <!DOCTYPE html>
+<html>
+<head>
+	<title>普通地图&全景图</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript"
+    src="http://api.map.baidu.com/api?v=3.0&ak=1aWBxNKUrmwscZ6P3163QPz0o7E1s6TL&__ec_v__=20079022"></script>
+    <style>
+		body, html{width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+		#panorama {height: 50%;overflow: hidden;}
+		#normal_map {height:50%;overflow: hidden;}
+	</style>
+</head>
+<body>
+	<div id="panorama"></div>
+	<div id="normal_map"></div>
+	<script type="text/javascript">
+	//全景图展示
+	var panorama = new BMap.Panorama('panorama');
+	panorama.setPosition(new BMap.Point(116.449112,39.729845)); //根据经纬度坐标展示全景图
+	panorama.setPov({heading: -40, pitch: 6});
+
+	panorama.addEventListener('position_changed', function(e){ //全景图位置改变后，普通地图中心点也随之改变
+		var pos = panorama.getPosition();
+		map.setCenter(new BMap.Point(pos.lng, pos.lat));
+		marker.setPosition(pos);
+	});
+
+
+	//普通地图展示
+	var mapOption = {
+			mapType: BMAP_NORMAL_MAP,
+			maxZoom: 18,
+			drawMargin:0,
+			enableFulltimeSpotClick: true,
+			enableHighResolution:true
+		}
+	var map = new BMap.Map("normal_map", mapOption);
+	var testpoint = new BMap.Point(116.449112,39.729845);
+	map.centerAndZoom(testpoint, 18);
+	var marker=new BMap.Marker(testpoint);
+	marker.enableDragging();
+	map.addOverlay(marker);
+	marker.addEventListener('dragend',function(e){
+		panorama.setPosition(e.point); //拖动marker后，全景图位置也随着改变
+		panorama.setPov({heading: -40, pitch: 6});}
+	);
+
+    map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
+	map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+    
+	</script>
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 地图名片 -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <iframe width="604" height="863" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://j.map.baidu.com/s/Xr8IFb"></iframe>
+</body>
+</html> -->
