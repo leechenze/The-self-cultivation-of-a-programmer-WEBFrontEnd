@@ -4,8 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .div1, .div2, .div3{
+            width: 200px;
+            height: 200px;
+            border: 1px solid #000;
+            margin: 10px;
+            box-sizing: border-box;
+            display: inline-block;
+            overflow: hidden;
+        }
+        .div1 p{
+            background-color: blueviolet;
+        }
+    </style>
 </head>
 <body>
+
+    <div class="div1">
+        <p class="p1" draggable="true">拖拽内容</p>
+    </div>
+    <div class="div2"></div>
+    <div class="div3"></div>
     
+    
+    <section style="display: none;">
+        设置元素为可拖放;
+            draggable属性; 就是在标签上设置draggable=true属性; 否则不会有效果;
+            注意: 链接和图片默认是可拖动的; 不需要draggable属性;
+        
+        
+        拖拽API的相关事件;
+            被拖动的源对象可以触发的事件;
+            
+        
+        
+        
+
+    </section>
 </body>
 </html>

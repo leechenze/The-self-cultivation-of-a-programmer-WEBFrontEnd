@@ -61,13 +61,6 @@
             :full-screen;
             :moz-full-screen;
             :webkit-full-screen;
-            
-
-
-
-
-
-
 
 
 
@@ -223,3 +216,12 @@
 
 
 陆.H5拖拽
+    
+    在HTML5中, 拖放是标准的一部分, 任何元素都能够拖放: p, div, img, a, video等....
+    
+    拖拽和释放:
+        拖拽: Drag;
+        释放: Drop;
+        
+    拖拽指的是鼠标点击源对象后一直移动对象不松手, 一旦松手即释放了;
+    
