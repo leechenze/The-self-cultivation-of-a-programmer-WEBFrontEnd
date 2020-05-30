@@ -26,6 +26,45 @@
     </div>
     <div class="div2"></div>
     <div class="div3"></div>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+        var $p1 = $('.p1'),
+            $div1 = $('.div1'),
+            $div2 = $('.div2'),
+            $div3 = $('.div3');
+        
+        $p1[0].ondragstart = function () {
+            // console.log('源对象开始拖动');
+        }
+        $p1[0].ondrag = function () {
+            // 不断执行;
+            // console.log('源对象拖动过程中');
+        }
+        $p1[0].ondragend = function () {
+            // console.log('源对象拖动结束');
+        }
+        
+        
+        $div2[0].ondragenter = function () {
+            console.log('目标对象被源对象拖入');
+        }
+        $div2[0].ondragover = function (e) {
+            console.log('目标对象被源对象拖住悬停');
+            // return false
+            e.preventDefault();
+        }
+        $div2[0].ondragleave = function () {
+            console.log('源对象拖出目标对象');
+        }
+        $div2[0].ondrop = function () {
+            console.log('源对象在目标对象上方松手/释放');
+        }
+        
+        
+    </script>
+    
+    
     
     
     <section style="display: none;">
@@ -36,8 +75,20 @@
         
         拖拽API的相关事件;
             被拖动的源对象可以触发的事件;
+            ondragstart:                            源对象开始被拖动;
+            ondrag:                                 源对象被拖动过程中
+                                                    (不断触发);
+            ondragend:                              源对象被拖动结束;
             
-        
+        拖动源对象拖入目标对象可以触发的事件:
+            ondragenter:                            目标对象被源对象拖动着进入;
+            ondragover:                             目标对象被源对象拖动悬停在上方
+                                                    (不断触发);
+            ondragleave:                            源对象拖动着离开了目标对象;
+            ondrop:                                 源对象拖动在目标对象上方释放;
+                                                    阻止掉dragover的默认事件方可触发drop事件;
+        拖拽API总共就是以上7个函数;
+            
         
         
 
