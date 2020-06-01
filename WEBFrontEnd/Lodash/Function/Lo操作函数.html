@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lodash.min.js"></script>
+</head>
+
+<body>
+    <script>
+        
+        // n次后发出某个函数;
+        // _.after(定义fn应该在调用多少次后在执行, 用来限定的函数);
+        // 返回值: 返回新的限定函数;
+
+            var finished = () => {
+                // console.log('Holy sh*t I finished it')
+                return 'Holy sh*t I finished it';
+            }
+
+            var code = _.after(3, finished)
+            code() // ...
+            code() // ...
+            code() // 'Holy sh*t I finished it'
+        
+        
+
+        // 创建一个调用func的函数。调用func时最多接受n个参数，忽略多出的参数
+        // _.ary(需要被限制参数个数的函数, 限制的参数数量);
+        // 返回值: 返回新的覆盖函数;
+            _.map(['6', '8', '10'], _.ary(parseInt, 1));
+            // => [6, 8, 10]
+            
+        
+        
+        
+        
+            
+    </script>
+</body>
+
+</html>
