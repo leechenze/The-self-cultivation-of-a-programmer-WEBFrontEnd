@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <!-- <div class="box" style="width: 100px; height: 100px;background-color: red;"></div> -->
     <script>
         
         // n次后发出某个函数;
@@ -27,16 +28,513 @@
         
         
 
+
+
+
+
         // 创建一个调用func的函数。调用func时最多接受n个参数，忽略多出的参数
         // _.ary(需要被限制参数个数的函数, 限制的参数数量);
         // 返回值: 返回新的覆盖函数;
+
+            _.map(['6', '8', '10'], parseInt);
+            // => [6, NaN, 2]
+            // 使用map将以上代码输出整数, 结果为[6, NaN, 2], 其实原因很明了, 对于parseInt函数而言;
+            // 其接收两个参数，第一个是需要处理的字符串，第二个是进制; 这样的输出就不难理解了;
+            // 处理第一个数组元素6时, parseInt实际传参是(6,0)按照十进制解析, 会得到6, 
+            // 处理第二个数组元素8时, parseInt实际传参是(8,1), 返回NaN很正常;
+            // 处理第三个数组元素时, parseInt实际传参是(10,2), 则10返回的是2;
+            // 所以就需要给parseInt限制只能传一个参数, 因为第二个参数是转换进制的基数, 现在只需要第一个参数能有转换为num即可, 无需第二个参数;
+            // 这时限制参数_.ary()就有用武之地了, 以下_.ary(parseInt,1), 第二个参数1, 可规定parseInt只传入一个参数, 输入结果[6,8,10]正常;
             _.map(['6', '8', '10'], _.ary(parseInt, 1));
-            // => [6, 8, 10]
+            
+
+
+        
+            
+            
+        
+        
+        // 创建一个调用func的函数，通过this绑定和创建函数的参数调用func，调用次数不超过 n 次。 之后再调用这个函数，将返回一次最后调用func的结果
+        // _.before(限制调用FN的次数, 执行的FN);
+        // 返回值: 返回新的限定函数;
+            var finished = () => {
+                // console.log('Holy sh*t I finished it')
+                // return 'Holy sh*t I finished it';
+            }
+            // document.querySelector('.box').onclick = _.before(5,finished);
+            var code = _.before(5, finished);
+            code(); // Holy sh*t I finished it
+            code(); // Holy sh*t I finished it
+            code(); // Holy sh*t I finished it
+            code(); // Holy sh*t I finished it
+            code(); // 不再执行;
+
+
+
+
+
+
+
+
+
+
+        // 创建一个函数 func，这个函数的 this 会被绑定在 thisArg 并且任何附加在 _.bind 的参数会被传入到这个绑定函数上
+        // _.bind(绑定的函数, 绑定的this对象thisArg, 附加参数);
+        // 返回值: 返回新的绑定函数;
+
+            var greet = function(greeting, punctuation) {
+                // console.log(greeting, punctuation);
+                return greeting + ' ' + this.user + punctuation;
+            };
+
+            var object = { 'user': 'fred' };
+            
+            var bound = _.bind(greet, object, 'hi');
+            bound('!');
+            // => 'hi fred!'
+
+            var bound = _.bind(greet, object, 'hi', '!');
+            bound();
+            // => 'hi fred!'
+            
+            // Bound with placeholders.
+            var bound = _.bind(greet, object, _, '!');
+            bound('hi');
+            // => 'hi fred!'
+
+
+            
+
+        
+
+
+        // 创建一个函数,在object[key]上通过接收partials附加参数，调用这个方法;
+        // _.bindkey(需要绑定的对象, 需要绑定对象的键(这个键的值必须是函数), 附加参数);
+        // 返回值: 返回新的绑定函数;
+            var object = {
+                'user': 'fred',
+                'greet': function(greeting, punctuation) {
+                    return greeting + ' ' + this.user + punctuation;
+                }
+            };
+
+            var bound = _.bindKey(object, 'greet', 'hi');
+            bound('!');
+            // => 'hi fred!'
+
+            object.greet = function(greeting, punctuation) {
+            return greeting + 'ya ' + this.user + punctuation;
+            };
+
+            bound('!');
+            // => 'hiya fred!'
+
+            // Bound with placeholders.
+            var bound = _.bindKey(object, 'greet', _, '!');
+            bound('hi');
+            // => 'hiya fred!'
+        
+        
+        
+        
+        
+
+        // 柯里化函数;
+        // 柯里化:
+            // 在计算机科学中，柯里化（英語：Currying），又译为卡瑞化或加里化，是把接受多个参数的函数变换成接受一个单一参数
+            // （最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术
+        // _.curry(用来柯里化的函数, 需要提供给FN的参数数量);
+        // 返回值: 返回新的柯里化函数;
+            var abc = function(a, b, c) {
+                return [a, b, c];
+            };
+
+            var curried = _.curry(abc);
+
+            curried(1)(2)(3);
+            // => [1, 2, 3]
+
+            curried(1, 2)(3);
+            // => [1, 2, 3]
+
+            curried(1, 2, 3);
+            // => [1, 2, 3]
+
+            // Curried with placeholders.
+            curried(1)(_, 3)(2);
+            // => [1, 2, 3]
+            // 所谓的占位符绑定可以理解为: 为后一个参数提供的位置(位置反转);
+
+            // curried(1)(2)(3)(4);
+            // 因为第四个参数没有所以会报错, 此时就需要规定第二个参数(限制参数数量): var curried = _.curry(abc, 5);
+            // 这样curried(1)(2)(3)(4)(5);也不会出问题, 参数长度根据需求自己在后定义_.curry(abc, n);
+
+
+
+            
+
+
+
+
+        
+        // 柯里化函数(反向操作);
+        // _.curry(用来柯里化的函数, 需要提供FN的参数数量);
+        // 返回值: 返回新的柯里化函数;
+            var abc = function(a, b, c) {
+                return [a, b, c];
+            };
+
+            var curried = _.curryRight(abc);
+
+            curried(3)(2)(1);
+            // => [1, 2, 3]
+
+            curried(2, 3)(1);
+            // => [1, 2, 3]
+
+            curried(1, 2, 3);
+            // => [1, 2, 3]
+
+            // Curried with placeholders.
+            curried(3)(1, _)(2);
+            // => [1, 2, 3]
+
+
+
+
+
+
+
+
+
+
+
+        // 防抖函数;
+        // _.debounce(需要防抖的函数, 延迟时间, 选项对象, 指定在延迟开始前调用, 允许延迟的最大值, 指定在延迟结束后调用);
+        // 返回新的防抖函数;
+            
+            function test() {
+                console.log('widnow had change');
+            }
+            // window.onresize = test;
+            window.onresize = _.debounce(test, 150);
+
+
+
+
+
+
+
+
+        // 推迟调用func，直到当前堆栈清理完毕。 调用时，任何附加的参数会传给func;
+        // _.defer(要延迟的函数, 调用时候传递func的参数);
+        // 返回值: 返回计时器ID;
+            
+            _.defer(function(text) {
+                // console.log(text);
+            }, 'text');
+            // => 一毫秒或更久一些输出 'deferred'。
+            
+        
+
+
+
+            
+        
+        
+        // 延迟调用func;
+        // _.delay(延迟的函数, 延迟的毫秒数, 会在调用时传入到func的参数);
+        // 返回值: 返回计时器的ID;
+            _.delay(function (text) {
+                // console.log(text);
+            }, 1000, '要延迟函数的参数');
+            
+        
+
+        
+
+
+            
+            
+        // 创建一个函数，调用func时候接收翻转的参数;
+        // _.flip(翻转参数的函数);
+        // 返回值: 返回新的函数;
+            var flipped = _.flip(function() {
+                return _.toArray(arguments);
+            });
+
+            flipped('a', 'b', 'c', 'd');
+            // => ['d', 'c', 'b', 'a']
+            
+            
+        
+        
+
+
+        // 缓存func结果的函数;
+        // _.memoize(需要缓存化的函数, 这个函数的返回值作为缓存的key);
+        // 返回值: 返回缓存化后的函数;
+            var object = { 'a': 1, 'b': 2 };
+            var other = { 'c': 3, 'd': 4 };
+
+            var values = _.memoize(_.values);
+            values(object);
+            // => [1, 2]
+
+            values(other);
+            // => [3, 4]
+
+            object.a = 2;
+            values(object);
+            // => [1, 2]
+
+            // 修改结果缓存。
+            values.cache.set(object, ['a', 'b']);
+            values(object);
+            // => ['a', 'b']
+
+            // 替换 `_.memoize.Cache`。
+            _.memoize.Cache = WeakMap;
+            
+            
+
+
+
+
+
+
+
+        // 创建一个针对断言函数func结果取反的函数。
+        // _.negate(需要对结果取反的函数);
+        // 返回值: 返回一个新的去反函数;
+            function isEven(n) {
+                return n % 2 == 0;
+            }
+
+            _.filter([1, 2, 3, 4, 5, 6], _.negate(isEven));
+            // => [1, 3, 5]
+
+
+
+        
+            
+
+        // 只调用一次的func;
+        // _.once(指定只触发一次的函数);
+        // 返回值: 返回新的首先函数;
+            function createApplication() {
+                // console.log('asdf');
+                // return 'asdfasdfasdf'
+            }
+            // var initialize = createApplication;
+            var initialize = _.once(createApplication);
+            initialize();
+            initialize();
+            initialize();
+            initialize();
+            initialize();
+
+
+
+
+
+
+
+        // 创造一个函数, 调用func时参数为相对应的transforms的返回值;
+        // _.overArgs(要包裹的函数);
+        // 返回值: 返回新函数;
+            function doubled(n) {
+                return n * 2;
+            }
+            function square(n) {
+                return n * n;
+            }
+
+            var func = _.overArgs(function (x,y) {
+                return [x,y]
+            }, [square, doubled]);
+
+            func(9, 3);
+            // [81, 6]
+
+            func(10, 5);
+            // [100, 10]
+
+
+
+
+
+
+
+        // 创建一个函数。 该函数调用func，并传入预设的partials参数。 这个方法类似_.bind，除了它不会绑定this
+        // _.partial(需要预设的函数, 预设的参数);
+        // 返回值: 返回预设参数的函数;
+            var greet = function(greeting, name) {
+                return greeting + ' ' + name;
+            };
+
+            var sayHelloTo = _.partial(greet, 'hello');
+            sayHelloTo('fred');
+            // => 'hello fred'
+
+            // 使用了占位符。
+            var greetFred = _.partial(greet, _, 'fred');
+            greetFred('hi');
+            // => 'hi fred'
+            
+            
+            
+        
+
+
+        // 这个函数类似_.partial，除了预设参数被附加到接受参数的后面;
+        // _.partialRight(需要预设的函数, 预设的参数);
+        // 返回值: 返回预设参数的函数;
+            var greet = function(greeting, name) {
+                return greeting + ' ' + name;
+            };
+
+            var greetFred = _.partialRight(greet, 'fred');
+            greetFred('hi');
+            // => 'hi fred'
+
+            // 使用了占位符。
+            var sayHelloTo = _.partialRight(greet, 'hello', _);
+            sayHelloTo('fred');
+            // => 'hello fred'
+            
+            
+            
+        
+
+
+
+
+
+
+        // 创建一个函数,调用func时，根据指定的indexes调整对应位置参数
+        // 其中第一个索引值是对应第一个参数，第二个索引值是作为第二个参数，依此类推;
+        // _.rearg(待调用的函数, 排列参数的索引值);
+        // 返回值: 返回新的函数;
+            var rearged = _.rearg(function(a, b, c) {
+                return [a, b, c];
+            }, [2, 0, 1]);
+
+            rearged('a', 'b', 'c')
+            // => ['c', 'a', 'b']
+            
+            
+            
+            
+
+
+
+
+
+
+        
+        // 创建一个函数，调用func时，this绑定到创建的新函数，并且start之后的参数作为数组传入
+        // _.rest(要应用的函数, rest参数的开始位置);
+        // 返回值: 返回新的函数;
+            var say = _.rest(function(what, names) {
+                // with(console){
+                //     log(names);
+                //     log(_.initial(names));
+                //     log(_.initial(names).join(', '))
+                //     log(_.size(names))
+                //     log(_.last(names));
+                // }
+                return what + ' ' + _.initial(names).join(', ') +
+                (_.size(names) > 1 ? ', & ' : '') + _.last(names);
+            });
+
+            say('hello', 'fred', 'barney', 'pebbles');
+            // => 'hello fred, barney, & pebbles'
+
+
+
+
+
+
+
+        // 创建一个函数，调用func时，this绑定到创建的新函数，把参数作为数组传入，类似于Function#apply;
+        // _.spread(应用传播参数的函数, spread参数开始位置);
+        // 返回值: 返回新的函数;
+            var say = _.spread(function(who, what) {
+                return who + ' says ' + what;
+            });
+
+            say(['fred', 'hello']);
+            // => 'fred says hello'
+
+            var numbers = Promise.all([
+                Promise.resolve(40),
+                Promise.resolve(36)
+            ]);
+
+            numbers.then(_.spread(function(x, y) {
+                return x + y;
+            }));
+            // => a Promise of 76
+
+
             
         
         
         
+
+
+        // 节流函数;
+        // _.throttle(节流函数, 需要节流的毫秒, 选项对象, 调用在节流开始前, 调用在节流结束后);
+        // 返回节流的函数;
+            
+            function test() {
+                console.log('widnow had change');
+            }
+            // window.onresize = test;
+            window.onresize = _.throttle(test, 1000);
+            
+
+
+
+
         
+        // 创建一个最多接受一个参数的函数，忽略多余的参数;
+        // _.unary(要处理的函数),   类似于: _.ary(FN, paramNum);
+        // 返回值: 返回新函数;
+            _.map(['6', '8', '10'], _.unary(parseInt));
+            // => [6, 8, 10]
+            
+
+        
+
+
+
+
+
+
+        
+
+        // 创建一个函数。提供的value包装在 wrapper 函数的第一个参数里。 
+        // 任何附加的参数都提供给 wrapper 函数。被调用时this绑定在创建的函数上
+        // _.wrap(要包装的值, 包装函数);
+        // 返回值: 返回新的函数;
+            var p = _.wrap(_.escape, function(func, text) {
+                // 这个func可以理解为p; 执行时期的上下文, 那么p()就是func(); 
+                // p传入的实参'fred, barney, & pebbles' 就是func的(text);
+                return '<p>' + func(text) + '</p>';
+            });
+            
+            p('fred, barney, & pebbles');
+            // => '<p>fred, barney, &amp; pebbles</p>'
+
+            
+        
+        
+            
+        
+        
+            
             
     </script>
 </body>
