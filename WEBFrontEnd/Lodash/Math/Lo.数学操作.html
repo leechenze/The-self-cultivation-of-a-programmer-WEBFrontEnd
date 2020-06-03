@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lodash.min.js"></script>
+</head>
+
+<body>
+    <script>
+
+        // 两数求和;
+        // _.add(相加的第一个数, 相加的第二个数);
+        // 返回总和;
+            _.add(6,4);
+            // => 10;
+
+
+
+
+        // 向上舍入;
+        // _.ceil(向上舍入的值, 向上舍入的精度);
+        // 返回值: 返回向上舍入的值;
+            
+            _.ceil(4.006);
+            // => 5
+
+            _.ceil(6.004, 2);
+            // => 6.01
+
+            _.ceil(6040, -2);
+            // => 6100
+        
+        
+        
+        
+        // 两数相除;
+        // _.divide(相除的第一个数, 相除的第二个数);
+        // 返回值: 返回商数;
+            _.divide(6.4);
+            // => 1.5;
+
+
+        
+
+
+
+        // 向下取舍
+        // _.floor(向下取舍的值, 向下舍入的精度);
+        // 返回值: 返回向下舍入的值;
+            _.floor(4.006);
+            // => 4
+            
+            _.floor(0.046, 2);
+            // => 0.04;
+
+            _.floor(4060, 2);
+            // => 4000;
+
+
+
+
+
+
+        // 取最大值;
+        // _.max(要迭代的数组);
+        // 返回值: 返回最大值;
+            _.max([4, 2, 8, 6]);
+            // => 8
+
+            _.max([]);
+            // => undefined
+        
+        
+
+
+
+
+        // 取数组中最大值;
+        // _.maxBy(检查的值);
+        // 返回值: 返回最大值,如果value是一个对象, 那么返回 true，否则返回 false
+            var objects = [{ 'n': 1 }, { 'n': 2 }];
+
+            _.maxBy(objects, function(o) { return o.n; });
+            // => { 'n': 2 }
+
+            // The `_.property` iteratee shorthand.
+            _.maxBy(objects, 'n');
+            // => { 'n': 2 }
+        
+
+
+
+        // 求数组中值平均值;
+        // _.mean(迭代数组);
+        // 返回值: 返回平均值;
+            _.mean([4, 2, 8, 6]);
+            // => 5
+
+
+
+
+
+        
+        // 求数组中值平均值;
+        // _.meanBy(迭代数组, 迭代函数);
+        // 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </script>
+</body>
+
+</html>
