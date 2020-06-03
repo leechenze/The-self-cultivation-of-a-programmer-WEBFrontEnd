@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!-- <html lang="en" manifest="./file/08.home.appcache"> -->
+<html lang="en" manifest="http://127.0.0.1:8080/H5C3/HTML5/file/08.home.appcache">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    
+    <img src="../images/1.jpg" alt="">
+    <img src="../images/2.jpg" alt="">
+    <img src="../images/3.jpg" alt="">
+    <img src="../images/4.png" alt="">
+    <img src="../images/5.png" alt="">
+
+
+    <script>
+
+        applicationCache.addEventListener("updateready",function(){
+            debugger;
+            applicationCache.swapCache();      // 手动更新本地缓存
+            location.reload();    //重新加载页面页面
+        },true);
+        // 添加事件监听，当监听到本地缓存更新后，进行重载页面，以达到更新的目的
+
+    </script>
+    <section style="display: none;">
+        应用缓存:
+            HTML5中可以轻松的构建一个离线应用(无网络状态), 只需创建一个cache manifest文件;
+            
+        优势:
+            1.可配置需要缓存的资源;
+            2.网络无连接仍可以应用;
+            3.本地读取缓存资源,提升访问速度, 增加用户体验;
+            4.减少请求, 缓解服务器负担;
+        
+        缓存清单:
+            一个普通文本文件, 其中列出了浏览器应缓存以供离线访问的资源, 推荐使用.appcache为后缀;
+            例如创建了一个名为demo.appcache的文件, 然后再需要应用缓存的页面的跟元素(html)添加属性
+            manifest="demo.appcache", 路径要保证正确;
+            
+        mainfest文件格式*
+            1.声明CACHE MANIFEST(离线缓存);
+            2.CACHE: 指定需要缓存的静态资源, 如:css,image,js等;
+            3.NETWORK: 指定需要在线访问的资源, 可使用通配符;
+            4.FALLBACK: 当被缓存的文件找不到时的备用资源;
+
+                # CACHE MANIFEST
+                # 上面必须是第一行
+                # CACHE:
+                    # 此部分写需要缓存的资源
+                # NETWORK:
+                    # 此部分要写需要有网络才可访问的资源, 无网络(离线)时不会读取此部分;
+                    # 一般用*表示有网络时所有文件均需要进行网络请求，而不使用缓存
+                # FALLBACK:
+                    # 当访问不到某个资源的情况下, 规定用另一个资源转换;
+
+        其他:
+            1.CACHE可以省略, 但必须将缓存的资源写在CACHE MANIFEST中
+            2.指定多个CACHE, NETWORK, FALLBACK, 无顺序限制;
+            3.#表示注释, 只有当.appcache文件内容发生改变或手动清除缓存后, 才会重新缓存;
+            4.chrome可以通过 chrome://appcache-internals/工具和离线(online)模式来调试管理应用缓存;
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </section>    
+</body>
+</html>
