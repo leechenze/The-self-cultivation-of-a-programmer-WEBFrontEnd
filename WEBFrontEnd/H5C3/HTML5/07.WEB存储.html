@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <!-- <input type="text" id="username"><br>
+    <button id="setdata">设置数据</button>
+    <button id="getdata">获取数据</button>
+    <button id="deldata">删除数据</button>
+    <button id="cleardata">清除所有数据</button> -->
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+
+    <!-- cookie -->
+    用户名称: <input type="text" name="username" id="username">
+    用户密码: <input type="password"  name="password" id="password">
+    <input type="button" value="保存" onclick="setCookie()">
+    <input type="button" value="读取" onclick="readCookie()">
+    <input type="button" value="删除" onclick="delCookie()">
+    
+    
+    
+
+    <!-- sessionStorage -->
+    <!-- <script>
+        var username = document.getElementById('username');
+        // 点击存储数据;
+        document.querySelector('#setdata').onclick = function () {
+            var val = username.value;
+            window.sessionStorage.setItem('username', val);
+        }
+
+
+        // 点击获取数据
+        document.querySelector('#getdata').onclick = function () {
+            var val = username.value;
+            console.log(window.sessionStorage.getItem('username'));
+        }
+
+
+        // 点击删除数据;
+        document.querySelector('#deldata').onclick = function () {
+            var val = username.value;
+            window.sessionStorage.removeItem(val);
+        }
+
+
+        // 清除所有数据;
+        document.querySelector('#cleardata').onclick = function () {
+            window.sessionStorage.clear();
+        }
+        
+    </script> -->
+    
+    
+    <!-- localStorage -->
+    <!-- <script>
+        // var username = document.getElementById('username');
+        // // 点击存储数据;
+        // document.querySelector('#setdata').onclick = function () {
+        //     var val = username.value;
+        //     window.localStorage.setItem('username', val);
+        // }
+
+
+        // // 点击获取数据
+        // document.querySelector('#getdata').onclick = function () {
+        //     var val = username.value;
+        //     console.log(window.localStorage.getItem('username'));
+        // }
+
+
+        // // 点击删除数据;
+        // document.querySelector('#deldata').onclick = function () {
+        //     var val = username.value;
+        //     window.localStorage.removeItem(val);
+        // }
+
+
+        // // 清除所有数据;
+        // document.querySelector('#cleardata').onclick = function () {
+        //     window.localStorage.clear();
+        // }
+    </script> -->
+    
+    
+    
+    <!-- cookie -->
+    <script>
+        function setCookie() {
+            document.cookie = encodeURI('username=' + document.getElementById('username').value);
+            document.cookie = encodeURI('password=' + document.getElementById('password').value);
+            alert('保存成功');
+        }
+
+        function readCookie() {
+            var cookieString = decodeURI(document.cookie);
+            if(cookieString.length != 0){
+                var cookieArray = cookieString.split(';');
+                for(var i = 0; i < cookieArray.length; i++){
+                    var cookieNum = cookieArray[i].split('=');
+                    var cookieName = cookieNum[0];
+                    var cookieValue = cookieNum[1];
+                    alert('cookie名称' + cookieName  + 'cookie值' + cookieValue);
+                }
+            }else{
+                alert('暂时没有cookie');
+            }
+            
+        }
+        function delCookie() {
+            var date = new Date();
+            date.setTime(date.getTime() -  1000);
+            document.cookie = 'username=删除' + ';expires=' + date.toGMTString();
+            document.cookie = 'password=删除' + ';expires=' + date.toGMTString();
+
+        }
+    </script>
+    
+    
+    
+    
+    
+    
+
+
+
+    <section style="display: none;">
+        随着互联网的快速发展, 基于网页的应用越来越普遍, 同时也变得越来越复杂, 为了满足各种需求, 会经常在本地存储大量的数据;
+        HTML5规范也提出了基于网页的WEB存储解决方案;
+
+        特性:
+            1.设置,读取方便;
+            2.容量较大, sessionStorage约5M, localStorage约20M;
+            3.只能存储字符串, 可以讲对象通过 JSON.stringify()编码后存储;
+
+        window.sessionStorage
+            1.生命周期为关闭浏览器窗口;
+            2.在同一个窗口下数据可以共享;
+        
+        window.localStorage
+            1.永久生效,除非手动删除;
+            2.可以多个窗口共享数据;
+
+        方法详解:
+            setItem(key,value)          设置存储内容;
+            getItem(key)                读取存储内容;
+            removeItem(key)             删除键值为key的存储内容;
+            clear()                     清空所有存储内容;
+            
+        其他:
+            WEBSQL, IndexDB, Cookie;
+        
+
+
+        cookie:
+            expires                 cookie什么时间内有效(cookie的保质期);
+            domain                  domain是域名，path是路径，两者加起来就构成了 URL
+            path                    domain是域名，path是路径，两者加起来就构成了 URL
+            secure                  secure选项用来设置cookie只在确保安全的请求中才会发送
+            HttpOnly                HttpOnly用来设置cookie是否能通过 js 去访问;
+            
+            cookie多个属性之间用;分割;
+            要想修改一个cookie，只需要重新赋值就行，旧的值会被新的值覆盖;
+            删除一个cookie, 也是重新赋值，只要将这个新cookie的expires 选项设置为一个过去的时间点即可;
+        
+
+            缺点:cookie会每次随http请求一起发送，浪费宽带
+
+    </section>    
+</body>
+</html>

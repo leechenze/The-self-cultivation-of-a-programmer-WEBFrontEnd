@@ -14,20 +14,28 @@
             display: inline-block;
             overflow: hidden;
         }
-        .div1 p{
+        p{
             background-color: blueviolet;
+            margin: 0;
+            color: #fff;
+            text-align: center;
         }
+        
     </style>
 </head>
 <body>
 
     <div class="div1">
-        <p class="p1" draggable="true">拖拽内容</p>
+        <p class="p1" draggable="true">拖拽内容1</p>
+        <p class="p2" draggable="true">拖拽内容2</p>
+        <p class="p3" draggable="true">拖拽内容3</p>
+        <p class="p4" draggable="true">拖拽内容4</p>
     </div>
     <div class="div2"></div>
     <div class="div3"></div>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
+    <!-- 第一章 -->
+    <!-- <script>
 
         var $p1 = $('.p1'),
             $div1 = $('.div1'),
@@ -59,13 +67,96 @@
         }
         $div2[0].ondrop = function () {
             console.log('源对象在目标对象上方松手/释放');
+            // 当源对象在目标对象上释放后放入其中;
+            // 目标对象.appendChild(源对象);
+            this.appendChild($p1[0]);
         }
         
         
+    </script> -->
+    
+
+    <!-- 第二章 -->
+    <!-- <script>
+        var targetSource = null;
+        document.ondragstart = function (event) {
+            var et = event.target || event.srcElement;
+            targetSource = et;
+            console.log(targetSource);
+        }
+
+        document.ondrag = function (event) {
+            var et = event.target || event.srcElement;
+
+        }
+
+        document.ondragend = function (event) {
+            var et = event.target || event.srcElement;
+
+        }
+
+
+        document.ondragover = function (event) {
+            event.preventDefault();
+        }
+        
+        document.ondrop = function (event) {
+            var et = event.target || event.srcElement;
+            et.appendChild(targetSource);
+        }
+
+        
+        
+    </script> -->
+    
+    
+    <!-- 第三章 -->
+    <script>
+
+        document.ondragstart = function (event) {
+            var et = event.target || event.srcElement;
+            // 文本HTML类型使用 'text/html'
+            // 普通文本类型使用  'text/plain'
+            // 路径存储类型使用  'text/uri-list'
+
+            // 将元素的类名存入dataTransfer中;
+            event.dataTransfer.setData('text/plain', et.className);
+        }
+
+        document.ondrag = function (event) {
+            var et = event.target || event.srcElement;
+
+        }
+
+        document.ondragend = function (event) {
+            var et = event.target || event.srcElement;
+
+        }
+
+
+        document.ondragover = function (event) {
+            event.preventDefault();
+        }
+        
+        document.ondrop = function (event) {
+            var et = event.target || event.srcElement,
+                targetSource = event.dataTransfer.getData('text/plain');
+            et.appendChild(document.getElementsByClassName(targetSource)[0]);
+        }
+
     </script>
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
     
     <section style="display: none;">
         设置元素为可拖放;
@@ -90,8 +181,20 @@
         拖拽API总共就是以上7个函数;
             
         
+        一般拖放都是事件都是绑定在document上的; 如果绑定到某个元素上, 就需要给这些元素每一个添加拖拽事件;
+        使用事件委托直接绑定大document上会方便很多;
         
-
+        DataTransfer
+            在进行拖放操作时, DataTransfer对象用来保存拖动的数据, 它可以保存一项或多项数据, 一种或多种数据类型;
+            可以理解为用来代替全局变量targetSource的一个对象;
+            
+            setData()的键类型有以下几种;
+                文本HTML类型使用 'text/html'
+                普通文本类型使用  'text/plain'
+                路径存储类型使用  'text/uri-list'
+            
+            getData()
+                获取数据时, 只需要指定类型即可, setData()设的什么类型, getData()就取什么类型; 设值取值的类型必须统一;
     </section>
 </body>
 </html>
