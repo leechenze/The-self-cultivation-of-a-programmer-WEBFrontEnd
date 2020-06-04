@@ -106,21 +106,117 @@
         
         // 求数组中值平均值;
         // _.meanBy(迭代数组, 迭代函数);
-        // 
+        // 返回值: 返回平均值;
+            
+            var objects = [{ 'n': 4 }, { 'n': 2 }, { 'n': 8 }, { 'n': 6 }];
+
+            _.meanBy(objects, function(o) { return o.n; });
+            // => 5
+
+            // The `_.property` iteratee shorthand.
+            _.meanBy(objects, 'n');
+            // => 5
+
+
+
+
+
+
+        // 求数组中最小值;
+        // _.min(迭代数组);
+        // 返回值: 返回最小值;
+            _.min([4, 2, 8, 6]);
+            // => 2
+
+            _.min([]);
+            // => undefined
+        
+
+
+        
+
+        
+        // 取数组中最小值;
+        // _.minBy(迭代函数);
+        // 返回值: 返回最小值;
+            var objects = [{ 'n': 1 }, { 'n': 2 }];
+
+            _.minBy(objects, function(o) { return o.n; });
+            // => { 'n': 1 }
+
+            // The `_.property` iteratee shorthand.
+            _.minBy(objects, 'n');
+            // => { 'n': 1 }
+        
+        
+        
+        
+
+
+        // 两数相乘求积;
+        // _.multiply(相乘的第一个数, 相乘的第二个数);
+        // 返回值: 返回值乘积;
+            _.multiply(6, 4);
+            // => 24
+
+
+            
         
         
         
         
         
+        // 四舍五入;
+        // _.round(要四舍五入的数值, 四舍五入精度);
+        // 返回值: 返回四舍五入的数字;
+            _.round(4.006);
+            // => 4
+
+            _.round(4.006, 2);
+            // => 4.01
+
+            _.round(4060, -2);
+            // => 4100
+
+
+
+
+
+        // 两数相减求差;
+        // _.subtract(相减的第一个数值, 相减的第二个数值);
+        // 返回值: 返回差;
+            _.subtract(6,4);
+            // => 2
+        
+        
+        
+
+
+
+
+        // 求数组中值总和;
+        // _.sum(迭代数组);
+        // 返回值: 返回总和;
+            _.sum([4, 2, 8, 6]);
+            // => 20;
         
         
         
         
         
-        
-        
-        
-        
+        // 求数组中值总和;
+        // _.sumBy(迭代数组, 迭代函数);
+        // 返回值: 返回总和;
+
+            var objects = [{ 'n': 4 }, { 'n': 2 }, { 'n': 8 }, { 'n': 6 }];
+
+            _.sumBy(objects, function(o) { return o.n; });
+            // => 20
+
+            // The `_.property` iteratee shorthand.
+            _.sumBy(objects, 'n');
+            // => 20
+            
         
         
         
