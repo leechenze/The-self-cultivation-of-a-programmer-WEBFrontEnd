@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lodash.min.js"></script>
+</head>
+
+<body>
+    <script>
+        
+        // 分配来源对象的可枚举属性到目标对象上。 来源对象的应用规则是从左到右，随后的下一个对象的属性会覆盖上一个对象的属性
+        // _.assign(目标对象, 来源对象);
+        // 返回值: 返回新Object;
+            function Foo() {
+                this.a = 1;
+            }
+
+            function Bar() {
+                this.c = 3;
+            }
+
+            Foo.prototype.b = 2;
+            Bar.prototype.d = 4;
+            
+            _.assign({ 'a': 0 }, new Foo, new Bar);
+            // => { 'a': 1, 'c': 3 }
+
+            _.assign({ 'e': 0 }, new Foo, new Bar);
+            // => {e: 0, a: 1, c: 3}
+
+
+        
+
+
+
+
+
+
+        // 类似_.assign， 除了它会遍历并继承来源对象的原型上属性
+        // _.assignIn(目标对象, 来源对象);
+        // 返回值: 返回新Object;
+            function Foo() {
+                this.a = '1';
+            }
+
+            function Bar() {
+                this.c = '3';
+            }
+
+            Foo.prototype.b = 2;
+            Bar.prototype.d = 4;
+            
+            _.assignIn({ 'a': 0 }, new Foo, new Bar);
+            // => { 'a': 1, 'b': 2, 'c': 3, 'd': 4 };
+
+        
+
+
+
+        
+
+        
+
+        
+
+        // 这个方法类似_.assignIn， 除了它接受一个customizer，被调用以产生所分配的值。 
+        // 如果customizer返回undefined将会由分配处理方法代替。
+        // customizer会传入5个参数：(objValue, srcValue, key, object, source)。
+        // _.assignInWith(目标对象, 来源对象, customizer);
+        // 返回值: 返回新Object;
+            function customizer(objValue, srcValue) {
+                return _.isUndefined(objValue) ? srcValue : objValue;
+            }
+
+            var defaults = _.partialRight(_.assignInWith, customizer);
+
+            defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
+            // => { 'a': 1, 'b': 2 }
+
+        
+
+
+        
+
+
+
+
+        
+    </script>
+</body>
+
+</html>
