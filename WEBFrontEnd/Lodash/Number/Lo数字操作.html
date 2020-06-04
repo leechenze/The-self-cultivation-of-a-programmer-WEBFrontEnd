@@ -10,6 +10,70 @@
 
 <body>
     <script>
+
+        // 求夹值;
+        // _.clamp(被限制的值, 下限, 上限);
+        // 返回值: 返回限制在下限和上限之间的值;
+            _.clamp(-10, -5, 5);
+            // => -5
+
+            _.clamp(10, -5, 5);
+            // => 5
+        
+
+
+
+
+
+
+        // 判断值是否在区间内;
+        // _.inRange(要检查的值, 开始范围, 结束范围); 如果开始范围没有指定, 开始范围就会置为零;
+        // 返回值:  如果number在范围内 ，那么返回true，否则返回 false;
+            _.inRange(3, 2, 4);
+            // => true
+
+            _.inRange(4, 8);
+            // => true
+
+            _.inRange(4, 2);
+            // => false
+
+            _.inRange(2, 2);
+            // => false
+
+            _.inRange(1.2, 2);
+            // => true
+
+            _.inRange(5.2, 4);
+            // => false
+
+            _.inRange(-3, -2, -6);
+            // => true
+        
+
+
+            
+            
+        
+        // 获取随机数;
+        // _.random(下限, 上限, 指定是否返回浮点数);  如果下限没有指定, 下限就会置为零, true表示返回浮点数;
+        // 返回值: 返回随机数;
+            _.random(0, 5);
+            // => an integer between 0 and 5
+
+            _.random(5);
+            // => also an integer between 0 and 5
+
+            _.random(5, true);
+            // => a floating-point number between 0 and 5
+
+            _.random(1.2, 5.2);
+            // => a floating-point number between 1.2 and 5.2
+        
+
+        
+        
+
         
     </script>
 </body>
