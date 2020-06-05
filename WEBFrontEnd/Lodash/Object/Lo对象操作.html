@@ -80,15 +80,939 @@
             defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
             // => { 'a': 1, 'b': 2 }
 
+            defaults({'a': 2}, { 'a': 1 }, { 'b': 2 }, { 'a': 3 });
+            // => {a: 2, b: 2}
+
+            defaults({'c': 2}, { 'a': 1 }, { 'b': 2 }, { 'a': 3 });
+            // => {c: 2, a: 1, b: 2}
+
+        
+        
+
+
+
+        // 这个方法类似_.assign， 除了它接受一个customizer决定如何分配值。 
+        // 如果customizer返回undefined将会由分配处理方法替。
+        // customizer会传入5个参数：(objValue, srcValue, key, object, source)。
+        // _.assignWith(目标对象, 来源对象, customizer);
+        // 返回值: 返回新的object;
+            function customizer(objValue, srcValue) {
+                return _.isUndefined(objValue) ? srcValue : objValue;
+            }
+
+            var defaults = _.partialRight(_.assignWith, customizer);
+
+            defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
+            // => { 'a': 1, 'b': 2 }
+            defaults({'c': 4},{ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
+            // => {c: 4, a: 1, b: 2}
+
+
+
+
+
+
+
+
+
+        // 创建一个数组，值来自object的paths路径相应的值。
+        // _.at(迭代对象, 获取对象的元素路径 单独指定或指定在数组中);
+        // 返回值: 返回选中的数组;
+            var object = { 'a': [{ 'b': { 'c': 3 } }, 4] };
+
+            _.at(object, ['a[0].b.c', 'a[1]']);
+            // => [3, 4]
+
+            _.at(object, ['a[1]', 'a[0].b.c']);
+            // => [4, 3];
+
+        
+
+
+
+
+
+        // 创建一个继承prototype的对象。 如果提供了prototype，它的可枚举属性会被分配到创建的对象上
+        // _.create(要继承的对象, 待分配的属性);
+        // 返回值: 返回新的对象;
+            function Shape() {
+                this.x = 0;
+                this.y = 0;
+            }
+
+            function Circle() {
+                Shape.call(this);
+            }
+
+            Circle.prototype = _.create(Shape.prototype, {
+                'constructor': Circle
+            });
+
+            var circle = new Circle;
+            circle instanceof Circle;
+            // => true
+
+            circle instanceof Shape;
+            // => true
+            
+
+
+        
+
+
+
+
+
+
+
+        // 分配来源对象的可枚举属性到目标对象所有解析为undefined的属性上。 
+        // 来源对象从左到右应用。 一旦设置了相同属性的值，后续的将被忽略掉。
+        // _.defaults(目标对象, 来源对象);
+        // 返回值: 返回Object;
+            _.defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
+            // => { 'a': 1, 'b': 2 }
+        
+            _.defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 }, {'b': 3});
+            // => { 'a': 1, 'b': 2 }
+
+
+
+
+
+
+
+
+
+        
+
+        // 这个方法类似_.defaults，除了它会递归分配默认属性;
+        // _.defaultsDeep(目标对象, 来源对象);
+        // 返回值: 返回object;
+            _.defaultsDeep({ 'a': { 'b': 2 } }, { 'a': { 'b': 1, 'c': 3 } });
+            // => { 'a': { 'b': 2, 'c': 3 } }
+
+
+
+
+
+
+
+
+
+
+        // 创建一个object对象自身可枚举属性的键值对数组。这个数组可以通过_.fromPairs.撤回。如果object是 map 或 set，返回其条目
+        // _.toPairs(检索的对象), 别名: _.entries();
+        // 返回值: 返回键值对的数组;
+            function Foo() {
+                this.a = 1;
+                this.b = 2;
+            }
+
+            Foo.prototype.c = 3;
+
+            // _.toPairs(new Foo);
+            _.entries(new Foo);
+            // => [['a', 1], ['b', 2]] (iteration order is not guaranteed)
+
+
+
+
+        
+
+
+
+
+        // 创建一个object对象自身和继承的可枚举属性的键值对数组。这个数组可以通过_.fromPairs撤回。如果object是 map 或 set，返回其条目。
+        // _.toPairsIn(检索的对象), 别名: _.entriesIn();
+        // 返回值: 返回键值对数组;
+            function Foo() {
+                this.a = 1;
+                this.b = 2;
+            }
+
+            Foo.prototype.c = 3;
+
+            _.toPairsIn(new Foo);
+            // => [['a', 1], ['b', 2], ['c', 3]] (iteration order is not guaranteed)
+        
+
+
+            
+
+
+
+        
+
+
+
+        // _.assignIn的别名,功能相同;
+        // _.extend(目标对象, 来源对象);
+        // 返回值: 返回新的Object;
+            let A = {a:1, b:1};
+            let B = {b:3, c:2};
+            let C = {b:2, c:3};
+            // console.log(_.extend(A, B, C));
+            // => {a: 1, b: 2, c: 3}
+            // console.log(B);
+            // => {b: 3, c: 2}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // _.assignInWith的别名,功能相同。
+        // _.extendWith(目标对象, 来源对象, customizer);
+        // 返回值: 返回新Object;
+            function customizer(objValue, srcValue) {
+                return _.isUndefined(objValue) ? srcValue : objValue;
+            }
+
+            var defaults = _.partialRight(_.extendWith, customizer);
+
+            defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
+            // => { 'a': 1, 'b': 2 }
+
+            defaults({'a': 2}, { 'a': 1 }, { 'b': 2 }, { 'a': 3 });
+            // => {a: 2, b: 2}
+
+            defaults({'c': 2}, { 'a': 1 }, { 'b': 2 }, { 'a': 3 });
+            // => {c: 2, a: 1, b: 2}
+
+
+
+        
+
+
+
+
+
+        // 这个方法类似_.find。 除了它返回最先被predicate判断为真值的元素 key，而不是元素本身;
+        // _.findKey(检索的对象, 迭代函数);
+        // 返回值: 返回匹配的key, 否则返回undefined;
+            var users = {
+                'barney':  { 'age': 36, 'active': true },
+                'fred':    { 'age': 40, 'active': false },
+                'pebbles': { 'age': 1,  'active': true }
+            };
+
+            _.findKey(users, function(o) { return o.age < 40; });
+            // => 'barney' (iteration order is not guaranteed)
+
+            // The `_.matches` iteratee shorthand.
+            _.findKey(users, { 'age': 1, 'active': true });
+            // => 'pebbles'
+
+            // The `_.matchesProperty` iteratee shorthand.
+            _.findKey(users, ['active', false]);
+            // => 'fred'
+
+            // The `_.property` iteratee shorthand.
+            _.findKey(users, 'active');
+            // => 'barney'
+
+
+
+
+        
+
+
+
+
+
+
+
+        // 这个方法类似_.findKey。 不过它是反方向开始遍历的。
+        // _.findLastKey(检索的对象, 迭代函数);
+        // 返回值: 返回匹配的 key，否则返回 undefined;
+            var users = {
+                'barney':  { 'age': 36, 'active': true },
+                'fred':    { 'age': 40, 'active': false },
+                'pebbles': { 'age': 1,  'active': true }
+            };
+
+            _.findLastKey(users, function(o) { return o.age < 40; });
+            // => returns 'pebbles' assuming `_.findKey` returns 'barney'
+
+            // The `_.matches` iteratee shorthand.
+            _.findLastKey(users, { 'age': 36, 'active': true });
+            // => 'barney'
+
+            // The `_.matchesProperty` iteratee shorthand.
+            _.findLastKey(users, ['active', false]);
+            // => 'fred'
+
+            // The `_.property` iteratee shorthand.
+            _.findLastKey(users, 'active');
+            // => 'pebbles'
+
+
+        
+
+
+
+
+
+        // 使用iteratee遍历对象的自身和继承的可枚举属性。
+        // iteratee会传入3个参数：(value, key, object)。 如果返回false，iteratee会提前退出遍历。
+        // _.forIn(遍历的对象, 迭代函数);
+        // 返回值: 返回object;
+
+            function Foo() {
+                this.a = 1;
+                this.b = 2;
+            }
+
+            Foo.prototype.c = 3;
+
+            _.forIn(new Foo, function(value, key) {
+                // console.log(key);
+            });
+            // => Logs 'a', 'b', then 'c' (iteration order is not guaranteed).
+
+
+
+
+
+
+
+
+        // 这个方法类似_.forIn。 除了它是反方向开始遍历object的。
+        // _.forInRight(要遍历的对象, 迭代函数);
+        // 返回值: 返回object;
+            function Foo() {
+                this.a = 1;
+                this.b = 2;
+            }
+
+            Foo.prototype.c = 3;
+
+            _.forInRight(new Foo, function(value, key) {
+                // console.log(key);
+            });
+            // => 输出 'c', 'b', 然后 'a'， `_.forIn` 会输出 'a', 'b', 然后 'c'。
+
+
+
+
+
+
+
+        // 使用iteratee遍历自身的可枚举属性。iteratee会传入3个参数：(value, key, object)。 
+        // 如果返回false，iteratee会提前退出遍历
+        // _.forOwn(要遍历的对象, 迭代函数);
+        // 返回值: 返回object;
+            function Foo() {
+                this.a = 1;
+                this.b = 2;
+            }
+
+            Foo.prototype.c = 3;
+
+            _.forOwn(new Foo, function(value, key) {
+                // console.log(key);
+            });
+            // => 输出 'a' 然后 'b' (无法保证遍历的顺序)。
+
+
+
+
+
+        
+
+
+        // 这个方法类似_.forOwn。 除了它是反方向开始遍历object的。
+        // _.forOwnRight(遍历的对象, 迭代函数);
+        // 返回值: 返回object;
+            function Foo() {
+                this.a = 1;
+                this.b = 2;
+            }
+
+            Foo.prototype.c = 3;
+
+            _.forOwnRight(new Foo, function(value, key) {
+                // console.log(key);
+            });
+            // =>  输出 'b' 然后 'a'， `_.forOwn` 会输出 'a' 然后 'b'
+
+        
+
+
+
+
+
+
+        // 创建一个函数属性名称的数组，函数属性名称来自object对象自身可枚举属性;
+        // _.functions(检查的对象);
+        // 返回值: 返回函数名;
+                        
+            function Foo() {
+                this.a = function () {};
+                this.b = function () {};
+            }
+
+            Foo.prototype.c = function () {};
+
+            _.functions(new Foo);
+            // => ['a', 'b']
+
+
+
+
+
+        
+
+        
+
+        // 创建一个函数属性名称的数组，函数属性名称来自object对象自身和继承的可枚举属性
+        // _.functionsIn(检查的对对象);
+        // 返回值: 返回函数名称;
+            function Foo() {
+                this.a = _.constant('a');
+                this.b = _.constant('b');
+            }
+
+            Foo.prototype.c = _.constant('c');
+
+            _.functionsIn(new Foo);
+            // => ['a', 'b', 'c']
+
+
+
+
+
+
+
+
+
+        // 根据object对象的path路径获取值。 如果解析 value 是undefined会以defaultValue取代
+        // _.get(检索的对象, 获取属性的路径, [defaultValue]如果解析的值是undefined 这个值会被返回);
+        // 返回值: 返回解析的值;
+            var object = { 'a': [{ 'b': { 'c': 3 } }] };
+
+            _.get(object, 'a[0].b.c');
+            // => 3
+
+            _.get(object, ['a', '0', 'b', 'c']);
+            // => 3
+
+            _.get(object, 'a.b.c', 'default');
+            // => 'default'
+
+
+
+
+
+
+
+        // 检查path是否是对象的直接属性, 而非是原型链上的属性;
+        // _.has(检索的对象, 检查的路径path);
+        // 返回值: 如果path存在，那么返回 true ，否则返回 false。
+            var object = { 'a': { 'b': 2 } };
+            var other = _.create({ 'a': _.create({ 'b': 2 }) });
+
+            _.has(object, 'a');
+            // => true
+
+            _.has(object, 'a.b');
+            // => true
+
+            _.has(object, ['a', 'b']);
+            // => true
+
+            _.has(other, 'a');
+            // => false
+        
+
+
+        
         
 
 
         
 
+        // 检查path是否是object对象的直接或继承属性
+        // _.hasIn(检索的对象, 检查的路径);
+        // 返回值: 如果path存在，那么返回 true ，否则返回 false。
+            var object = _.create({ 'a': _.create({ 'b': 2 }) });
+
+            _.hasIn(object, 'a');
+            // => true
+
+            _.hasIn(object, 'a.b');
+            // => true
+
+            _.hasIn(object, ['a', 'b']);
+            // => true
+
+            _.hasIn(object, 'b');
+            // => false
+
+
+        
+
+
+        // 创建一个object键值倒置后的对象。 如果object有重复的值，后面的值会覆盖前面的值
+        // _.invert(需要键值倒置的对象);
+        // 返回值: 返回键值倒置后的对象;
+            var object = { 'a': 1, 'b': 2, 'c': 1 };
+            
+            _.invert(object);
+            // => { '1': 'c', '2': 'b' }
+
+
+        
+
+
+
+
+
+
+        // 这个方法类似_.invert，除了倒置对象 是collection（集合）中的每个元素经过iteratee（迭代函数） 处理后返回的结果。
+        // 每个反转键相应反转的值是一个负责生成反转值key的数组。iteratee会传入3个参数：(value)。
+        // _.invertBy(要键值倒置的对象, 迭代调用的函数);
+        // 返回值: 返回新的键值倒置后的对象。
+            var object = { 'a': 1, 'b': 2, 'c': 1 };
+
+            _.invertBy(object);
+            // => { '1': ['a', 'c'], '2': ['b'] }
+
+            _.invertBy(object, function(value) {
+                return 'group' + value;
+            });
+            // => { 'group1': ['a', 'c'], 'group2': ['b'] }
+
+
+
+
+
+
+
+
+
+        // 调用对象path上的path方法;
+        // _.invoke(检索的对象, 调用的方法路径,调用的方法参数);
+        // 返回值: 返回调用方法的结果;
+            var object = { 'a': [
+                                    { 
+                                        'b': { 
+                                            'c': [1, 2, 3, 4] 
+                                        }
+                                    }
+                                ]
+                            };
+
+            _.invoke(object, 'a[0].b.c.slice', 1, 3);
+            // => [2, 3]
+            
+        
+
+
+
+
+
+
+
+
+        // 创建一个object的自身可枚举属性名为数组
+        // _.keys(检索的对象);
+        // 返回值: 返回包含数组名的数组;
+            function Foo() {
+                this.a = 1;
+                this.b = 2;
+            }
+
+            Foo.prototype.c = 3;
+
+            _.keys(new Foo);
+            // => ['a', 'b'] (iteration order is not guaranteed)
+
+            _.keys('hi');
+            // => ['0', '1']
+
+            _.keys('hello world');
+            // => ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+
+
+
+
+
+
+
+
+        // 创建一个object自身 和 继承的可枚举属性名为数组。
+        // _.keysIn(检索的对象)
+        // 返回值: 返回包含属性名的数组;
+            function Foo() {
+                this.a = 1;
+                this.b = 2;
+            }
+
+            Foo.prototype.c = 3;
+
+            _.keysIn(new Foo);
+            // => ['a', 'b', 'c'] (iteration order is not guaranteed)
+
+
+
 
 
 
         
+        // 这个方法创建一个对象，对象的值与object相同，并且 key 是通过iteratee运行object中每个自身可枚举属性名字符串 产生的。
+        // iteratee调用三个参数：(value, key, object)
+        // _.mapKeys(要遍历的对象, 迭代函数);
+        // 返回值: 返回映射后的新数组;
+            _.mapKeys({ 'a': 1, 'b': 2 }, function(value, key) {
+                return key + value;
+            });
+            // => { 'a1': 1, 'b2': 2 }
+
+
+
+
+
+
+
+
+
+        // 创建一个对象，这个对象的key与object对象相同，值是通过iteratee运行object中每个自身可枚举属性名字符串产生的。
+        // iteratee调用三个参数：(value, key, object)。
+        // mapValues(遍历的对象, 迭代函数);
+        // 返回值: 返回映射后的新数组;
+            var users = {
+                'fred':    { 'user': 'fred',    'age': 40 },
+                'pebbles': { 'user': 'pebbles', 'age': 1 }
+            };
+
+            _.mapValues(users, function(o) { return o.age; });
+            // => { 'fred': 40, 'pebbles': 1 } (iteration order is not guaranteed)
+
+            // The `_.property` iteratee shorthand.
+            _.mapValues(users, 'age');
+            // => { 'fred': 40, 'pebbles': 1 } (iteration order is not guaranteed)
+
+
+        
+
+
+
+
+        // 该方法类似_.assign， 除了它递归合并sources来源对象自身和继承的可枚举属性到object目标对象。
+        // 如果目标值存在，被解析为undefined的sources来源对象属性将被跳过。
+        // 数组和普通对象会递归合并，其他对象和值会被直接分配覆盖。源对象从从左到右分配。后续的来源对象属性会覆盖之前分配的属性。
+        // _.merge(目标对象, 来源对象);
+        // 返回值: 返回Object;
+            
+            var object = {
+                'a': [{ 'b': 2 }, { 'd': 4 }]
+            };
+
+            var other = {
+                'a': [{ 'c': 3 }, { 'e': 5 }]
+            };
+            
+            _.merge(object, other);
+            // => { 'a': [{ 'b': 2, 'c': 3 }, { 'd': 4, 'e': 5 }] }
+
+        
+
+
+
+        
+
+        // 该方法类似_.merge，除了它接受一个customizer，调用以产生目标对象和来源对象属性的合并值。
+        // 如果customizer返回undefined，将会由合并处理方法代替。
+        // customizer调用与7个参数：(objValue, srcValue, key, object, source, stack)。
+        // _.mergeWith(目标对象, 来源对象, 定制合并值函数);
+        // 返回值: 返回object;
+            function customizer(objValue, srcValue) {
+                // console.log(objValue, srcValue);
+                if (_.isArray(objValue)) {
+                    return objValue.concat(srcValue);
+                }
+            }
+
+            var object = { 'a': [1], 'b': [2] };
+            var other = { 'a': [3], 'b': [4] };
+
+            _.mergeWith(object, other, customizer);
+            // => { 'a': [1, 3], 'b': [2, 4] }
+
+
+
+
+
+
+
+        // 这个方法一个对象，这个对象由忽略属性之外的object自身和继承的可枚举属性组成。
+        // (愚人码头注：可以理解为删除object对象的属性)
+        // _.omit(来源对象, 要被忽略的属性);
+        // 返回值: 返回新对象;
+            var object = { 'a': 1, 'b': '2', 'c': 3 };
+
+            _.omit(object, ['a', 'c']);
+            // => { 'b': '2' }
+
+            
+
+        
+
+
+        // 创建一个从object中选中的属性的对象。
+        // _.pick(来源对象, 要忽略的属性);
+        // 返回值: 返回新对象;
+            var object = { 'a': 1, 'b': '2', 'c': 3 };
+
+            _.pick(object, ['a', 'c']);
+            // => { 'a': 1, 'c': 3 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // 创建一个对象，这个对象组成为从object中经predicate判断为真值的属性。predicate调用2个参数：(value, key)。
+        // _.pickBy(来源对象, predicate调用每一个属性函数);
+        // 返回值: 返回新对象;
+            
+            var object = { 'a': 1, 'b': '2', 'c': 3 };
+
+            _.pickBy(object, _.isNumber);
+            // => { 'a': 1, 'c': 3 }
+
+
+
+
+
+
+
+
+        // 这个方法类似_.get， 除了如果解析到的值是一个函数的话，就绑定this到这个函数并返回执行后的结果。
+        // _.result(要是检索的对象, 要解析的属性路径, 如果值解析为undefined 返回这个值);
+        // 返回值: 返回解析后的值;
+            var object = { 'a': [{ 'b': { 'c1': 3, 'c2': _.constant(4) } }] };
+
+            _.result(object, 'a[0].b.c1');
+            // => 3
+
+            _.result(object, 'a[0].b.c2');
+            // => 4
+
+            _.result(object, 'a[0].b.c3', 'default');
+            // => 'default'
+
+            _.result(object, 'a[0].b.c3', _.constant('default'));
+            // => 'default'
+
+
+
+
+
+
+
+        
+
+        // 设置object对象中对应path属性路径上的值，如果path不存在，则创建。 
+        // 缺少的索引属性会创建为数组，而缺少的属性会创建为对象。 使用_.setWith定制path创建。
+        // _.set(要修改的对象, 设置对象路径, 设置的值);
+        // 返回值: 返回object;
+            var object = { 'a': [{ 'b': { 'c': 3 } }] };
+
+            _.set(object, 'a[0].b.c', 4);
+            // console.log(object.a[0].b.c);
+            // => 4
+
+            _.set(object, ['x', '0', 'y', 'z'], 5);
+            // console.log(object.x[0].y.z);
+            // => 5
+        
+            
+            _.set(object, 'x[1].y.z', 5);
+            // console.log(object.x[1].y.z);
+            // => 5
+
+
+
+
+
+        
+
+
+
+
+        // 这个方法类似_.set，除了它接受一个customizer，调用生成对象的path。 
+        // 如果customizer返回undefined将会有它的处理方法代替。customizer调用3个参数：(nsValue, key, nsObject)。
+        // _.setWith(要修改的对象, 设置对象路径, 要设置的值, 定制分配值的函数);
+        // 返回值: 返回object;
+            var object = {};
+
+            _.setWith(object, '[0][1]', 'a', Object);
+            // => { '0': { '1': 'a' } }
+
+
+
+
+
+
+
+
+
+
+
+        // _.reduce的替代方法;此方法将转换object对象为一个新的accumulator对象，结果来自iteratee处理自身可枚举的属性。
+        // 每次调用可能会改变accumulator对象。如果不提供accumulator，将使用与[[Prototype]]相同的新对象。
+        // iteratee调用4个参数：(accumulator, value, key, object)。如果返回false，iteratee会提前退出。
+        // _.transfrom(要遍历的对象, 迭代函数, 定制叠加的值);
+        // 返回值: 返回叠加后的值;
+            _.transform([2, 3, 4], function(result, n) {
+                result.push(n *= n);
+                return n % 2 == 0;
+            }, []);
+            // => [4, 9]
+
+            _.transform({ 'a': 1, 'b': 2, 'c': 1 }, function(result, value, key) {
+                // debugger;
+                (result[value] || (result[value] = [])).push(key);
+            }, {});
+            // => { '1': ['a', 'c'], '2': ['b'] }
+            
+            
+            
+        
+
+
+        
+        
+
+        // 移除对象路径上的属性, 改变源对象;
+        // _.unset(修改的对象, 移除对象的路径);
+        // 返回值: 如果移除成功, 返回true, 否则返回false;
+            
+            var object = { 'a': [{ 'b': { 'c': 7 } }] };
+            _.unset(object, 'a[0].b.c');
+            // => true
+
+            console.log(object);
+            // => { 'a': [{ 'b': {} }] };
+
+            _.unset(object, ['a', '0', 'b', 'c']);
+            // => true
+
+            console.log(object);
+            // => { 'a': [{ 'b': {} }] };
+            
+            
+
+
+
+
+        // 该方法类似_.set，除了接受updater以生成要设置的值。
+        // 使用_.updateWith来自定义生成的新path。updater调用1个参数：(value)。
+        // _.update(要修改的值, 要设置属性的路径, 用来生成设置值的函数);
+        // 返回值: 返回object;
+            var object = { 'a': [{ 'b': { 'c': 3 } }] };
+
+            _.update(object, 'a[0].b.c', function(n) { return n * n; });
+            console.log(object.a[0].b.c);
+            // => 9
+
+            _.update(object, 'x[0].y.z', function(n) { return n ? n + 1 : 0; });
+            console.log(object.x[0].y.z);
+            // => 0
+            
+        
+            
+        
+
+
+
+
+
+        // 该方法类似_.update，不同之处在于它接受customizer，调用来生成新的对象的path。
+        // 如果customizer返回undefined，路径创建由该方法代替。customizer调用有三个参数：(nsValue, key, nsObject)
+        // _.updateWith(要修改的对象, 要设置属性的路径, 用来生成设置值的函数, 用来自定义分配值的函数);
+        // 返回值: 返回object;
+            var object = {};
+
+            _.updateWith(object, '[0][1]', _.constant('a'), Object);
+            // => { '0': { '1': 'a' } }
+            
+
+
+
+
+        
+
+
+        
+
+        // 创建object自身可枚举属性的值为数组。
+        // _.values(检索的对象);
+        // 返回对象属性的值的数组;
+            function Foo() {
+                this.a = 1;
+                this.b = 2;
+            }
+
+            Foo.prototype.c = 3;
+
+            _.values(new Foo);
+            // => [1, 2] (iteration order is not guaranteed)
+
+            _.values('hi');
+            // => ['h', 'i']
+
+
+
+
+
+
+
+
+
+
+        // 创建object自身和继承的可枚举属性的值为数组;
+        // valuesIn(检索的对象);
+        // 返回值: 返回对象属性的值的数组;
+            function Foo() {
+                this.a = 1;
+                this.b = 2;
+            }
+
+            Foo.prototype.c = 3;
+
+            _.valuesIn(new Foo);
+            // => [1, 2, 3] (iteration order is not guaranteed)
+
+        
+
+
+
+
+
+        
+            
+            
     </script>
 </body>
 
