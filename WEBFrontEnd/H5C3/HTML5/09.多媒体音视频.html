@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/09.多媒体音视频.css">
+</head>
+<body>
+
+    <figure>
+        <figcaption>视频播放器</figcaption>
+        <div class="player">
+            <video src="./file/l01555565mu.p702.1.mp4"></video>
+            <div class="controls">
+                <!-- 播放暂停 -->
+                <a href="javascript:;" class="switch fa fa-play"></a>
+                <!-- 播放进度 -->
+                <div class="progress">
+                    <div class="line"></div>
+                    <div class="bar"></div>
+                </div>
+                <!-- 当前播放时间/ 播放总时长 -->
+                <div class="timer">
+                    <span class="current">00:00:00</span>/
+                    <span class="total">00:00:00</span>
+                </div>
+                <!-- 全屏/取消全屏 -->
+                <a href="javascript:;" class="expand fa fa-arrows-alt"></a>
+            </div>
+        </div>
+    </figure>
+    
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+        // 获取视频;
+        var video = $('video').get(0),
+            total = $('.total').get(0),
+            $current = $('.current'),
+            $switch = $('.switch'),
+            $line = $('.line'),
+            $bar = $('.bar'),
+            $expand = $('.expand');
+        
+        // 时间转换函数
+        function formatTime(time) {
+
+            // 计算时;
+            // 1h == 60m * 60s == 3600s
+            // 使用总时长除3600秒得到时长;
+            // time / 3600s = hour;
+            var h = Math.floor(time / 3600);
+            
+
+            // 计算分;
+            // 总时长除3600s后的余 除 60秒得到分;
+            // time % 3600s / 60 == minute
+            var m = Math.floor(time % 3600 / 60);
+
+            // 计算秒;
+            // 总时长除60的余数;
+            // time % 60
+            var s = Math.floor(time % 60);
+
+            return (h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s)
+            
+        }
+        
+
+
+        // 当浏览器可以播放视频时, 显示video和时间;
+        video.oncanplay = function () {
+            $(video).show();
+            
+            // duration返回视频长度;
+            // console.log(video.duration);
+
+
+            // 获取转换后的总时长;
+            var totalTime = formatTime(video.duration);
+            
+            $('.total').html(totalTime);
+            
+        }
+
+
+
+
+        // 制作播放暂停按钮;
+        $switch.on('click', function () {
+            if($(this).hasClass('fa-play')){
+                video.play();
+                $(this).addClass('fa-pause').removeClass('fa-play');
+            }else{
+                video.pause();
+                $(this).addClass('fa-play').removeClass('fa-pause');
+            }
+        })
+        
+        
+        
+        // 当视频时间发生变化时, 制作滚动条;
+        video.ontimeupdate = function () {
+            // 视频播放的当前时间;
+            // console.log(video.currentTime);
+
+            // 当前进度条 = 当前时间 / 总时长 * 100 + '%';
+            var videoLineWidth = video.currentTime / video.duration * 100 + '%';
+            
+            // 设置当前进度条;
+            $line.width(videoLineWidth);
+
+            // 当前时间显示;
+            $current.html(formatTime(video.currentTime));
+            
+        }
+
+
+
+        // 控制全屏;
+        $expand.on('click', function () {
+            if($(this).hasClass('fa-arrows-alt')){
+                video.webkitRequestFullScreen();
+                $(this).addClass('fa-compress').removeClass('fa-arrows-alt');
+            }else{
+                document.webkitCancelFullScreen();
+                $(this).addClass('fa-arrows-alt').removeClass('fa-compress');
+            }
+        })
+        
+        
+        
+        // 视频完成之后重置操作;
+        video.onended = function() {
+            // 当前视频时间清零;
+            video.currentTime = 0;
+
+            // 把播放按钮改为暂停状态;
+            $switch.addClass('fa-play').removeClass('fa-pause');
+            
+        }
+        
+
+
+        // 点击bar跳跃进度
+        $bar.on('click', function (event) {
+            // 获取点击时的距左边距;
+            var offset = event.offsetX;
+            
+            // 当前视频的播放位置 = 点击的位置 / bar的宽度 * 视频总时长;
+            var current = offset / $bar.width() * video.duration;
+            
+            video.currentTime = current;
+            
+        })
+        
+        
+    </script>
+    
+    <section style="display: none;">
+        多媒体:
+            方法: load(), play(), pause();
+            属性: currentSrc, currentTime, duration;
+            事件: oncanplay, ontimeupdate, onended等;
+        
+            这些方法、属性和事件允许您使用 JavaScript 来操作 <audio> 和 <video> 元素, 这些API是原生JS来操作的;
+        
+            更多API自查阅官方文档:
+            https://www.w3school.com.cn/tags/html_ref_audio_video_dom.asp
+
+            
+        
+    </section>
+</body>
+</html>

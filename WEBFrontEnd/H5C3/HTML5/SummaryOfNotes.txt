@@ -384,3 +384,35 @@
         2.指定多个CACHE, NETWORK, FALLBACK, 无顺序限制;
         3.#表示注释, 只有当.appcache文件内容发生改变或手动清除缓存后, 才会重新缓存;
         4.chrome可以通过 chrome://appcache-internals/工具和离线(online)模式来调试管理应用缓存;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+玖.多媒体音视频
+    多媒体:
+        方法: load(), play(), pause();
+        属性: currentSrc, currentTime, duration;
+        事件: oncanplay, ontimeupdate, onended等;
+    
+        这些方法、属性和事件允许您使用 JavaScript 来操作 <audio> 和 <video> 元素, 这些API是原生JS来操作的;
+    
+        更多API自查阅官方文档:
+        https://www.w3school.com.cn/tags/html_ref_audio_video_dom.asp
