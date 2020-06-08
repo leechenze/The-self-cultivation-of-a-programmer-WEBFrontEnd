@@ -1,0 +1,686 @@
+<!--
+ *                        _oo0oo_
+ *                       o8888888o
+ *                       88" . "88
+ *                       (| -_- |)
+ *                       0\  =  /0
+ *                     ___/`---'\___
+ *                   .' \\|     |// '.
+ *                  / \\|||  :  |||// \
+ *                 / _||||| -:- |||||- \
+ *                |   | \\\  - /// |   |
+ *                | \_|  ''\---/''  |_/ |
+ *                \  .-\__  '-'  ___/-. /
+ *              ___'. .'  /--.--\  `. .'___
+ *           ."" '<  `.___\_<|>_/___.' >' "".
+ *          | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+ *          \  \ `_.   \_ __\ /__ _/   .-` /  /
+ *      =====`-.____`.___ \_____/___.-`___.-'=====
+ *                        `=---='
+ * 
+ * 
+ *      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * 
+ *            佛祖保佑       永不宕机     永无BUG
+ -->
+
+
+
+<!--
+ * @Author: leecs
+ * @Date: 2020-06-08 18:05:10
+ * @LastEditTime: 2020-06-09 06:40:47
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \The-self-cultivation-of-a-programmer\WEBFrontEnd\Lodash\String\Lo字符串操作.html
+--> 
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lodash.min.js"></script>
+    <script src="../../JQuery/jQuery/jquery3.4.1.min.js"></script>
+</head>
+<body>
+
+    
+    <div id="example1"></div>
+    <div id="example2"></div>
+
+    <script>
+
+        // 转换驼峰;
+        // _.camelCase(转换的字符串);
+        // 返回值: 返回驼峰写法的字符串;
+            
+            _.camelCase('Foo Bar');
+            // => 'fooBar'
+
+            _.camelCase('--foo-bar--');
+            // => 'fooBar'
+
+            _.camelCase('__FOO_BAR__');
+            // => 'fooBar'
+        
+
+
+
+
+        // 首字母大写, 其他小写;
+        // _.capitalize(转换的字符串);
+        // 返回值: 返回大写开头的字符串;
+            _.capitalize('FRED');
+            // => 'Fred'
+
+
+
+
+
+        // 拉丁语字母处理;
+        // _.deburr(处理的字符);
+        // 返回值: 返回处理后的字符串;
+            _.deburr('déjà vu');
+            // => 'deja vu'
+
+
+
+
+
+
+        
+        // 检测结尾字符串
+        // _.endswith(检索的索引值, 检索的字符, 检索位置);
+        // 返回值: 如果字符串string以 检索的字符串 结尾，那么返回 true，否则返回 false
+            _.endsWith('abc', 'c');
+            // => true
+
+            _.endsWith('abc', 'b');
+            // => false
+
+            _.endsWith('abc', 'b', 2);
+            // => true
+        
+        
+        
+        
+        
+        
+        // 转html实体字符
+        // _.escape(转义的字符串);
+        // 返回值: 返回转义后的字符串;
+            _.escape('fred, barney, & pebbles');
+            // => 'fred, barney, &amp; pebbles'
+        
+
+
+
+
+
+
+
+
+        // 转义正则特殊字符;
+        // _.escapeRegExp(转义的字符);
+        // 返回值: 返回转义后的字符;
+            _.escapeRegExp('[lodash](https://lodash.com/)');
+            // => '\[lodash\]\(https://lodash\.com/\)'
+        
+
+
+
+
+        
+
+        // 以连字符连接字符串;
+        // _.kebabCase(转换字符);
+        // 返回值: 返回转换后的字符串;
+            _.kebabCase('Foo Bar');
+            // => 'foo-bar'
+
+            _.kebabCase('fooBar');
+            // => 'foo-bar'
+
+            _.kebabCase('__FOO_BAR__');
+            // => 'foo-bar'
+        
+        
+        
+        
+        
+        
+        
+        // 空格分开单词并转小写;
+        // _.lowerCase(转换的字符);
+        // 返回值: 返回转换后的字符;
+            
+            _.lowerCase('--Foo-Bar--');
+            // => 'foo bar'
+
+            _.lowerCase('fooBar');
+            // => 'foo bar'
+
+            _.lowerCase('__FOO_BAR__');
+            // => 'foo bar'
+
+
+
+
+
+
+        // 仅首字母小写, 其他不变;
+        // _.lowerFirst(转换的字符);
+        // 返回值: 返回转换后的字符串;
+
+            _.lowerFirst('Fred');
+            // => 'fred'
+
+            _.lowerFirst('FRED');
+            // => 'fRED'
+
+
+
+
+
+        // 左右填充字符;
+        // _.pad(要填充的字符串, 填充的长度, 填充字符), 注意填充的长度必须大于字符长度(填充的长度包含了原字符串的长度);
+        // 返回值: 返回填充后的字符串;
+            _.pad('abc', 8);
+            // => '  abc   '
+
+            _.pad('abc', 8, '_-');
+            // => '_-abc_-_'
+
+            _.pad('abc', 3);
+            // => 'abc'
+
+
+
+
+        
+        // 右侧填充字符
+        // _.padEnd(要填充的字符串, 填充长度, 填充字符);
+        // 返回值: 返回填充后的字符串;
+            _.padEnd('abc', 6);
+            // => 'abc   '
+
+            _.padEnd('abc', 6, '_-');
+            // => 'abc_-_'
+
+            _.padEnd('abc', 3);
+            // => 'abc'
+        
+
+
+
+
+        // 左侧填充字符;
+        // _.padStart(要填充的字符串, 填充长度, 填充字符);
+        // 返回值: 返回填充后的字符穿;
+            _.padStart('abc', 6);
+            // => '   abc'
+
+            _.padStart('abc', 6, '_-');
+            // => '_-_abc'
+
+            _.padStart('abc', 3);
+            // => 'abc'
+        
+
+
+
+
+
+
+        // 转成不同进制的整数
+        // _.parseInt(要转换的字符串, 抓换的基数);
+        // 返回值: 返回转换后的整数;
+
+            _.parseInt('08');
+            // => 8
+
+            _.map(['6', '08', '10'], _.parseInt);
+            // => [6, 8, 10]
+        
+        
+        
+
+
+
+
+
+        // 重复给定字符串;
+        // _.repeat(要重复的字符串, 重复的次数);
+        // 返回值: 返回重复的字符串;
+            _.repeat('*', 3);
+            // => '***'
+
+            _.repeat('abc', 2);
+            // => 'abcabc'
+
+            _.repeat('abc', 0);
+            // => ''
+
+
+            
+
+
+
+        // 字符串替换;
+        // _.replace(待替换的字符串, 要匹配的内容, 替换的内容);
+        // 返回值: 返回替换后的字符串;
+            _.replace('Hi Fred', 'Fred', 'Barney');
+            // => 'Hi Barney'
+        
+
+
+
+
+        // 以下划线连接字符串;
+        // _.snakeCase(要转换的字符串);
+        // 返回转换后的字符串;
+            _.snakeCase('Foo Bar');
+            // => 'foo_bar'
+
+            _.snakeCase('fooBar');
+            // => 'foo_bar'
+
+            _.snakeCase('--FOO-BAR--');
+            // => 'foo_bar'
+
+
+
+        
+
+
+        
+        // 拆分字符串为数组;
+        // _.split(要拆分的字符串, 拆分的分隔符, 限定拆分结果的数量);
+        // 返回值: 返回拆分部分的字符串的数组;
+            _.split('a-b-c', '-', 2);
+            // => ['a', 'b']
+        
+        
+
+
+
+
+        
+
+        // 空格间隔并且首字母大写单词;
+        // _.startCase(要转换的字符串);
+        // 返回值: 返回转换后的字符串;
+            _.startCase('--foo-bar--');
+            // => 'Foo Bar'
+
+            _.startCase('fooBar');
+            // => 'Foo Bar'
+
+            _.startCase('__FOO_BAR__');
+            // => 'FOO BAR'
+
+
+
+
+
+
+
+        // 检查开头字符串;
+        // _.startsWith(检索的字符串, 检查的字符串, 检索的位置);
+        // 返回值: 如果string以 target，那么返回true，否则返回 false 
+            _.startsWith('abc', 'a');
+            // => true
+            
+            _.startsWith('abc', 'b');
+            // => false
+
+            _.startsWith('abc', 'b', 1);
+            // => true
+        
+
+
+
+
+
+
+
+/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<> */
+/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<> */
+/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<> */
+/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<> */
+/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<> */
+
+
+
+
+
+
+        // 创建预编译模板方法;
+        // _.template(模板字符串, 选项对象, escape分隔符, evaluate分隔符, 导入对象到模板中作为自由变量, interpolate分隔符, 模板编译的来源URL, 数据对象的变量名);
+        // 返回值: 返回编译模板函数;
+
+            // Use the "interpolate" delimiter to create a compiled template.
+            var compiled = _.template('hello <%= user %>!');
+            compiled({ 'user': 'fred' });
+            // => 'hello fred!'
+
+            // Use the HTML "escape" delimiter to escape data property values.
+            var compiled = _.template('<b><%- value %></b>');
+            compiled({ 'value': '<script>' });
+            // => '<b>&lt;script&gt;</b>'
+
+            // Use the "evaluate" delimiter to execute JavaScript and generate HTML.
+            var compiled = _.template('<% _.forEach(users, function(user) { %><li><%- user %></li><% }); %>');
+            compiled({ 'users': ['fred', 'barney'] });
+            // => '<li>fred</li><li>barney</li>'
+
+            // Use the internal `print` function in "evaluate" delimiters.
+            var compiled = _.template('<% print("hello " + user); %>!');
+            compiled({ 'user': 'barney' });
+            // => 'hello barney!'
+
+            // Use the ES template literal delimiter as an "interpolate" delimiter.
+            // Disable support by replacing the "interpolate" delimiter.
+            var compiled = _.template('hello ${ user }!');
+            compiled({ 'user': 'pebbles' });
+            // => 'hello pebbles!'
+
+            // Use backslashes to treat delimiters as plain text.
+            var compiled = _.template('<%= "\\<%- value %\\>" %>');
+            compiled({ 'value': 'ignored' });
+            // => '<%- value %>'
+
+            // Use the `imports` option to import `jQuery` as `jq`.
+            var text = '<% jq.each(users, function(ind, item) { %><li><%- item %></li><% }); %>';
+            var compiled = _.template(text, { 'imports': { 'jq': jQuery } });
+            compiled({ 'users': ['fred', 'barney'] });
+            // => '<li>fred</li><li>barney</li>'
+            
+
+            // Use the `sourceURL` option to specify a custom sourceURL for the template.
+            var compiled = _.template('hello <%= user %>!', { 'sourceURL': '/basic/greeting.jst' });
+            // compiled(data);
+            // => Find the source of "greeting.jst" under the Sources tab or Resources panel of the web inspector.
+
+            // Use the `variable` option to ensure a with-statement isn't used in the compiled template.
+            var compiled = _.template('hi <%= data.user %>!', { 'variable': 'data' });
+            compiled.source;
+            // => function(data) {
+            //   var __t, __p = '';
+            //   __p += 'hi ' + ((__t = ( data.user )) == null ? '' : __t) + '!';
+            //   return __p;
+            // }
+
+            // Use custom template delimiters.
+            // _.templateSettings.interpolate = /{{([\s\S]+?)}}/g;
+            // var compiled = _.template('hello {{ user }}!');
+            // compiled({ 'user': 'mustache' });
+            // => 'hello mustache!'
+
+            // Use the `source` property to inline compiled templates for meaningful
+            // line numbers in error messages and stack traces.
+            // fs.writeFileSync(path.join(process.cwd(), 'jst.js'), '\
+            //     var JST = {\
+            //         "main": ' + _.template(mainText).source + '\
+            //     };\
+            // ');
+        
+        
+    </script>
+
+
+    <script type="text/template" id="tpl1">
+        <% _.each(datas, function (item) { %>
+            <div class="outer">
+                <%= item.film %> ===== <%= item.url %> ===== <%= item.director %>
+            </div>
+        <% }); %>
+    </script>
+
+    <script type="text/template" id="tpl2">
+        <% if ( 2 + 4 === 6 ) {
+            _.each(datas, function (item) { %>
+                <div class="outer">
+                    <%= item.film %> ===== <%= item.url %> ===== <%= item.director %>
+                </div>
+            <% });
+        } %>
+    </script>
+    
+    <script>
+        var datas = [
+            {
+                film: '电影名称1',
+                url: 'http://www.baidu.com',
+                director: '导演名称1'
+            },
+            {
+                film: '电影名称2',
+                url: 'http://www.baidu.com',
+                director: '导演名称2'
+            },
+            {
+                film: '电影名称3',
+                url: 'http://www.baidu.com',
+                director: '导演名称4'
+            },
+            {
+                film: '电影名称4',
+                url: 'http://www.baidu.com',
+                director: '导演名称4'
+            },
+        ];
+
+
+        // 方法一:
+        // $('#example1').html( _.template($('#tpl1').html(), datas) );
+        // $('#example2').html( _.template($('#tpl2').html(), datas) );
+        
+        // 方法二:
+        // var compiledOne = _.template($('#tpl1').html());
+        // var compiledTwo = _.template($('#tpl2').html());
+        // $('#example1').html(compiledOne(datas));
+        // $('#example2').html(compiledTwo(datas));
+        
+        
+
+
+/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<> */
+/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<> */
+/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<> */
+/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<> */
+/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<> */
+
+
+    </script>
+
+
+    <script>
+
+        // 字符串转小写
+        // _.toLower(转换的字符串);
+        // 返回值: 返回小写的字符串
+            _.toLower('--Foo-Bar--');
+            // => '--foo-bar--'
+
+            _.toLower('fooBar');
+            // => 'foobar'
+
+            _.toLower('__FOO_BAR__');
+            // => '__foo_bar__'
+        
+        
+        
+
+        
+    
+        // 字符串转大写;
+        // _.toUpper(转换的字符串);
+        // 返回值: 返回大写的字符串;
+            _.toUpper('--foo-bar--');
+            // => '--FOO-BAR--'
+
+            _.toUpper('fooBar');
+            // => 'FOOBAR'
+
+            _.toUpper('__foo_bar__');
+            // => '__FOO_BAR__'
+        
+        
+        
+
+
+
+        // 移除两侧空个或指定字符;
+        // _.trim(要处理的字符串, 要移除的字符);
+        // 返回值: 返回处理后的字符;
+            _.trim('  abc  ');
+            // => 'abc'
+
+            _.trim('-_-abc-_-', '_-');
+            // => 'abc'
+
+            _.map(['  foo  ', '  bar  '], _.trim);
+            // => ['foo', 'bar']
+        
+        
+        
+        
+
+
+
+        // 移除尾部空格或指定字符;
+        // _.trimEnd(处理的字符串, 移除的字符);
+        // 返回值: 返回处理后的字符串;
+            
+            _.trimEnd('  abc  ');
+            // => '  abc'
+
+            _.trimEnd('-_-abc-_-', '_-');
+            // => '-_-abc'
+        
+        
+        
+        
+        
+        
+
+
+        // 移除头部空格或指定字符;
+        // _.trimStart(处理的字符串, 移除的字符);
+        // 返回值: 返回处理后的字符串;
+
+            _.trimStart('  abc  ');
+            // => 'abc  '
+
+            _.trimStart('-_-abc-_-', '_-');
+            // => 'abc-_-'
+        
+        
+        
+        
+        
+        
+        
+        
+        // 截断字符串
+        // _.truncate(截断的字符串, 选项对象, 允许的最大长度, 超出后代替的字符, 截断点);
+        // 返回值: 返回处理后的字符串;
+            
+            _.truncate('hi-diddly-ho there, neighborino');
+            // => 'hi-diddly-ho there, neighbo...'
+
+            _.truncate('hi-diddly-ho there, neighborino', {
+            'length': 24,
+            'separator': ' '
+            });
+            // => 'hi-diddly-ho there,...'
+
+            _.truncate('hi-diddly-ho there, neighborino', {
+            'length': 24,
+            'separator': /,? +/
+            });
+            // => 'hi-diddly-ho there...'
+
+            _.truncate('hi-diddly-ho there, neighborino', {
+            'omission': ' [...]'
+            });
+            // => 'hi-diddly-ho there, neig [...]'
+        
+        
+        
+
+
+
+
+
+        // 转实体为对应字符;
+        // _.unescape(转换的字符串);
+        // 返回值: 返回转换后的字符串;
+            
+            _.unescape('fred, barney, &amp; pebbles');
+            // => 'fred, barney, & pebbles' 
+
+
+
+
+
+
+
+        
+
+        // 空格分割的大写单词;
+        // _.upperCase(转换的字符);
+        // 返回值: 返回大写单词;
+            _.upperCase('--foo-bar');
+            // => 'FOO BAR'
+
+            _.upperCase('fooBar');
+            // => 'FOO BAR'
+
+            _.upperCase('__foo_bar__');
+            // => 'FOO BAR'
+        
+        
+
+
+
+
+        // 首写字母大写其他不变;
+        // _.upperFirst(转换的字符);
+        // 返回值: 返回转换后的字符;
+            _.upperFirst('fred');
+            // => 'Fred'
+
+            _.upperFirst('FRED');
+            // => 'FRED'
+        
+
+
+
+
+
+
+
+        // 拆分字符串为数组;
+        // _.words(要拆分的字符串, 匹配模式);
+        // 返回拆分字符串之后的数组;
+            
+            _.words('fred, barney, & pebbles');
+            // => ['fred', 'barney', 'pebbles']
+
+            _.words('fred, barney, & pebbles', /[^, ]+/g);
+            // => ['fred', 'barney', '&', 'pebbles']
+        
+        
+    </script>
+
+
+</body>
+
+</html>
