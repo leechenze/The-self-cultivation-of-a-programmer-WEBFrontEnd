@@ -14,23 +14,78 @@
         body{
             text-align: center;
         }
-        canvas{
+        #canvas{
             display: block;
             box-shadow: 0px 0px 10px #000;
             margin: 50px auto;
+            /* display: none; */
         }
     </style>
 </head>
 <body>
+
     <canvas width="800" height="600" id="canvas">
         您的浏览器不支持Canvas!请升级或者更换浏览器进行浏览;
     </canvas>
+
+
+
+
+
+    <!-- 刮刮卡 -->
+        <!-- <style>
+            body,html{
+                margin: 0;
+                text-align: left;
+            }
+            img{
+                
+            }
+            #scraping-card{
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 1;
+            }
+
+        </style>
+        <img src="../images/1.jpg" alt="">
+        <canvas width="1024" height="711" id="scraping-card">
+            您的浏览器不支持Canvas!请升级或者更换浏览器进行浏览;
+        </canvas> -->
+    
+    
+    
+
+
+
+    <!-- 图像组合 globalCompositeOperation -->
+        <!-- <style>
+            body,html{
+                margin: 0;
+                text-align: center;
+            }
+            #globalCompositeOperation{
+                display: block;
+                box-shadow: 0px 0px 10px #000;
+                margin: 50px auto;
+            }
+
+        </style>
+        <canvas width="800" height="600" id="globalCompositeOperation">
+            您的浏览器不支持Canvas!请升级或者更换浏览器进行浏览;
+        </canvas> -->
+    
+    
+    
 
     
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         
         window.onload = function () {
+
             // 获取canvas元素
             var canvas = document.getElementById('canvas');
             // 创建canvas上下文;
@@ -232,10 +287,130 @@
 
 
             
+            
+
+            // 图片Clip
+                // var img = new Image();
+                // img.src = '../../images/1.jpg';
+                
+                // img.onload = function () {
+                //     ctx.beginPath();
+                //     ctx.arc(400, 300, 200, 0, Math.PI*2);
+                //     ctx.clip();
+                //     ctx.drawImage(this, -100, 0);
+                // }
+                
 
             
 
+            // 涂鸦
+                // canvas.onmousedown = function (event) {
+                //     var ev = event || window.event;
+                //     var x = ev.clientX - canvas.offsetLeft;
+                //     var y = ev.clientY - canvas.offsetTop;
+
+                //     ctx.strokeStyle = 'green';
+                //     ctx.lineWidth = 10;
+                //     ctx.beginPath();
+                //     ctx.moveTo(x, y);
+
+                //     canvas.onmousemove = function (event) {
+                //         var ev = event || window.event;
+                //         var x = ev.clientX - canvas.offsetLeft;
+                //         var y = ev.clientY - canvas.offsetTop;
+                //         ctx.lineTo(x, y);
+                //         ctx.stroke();
+                        
+                //     }
+                //     canvas.onmouseup = function () {
+                //         canvas.onmousemove = null;
+                //     }
+                // }
             
+            
+
+
+            // 刮刮卡;
+            
+                // var canvas = document.getElementById('scraping-card');
+                // // 创建canvas上下文;
+                // if(canvas.getContext){
+                //     var ctx = canvas.getContext('2d');
+                // }else{
+                //     alert('浏览器不支持canvas');
+                // }
+                
+                // ctx.fillStyle = 'gray';
+                // ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // // 定义新图像如何绘制到已有的图像上 = 只有源图像之外的目标图像部分会被显示并且为透明状态;
+                // ctx.globalCompositeOperation = 'destination-out';
+
+                // ctx.lineWidth = 30;
+                // ctx.lineCap = 'round';
+                // ctx.beginPath();
+                
+                // canvas.onmousedown = function (event) {
+                //     var ev = event || window.event;
+                //     var x = ev.clientX - canvas.offsetLeft;
+                //     var y = ev.clientY - canvas.offsetTop;
+
+                //     // ctx.strokeStyle = 'red';
+                    
+                //     ctx.moveTo(x, y);
+                    
+                //     canvas.onmousemove = function (event) {
+                //         var ev = event || window.event;
+                //         var x = ev.clientX - canvas.offsetLeft;
+                //         var y = ev.clientY - canvas.offsetTop;
+
+                //         ctx.lineTo(x,  y);
+                //         ctx.stroke();
+                        
+                //     }
+                    
+                //     canvas.onmouseup = function() {
+                //         canvas.onmousemove = null;
+                //     }
+                    
+                // }
+            
+
+
+
+
+
+
+
+
+            // 图像组合;
+
+                // var canvas = document.getElementById('globalCompositeOperation');
+                // // 创建canvas上下文;
+                // if(canvas.getContext){
+                //     var ctx = canvas.getContext('2d');
+                // }else{
+                //     alert('浏览器不支持canvas');
+                // }
+            
+                // // 目标对象
+                // ctx.fillStyle = 'red';
+                // ctx.fillRect(30, 30, 50, 50);
+                
+                // ctx.globalCompositeOperation = 'destination-out'
+                
+                // // 源对象
+                // ctx.fillStyle = 'blue';
+                // ctx.arc(80, 80, 30, 0, Math.PI * 2);
+                // ctx.fill();
+            
+                
+            
+            
+
+
+            // 矩形直线运动
+                
             
             
         }
@@ -284,6 +459,7 @@
             以上做个了解, 绘制图片经常用的是drawImage()方法;
             ctx.drawImage(img, x, y, widht, height);                                              绘制图片(这些参数用于绘制img整个图片);              
             ctx.drawImage(img, x, y, widht, height, x, y, width, height);                         绘制图片(后面这些参数用来指定绘制出来img整个图片的某个部分);
+            ctx.clip();                                                                           剪裁图片
 
 
         绘制文字:
@@ -295,6 +471,24 @@
             ctx.shadowOffsetY = num;                                                              绘制阴影Y轴位置;
                 
 
+        图像组合重叠:
+            ctx.globalCompositeOperation                                                          定义新图像如何绘制到已有的图像上
+
+                目标图像:
+                    destination-over;                                                             重叠区域:目标图像覆盖源对象;
+                    destination-atop;                                                             只显示和源对象重叠的部分和源图像整个部分;
+                    destination-in;                                                               只显示和源对象重叠的部分;
+                    destination-out;                                                              只显示目标图像部分;源图像和重叠部分不限时
+
+                源图像:
+                    source-over;                                                                  重叠:源图像覆盖目标对象;
+                    source-atop;                                                                  只显示和目标对象重叠的部分和目标图像整个部分;
+                    source-in;                                                                    只显示和目标对象重叠的部分;
+                    source-in;                                                                    只显示源图像部分;目标图像和重叠部分不限时
+
+
+
+            
         
         
         
