@@ -271,3 +271,61 @@
             @import "library"; // library.less
             @import "typo.css";
         
+
+
+
+
+    循环==========================================(loops)
+
+        在Less中，混合可以调用它自身。
+        这样，当一个混合递归调用自己，再结合Guard表达式和模式匹配这两个特性，就可以写出循环结构。
+
+           示例:
+
+                .loop(@counter) when (@counter > 0) {
+                    .loop((@counter - 1));              // 递归调用自身
+                    width: (10px * @counter);           // 每次调用时产生的样式代码
+                }
+
+                div {
+                    .loop(5);                           // 调用循环
+                }
+
+            
+            输出:
+
+                div {
+                    width: 10px;
+                    width: 20px;
+                    width: 30px;
+                    width: 40px;
+                    width: 50px;
+                }
+
+        使用递归循环最常见的情况就是生成栅格系统的CSS：
+
+            
+            .generate-columns(4);
+
+            .generate-columns(@n, @i : 1) when (@i <= @n){
+                .columns-@{i} {
+                    width: @i * 100% / @n;
+                }
+                .generate-columns(@n, @i + 1);
+            }
+
+
+        输出：
+
+            .columns-1 {
+                width: 25%; 
+            }
+            .columns-2 {
+                width: 50%; 
+            }
+            .columns-3 {
+                width: 75%; 
+            }
+            .columns-4 {
+                width: 100%;    
+            }

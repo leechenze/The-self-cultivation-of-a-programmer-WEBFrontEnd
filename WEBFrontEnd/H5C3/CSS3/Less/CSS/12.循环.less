@@ -1,0 +1,23 @@
+.loop(@counter) when (@counter > 0) {
+
+    .loop(@counter - 1);
+
+    width: 10px * @counter;
+    
+}
+
+div{
+    .loop(5);
+}
+
+
+
+
+.generate-columns(4);
+
+.generate-columns(@n, @i : 1) when (@i <= @n){
+    .columns-@{i} {
+        width: @i * 100% / @n;
+    }
+    .generate-columns(@n, @i + 1);
+}

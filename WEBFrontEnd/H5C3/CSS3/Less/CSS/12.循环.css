@@ -1,0 +1,19 @@
+div {
+  width: 10px;
+  width: 20px;
+  width: 30px;
+  width: 40px;
+  width: 50px;
+}
+.columns-1 {
+  width: 25%;
+}
+.columns-2 {
+  width: 50%;
+}
+.columns-3 {
+  width: 75%;
+}
+.columns-4 {
+  width: 100%;
+}
