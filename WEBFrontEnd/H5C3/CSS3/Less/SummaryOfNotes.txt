@@ -329,3 +329,21 @@
             .columns-4 {
                 width: 100%;    
             }
+
+
+    函数指令==========================================(function)
+        
+        封装rem转换px单位;
+
+            .rem (@name, @px) {
+                @{name}: unit(@px / 75, rem);
+            }
+
+            
+        调用输出: 
+
+            .content{
+                .rem(width, 1000);   
+                .rem(height, 1000);
+                background-color: #aaa;
+            }
