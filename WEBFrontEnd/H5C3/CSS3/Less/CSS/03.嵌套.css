@@ -1,0 +1,30 @@
+#header {
+  color: black;
+}
+#header .navigation {
+  font-size: 12px;
+}
+#header .logo {
+  width: 300px;
+}
+#header .logo:hover {
+  background-color: blue;
+}
+.component {
+  width: 300px;
+}
+@media screen and (min-width: 768px) {
+  .component {
+    width: 600px;
+  }
+}
+@media screen and (min-width: 768px) and (min-resolution: 1920dpi) {
+  .component {
+    background-image: url(/img/retina2x.png);
+  }
+}
+@media screen and (min-width: 1280px) {
+  .component {
+    width: 1000px;
+  }
+}

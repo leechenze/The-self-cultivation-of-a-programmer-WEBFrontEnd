@@ -1,0 +1,29 @@
+
+@conversion-1: 5cm + 10mm; 
+@conversion-2: 2 - 3cm - 5mm; 
+
+@incompatible-units: 2 + 5px;
+
+@base: 5%;
+@filler: @base * 2; 
+@other: @base + @filler; 
+
+@base-cm: 3cm;
+
+@color-text: #112233;
+
+@num: 50vh/2;
+
+body{
+    width: @conversion-1;
+    width: @conversion-2;
+    width: @incompatible-units;
+    width: @base;
+    width: @filler;
+    width: @other;
+    width: @base-cm * 3cm;
+    color: @color-text + #111;
+    width: calc(50% + (@num - 20px));
+}
+
+
