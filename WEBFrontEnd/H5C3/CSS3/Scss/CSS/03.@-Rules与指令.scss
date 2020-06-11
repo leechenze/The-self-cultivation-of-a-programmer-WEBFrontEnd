@@ -1,0 +1,114 @@
+@import './01.CSS拓展功能';
+@import './02.sassScript.css';
+
+/*=============================================================================*/
+
+.sidebar {
+    width: 300px;
+    @media screen and (orientation: landscape) {
+        width: 500px;
+    }
+}
+
+@media screen {
+    .sidebar {
+        @media (orientation: landscape) {
+            width: 500px;
+        }
+    }
+}
+
+
+
+
+$media: screen;
+$feature: min-width;
+$value: 1000px;
+
+@media #{$media} and ($feature: $value) {
+    .sidebar {
+        width: 500px;
+    }
+}
+
+
+
+
+
+.error {
+    border: 1px #f00;
+    background-color: #fdd;
+}
+.error.intrusion {
+    background-image: url("/image/hacked.png");
+}
+.seriousError {
+    @extend .error;
+    border-width: 3px;
+}
+
+
+.hoverlink {
+    @extend a:hover;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+
+.hoverlink {
+    @extend a:hover;
+}
+.comment a.user:hover {
+    font-weight: bold;
+}
+
+
+
+.error {
+    border: 1px #f00;
+    background-color: #fdd;
+}
+.attention {
+    font-size: 3em;
+    background-color: #ff0;
+}
+.seriousError {
+    @extend .error;
+    @extend .attention;
+    border-width: 3px;
+}
+
+
+
+
+
+
+.error {
+    border: 1px #f00;
+    background-color: #fdd;
+}
+.seriousError {
+    @extend .error;
+    border-width: 3px;
+}
+.criticalError {
+    @extend .seriousError;
+    position: fixed;
+    top: 10%;
+    bottom: 10%;
+    left: 10%;
+    right: 10%;
+}
+
+
+
+
+.parent {
+    width: 100px;
+    @at-root {
+        .child1 { width: 100px; }
+        .child2 { width: 100px; }
+    }
+    .step-child { width: 100px; }
+    }

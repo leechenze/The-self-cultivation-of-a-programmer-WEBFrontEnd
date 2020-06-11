@@ -1,0 +1,41 @@
+$width: 5em;
+
+#main {
+    width: $width;
+    $width: 10em !global;
+    width: $width;
+}
+
+#sidebar {
+    width: $width;
+}
+
+
+@mixin firefox-message($selector) {
+    body.firefox #{$selector}:before {
+        content: "Hi, Firefox users!";
+        // content: #{"Hi, Firefox users!"};
+    }
+}
+
+@include firefox-message(".header");
+
+
+
+$name: foo;
+$attr: border;
+p.#{$name} {
+    #{$attr}-color: blue;
+}
+
+
+
+
+$content: "First content";
+$content: "Second content?" !default;
+$new_content: "First time reference" !default;
+
+#main {
+    content: $content;
+    new-content: $new_content;
+}

@@ -1,0 +1,72 @@
+p{
+    @if 1 + 1 == 2 {border: 1px solid red};
+    @if 5 < 3 {color: blue};
+    @if null {color: red}
+}
+
+
+$type: monster;
+p{
+    @if $type == 'ocean' {
+        color: blue;
+    } @else if $type == 'obama' {
+        color: red;
+    } @else if $type == 'trump' {
+        color: yellow;
+    } @else if $type == 'monster' {
+        color: green;
+    } @else {
+        color: violet;
+    }
+}
+
+
+
+@for $i from 1 through 3 {
+    .item-#{$i} { width: 2em * $i; }
+}
+/*========================================================================*/
+@for $i from 1 to 3 {
+    .item-#{$i} { width: 2em * $i; }
+}
+
+
+
+
+
+@each $animal in george, lincoln, nixon, clinton, bush {
+    .#{$animal}-icon{
+        background-color: url('./#{$animal}.png');
+    }
+}
+
+
+
+/*====================================================================================*/
+
+
+
+@each $animal, $color, $cursor in (puma, black, default),(sea-slug, blue, pointer),(egret, white, move) {
+    .#{$animal}-icon {
+        background-image: url('/images/#{$animal}.png');
+        border: 2px solid $color;
+        cursor: $cursor;
+    }
+}
+
+
+
+
+@each $header, $size in (h1: 2em, h2: 1.5em, h3: 1.2em) {
+    #{$header} {
+        font-size: $size;
+    }
+}
+
+
+$i: 6;
+@while $i > 0 {
+    .item-#{$i} { width: 2em * $i; }
+    $i: $i - 2;
+}
+

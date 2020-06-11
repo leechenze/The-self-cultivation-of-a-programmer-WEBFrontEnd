@@ -1,0 +1,91 @@
+p {
+  border: 1px solid red;
+}
+
+p {
+  color: green;
+}
+
+.item-1 {
+  width: 2em;
+}
+
+.item-2 {
+  width: 4em;
+}
+
+.item-3 {
+  width: 6em;
+}
+
+/*========================================================================*/
+.item-1 {
+  width: 2em;
+}
+
+.item-2 {
+  width: 4em;
+}
+
+.george-icon {
+  background-color: url("./george.png");
+}
+
+.lincoln-icon {
+  background-color: url("./lincoln.png");
+}
+
+.nixon-icon {
+  background-color: url("./nixon.png");
+}
+
+.clinton-icon {
+  background-color: url("./clinton.png");
+}
+
+.bush-icon {
+  background-color: url("./bush.png");
+}
+
+/*====================================================================================*/
+.puma-icon {
+  background-image: url("/images/puma.png");
+  border: 2px solid black;
+  cursor: default;
+}
+
+.sea-slug-icon {
+  background-image: url("/images/sea-slug.png");
+  border: 2px solid blue;
+  cursor: pointer;
+}
+
+.egret-icon {
+  background-image: url("/images/egret.png");
+  border: 2px solid white;
+  cursor: move;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+.item-6 {
+  width: 12em;
+}
+
+.item-4 {
+  width: 8em;
+}
+
+.item-2 {
+  width: 4em;
+}

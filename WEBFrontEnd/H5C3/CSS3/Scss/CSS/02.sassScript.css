@@ -1,0 +1,21 @@
+#main {
+  width: 5em;
+  width: 10em;
+}
+
+#sidebar {
+  width: 10em;
+}
+
+body.firefox .header:before {
+  content: "Hi, Firefox users!";
+}
+
+p.foo {
+  border-color: blue;
+}
+
+#main {
+  content: "First content";
+  new-content: "First time reference";
+}
