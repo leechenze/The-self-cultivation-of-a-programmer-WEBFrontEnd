@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./js/handlebars/handlebars.min.js"></script>
+</head>
+<body>
+    
+    <table border="1">
+        <thead>
+            <tr>
+                <th>名字</th>
+                <th>性别</th>
+                <th>年龄</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script type="text/x-handlebars-template" id="tbody-tr">
+        {{#each student}}
+            <tr>
+                <td>{{name}}</td>
+                <td>{{sex}}</td>
+                <td>{{age}}</td>
+            </tr>
+        {{/each}}
+    </script>
+
+    <script type="text/javascript">
+        var leechense = {
+            "student": [
+                {
+                    "name": "Clinton",
+                    "sex": "man",
+                    "age": 30
+                },{
+                    "name": "Lincoln",
+                    "sex": "man",
+                    "age": 60
+                },{
+                    "name": "george",
+                    "sex": "man",
+                    "age": 50
+                },
+            ]
+        };
+
+        var myTpl = Handlebars.compile($('#tbody-tr').html());
+        $('tbody').html(myTpl(leechense));
+        
+    </script>
+    
+</body>
+</html>
