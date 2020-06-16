@@ -711,9 +711,21 @@
         
 
     
+
+
+
+
+
+
+
+    
 陆.混合指令 (Mixin Directives)
     混合指令（Mixin）用于定义可重复使用的样式，避免了使用无语意的 class，比如 .float-left。
     混合指令可以包含所有的 CSS 规则，绝大部分 Sass 规则，甚至通过参数功能引入变量，输出多样化的样式
+
+    1.定义混合指令 @mixin
+
+        混合指令的用法是在 @mixin 后添加名称与样式
 
         @mixin large-text {
             font: {
@@ -725,88 +737,275 @@
         }
 
         
+    2.引用混合样式
+                
+        使用 @include 指令引用混合样式，格式是在其后添加混合名称
+        
+            .page-title {
+                @include large-text;
+                padding: 4px;
+                margin-top: 10px;
+            }
+        
+            编译为:
+
+            
+            .page-title{
+                font-family: Arial;
+                font-size: 20px;
+                font-weight: bold;
+                color: #ff0000;
+                padding: 4px;
+                margin-top: 10px;
+            }
+        
+        也可以在最外层引用混合样式，不会直接定义属性，也不可以使用父选择器
+
+            @mixin silly-links {
+            a {
+                    color: blue;
+                    background-color: red;
+            }
+            }
+            @include silly-links;
+
+
+            编译为
+
+            a {
+                color: blue;
+                background-color: red;
+            }
+
+        混合样式中也可以包含其他混合样式: 
+        
+            @mixin compound {
+                @include highlighted-background;
+                @include header-text;
+            }
+            @mixin highlighted-background { background-color: #fc0; }
+            @mixin header-text { font-size: 20px; }
+    
+
+
+
+    3.参数:
+        
+        参数用于给混合指令中的样式设定变量，并且赋值使用。在定义混合指令的时候，按照变量的格式，通过逗号分隔，将参数写进圆括号里。
+        引用指令时，按照参数的顺序，再将所赋的值对应写进括号
+
+            @mixin sexy-border($color, $width) {
+                border: {
+                    color: $color;
+                    width: $width;
+                    style: dashed;
+                }
+            }
+
+            p { @include sexy-border(blue, 1in); }
+            h1 { @include sexy-border(blue, 2in); }
+    
+
+            编译为: 
+
+            p {
+                border-color: blue;
+                border-width: 1in;
+                border-style: dashed;
+            }
+
+            h1 {
+                border-color: blue;
+                border-width: 2in;
+                border-style: dashed;
+            }
+    
+        关键词参数 (Keyword Arguments)
+
+            混合指令也可以使用关键词参数
+            
+            p { @include sexy-border($color: blue); }
+            h1 { @include sexy-border($color: blue, $width: 2in); }
+
+            
+        参数变量 (Variable Arguments)
+
+            有时，不能确定混合指令需要使用多少个参数, 这时，可以使用参数变量 … 声明
+            
+            @mixin box-shadow($shadows...) {
+                -moz-box-shadow: $shadows;
+                -webkit-box-shadow: $shadows;
+                box-shadow: $shadows;
+            }
+            .shadows {
+                @include box-shadow(0px 4px 5px #666, 2px 6px 10px #999);
+            }
+            
+            编译为:
+
+            .shadowed {
+                -moz-box-shadow: 0px 4px 5px #666, 2px 6px 10px #999;
+                -webkit-box-shadow: 0px 4px 5px #666, 2px 6px 10px #999;
+                box-shadow: 0px 4px 5px #666, 2px 6px 10px #999;
+            }
+    
+    
+    
+    
+    
+    
+        向混合样式中导入内容
+
+            在引用混合样式的时候，可以先将一段代码导入到混合指令中，然后再输出混合样式，额外导入的部分将出现在 @content 标志的地方
+
+            @mixin apply-to-ie6-only {
+                * html {
+                    @content;
+                }
+            }
+            @include apply-to-ie6-only {
+                #logo {
+                    background-image: url(/logo.gif);
+                }
+            }
+
+            编译为:
+
+            * html #logo {
+                background-image: url(/logo.gif);
+            }
+    
+
+        为便于书写，@mixin 可以用 = 表示，而 @include 可以用 + 表示
+
+            =apply-to-ie6-only
+            * html
+                @content
+
+            +apply-to-ie6-only
+            #logo
+                background-image: url(/logo.gif)
+    
+
+
+
+        当 @content 在指令中出现过多次或者出现在循环中时，额外的代码将被导入到每一个地方
+
+            $color: white;
+            @mixin colors($color: blue) {
+                background-color: $color;
+                @content;
+                border-color: $color;
+            }
+            .colors {
+                @include colors { color: $color; }
+            }
+
+
+            编译为:
+
+            .colors {
+                background-color: blue;
+                color: white;
+                border-color: blue;
+            }
+
+
         
     
     
+    
+    
 
-柒
+柒.函数指令 (Function Directives)
 
+    Sass 支持自定义函数，并能在任何属性值或 Sass script 中使用：
 
+        $grid-width: 40px;
+        $gutter-width: 10px;
 
-捌
+        @function grid-width($n) {
+            @return $n * $grid-width + ($n - 1) * $gutter-width;
+        }
 
-
-
-玖
-
-
-
-拾
-
-
-
+        #sidebar { width: grid-width(5); }
 
 
-7. @-Rules 与指令
-    1. @import
-    1. 分音
-    2. 嵌套 @import
-    2. @media
-    3. @extend
-    1. How it Works
-    2. 延伸复杂的选择器
-    3. 多重延伸
-    4. 继续延伸
-    5. 选择器列
-    1. 合并选择器列
-    6. @extend-Only 选择器
-    7. !optional 声明
-    8. 在指令中延伸
-    4. @at-root
-    1. @at-root
-    5. @debug
-    6. @warn
-    7. @warn
+        编译为
+
+        #sidebar {
+            width: 240px; 
+        }
 
 
+    与 mixin 相同，也可以传递若干个全局变量给函数作为参数。一个函数可以含有多条语句，需要调用 @return 输出结果。
+    自定义的函数也可以使用关键词参数
 
-8. 控制指令
-    1. if
-    2. @if
-    3. @for
-    4. @each
-    8.4.1 Multiple Assignment
-    5. @while
+        #sidebar { width: grid-width($n: 5); }
+
+    
 
 
 
 
 
-9. 混合指令
-    1. 定义混合指令 @mixin
-    2. 引用混合样式 @include
-    3. 参数
-    1. 关键词参数
-    2. 参数变量
-    4. 向混合样式中导入内容
-    1. Variable Scope and Content Blocks
+
+
+    
+
+捌.输出格式;
+
+    :nested
+    （嵌套）样式是 Sass 默认的输出格式
+
+        #main {
+            color: #fff;
+            background-color: #000;
+            #main {
+                p{
+                    width: 10em;
+                }
+            }
+            .huge {
+                font-size: 10em;
+                font-weight: bold;
+                text-decoration: underline;
+            }
+        }
+
+
+    :expanded
+    输出是css的样式;
+    
+        #main {
+            color: #fff;
+            background-color: #000;
+        }
+        #main p {
+            width: 10em;
+        }
+
+        .huge {
+            font-size: 10em;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+    
+    
+
+    :compact
+    Compact 输出方式比起上面两种占用的空间更少
+
+        #main { color: #fff; background-color: #000; }
+        #main p { width: 10em; }
+
+        .huge { font-size: 10em; font-weight: bold; text-decoration: underline; }
 
 
 
-10. 函数指令
 
+    :compressed
+    Compressed 输出方式删除所有无意义的空格、空白行、以及注释，力求将文件体积压缩到最小;
 
+        #main{color:#fff;background-color:#000}#main p{width:10em}.huge{font-size:10em;font-weight:bold;text-decoration:underline}
 
-11. 输出格式
-    1. :nested
-    2. :expanded
-    3. :compact
-    4. :compressed
-
-
-
-12. 拓展 Sass
-
-    1. 自定义 Sass 函数
-    2. 存储缓存
-    3. 自定义导入
