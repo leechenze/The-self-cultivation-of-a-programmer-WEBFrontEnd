@@ -492,6 +492,27 @@
 
 拾壹.Canvas
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
 
@@ -500,8 +521,39 @@
 
 
 拾贰.Handlebars
+
+    上级数据使用../xxx, 本级数据使用this即可;
     
+    @index指定当前索引, 
+
+    registerHelper 注册helper(自定义块级标签) 可以规定索引值从1开始, 第一个参数是自定义标签名称 可以随意命名;
+    Handlebars.registerHelper('addOne', function (ind, option) {return xxx})
+    使用时应用 {{addOne 空格 @index}}即可
+
+    registerHelper 注册helper(自定义行级标签) 可以不用指定option参数;
+    Handlebars.registerHelper('format', function (sex) {return xxx})
+    使用时就没有 #开头 /结尾, 而是直接应用一个但标签后面跟参数即可 {{format sex}} 
     
+    if 后面的条件如果是 空串, 空数组, 空对象, 0, false, undefined, null都将返回false;
+
+    三个花括号会将字符串形式的 html 代码转义
+
+    with标签 就是进入到数据的一个属性当中, 
+        {{#with hobby}}
+            {{#each this}}
+            <p>{{name}}</p>
+            {{/each}}
+        {{/with}}
+
+        以上with的写法也可以不实用with如下:
+        
+        {{#each hobby}}
+            <p>{{name}}</p>
+        {{/each}}
+
+        输出结果是一样的;
+        
+
 
 
 

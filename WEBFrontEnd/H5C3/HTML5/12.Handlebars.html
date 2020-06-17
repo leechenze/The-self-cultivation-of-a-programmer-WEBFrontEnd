@@ -288,6 +288,288 @@
     
 
 
+    <!-- 注册helper的compare比较标签(注册自定义标签compare) -->
+    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
+        <!-- <table border="1">
+            <thead>
+                <tr>
+                    <th>名字</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <script type="text/x-handlebars-template" id="tbody-tr">
+            {{#each student}}
+                {{#compare age 50}}
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{sex}}</td>
+                        <td>{{age}}</td>
+                    </tr>
+                    {{else}}
+                    <tr>
+                        <td>年龄小于六十</td>
+                        <td>==========</td>
+                        <td>==========</td>
+                    </tr>
+                {{/compare}}
+            {{/each}}
+        </script>
+
+        <script type="text/javascript">
+            var leechense = {
+                "student": [
+                    {
+                        "name": "Clinton",
+                        "sex": "man",
+                        "age": 30
+                    },{
+                        "name": "Lincoln",
+                        "sex": "man",
+                        "age": 60
+                    },{
+                        "name": "george",
+                        "sex": "man",
+                        "age": 50
+                    },
+                ]
+            };
+
+            var myTpl = Handlebars.compile($('#tbody-tr').html());
+            Handlebars.registerHelper('compare', function (ageOne, ageTwo, opt) {
+                if(ageOne > ageTwo) {
+                    // opt.fn() 是执行条件为真的那段模版;
+                    return opt.fn(this);
+                } else {
+                    // opt.inverse() 是执行条件为假的那段模版;
+                    return opt.inverse(this);
+                }
+            })
+            $('tbody').html(myTpl(leechense));
+        </script> -->
+    
+    
+    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- html代码编码处理 -->
+    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
+        <!-- <table border="1">
+            <thead>
+                <tr>
+                    <th>名字</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>主页</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <script type="text/x-handlebars-template" id="tbody-tr">
+            {{#each student}}
+                {{#compare age 50}}
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{sex}}</td>
+                        <td>{{age}}</td>
+                        <td>{{{homePage}}}</td>
+                    </tr>
+                    {{else}}
+                    <tr>
+                        <td>年龄小于六十</td>
+                        <td>==========</td>
+                        <td>==========</td>
+                        <td>{{homePage}}</td>
+                    </tr>
+                {{/compare}}
+            {{/each}}
+        </script>
+
+        <script type="text/javascript">
+            var leechense = {
+                "student": [
+                    {
+                        "name": "Clinton",
+                        "sex": "man",
+                        "age": 30,
+                        "homePage": '<a href="https://www.leechenze.com/subset/index.html">首页</a>' 
+                    },{
+                        "name": "Lincoln",
+                        "sex": "man",
+                        "age": 60,
+                        "homePage": '<a href="https://www.leechenze.com/subset/index.html">首页</a>' 
+                    },{
+                        "name": "george",
+                        "sex": "man",
+                        "age": 50,
+                        "homePage": '<a href="https://www.leechenze.com/subset/index.html">首页</a>' 
+                    },
+                ]
+            };
+
+            var myTpl = Handlebars.compile($('#tbody-tr').html());
+            Handlebars.registerHelper('compare', function (ageOne, ageTwo, opt) {
+                if(ageOne > ageTwo) {
+                    return opt.fn(this);
+                } else {
+                    return opt.inverse(this);
+                }
+            })
+            $('tbody').html(myTpl(leechense));
+        </script> -->
+    
+    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- 行级helper使用 -->
+    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
+        <!-- <table border="1">
+            <thead>
+                <tr>
+                    <th>名字</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <script type="text/x-handlebars-template" id="tbody-tr">
+            {{#each student}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{format sex}}</td>
+                    <td>{{age}}</td>
+                </tr>
+            {{/each}}
+        </script>
+
+        <script type="text/javascript">
+            var leechense = {
+                "student": [
+                    {
+                        "name": "Clinton",
+                        "sex": 1,
+                        "age": 30
+                    },{
+                        "name": "Lincoln",
+                        "sex": 1,
+                        "age": 60
+                    },{
+                        "name": "Hillary",
+                        "sex": 0,
+                        "age": 50
+                    },
+                ]
+            };
+
+            var myTpl = Handlebars.compile($('#tbody-tr').html());
+            Handlebars.registerHelper('format', function (sex) {
+                if(sex == 1) {
+                    return '男'
+                } else if(sex == 0) {
+                    return '女'
+                }
+            })
+            $('tbody').html(myTpl(leechense));
+        </script> -->
+        
+    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+    
+    
+    
+    
+    
+    
+    <!-- with的应用 -->
+    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
+        <!-- <table border="1">
+            <thead>
+                <tr>
+                    <th>名字</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>爱好</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <script type="text/x-handlebars-template" id="tbody-tr">
+            {{#each student}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{format sex}}</td>
+                    <td>{{age}}</td>
+                    <td>
+                        {{#with hobby}}
+                            {{#each this}}
+                            <p>{{name}}</p>
+                            {{/each}}
+                        {{/with}}
+                    </td>
+                </tr>
+            {{/each}}
+        </script>
+
+        <script type="text/javascript">
+            var leechense = {
+                "student": [
+                    {
+                        "name": "Clinton",
+                        "sex": 1,
+                        "age": 30,
+                        "hobby": [{'name': '篮球'},{'name': '排球'}]
+                    },{
+                        "name": "Lincoln",
+                        "sex": 1,
+                        "age": 60,
+                        "hobby": [{'name': '足球'},{'name': '排球'}]
+                    },{
+                        "name": "Hillary",
+                        "sex": 0,
+                        "age": 50,
+                        "hobby": [{'name': '冰球'},{'name': '排球'}]
+                    },
+                ]
+            };
+
+            var myTpl = Handlebars.compile($('#tbody-tr').html());
+            Handlebars.registerHelper('format', function (sex) {
+                if(sex == 1) {
+                    return '男'
+                } else if(sex == 0) {
+                    return '女'
+                }
+            })
+            $('tbody').html(myTpl(leechense));
+        </script> -->
+        
+    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
+    
     
     
     
@@ -296,15 +578,33 @@
         
         @index指定当前索引, 
 
-        registerHelper 注册helper 可以规定索引值从1开始, 第一个参数可以随意命名;
+        registerHelper 注册helper(自定义块级标签) 可以规定索引值从1开始, 第一个参数是自定义标签名称 可以随意命名;
         Handlebars.registerHelper('addOne', function (ind, option) {return xxx})
-        使用时直接拿 {{addOne 空格 @index}}即可
+        使用时应用 {{addOne 空格 @index}}即可
+
+        registerHelper 注册helper(自定义行级标签) 可以不用指定option参数;
+        Handlebars.registerHelper('format', function (sex) {return xxx})
+        使用时就没有 #开头 /结尾, 而是直接应用一个但标签后面跟参数即可 {{format sex}} 
         
         if 后面的条件如果是 空串, 空数组, 空对象, 0, false, undefined, null都将返回false;
 
-        
-        
+        三个花括号会将字符串形式的 html 代码转义
 
+        with标签 就是进入到数据的一个属性当中, 
+            {{#with hobby}}
+                {{#each this}}
+                <p>{{name}}</p>
+                {{/each}}
+            {{/with}}
+
+            以上with的写法也可以不实用with如下:
+            
+            {{#each hobby}}
+                <p>{{name}}</p>
+            {{/each}}
+
+            输出结果是一样的;
+            
     </section>
 </body>
 </html>
