@@ -1,1 +1,72 @@
-无更新
+博学之, 审问之, 慎思之, 明辨之, 笃行之;
+壹、贰、叁、肆、伍、陆、柒、捌、玖、拾;
+
+
+
+
+壹.实例化VUE对象;
+
+    index.html
+
+        <div id="vue-app"></div>                    跟容器
+
+
+    app.js
+        new Vue({
+            el: element,                            #vue-app的跟容器;
+            data: {}                                用于数据的存储, 定义一个对象, 里面可以存储任何类型的值;
+        })
+
+
+
+
+
+
+
+贰.数据&方法;
+    
+    new Vue({
+        el: element,                                    #vue-app的跟容器;
+        data: {},                                       用于数据的存储, 定义一个对象, 里面可以存储任何类型的值;
+        methods: {greet: function(param) {}},           存储各种方法;
+            methods中的方法可以在index.html的标签模版中传参
+            方法中可以this.attr 即可拿到实例中的属性;不需要this.data.attr;
+        
+    })
+
+
+
+
+
+
+
+
+
+
+
+叁.属性绑定;
+    
+    v-bind:标签上的属性="data下的属性";
+        <a v-bind:href="website">leechense</a> 
+
+    v-html="data下的属性"
+        <p v-html="websiteTag"></p>
+        会将data下websiteTag的内容以解析为 html标签 插入到p标签中;
+
+
+
+
+
+
+
+
+
+
+
+肆.事件
+    
+    <button v-on:click="age++">涨一岁</button>
+    <button v-on:click="age--">减一岁</button>
+        也可实现对于data下age属性的直接操作;
+    
+    
