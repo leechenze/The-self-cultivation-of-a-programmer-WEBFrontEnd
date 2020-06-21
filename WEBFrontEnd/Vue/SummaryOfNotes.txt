@@ -332,3 +332,113 @@
 拾肆.搭建脚手架CLI;
     CLI全称: command-line interface             命令行解释程序;
     
+    脚手架是基于webpack搭建的开发环境;
+    使用ES6语法不必要担心浏览器兼容性, 在脚手架中应用了对应的loader, 在编译过程过中可以将Es6的语法自动转化为浏览器可识别的ES5代码;
+    打包和压缩JS为一个文件;
+    项目文件在环境中编译, 而不是浏览器中编译, 在脚手架中就已拥基于webpack的开发环境, 所以都是通过webpack编译, 所以速度会很快;
+    实现页面自动刷新, 当我们保存完成后, 浏览器不需要重新refresh即可自动刷新页面;
+
+    搭建脚手架必须依赖nodeJS环境, npm包管理(下载好nodeJS就会自带npm包管理工具);
+
+    npm install -g @vue/cli
+    # OR
+    yarn global add @vue/cli
+
+
+    vue2.0目录结构介绍:
+
+        build                                       项目构建(webpack)相关代码;
+        config                                      配置目录, 包括端口号, 代理地址等;
+        node-modules                                npm加载的项目依赖模块;
+        src                                         开发目录(源码目录),基本要做的事情都在这里进行;
+            assets                                      放置一些图片, 如logo等;
+            components                                  目录自带的一个组件目录, 可以不用;
+            App.vue                                     项目入口文件, 可以直接将组件写在这里, 而不使用components目录;
+            main.js                                     项目核心文件;
+            router                                      项目中的路由文件;
+        static                                      静态资源目录, 如图片, 字体等;
+        index.html                                  首页入口文件;
+
+        package.json                                项目配置文件
+        README.md                                   项目说明文档, markdown的格式(其中通常都是一些命令);
+    
+
+    一些相关命令, 在pageage.json中可以重指定命令名, README.md中也有写命令说明;
+    npm run dev                                     运行项目
+
+
+
+    index.html首页入口文件隐私的引入main.js项目核心文件;
+    main.js中实例化Vue对象定义了app.vue的组件
+    app.vue组件的模版中有内容就会插入到index.html当中渲染;
+        同时如果app.vue中有 <router-view/> 是将router下的index.js中的路由相关部分渲染到app.vue组件中,
+        而路由中有个HelloWorld组件, 所以app.vue包含了HelloWorld组件;
+
+
+
+
+
+    壹、贰、叁、肆、伍、陆、柒、捌、玖、拾;
+    壹.组件嵌套;
+
+        import Users from '@/components/Users'
+        等同于
+        import Users from './components/Users'
+        但是@并不是表示 . @表示的是src目录, 所以 @ === src;
+
+        
+        
+        src/components/
+            新建一个组件Users.vue
+            Users.vue
+                组件文件名开头大写, template下的根容器id最好就是组件名
+                name就是组件文件名称, 开头最好也是大写;
+
+        src/main.js
+            在全局引入并且注册的组件可以在任何地方调用这个组件,一般不会在全局注册公用的组件, 通常都是局部注册定义和引用;
+            全局组件一般会有特殊要求才会使用;
+            全局引入组件    import Users from './components/Users',后面可以不加vue文件的后缀, 会自动识别;
+            全局注册组件    Vue.component("Users",Users);
+            
+
+        src/app.vue
+            在全局引入并且注册的组件可以在任何地方调用这个组件;
+            <Users></Users>
+            
+            局部引入Users组件;
+            局部引入组件    import Users from './components/Users'
+            局部注册组件    components: {
+                            "users":  Users,
+                        }
+            
+            在局部引入并且注册的组件只可在当前组件中调用这个组件;
+            <Users></Users>
+
+
+
+
+
+    贰.组件css作用域;
+        在每一组件中的<style></style>上最好添加一个scoped的属性, 指定一个样式域,
+        可以避免组件之间的样式冲突: <style scoped> code... </style>
+
+    
+
+
+
+    
+
+    叁.简单demo制作;
+        src/components/Header.vue
+        src/components/Footer.vue
+            创建两个组件分别是页面的头和尾;
+        
+        注意组件中的name的命名不可以和html原生标签命名冲突, 包括H5新增标签header, footer等;
+
+
+
+    
+
+
+    肆.属性传值Props;
+        
