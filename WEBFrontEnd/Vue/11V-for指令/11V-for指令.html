@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="vue-app">
+
+        <!-- 数组下标获取 -->
+        {{characters[0]}}
+        {{characters[1]}}
+        {{characters[2]}}
+
+        <!-- 数组便利 -->
+        <ul>
+            <li v-for="character in characters">{{character}}</li>
+        </ul>
+
+        <br>
+        <br>
+        <br>
+        
+        <!-- 对象便利 -->
+        <ul>
+            <li v-for="(user, index) in users">
+                {{index + 1}}.{{user.name}} === {{user.age}}
+            </li>
+        </ul>
+
+        <br>
+        <br>
+        <br>
+        
+        <!-- 会把div一块循环 -->
+        <div v-for="(user, index) in users">
+            <h3>{{index}}. {{user.name}}</h3>
+            <p>{{user.age}}</p>
+        </div>
+
+        <br>
+        <br>
+        <br>
+        
+
+        <!-- template只会循环h3和p, 不会循环template, template是内置的标签; -->
+        <template v-for="(user, index) in users">
+            <h3>{{index}}. {{user.name}}</h3>
+            <p>{{user.age}}</p>
+        </template>
+        
+        <br>
+        <br>
+        <br>
+
+        <!-- 双循环 -->
+        <template v-for="(user, ind) in users">
+            <div v-for="(val, key) in user">
+                {{key}} === {{val}}
+            </div>
+        </template>
+        
+        <br>
+        <br>
+        <br>
+
+        <!-- key值的使用 -->
+        <div v-for="(user, index) in users" :key="index">
+            <h3>{{index}}. {{user.name}}</h3>
+            <p>{{user.age}}</p>
+        </div>
+
+    </div>
+    
+    <script src="./app.js"></script>
+</body>
+</html>

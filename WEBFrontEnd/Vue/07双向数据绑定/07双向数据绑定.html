@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="vue-app">
+
+        <label for="">姓名</label>
+        <input ref="name" type="text" @keyup="logName()">
+        <span>{{name}}</span>
+        <br>
+        <label for="">年龄</label>
+        <input ref="age" type="text" @keyup="logAge()">
+        <span>{{age}}</span>
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <!-- 数据双向绑定实现 -->
+        <label for="">姓名</label>
+        <input ref="name" type="text" v-model="name">
+        <span>{{name}}</span>
+        <br>
+        <label for="">年龄</label>
+        <input ref="age" type="text" v-model="age">
+        <span>{{age}}</span>
+        
+        
+    </div>
+    
+    <script src="./app.js"></script>
+</body>
+</html>

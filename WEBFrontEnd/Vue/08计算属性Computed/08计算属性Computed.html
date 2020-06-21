@@ -10,14 +10,19 @@
 <body>
 
     <div id="vue-app">
-        <h1> Events </h1>
-        <button v-on:click="add(1)">涨一岁</button>
-        <button v-on:click="subtract(1)">减一岁</button>
-        <button v-on:dblclick="add(10)">涨十岁</button>
-        <button v-on:dblclick="subtract(10)">减十岁</button>
-        <p>my age is {{age}}</p>
 
-        <div id="canvas" @mousemove='updataXY($event)'>{{x}},{{y}}</div>
+        <button @click="a++">Add to A</button>
+        <button @click="b++">Add to B</button>
+        <p>A - {{a}}</p>
+        <p>B - {{b}}</p>
+        <!-- methods -->
+        <!-- <p>Age + A == {{addToA()}}</p>
+        <p>Age + B == {{addToB()}}</p>
+        <p>{{test()}}</p> -->
+        
+        <!-- computed -->
+        <p>Age + A == {{addToA}}</p>
+        <p>Age + B == {{addToB}}</p>
     </div>
     
     <script src="./app.js"></script>

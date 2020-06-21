@@ -17,6 +17,12 @@ new Vue({
         updataXY: function(event) {
             this.x = event.offsetX;
             this.y = event.offsetY;
+        },
+        stopMoving: function (event) {
+            event.cancelBubble = true;
+        },
+        preventEvent: function () {
+            alert('leechense');
         }
     }
 })

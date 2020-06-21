@@ -10,14 +10,13 @@
 <body>
 
     <div id="vue-app">
-        <h1> Events </h1>
-        <button v-on:click="add(1)">涨一岁</button>
-        <button v-on:click="subtract(1)">减一岁</button>
-        <button v-on:dblclick="add(10)">涨十岁</button>
-        <button v-on:dblclick="subtract(10)">减十岁</button>
-        <p>my age is {{age}}</p>
 
-        <div id="canvas" @mousemove='updataXY($event)'>{{x}},{{y}}</div>
+        <h1>键盘 Events</h1>
+        <label for="">姓名</label>
+        <input type="text" v-on:keyup.enter="logName()">
+        <label for="">年龄</label>
+        <input type="text" v-on:keyup.alt.enter="logAge()">
+        
     </div>
     
     <script src="./app.js"></script>

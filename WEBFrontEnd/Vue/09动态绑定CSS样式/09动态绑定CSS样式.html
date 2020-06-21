@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="vue-app">
+
+        <div :class="{red:true, blue:false}"></div>
+        <!-- 会添加red的类名, 且不添加blue类名, 并没有在data中有指定的属性, 这是固定写法, 如果值为true则有, 反之则无; -->
+        
+        <h1>示例1</h1>
+        <!-- 动态添加class -->
+        <div @click="changeColor = !changeColor" :class="{changeColor: changeColor}">
+            <span>lincoln</span>
+        </div>
+        
+        <h1>示例2</h1>
+        <button @click="changeColor = !changeColor">changeColor</button>
+        <button @click="changeLength = !changeLength">changeLength</button>
+        <div :class="compClasses">
+            <span>clinton</span>
+        </div>
+
+    </div>
+    
+    <script src="./app.js"></script>
+</body>
+</html>

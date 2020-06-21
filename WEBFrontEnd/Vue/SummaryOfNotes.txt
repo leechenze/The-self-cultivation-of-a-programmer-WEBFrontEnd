@@ -8,7 +8,7 @@
 
     index.html
 
-        <div id="vue-app"></div>                    跟容器
+        <div id="vue-app"></div>                    根容器
 
 
     app.js
@@ -46,8 +46,9 @@
 
 叁.属性绑定;
     
+    v-bind: 可以简写为  :
     v-bind:标签上的属性="data下的属性";
-        <a v-bind:href="website">leechense</a> 
+        <a v-bind:href="website">leechense</a>
 
     v-html="data下的属性"
         <p v-html="websiteTag"></p>
@@ -69,4 +70,265 @@
     <button v-on:click="age--">减一岁</button>
         也可实现对于data下age属性的直接操作;
     
+    v-on:click='updataXY'   简写为  @click='updataXY'
+    
+    注意事件对象如果在html中    @mousemove='updataXY()'         形式在app.js中拿不到事件对象;
+                             @mousemove='updataXY($event)'  形式在app.js中可以拿到事件对象;
+                            @mousemove='updataXY'           形式也可在app.js中拿到事件对象;
+
+
+    
+    
+
+
+
+
+
+
+
+
+伍.事件修饰符
+
+    事件修饰符也可以组合使用
+    <a v-on:click.stop.prevent="doThat"></a>
+
+    @mousemove.stop                                 阻止事件冒泡;
+    @click.once                                     只触发一次事件;
+    @click.self                                     事件在当前标签上触发的, 而不是在当前标签的子元素上触发的;
+    @click.prevent                                  阻止默认事件
+    @click.capture                                  事件捕获;
+    @click.passive                                  滚动行为立即出发, 不会等待onscroll;
+    
+    
+    <!-- 阻止单击事件继续传播 -->
+    <a v-on:click.stop="doThis"></a>
+
+    <!-- 提交事件不再重载页面 -->
+    <form v-on:submit.prevent="onSubmit"></form>
+
+    <!-- 修饰符可以串联 -->
+    <a v-on:click.stop.prevent="doThat"></a>
+
+    <!-- 只有修饰符 -->
+    <form v-on:submit.prevent></form>
+
+    <!-- 添加事件监听器时使用事件捕获模式 -->
+    <!-- 即内部元素触发的事件先在此处理，然后才交由内部元素进行处理 -->
+    <div v-on:click.capture="doThis">...</div>
+
+    <!-- 只当在 event.target 是当前元素自身时触发处理函数 -->
+    <!-- 即事件不是从内部元素触发的 -->
+    <div v-on:click.self="doThat">...</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+陆.键盘事件及键值修饰符;
+    .enter
+    .tab                                                                
+    .delete                                                             (捕获“删除”和“退格”键)
+    .esc
+    .space
+    .up
+    .down
+    .left
+    .right
+    .ctrl
+    .alt
+    .shift
+    .meta                                                               对应的是mac下的command键, win下的windows键;
+
+
+    .exact                                                              修饰符允许你控制由精确的系统修饰符组合触发的事件。                                                                          
+        <!-- 即使 Alt 或 Shift 被一同按下时也会触发 -->
+        <button v-on:click.ctrl="onClick">A</button>
+
+        <!-- 有且只有 Ctrl 被按下的时候才触发 -->
+        <button v-on:click.ctrl.exact="onCtrlClick">A</button>
+
+        <!-- 没有任何系统修饰符被按下的时候才触发 -->
+        <button v-on:click.exact="onClick">A</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+柒.双向数据绑定
+    双向数据绑定一定是和input, textarea, select是有关系的;
+    ref:    被用来给元素或子组件注册引用信息，引用信息将会注册在父组件的$refs对象上。如果在普通的DOM元素上使用，那么指向的就是普通的DOM元素
+
+    v-model双向数据绑定
+        其实是先绑定了app.js的name属性到input, textarea, select这些表单元素上;
+        如果name属性有对应的值, input开始就会对应name的值渲染到页面上, 所以数据是双向的;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+捌.计算属性Computed
+    methods中的某一个方法一旦被触发之后, 就将会触发methods中所有的方法, 导致每次都会渲染DOM结构, 是很耗费性能的;
+    computed和methods用法上很相似, 但是会避免methods以上的一些问题, 整体优化有一些不同;
+    执行某个属性就单只执行某个属性, 而不会将computed中的属性全部执行;
+    
+    computed可以理解为具有方法功能的属性; 它的执行时不可以添加()来执行
+        {{addToA()}}        会找methods中的方法;
+        {{addToA}}          会找data中的属性或者computed中的方法, 所以computed归根结底的定义还是属性, 而非方法;
+
+
+
+
+
+
+
+
+玖.动态绑定CSS样式;
+    <div :class="{red:true, blue:false}"></div>
+    <!-- 会添加red的类名, 且不添加blue类名, 并没有在data中有指定的属性, 这是固定写法, 如果值为true则有, 反之则无; -->
+
+    
+
+
+
+
+
+
+    
+
+
+拾.v-if指令;
+
+    v-if语法形式: v-if="error"
+                v-else-if="success"
+                v-else
+
+    v-if                    条件为真显示, 条件为假形成一条注释;
+    v-else-if               配合v-if两个标签不显示或只显示一条;
+    v-else                  配合v-if两个标签只会显示一条;
+    
+
+    v-show语法形式: v-show="error"    
+    v-show                  条件为真显示, 条件为假会加上display:none;
+
+
+
+
+
+
+
+
+
+
+
+
+
+拾壹.V-for指令;
+    template只会循环h3和p, 不会循环template, template是Vue内置的标签;
+        会把div一块循环
+            <div v-for="(user, index) in users">
+                <h3>{{index}}. {{user.name}}</h3>
+                <p>{{user.age}}</p>
+            </div>
+
+        template只会循环h3和p, 不会循环template, template是内置的标签;
+            <template v-for="(user, index) in users">
+                <h3>{{index}}. {{user.name}}</h3>
+                <p>{{user.age}}</p>
+            </template>
+
+    :key值必须是一个唯一值, 在新的版本出现之后在遍历时都需要提供一个key值, 代码运行速度会更快一些, 反之虽然不会影响效果展示, 但仍会爆红;
+    
+
+
+
+
+
+
+
+
+
+
+拾贰.实例化多个Vue对象;
+    实例化多个对象, 给实例对象指定一个变量名称, el指定对应的html中的根元素;
+    
+    在全局可以操作示例one下的data下的属性, one.title = xxx;
+    在可以在two中操作示例one下的data下的title属性, 这就是如何在第二个Vue示例中更改第一个Vue实例中的属性的操作;
+
+
+
+
+
+
+
+
+
+
+
+拾叁.组件应用;
+    可以理解为vue中自定义标签;
+    Vue.component("greeting",{
+        template: `                                                                             规定自定义组件的内容;
+            <div id="root-tag">
+                <span>{{name}}: 大家好, 给大家介绍下我的女朋友@关晓彤</span>
+                <button @click="changeName">改名</button>
+            </div>
+        `,  
+        data() {                                                                                规定组件中的data属性, 语法是固定的 必须是方法然后return一个对象;                             
+            return {
+                name: '鹿晗',
+            }
+        },
+        methods: {                                                                              组件中的方法集;
+            changeName() {
+                this.name = "lincoln";
+            }
+        }
+    })
+
+    千万注意组件中的template一定要有一个根标签
+
+    data() { return {}} 组件中data使用这种形式的原因在于组件和组件中的data属性理论上是不可共享的; 所以把data定义成一个方法,
+    然后每一次返回一个对象, 可以达到组件之间的data属性不共用的问题, 另外data() {} 是固定写法, data: {}的形式会报错;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+拾肆.搭建脚手架CLI;
+    CLI全称: command-line interface             命令行解释程序;
     

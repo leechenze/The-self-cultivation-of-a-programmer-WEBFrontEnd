@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="vue-app">
+        <h1> Events </h1>
+        <button v-on:click="add(1)">涨一岁</button>
+        <button v-on:click="subtract(1)">减一岁</button>
+        <button v-on:dblclick.once="add(10)">涨十岁</button>
+        <button v-on:dblclick.once="subtract(10)">减十岁</button>
+        <p>my age is {{age}}</p>
+
+        <div id="canvas" @mousemove='updataXY($event)'>
+            <!-- 在span中取消冒泡 可以阻止对x,y的更新; -->
+            <!-- {{x}},{{y}} - <span v-on:mousemove='stopMoving($event)'>stopMoving</span> -->
+
+            <!-- 在span中取消冒泡, 直接使用事件修饰符 -->
+            {{x}},{{y}} - <span v-on:mousemove.stop>stopMoving</span>
+        </div>
+
+        <a @click.prevent="preventEvent()" href="http://www.leechenze.com/">leechense</a>
+        
+    </div>
+    
+    <script src="./app.js"></script>
+</body>
+</html>
