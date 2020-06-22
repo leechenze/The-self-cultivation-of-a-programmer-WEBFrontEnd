@@ -7,26 +7,38 @@
                 <h6 v-if="user.show">{{user.position}}</h6>
             </li>
         </ul>
+        <button @click="deleteUser">删除</button>
     </div>
 </template>
 <script>
 export default {
     name: 'Users',
+    props: {
+        users: {
+            type: Array,
+            required: true,
+        },
+    },
     data() {
         return {
-            users: [
-                {name: 'LinColn', position: 'lawyer', show: false},
-                {name: 'LinColn', position: 'lawyer', show: false},
-                {name: 'LinColn', position: 'lawyer', show: false},
-                {name: 'LinColn', position: 'lawyer', show: false},
-                {name: 'LinColn', position: 'lawyer', show: false},
-                {name: 'LinColn', position: 'lawyer', show: false},
-                {name: 'LinColn', position: 'lawyer', show: false},
-                {name: 'LinColn', position: 'lawyer', show: false},
-                {name: 'LinColn', position: 'lawyer', show: false},
-                {name: 'LinColn', position: 'lawyer', show: false},
-                {name: 'LinColn', position: 'lawyer', show: false},
-            ],
+            // users: [
+            //     {name: 'LinColn', position: 'lawyer', show: false},
+            //     {name: 'LinColn', position: 'lawyer', show: false},
+            //     {name: 'LinColn', position: 'lawyer', show: false},
+            //     {name: 'LinColn', position: 'lawyer', show: false},
+            //     {name: 'LinColn', position: 'lawyer', show: false},
+            //     {name: 'LinColn', position: 'lawyer', show: false},
+            //     {name: 'LinColn', position: 'lawyer', show: false},
+            //     {name: 'LinColn', position: 'lawyer', show: false},
+            //     {name: 'LinColn', position: 'lawyer', show: false},
+            //     {name: 'LinColn', position: 'lawyer', show: false},
+            //     {name: 'LinColn', position: 'lawyer', show: false},
+            // ],
+        }
+    },
+    methods: {
+        deleteUser() {
+            this.users.pop();
         }
     }
 };

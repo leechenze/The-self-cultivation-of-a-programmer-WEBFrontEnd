@@ -1,12 +1,18 @@
 <template>
   <div id="footer">
-      {{copyright}}
+      {{copyright}} === {{tip}}
   </div>
 </template>
 
 <script>
 export default {
     name: 'app-footer',
+    props: {
+        tip: {
+            type: String,
+            required: true,
+        }
+    },
     data() {
         return {
             copyright: 'Copyright 2020 vue demo',

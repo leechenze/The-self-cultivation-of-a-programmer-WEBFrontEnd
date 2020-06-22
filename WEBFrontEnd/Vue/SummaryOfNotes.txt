@@ -377,6 +377,16 @@
 
 
 
+================================================================================================================================================
+================================================================================================================================================
+================================================================================================================================================
+================================================================================================================================================
+================================================================================================================================================
+================================================================================================================================================
+
+
+
+
 
     壹、贰、叁、肆、伍、陆、柒、捌、玖、拾;
     壹.组件嵌套;
@@ -401,7 +411,7 @@
             全局注册组件    Vue.component("Users",Users);
             
 
-        src/app.vue
+        src/Home.vue
             在全局引入并且注册的组件可以在任何地方调用这个组件;
             <Users></Users>
             
@@ -440,5 +450,173 @@
     
 
 
+
+    
+
+
     肆.属性传值Props;
+        父组件: Home.vue
+            data() {
+                return {
+                    // title: "this is Vue cli",
+                    users: [
+                        {name: 'LinColn', position: 'lawyer', show: false},
+                        {name: 'LinColn', position: 'lawyer', show: false},
+                        {name: 'LinColn', position: 'lawyer', show: false},
+                        {name: 'LinColn', position: 'lawyer', show: false},
+                        {name: 'LinColn', position: 'lawyer', show: false},
+                        {name: 'LinColn', position: 'lawyer', show: false},
+                        {name: 'LinColn', position: 'lawyer', show: false},
+                        {name: 'LinColn', position: 'lawyer', show: false},
+                        {name: 'LinColn', position: 'lawyer', show: false},
+                        {name: 'LinColn', position: 'lawyer', show: false},
+                        {name: 'LinColn', position: 'lawyer', show: false},
+                    ],
+                };
+            }
+
+            如果在子组件中需要用到users这组数据, 可以通过在子组件调用的地方绑定users;
+
+            <Users :users="users"></Users>
+
+        子组件: users.vue
+
+            在子组件中获取父组件上绑定的值;
+
+            props: {                                            规定从父组件接收值;
+                users: {
+                    type: Array,                                规定users的类型;
+                    required: true                              规定是否是必须依赖, 通常都是true;
+                },
+                userstwo: {                                     从父组件接收多条数据, 以此类推往下写即可;
+                    type: Array,
+                    required: true,
+                }
+                usersthree: {
+                    type: Array,
+                    required: true,
+                }
+            }
+
+
+
+
+
+
+
+
+    伍.传值和传引用;
+        传值:       字符串, 数值, 布尔等;
+            传值不会对多个组件共用的数据造成影响, 假如一条字符串, 在子组件A中改变了字符串的内容, 此时子组件B不会改变
+        传应用:     数组, 对象;
+            传引用会对多个组件公用的数据造成影响, 假如一条数组, 在子组件A中改变了数组中的内容, 此时子组件B也会跟着改变
+
         
+
+
+
+
+
+
+
+    陆.事件传值;
+        子组件: header.vue
+            当子组件的header点击之后, 会触发@click="changeTip"方法
+            我们可以在changeTip方法中注册一个事件:
+
+            this.$emit('changeTip', 'HeaderVue子组件向HomeVue父组件传值');
+            
+            $emit('声明父组件中自定义的事件名称', '往父组件中传的值');
+
+        父组件: Home.vue
+            此时父组件中在 v-header组件上监听 @emit传递的事件名称="updataTip($event)"; $event就是emit传递的第二个参数值;
+
+            <v-header :tip="tip" @changeTip="updataTip($event)"></v-header>
+            
+            updataTip(tip) {
+                this.tip = tip;
+            }
+
+            此时改变this.tip 也就是要传给子组件的值, 可以达到, 头部和尾部接受的父组件中的字符串的值的像传引用那样共同改变;
+            
+        
+    
+
+
+
+
+
+
+            
+
+
+
+
+
+
+
+    柒.生命周期钩子
+
+        beforeCreate                    没有创建对象之前执行    (通常加载中动画在这里呈现执行);
+        created                         实例或组件已创建完成,属性也成功绑定,但DOM并没有生成 (通常在这里请求数据);
+        beforeMount                     挂载之前, 开始编译模版(编译template), 虚拟DOM中指定的, 并不能看到对应的内容
+        mounted                         挂载完成, 一旦mounted执行, 也就是DOM就已经生成了, DOM进行渲染;
+        beforeUpdate                    组件(DOM)发生更新之前执行, 页面就已经展示出来了, 对html元素的操作可以在这段时间进行;
+        updated                         组件(DOM)更新完成之后执行, 页面就已经展示出来了, 对html元素的操作可以在这段时间进行;
+        beforeDestroy                   组件销毁之前执行;
+        destroyed                       组件销毁完成执行;
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+    捌.路由和请求;
+        cnpm install vue-router --save-dev                                      安装路由模块;
+
+        main.js                                                                 核心文件中配置路由模块;
+            import VueRouter from 'vue-router';                                 引入路由模块;
+            Vue.use(VueRouer);                                                  使用Vue.use中间见声明应用路由;
+            const router = new VueRouter({                                      配置路由
+                routes: [                                                       规定路线地址, 固定写法;
+                    {
+                        path: "/", component: Home                              引入Home组件;
+                    },
+                    {
+                        path: "/helloworld", component: HelloWorld              引入HelloWorld组件;
+                    },
+                ]
+            })
+
+            以上部分不在main核心文件中去配置了, 分离处理到router下的index.js中去写路由;
+            前提是将router引入, 然后以下步骤不变;
+
+
+            
+
+
+
+
+            new Vue({
+                el: '#app',                                                     可以不指定但是, 必须要在后面调用$mount方法来指定#app;
+                router,                                                         在实例化中声明使用router
+                components: { App },
+                template: '<App/>'
+            }).$mount('#app');
+
+
+
+
+        app.vue
+
+            让路由在根组件app.vue中展示;
+            <router-view></router-view>
+
+
