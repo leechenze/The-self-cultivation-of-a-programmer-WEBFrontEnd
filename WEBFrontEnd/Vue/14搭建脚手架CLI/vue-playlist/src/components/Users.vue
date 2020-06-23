@@ -1,5 +1,6 @@
 <template>
-    <div id="users">
+    <!-- 获取home中的死数据 -->
+    <!-- <div id="users">
         <h1>hellow characters</h1>
         <ul>
             <li @click="user.show = !user.show" v-for="(user,ind) in users" :key="ind">
@@ -8,7 +9,20 @@
             </li>
         </ul>
         <button @click="deleteUser">删除</button>
+    </div> -->
+    
+    <!-- 获取home中请求的线上数据 -->
+    <div id="users">
+        <h1>hellow characters</h1>
+        <ul>
+            <li v-for="(user,ind) in users" :key="ind">
+                <h3>{{user.name}}</h3>
+                <h6>{{user.email}}</h6>
+            </li>
+        </ul>
+        <button @click="deleteUser">删除</button>
     </div>
+    
 </template>
 <script>
 export default {

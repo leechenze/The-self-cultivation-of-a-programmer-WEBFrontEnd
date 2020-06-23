@@ -377,12 +377,16 @@
 
 
 
+
+
+
 ================================================================================================================================================
 ================================================================================================================================================
 ================================================================================================================================================
 ================================================================================================================================================
 ================================================================================================================================================
 ================================================================================================================================================
+
 
 
 
@@ -580,26 +584,37 @@
 
     捌.路由和请求;
         cnpm install vue-router --save-dev                                      安装路由模块;
+        cnpm install vue-resource --save-dev                                    安装vue-resource(http请求)模块;
 
+
+
+        
+        
         main.js                                                                 核心文件中配置路由模块;
             import VueRouter from 'vue-router';                                 引入路由模块;
-            Vue.use(VueRouer);                                                  使用Vue.use中间见声明应用路由;
+            import VueResource from 'vue-resource';                             引入请求模块;
+            Vue.use(VueRouer);                                                  使用Vue.use中间见声明路由模块的应用;
+            Vue.use(VueResource);                                               使用Vue.use中间件声明请求模块的应用;
+
+
             const router = new VueRouter({                                      配置路由
                 routes: [                                                       规定路线地址, 固定写法;
                     {
-                        path: "/", component: Home                              引入Home组件;
+                        path: "/",                                              引入Home组件;
+                        alias: "/home",                                         别名, 当访问path没有画面时, 可以配置个别名
+                        redirect: "/home",                                      重定向, 即使有自己的路径可以访问, 但仍可以重定向到的新的地址;
+                        name: "Home",
+                        component: Home,
                     },
                     {
-                        path: "/helloworld", component: HelloWorld              引入HelloWorld组件;
+                        path: "/helloworld",                                    引入HelloWorld组件;
+                        component: HelloWorld,
                     },
                 ]
             })
 
             以上部分不在main核心文件中去配置了, 分离处理到router下的index.js中去写路由;
             前提是将router引入, 然后以下步骤不变;
-
-
-            
 
 
 
@@ -618,5 +633,30 @@
 
             让路由在根组件app.vue中展示;
             <router-view></router-view>
+            相当与a标签, 用来指定vue中路由的跳转, to属性相当与a标签的href, 好处就是实现不刷新跳转页面;
+            <router-link to="/">home</router-link>
+            <router-link to="/helloworld">helloworld</router-link>
 
 
+            页面中如果使用a标签的href进行跳转时, 缺点显而易见, 就是当点击导航时页面会重新刷新然后跳转到导航指定的页面;
+            而且vue的路由跳转时不会刷新, 很大程度提高页面运行效率;
+
+
+
+
+        Home.vue
+            在home.vue中使用http的应用, 在main.js中已经全局应用了vue-resource模块, 所以可以在任何地方使用this.$http模块;
+            
+            将自己定义的死数据users干掉, 使用http请求线上的一个接口;
+
+            接口地址:
+            https://jsonplaceholder.typicode.com/users
+
+
+            以下是使用vue-resource($http)的使用;
+
+                this.$http.get('https://jsonplaceholder.typicode.com/users').then((res) => {
+                    this.users = res.body;
+                }).catch((err) => {
+                    console.log(err);
+                })

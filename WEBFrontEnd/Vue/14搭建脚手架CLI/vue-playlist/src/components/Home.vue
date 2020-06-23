@@ -19,17 +19,17 @@ export default {
       tip: "传值测试",
       title: "this is Vue cli",
       users: [
-        { name: "LinColn", position: "lawyer", show: false },
-        { name: "LinColn", position: "lawyer", show: false },
-        { name: "LinColn", position: "lawyer", show: false },
-        { name: "LinColn", position: "lawyer", show: false },
-        { name: "LinColn", position: "lawyer", show: false },
-        { name: "LinColn", position: "lawyer", show: false },
-        { name: "LinColn", position: "lawyer", show: false },
-        { name: "LinColn", position: "lawyer", show: false },
-        { name: "LinColn", position: "lawyer", show: false },
-        { name: "LinColn", position: "lawyer", show: false },
-        { name: "LinColn", position: "lawyer", show: false }
+        // { name: "LinColn", position: "lawyer", show: false },
+        // { name: "LinColn", position: "lawyer", show: false },
+        // { name: "LinColn", position: "lawyer", show: false },
+        // { name: "LinColn", position: "lawyer", show: false },
+        // { name: "LinColn", position: "lawyer", show: false },
+        // { name: "LinColn", position: "lawyer", show: false },
+        // { name: "LinColn", position: "lawyer", show: false },
+        // { name: "LinColn", position: "lawyer", show: false },
+        // { name: "LinColn", position: "lawyer", show: false },
+        // { name: "LinColn", position: "lawyer", show: false },
+        // { name: "LinColn", position: "lawyer", show: false }
       ]
     };
   },
@@ -42,7 +42,16 @@ export default {
     updataTip(tip) {
       this.tip = tip;
     }
+  },
+  created() {
+      this.$http.get('https://jsonplaceholder.typicode.com/users').then((res) => {
+          this.users = res.body;
+        //   console.log(res.body);
+      }).catch((err) => {
+        console.log(err);
+      })
   }
+  
 };
 </script>
 

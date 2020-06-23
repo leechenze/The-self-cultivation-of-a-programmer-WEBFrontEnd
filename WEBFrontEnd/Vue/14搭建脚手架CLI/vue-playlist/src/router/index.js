@@ -9,6 +9,8 @@ export default new Router({
   routes: [
     {
       path: '/',
+      alias:'/home',
+    //   redirect: '/home',
       name: 'Home',
       component: Home
     },
@@ -18,5 +20,5 @@ export default new Router({
       component: HelloWorld
     },
   ],
-//   mode: 'history'
+  mode: 'history'
 })

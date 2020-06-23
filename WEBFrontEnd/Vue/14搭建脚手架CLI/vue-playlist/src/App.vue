@@ -1,8 +1,8 @@
 <template>
   <div id="app">
       <ul>
-          <li><a href="/home">Home</a></li>
-          <li><a href="/helloworld">helloworld</a></li>
+          <li><router-link to="/">home</router-link></li>
+          <li><router-link to="/helloworld">helloworld</router-link></li>
       </ul>
     <router-view/>
   </div>
@@ -42,10 +42,10 @@ export default {
     // updated() {
     //     alert('DOM发生更新完成, 页面已显示');
     // },
-    // beforeCreate() {
+    // beforeDestroy() {
     //     alert("组件销毁前");
     // },
-    // created() {
+    // destroyed() {
     //     alert('组件销毁完成');
     // },
 
