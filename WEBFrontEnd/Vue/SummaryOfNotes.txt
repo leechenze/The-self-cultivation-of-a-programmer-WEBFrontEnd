@@ -660,3 +660,200 @@
                 }).catch((err) => {
                     console.log(err);
                 })
+
+
+
+
+
+
+
+
+
+
+
+
+================================================================================================================================================
+================================================================================================================================================
+================================================================================================================================================
+================================================================================================================================================
+================================================================================================================================================
+================================================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+拾伍.Vuex
+    vue init webpack-simple vuex-playlist
+    webpack-simple 旨在创建一个简单的vue项目;
+    
+
+    壹、贰、叁、肆、伍、陆、柒、捌、玖、拾;
+    壹.一个简单的vue APP;
+        创建两个组件分别是product-list-one和product-list-two;
+        从父组件中传值products循环渲染到页面上,
+
+    
+
+
+
+    贰.搭建vuex中央状态管理;
+        cnpm install vuex --save;
+        
+        本章内容是将products数据抽离出来放到vuex中集中管理, 在和其他组件进行一个对接;
+
+        创建store文件夹下的store.js文件, 用于存储一个数据;
+
+
+        每一个 Vuex 应用的核心就是 store（仓库）。“store”基本上就是一个容器，它包含着你的应用中大部分的状态 (state)。Vuex 和单纯的全局对象有以下两点不同：
+
+            1.Vuex 的状态存储是响应式的。当 Vue 组件从 store 中读取状态的时候，若 store 中的状态发生变化，那么相应的组件也会相应地得到高效更新。
+
+            2.你不能直接改变 store 中的状态。改变 store 中的状态的唯一途径就是显式地提交 (commit) mutation。这样使得我们可以方便地跟踪每一个状态的变化，从而让我们能够实现一些工具帮助我们更好地了解我们的应用。
+                
+        
+        
+        
+
+        store.js
+            import Vue from 'vue';
+            import Vuex from 'vuex';
+
+            Vue.use(Vuex);
+
+            要想在别的地方应用必须导出(export)store;
+            export const store = new Vuex.store({
+                state: {
+                    products: [
+                        {name: '柳传志', price: 200},
+                        {name: '马云', price: 140},
+                        {name: '马化腾', price: 130},
+                        {name: '李彦宏', price: 20},
+                    ]
+                }
+            })
+
+
+
+
+
+
+
+
+
+
+    叁.使用computed获取store数据;
+
+        products不从父组件获取, 而是vux的store中获取数据;
+        在main.js中应用并使用store;
+            
+            import store from './store/store';
+            new Vue({
+                store,
+                el: '#app',
+                render: h => h(App)
+            })
+
+
+        之前从app.vue中传到product-list-one和two中的products数据删除, 可以从store中获取;
+        
+        在product-list-one和two中
+            computed: {
+                products() {
+                    this.$store.state.products;
+                }
+            }
+
+        
+
+
+
+
+
+    肆.Vuex.Getters
+        一个多用的方法不会在每个组件中写,
+        vuex提供这种解决方案, 在store.js中写公用的FN, 然后可以通过, this.$store.getters.xxx在每个组件中调用这个方法;
+
+
+
+
+
+
+
+    伍.Vuex.Mutations
+        Vuex 中的 mutation 非常类似于事件:
+            每个 mutation 都有一个字符串的 事件类型 (type) 和 一个 回调函数 (handler)。
+            这个回调函数就是我们实际进行状态更改的地方，并且它会接受 state 作为第一个参数
+
+        调用时, 不能this.$store.matations.xxx调用, 而是 this.$store.commit('xxx')的方式进行激活mutations中的事件方法;
+        而且mutations中的事件方法在执行时, 如果和getters中的方法操作的同一条数据, 那么也同样会执行getters中的方法的;
+        
+        而且VueDevelopmentTool中的vuex管理可以监听任何通过commit('xxx')发送的mutaions中的事件;
+
+        
+
+
+    
+
+    
+    陆.Vuex.Actions
+        Action 类似于 mutation，不同在于：
+
+            1.Action 提交的是 mutation，而不是直接变更状态。
+            2.Action 可以包含任意异步操作。
+
+        牢记一点:
+            commit()    方法触发的  mutations
+            dispatch()  方法触发的  actions
+
+            commit和dispatch的参数第一个默认是actions和mutations下的某个方法(type), 第二个参数是方法的传递的参数(payload);
+            actions和mutations下的方法中 传递的参数分别为state和context, 第二个参数是commit和dispatch传递的参数;
+        
+        actions中的方法方法的参数默认接收的不是state, 而是context === store;
+            
+            通过commit或dispatch传递的 payload和type 两个参数在 VueDevelopmentTool中都可以监听到;
+        
+        
+        
+        
+    
+    
+    
+    
+
+
+
+    柒.Vuex中的辅助函数 MapGetters & MapActions (映射器);
+
+        由于vuex提供的辅助函数使用的是ES6的语法, 不能被浏览器解析, 所以我们需要使用babel进行转换
+
+        安装babel
+        cnpm install babel-perset-stage-2 --save
+        cnpm install babel-perset-stage-3 --save
+        根据版本安装 stage-2不兼容当前版本可以尝试安装stage-3版本;
+
+        在.babelrc文件中进行配置, 把stage-3添加进去;
+        ["state-3"]
+
+        首先看.babelrc的配置, 如果有stage-@x的配置就不需要了, 如果没有就需要进行下载安装babel进行配置;
+
+
+        使用: 哪个组件需要使用getters或actions的映射器就在哪个组件引入然后引用;
+
+        import {mapGetters, mapActions} from 'vuex'
+        
+            ...mapActions([
+                "Actions下的某个方法",
+            ])
+            ...mapGetters([
+                "Getters下的某个方法",
+            ])
+
+
