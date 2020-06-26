@@ -9,34 +9,44 @@
     
 
         <!-- 动态组件 -->
-        <keep-alive>
+        <!-- <keep-alive>
             <component :is="component"></component>
         </keep-alive>
         <button @click="component = 'form-one'">form-one</button>
-        <button @click="component = 'form-two'">form-two</button>
+        <button @click="component = 'form-two'">form-two</button> -->
+
+
+        <!-- 自定义指令 -->
+        <directive-test></directive-test>
+
+
   </div>
 </template>
 
 <script>
 // import FormHelper from "./components/FormHelper";
 
+// import FormOne from "./components/FormOne";
+// import FormTwo from "./components/FormTwo";
 
-import FormOne from "./components/FormOne";
-import FormTwo from "./components/FormTwo";
+import DirectiveTest from "./components/DirectiveTest";
 
 
 export default {
   name: 'App',
   data() {
       return {
-          title: "slot插槽",
-          component: "form-one",
+        //   title: "slot插槽",
+        //   component: "form-one",
       }
   },
   components: {
     //   FormHelper,
-    FormOne,
-    FormTwo
+    // FormOne,
+    // FormTwo
+
+    // 自定义指令
+    DirectiveTest,
   }
 }
 </script>
