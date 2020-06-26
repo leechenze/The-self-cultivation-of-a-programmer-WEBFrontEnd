@@ -922,10 +922,51 @@
 
 
     贰.slot插槽
-        
+        Vue 实现了一套内容分发的 API, 将 <slot> 元素作为承载分发内容的出口。
 
+        App:
+
+            <FromHelper>
+                <h1 slot="title">{{title}}</h1>
+                <h2 slot="text">这是一段测试 文本内容</h2>
+            </FromHelper>
+
+            title插槽的{{title}}数据声明应该是在app中声明, 而不是在fromhelper中声明;
+
+        
+        FromHelper:
+            
+            通过<slot></slot>可以接收到在根组件中<FromHelper></FromHelper>标签之间的内容;
+            如果想要执行标签之间的某个标签, 在根组件中的标签上指定slot属性对应, 然后在子组件中的slot标签name属性指定对应的内容;
+
+            <slot name="title"></slot>
+            <slot name="text"></slot>
+    
+            关于样式问题, 可以在app写标签的样式, 也可以在fromhelper写入标签样式, 但是不是指定slot写入而是指定h1和h2;
+
+
+    
+
+    
+    
+    
+    
+    
     
     叁.动态组件和缓存;
-        
+        <component :is="组件名"></component>
+            说白了动态组件就是使用component标签来定义组件, is属性指定的值的就是组件的名字;
+            这样可以实现动态切换组件, 也许故而名为动态组件;
+            注意新坑就是is必须是绑定属性;
 
-    
+
+        <keep-alive>包裹需要缓存的组件</keep-alive>
+            1:  有一种场景, 组件一个和组件二切换时, 如果在组件一中表单元素中填入一些内容, 然后切换至组件二;
+            这时在返回至组件一, 之前填入表单中的内容就会消失;
+
+            2:  又或者, 在组件一中发起了一个http请求, 当组件一和组件二来回切换时, 每切换到组件一时, 都会重新发送这个http请求;
+
+            介于以上两种问题vue提供一个缓存机制, 只需要在需要缓存的表单组件外层将<keep-alive></keep-alive>
+            加上即可实现缓存机制, 完美解决上述的两种问题;
+
+        
