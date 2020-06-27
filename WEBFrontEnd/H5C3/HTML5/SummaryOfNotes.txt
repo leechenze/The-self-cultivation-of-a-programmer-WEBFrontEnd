@@ -491,34 +491,118 @@
 
 
 拾壹.Canvas
+    canvas是H5新增的图形绘制技术;
+    canvas标签之间的所有内容都不会展示到页面上, 全程都是通过JS和H5API控制的;
+    所以如果有些低版本浏览器不支持时, canvas标签中的内容才会显示出来;
+
+    canvas 元素本身是没有绘图能力的。所有的绘制工作必须在 JavaScript 内部完成：
+
+    var canvas = document.getElementById('canvas');     获取canvas元素;
+
+    var ctx = canvas.getContext('2d');                  获取canvas元素的上下文并指定图形类型(2d or 3d);
+
+    canvas是画布, ctx(声明的类型上下文)可以理解为画笔, 之后的一切操作都是通过ctx这个画笔实现的;
+    
+    fillRect(x, y, width, height)                       绘制填充矩形;
+    fillStyle = 'color'                                 声明填充;
+    strokeRect(x, y, width, height)                     绘制描边矩形;
+    strokeStyle = 'color'                               声明描边;
+    clearRect(x, y, width, height)                      清除矩形;
+    lineWidth = number                                  定义画笔宽度;
+    arc(x,y, 半径, 开始角度, 结束角度, 顺时针/逆时针)         绘制圆形, false为顺时针, true为逆时针, 默认false(顺时针);
     
     
+    渐变对象:
+        线性渐变:
+            var linearGradients = ctx.createLinearGradient(x1,y1,x2,y2);              声明渐变类型(参数规定起点x轴y轴和终点x轴y轴);
+                                                                                    渐变色的参数声明x和y轴的范围多大是规定死的, 会收到受应用到的绘制区域限制;
+                                                                                    所以一般这个参数根据Rect(绘制区域)的参数定义;
+            ctx.strokeStyle = linearGradients.addColorStop(0, color);                 声明渐变颜色(0-1之间的数值, color);
+
+        径向渐变:
+            var radialGradients = ctx.createRadialGradient(x1,y1,r1, x2,y2,r2);          声明渐变类型(参数规定一个圆的(x,y,半径)和第二个圆的(x,y,半径));
+                                                                                            同样声明的区域如果超出应用的绘制区域会不显示, 受限制;
+            radialGradients.addColorStop(0, 'red');                                      声明渐变颜色(0-1之间的数值, color);
+            
+            
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    绘制图片:
+        var pattern = ctx.createPattern(img, 'repeat');                                       有这个方法,可以用于指定图片;
+        ctx.fillStyle = pattern;                                                              填充图片;
+        以上做个了解, 绘制图片经常用的是drawImage()方法;
+        ctx.drawImage(img, x, y, widht, height);                                              绘制图片(这些参数用于绘制img整个图片);              
+        ctx.drawImage(img, x, y, widht, height, x, y, width, height);                         绘制图片(后面这些参数用来指定绘制出来img整个图片的某个部分);
+        ctx.clip();                                                                           剪裁图片
+
+
+    绘制文字:
+        ctx.font = 'weight style size family'                                               声明文字颜色规格(加粗,斜体,..,..);
+        ctx.fillText('文字内容', x, y);                                                     绘制填充文字(内容, x, y);
+        ctx.shadowColor = 'red';                                                              绘制阴影颜色;
+        ctx.shadowBlur = num;                                                                 绘制阴影聚焦程度;
+        ctx.shadowOffsetX = num;                                                              绘制阴影X轴位置;
+        ctx.shadowOffsetY = num;                                                              绘制阴影Y轴位置;
+            
+
+    图像组合重叠:
+        ctx.globalCompositeOperation                                                          定义新图像如何绘制到已有的图像上
+
+            目标图像:
+                destination-over;                                                             重叠区域:目标图像覆盖源对象;
+                destination-atop;                                                             只显示和源对象重叠的部分和源图像整个部分;
+                destination-in;                                                               只显示和源对象重叠的部分;
+                destination-out;                                                              只显示目标图像部分;源图像和重叠部分不限时
+
+            源图像:
+                source-over;                                                                  重叠:源图像覆盖目标对象;
+                source-atop;                                                                  只显示和目标对象重叠的部分和目标图像整个部分;
+                source-in;                                                                    只显示和目标对象重叠的部分;
+                source-in;                                                                    只显示源图像部分;目标图像和重叠部分不限时
+
+
+        
+    window.requestAnimationFrame(move);
+        系统会结合硬软件配置, 来自定指定一种动画, 相比定时器和延时器可以手动定义执行时间的方法比起来, 这个方法执行时不会失真;
     
 
 
+    
 
+    水平全景滚动:
+        ctx.translate(x,y);                                                                     定义偏移量;
+        ctx.save();                                                                             保存当前环境的状态包括(颜色, 宽高, 坐标);
+        ctx.restore();                                                                          返回之前保存过的路径状态和属性;
+            save和restore的存储方式是栈存储的方式(既先存储后取得, 后存储先取得);
+            
+    
+    图形的基本元素就是路径, 无论是矩形,圆形,三角形都是有一条条路径组成的;
+        1.创建其实点;                                       beginPath();
+        2.使用画图命令画出路径;                               moveTo(), lineTo();
+        3.路径绘制结束后闭合路径;                             closePath();
+        4.通过描边或填充的方式绘制图形;                        stroke(), fill();
+    
+    
+        beginPath()                                     路径开始声明;
+        moveTo(x,y)                                     指定开始落笔点;
+        lineTo(x,y);                                    指定过程落笔点;
+        closePath();                                    路径闭合声明;
+        stroke();                                       描边声明;
+        fill();                                         填充声明;
+        
 
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 拾贰.Handlebars
 

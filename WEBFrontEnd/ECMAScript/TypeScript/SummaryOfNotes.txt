@@ -1,0 +1,231 @@
+﻿博学之, 审问之, 慎思之, 明辨之, 笃行之;
+壹、贰、叁、肆、伍、陆、柒、捌、玖、拾;
+
+
+
+壹.TS的安装/介绍/开发工具;
+    TypeScript介绍:
+        1.TypeScript 是由微软开发的一款开源的编程语言。
+
+        2.TypeScript 是 Javascript 的超集，遵循最新的 ES6、Es5 规范。TypeScript 扩展了 JavaScript 的语法。
+
+        3.TypeScript 更像后端 java、C#这样的面向对象语言，可以让 js 开发大型企业项目。 
+        
+        4.谷歌也在大力支持 Typescript 的推广，谷歌的 angular2.x+就是基于 Typescript 语法。 
+
+        5.最新的 Vue 、React 也可以集成 TypeScript。
+
+        6.Nodejs 框架 Nestjs、midway 中用的就是 TypeScript 语法。
+
+    TypeScript安装和编译;
+        
+        npm install -g typescript
+        tsc -v
+        
+        浏览器不能识别TS就先ES6那样, 需要编译识别;
+        解析编译ts文件命令:
+        tsc index.ts
+        编译成功后就会在同级目录下生成index.js文件;
+        
+
+
+        tsc --init
+        生成stconfig.json文件进行配置文件中的 outDir就是输出目录, 配置为./js/
+        当编译完成之后就会输出js文件夹下的同名js文件;
+        然后, terminal > run task > typescript > tsc:watch选择
+        此时, 当保存ts文件后, 就会自动编译到outDir的指定路径下;
+        
+
+        
+
+
+
+
+
+
+
+
+
+贰.TS中的数据类型;
+    
+    TypeScript为了使编写的代码更规范, 更利于维护, 增加了类型校验, 在TypeScript中主要给我们以下数据类型;
+        布尔类型(boolean)
+        数字类型(number)
+        字符串类型(string)
+        数组类型(array)
+        元组类型(tuple)
+        枚举类型(enum)
+        任意类型(any)
+        null和undefined
+        void类型
+        never类型
+
+        
+    布尔类型(boolean)
+        true
+        false
+
+        var flag:boolean = true;
+        被定义为boolean则 flag只能是布尔类型的值, 否则会报错
+        flag = 'asdf'   报错;
+        flag = false    可以;
+
+        
+        
+    数字类型(number)
+        var num:number = 123;
+
+    字符串类型(string)
+        var str:string = 'hello world';
+    
+    数组类型(array)
+        TypeScript中定义的数组中不可以包含多个数据类型: 比如:
+        ['asdf', 123, false, null, undefined]这种在TS中是不允许的;
+        TS只支持两种方式定义数组;
+            1.第一个定义数组方式;
+                let arr:number[] = [1,2,3,5,6];
+                这样定义arr中只能存放number类型, 如果放置string同样报错;
+            
+                let arr:string[] = ['trump', 'obama', 'clinton', 'lincoln', 'george'];
+                和num同理, 声明数组中是什么类型就是什么类型, 否则将会报错;
+            
+            2.第二种定义数组方式;
+                
+                let arr:Array<number> = [1,2,3,44,5555,88];
+                这种定义的方式是一种泛型定义;
+
+                let arr:Array<string> = ['trump', 'obama', 'clinton', 'lincoln', 'george'];
+                同理;
+
+    元组类型(tuple) 属于数组的一种;
+        let arr:[string, number, boolean] = ['123', 3.1415926, true];
+        所谓的元组就是可以给数组中的每一位分别指定是什么类型;
+
+    
+    枚举类型(enum)
+        enum flag1 {
+            success = 1,
+            error = -1,
+        }
+        var f:flag1 = flag1.success;
+        console.log(f);
+        此时输出为1;
+
+        enum color {red, blue, orange};
+        var result1:color = color.red;
+        var result2:color = color.blue;
+        var result3:color = color.orange;
+        console.log(result1, result2, result3);
+        如果在枚举中没有指定个具体值, 将会指向索引;
+        此时输出为 (0, 1, 2);
+    
+        enum color {red, blue=5, orange};
+        var result1:color = color.red;
+        var result2:color = color.blue;
+        var result3:color = color.orange;
+        console.log(result1, result2, result3);
+        如果在枚举中声明了某一个值的具体值, 那么其后面的值,将会根据它的值往后类推;
+        比如设置blue为5; 此时orange就是6, 不再是索引值2;
+        输出为: (0, 5, 6);
+        
+        
+        
+        
+        
+    任意类型(any)
+        var any:any = 'asdf';
+        var num1:any = 123;
+        var flag2:any = false;
+        任意类型最好理解, 可以将声明的值赋值为任何类型, 好比JS中的值声明;
+        获取一个DOM对象时指定any 不会警告语法错误;
+        
+    
+    null和undefined
+
+        var num:number;
+        console.log(num);
+        
+        var num2:number | undefined;
+        console.log(num2);
+        
+        之前版本TS声明变量如果指定类型但是不指定值, 那么默认类型就是undefined, 此时同样有语法错误;
+        我们可以在指定类型时, 做个或条件比如: var num2:number | undefined;
+        那么即使num2没有声明值也就是为undefined也不会有语法错误;
+
+
+    
+    void类型
+        表示一个没有返回值(返回任何类型)的一个函数;
+        function run():void {
+            console.log('run');
+        }
+        run();
+
+
+        如果函数有返回值可以在()后面声明返回值类型, 当然不声明也不会有警告错误;
+        var num4 = function num4():number {
+            return 123;
+        }
+    
+
+    
+    never类型
+
+        never类型: 其他类型(包括null 和 undefined类型);
+        代表从不会出现的值, 这意味着声明never变量只能被never类型所赋值;
+    
+            var never:never;
+            
+            never = (() => {
+                throw new Error('error');
+            })();
+        
+        匿名自执行函数就属于不会出现的值;
+
+
+
+
+
+
+
+
+
+
+
+
+叁.TS中的函数
+    ES函数的定义:
+        函数声明:
+            function test() {
+                return 'run';
+            }
+        匿名函数:
+            var test = function () {
+                
+            }
+
+    
+    TS中函数定义:
+        函数声明:
+        TS中的函数声明就是在()后加上一个指定函数返回类型的值;
+            function fun():string {
+                return '123';
+            }
+
+        匿名函数
+            var fun = function ():number{
+                return 123;
+            }
+
+
+    TS中定义方法传参;
+        
+
+
+肆
+
+
+伍
+
+
+陆
