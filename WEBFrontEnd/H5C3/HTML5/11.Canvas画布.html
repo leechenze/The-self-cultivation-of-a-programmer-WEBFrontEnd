@@ -24,7 +24,7 @@
 </head>
 <body>
 
-    <canvas width="800" height="600" id="canvas">
+    <canvas width="800" height="600" id="canvas" style="display: block;">
         您的浏览器不支持Canvas!请升级或者更换浏览器进行浏览;
     </canvas>
 
@@ -80,6 +80,12 @@
     
     
 
+    <!-- 水平全景滚动 -->
+    <!-- <canvas width="1200" height="300" id="panorama">
+        您的浏览器不支持Canvas!请升级或者更换浏览器进行浏览;
+    </canvas> -->
+        
+        
     
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
@@ -460,7 +466,7 @@
 
 
 
-            // 请求关键帧运动
+            // 请求关键帧运动(面向过程)实现;
 
                 // var x = 0,
                 //     y = 0,
@@ -474,8 +480,9 @@
                 // ctx.fillStyle = 'blue';
                 // ctx.fillRect(x, y, width, height);
             
-                // setInterval(function () {
 
+
+                // function move() {
                 //     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     
                 //     x += speedX;
@@ -494,17 +501,299 @@
                 //     }
 
                 //     ctx.fillRect(x, y, width, height);
-                    
-                // },3);
-            
-                
-                
-                
-                
-                
-                
-        }
 
+                //     window.requestAnimationFrame(move);
+                // }
+                // move();
+                
+                
+
+
+
+                
+                
+            
+            // 圆形碰撞反弹(面向对象)实现;
+                
+                // function Ball(x, y, r, speedX, speedY, color) {
+                //     // 设置属性;
+                //     this.x = x;
+                //     this.y = y;
+                //     this.r = r;
+                //     this.speedX = speedX;
+                //     this.speedY = speedY;
+                //     this.color = color;
+                    
+                //     // 设置方法;
+                //     this.draw = function () {
+                //         ctx.beginPath();
+                //         ctx.fillStyle = this.color;
+                //         ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                //         ctx.fill();
+                //     };
+                    
+                //     this.move = function () {
+                //         this.x += this.speedX;
+                //         if(this.x > canvas.width - this.r){
+                //             this.speedX *= -1;
+                //         }else if(this.x < this.r){
+                //             this.speedX *= -1;
+                //         }
+
+                //         this.y += this.speedY;
+                //         if(this.y > canvas.height - this.r){
+                //             this.speedY *= -1;
+                //         }else if(this.y < this.r){
+                //             this.speedY *= -1;
+                //         }
+                //     };
+                // }
+
+                // var ball = new Ball(50, 50, 50, 2, 2, 'blue');
+
+                // function start() {
+                //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+                //     ball.draw();
+                //     ball.move();
+                //     window.requestAnimationFrame(start);
+                // }
+                // start();
+                
+
+                
+
+
+
+
+
+                
+            // 水平全景滚动
+                
+                // var canvas = document.getElementById('panorama');
+                // if(canvas.getContext){
+                //     var ctx = canvas.getContext('2d');
+                // }else{
+                //     alert('您的浏览器不支持canvas');
+                // }
+
+                // var x = 0;
+                
+                // function scrolling() {
+                //     // 记录状态;
+                //     ctx.save();
+                //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+                //     ctx.translate(-x,0);
+                //     ctx.drawImage(panoramaImg, 0, 0);
+                //     ctx.drawImage(panoramaImg, canvas.width, 0);
+
+                //     x++;
+
+                //     if(x >= canvas.width){
+                //         x = 0;
+                //     }
+
+                //     ctx.restore();
+                //     window.requestAnimationFrame(scrolling);
+                // }
+                
+
+                // var panoramaImg = new Image();
+                // panoramaImg.src = './images/panorama.jpg';
+                
+                // panoramaImg.onload = function () {
+                //     scrolling();
+                // }
+                
+            
+
+            // save&restore
+                // ctx.beginPath();
+                // ctx.fillStyle = 'blue';
+                // ctx.fillRect(100, 100, 150, 150);
+                // ctx.save();
+                // ctx.closePath();
+                
+
+                // ctx.beginPath();
+                // ctx.fillStyle = 'red';
+                // ctx.save();
+                // ctx.fillRect(100, 300, 150, 150);
+                // ctx.closePath();
+
+                // ctx.beginPath();
+                // ctx.restore();
+                // ctx.fillRect(300, 100, 150, 150);
+                // ctx.closePath();
+                
+                // ctx.beginPath();
+                // ctx.restore();
+                // ctx.fillRect(300, 300, 150, 150);
+                // ctx.closePath();
+                
+
+            
+
+
+
+
+
+
+
+            // 矩形碰撞检测;
+                // function Rect(x, y, width, height, color, speed) {
+                //     this.x = x;
+                //     this.y = y;
+                //     this.width = width;
+                //     this.height = height;
+                //     this.color = color;
+                //     this.speed = speed;
+                // }
+
+                // Rect.prototype.draw = function () {
+                //     ctx.beginPath();
+                //     ctx.fillStyle = this.color;
+                //     ctx.fillRect(this.x, this.y, this.width, this.height);
+                //     ctx.closePath();
+                // }
+
+                // Rect.prototype.move = function () {
+                //     this.x += this.speed;
+                //     if(this.x >= canvas.width - this.width){
+                //         this.speed *= -1;
+                //     }else if(this.x < 0) {
+                //         this.speed *= -1;
+                //     }
+                // }
+                
+
+                // // 创建两个矩形;
+                // var rect1 = new Rect(0, 100, 100, 100, 'red', 2);
+                // var rect2 = new Rect(700, 100, 100, 100, 'blue', -2);
+
+
+                // function animate() {
+                //     // 清除画布;
+                //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                //     // 移动;
+                //     rect1.draw();
+                //     rect1.move();
+                //     rect2.draw();
+                //     rect2.move();
+
+                //     // 检测
+                //     if(isRectColl(rect1, rect2)){
+                //         rect1.speed *= -1;
+                //         rect2.speed *= -1;
+                //     }
+                    
+                //     window.requestAnimationFrame(animate);
+                // }
+
+                // animate();
+
+
+                // // 检测是否是碰撞
+                // function isRectColl(rect1, rect2) {
+                //     // 获取矩形的最小x和最大x;
+                //     var min1 = rect1.x;
+                //     var min2 = rect2.x;
+                //     var max1 = rect1.x + rect1.width;
+                //     var max2 = rect2.x + rect2.width;
+
+                //     var min3 = Math.max(min1, min2);
+                //     var max3 = Math.min(max1, max2);
+                    
+                //     if(min3 < max3) {
+                //         return true;
+                //     }else{
+                //         return false;
+                //     }
+                // }
+            
+
+
+
+
+
+
+
+
+
+
+
+            // 圆形碰撞检测;
+                // function Ball(x, y, r, color, speed) {
+                //     this.x = x;
+                //     this.y = y;
+                //     this.r = r;
+                //     this.color = color;
+                //     this.speed = speed;
+                // }
+
+                // var ball1 = new Ball(50, 50, 50, 'blue', 2);
+                // var ball2 = new Ball(750, 50, 50, 'green', 2);
+                
+
+                // Ball.prototype.draw = function () {
+                //     ctx.beginPath();
+                //     ctx.fillStyle = this.color;
+                //     ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                //     ctx.fill();
+                // }
+
+                // Ball.prototype.move = function () {
+                //     this.x += this.speed;
+                //     if(this.x > canvas.width - this.r) {
+                //         this.speed *= -1;
+                //     }else if(this.x < this.r){
+                //         this.speed *= -1;
+                //     }
+                // }
+            
+
+                // function animate() {
+
+                //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                //     if(isArcColl(ball1, ball2)){
+                //         ball1.speed *= -1;                        
+                //         ball2.speed *= -1;                        
+                //     }
+                    
+                //     ball1.move();
+                //     ball2.move();
+                //     ball1.draw();
+                //     ball2.draw();
+                    
+                //     window.requestAnimationFrame(animate);
+                // }
+
+                // animate();
+
+                // function isArcColl(ball1, ball2) {
+                //     var x1 = ball1.x;
+                //     var y1 = ball1.y;
+                //     var r1 = ball1.r;
+
+                //     var x2 = ball2.x;
+                //     var y2 = ball2.y;
+                //     var r2 = ball2.r;
+                    
+                //     var dx = x1 - x2;
+                //     var dy = y1 - y2;
+                    
+                //     var distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                //     if(distance < r1 + r2){
+                //         return true;
+                //     }else {
+                //         return false;
+                //     }
+                // }
+
+            
+        }
     </script>
     
     <section style="display: none;">
@@ -577,10 +866,20 @@
                     source-in;                                                                    只显示源图像部分;目标图像和重叠部分不限时
 
 
-
             
+        window.requestAnimationFrame(move);
+            系统会结合硬软件配置, 来自定指定一种动画, 相比定时器和延时器可以手动定义执行时间的方法比起来, 这个方法执行时不会失真;
         
+
+
         
+
+        水平全景滚动:
+            ctx.translate(x,y);                                                                     定义偏移量;
+            ctx.save();                                                                             保存当前环境的状态包括(颜色, 宽高, 坐标);
+            ctx.restore();                                                                          返回之前保存过的路径状态和属性;
+                save和restore的存储方式是栈存储的方式(既先存储后取得, 后存储先取得);
+                
         
         图形的基本元素就是路径, 无论是矩形,圆形,三角形都是有一条条路径组成的;
             1.创建其实点;                                       beginPath();
