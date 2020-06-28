@@ -8,20 +8,40 @@
 </head>
 <body>
     <div>
-        ECMA标准每年六月份都会发布新的版本
-        ESnext 就指的是ES下一代JS语言
         
-        任何人都可以向标准委员会(TC39) 要求更改语言标准
-        
-        如果提案被参考 变成标准 经历五个阶段
-            stage 1;        展示阶段
-            stage 2;        征求广大开发者意见
-            stage 3;        进入草案阶段  基本上会被采纳
-            stage 4;        候选阶段
-            stage 5;        定案阶段(标准形成);
+    ECMA标准每年六月份都会发布新的版本
+    ESnext 就指的是ES下一代JS语言
+    
+    任何人都可以向标准委员会(TC39) 要求更改语言标准
+    
+    如果提案被参考 变成标准 经历五个阶段
+        stage 1;        展示阶段
+        stage 2;        征求广大开发者意见
+        stage 3;        进入草案阶段  基本上会被采纳
+        stage 4;        候选阶段
+        stage 5;        定案阶段(标准形成);
 
-        GitHub 提案网址:
-        https://github.com/tc39/ecma262
+    GitHub 提案网址:
+    https://github.com/tc39/ecma262
+
+
+    ES6转换ES5;
+        npm init 初始化package.json文件
+        npm install -g babel-cli 全局安装babel-cli 但是现在还不能转换,还需要安装一个转换包
+        npm install --save-dev babel-preset-es2015 babel-cli
+        安装再新建一个文件.babelrc
+            {
+                "presets" :[
+                    "es2015"
+                ],
+                "plugins": []
+            }
+        babel index.js --out-dir dist           执行转码命令(因为-dir命令, 所以会将dist生成为目录);
+        通常使用自动监听命令, 方便很多;
+        babel xxx/xxx.js -w -o yyy/yyy.js       监听文件修改，自动编译  -w == --watch, -o == --out;
+        最终将会在yyy目录下生成yyy.js文件既是转码后的结果;
+
+
         
     </div>
 </body>

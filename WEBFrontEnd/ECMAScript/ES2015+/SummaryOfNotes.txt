@@ -15,6 +15,31 @@
     GitHub 提案网址:
     https://github.com/tc39/ecma262
 
+
+    ES6转换ES5;
+        npm init 初始化package.json文件
+        npm install -g babel-cli 全局安装babel-cli 但是现在还不能转换,还需要安装一个转换包
+        npm install --save-dev babel-preset-es2015 babel-cli
+        安装再新建一个文件.babelrc
+            {
+                "presets" :[
+                    "es2015"
+                ],
+                "plugins": []
+            }
+        babel index.js --out-dir dist           执行转码命令(因为-dir命令, 所以会将dist生成为目录);
+        通常使用自动监听命令, 方便很多;
+        babel xxx/xxx.js -w -o yyy/yyy.js       监听文件修改，自动编译  -w == --watch, -o == --out;
+        最终将会在yyy目录下生成yyy.js文件既是转码后的结果;
+
+
+
+
+
+
+
+
+
 二、let，const；
     ES6中{}就是一个块级作用域;
     var 定义一个变量是属于window的
@@ -90,6 +115,10 @@
     建议：
         1、尽量使用let 不要使用var 有效的避免全局作用域污染问题
         2、不会修改的的东西一定使用const 比如:  const http = require('http');
+
+
+
+
 
 
 
