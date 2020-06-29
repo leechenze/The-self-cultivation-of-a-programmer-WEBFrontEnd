@@ -50,7 +50,7 @@ function getInfo3(name, age) {
         return name + " --- \u5E74\u9F84\u4FDD\u5BC6";
     }
 }
-console.log(getInfo3('张三'));
+// console.log(getInfo3('张三'));
 // 剩余参数(三点运算符);
 // 三点运算符
 function sum() {
@@ -77,6 +77,32 @@ function sum1(a, b) {
     });
     return sum;
 }
-// console.log(sum1(1,2,3,4))
-// 函数重载;
-// javascript
+// 参数只读重载函数的参数类型声明, 实际函数体的参数类型声明不会在执行时应该用到;
+// 也就是说, 函数体是any, 但是函数重载限定是string或number, 那么就只能是重载限定的string和number两个参数类型,
+// 函数体的any不会对执行时传入的实参生效, :any限定的是重载函数的形参类型声明;
+// 
+function getInfo4(str) {
+    if (typeof str == 'string') {
+        return "\u6211\u53EB:" + str;
+    }
+    else {
+        return "\u6211\u7684\u5E74\u9F84\u662F:" + str;
+    }
+}
+function getInfo5(name, age) {
+    if (age) {
+        return "\u6211\u53EB" + name + ",\u6211\u7684\u5E74\u9F84\u662F" + age;
+    }
+    else {
+        return "\u6211\u53EB" + name + ",\u6211\u7684\u5E74\u9F84\u4FDD\u5BC6";
+    }
+}
+// console.log(getInfo5('leecs', 20));
+// 箭头函数;
+// 箭头函数中的this指向上下文;
+setTimeout(function () {
+    console.log('ES5');
+}, 1000);
+setTimeout(function () {
+    console.log('Arrow');
+}, 1000);

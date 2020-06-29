@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="./js/index.js"></script>
+    <script>
+
+    // JS中的类
+        // 类的概念;
+            // function Person() {
+            //     this.name = '张三';
+            //     this.age = 20;
+            // }
+
+            // var person = new Person();
+            // console.log(person.name);
+
+        
+
+
+        // 构造函数和原型链中增加方法;
+            // function Person() {
+            //     this.name = '张三';
+            //     this.age = 20;
+            //     this.run = function () {
+            //         return this.name + '在运动';
+            //     }
+            // }
+
+            // Person.prototype.sex = '男';
+            // Person.prototype.work = function () {
+            //     return this.name + '在工作';
+            // }
+
+            // var person = new Person();
+            // console.log(person.run());
+            // console.log(person.work());
+        
+        
+
+
+
+        // 类里面的静态方法;
+            // function Person() {
+            //     this.name = '张三';
+            //     this.age = 20;
+            //     // 这是实例方法;
+            //     this.example = function () {
+            //         return '这是实例方法';
+            //     }
+            // }
+
+            // // 这是静态方法;
+            // Person.static = function () {
+            //     return '这是静态方法';
+            // }
+
+            // var person = new Person();
+            // // 调用静态方法;
+            // console.log(Person.static());
+            // // 调用实例方法;
+            // console.log(person.example());
+
+            
+
+
+        
+
+        // 继承
+            // Person类;
+            function Person() {
+                this.name = '张三';
+                this.age = 20;
+                // 这是实例方法;
+                this.example = function () {
+                    return '这是实例方法';
+                }
+            }
+
+            Person.prototype.sex = '男';
+            Person.prototype.anestor = function () {
+                return 'Person原型链上的方法'
+            }
+
+            var person = new Person();
+            // 调用实例方法;
+            console.log(person.example());
+            
+            
+
+
+
+            // Web类, 继承Person类, 对象冒充继承模式;
+            function Web() {
+                // 对象冒充实现继承;
+                Person.call(this);
+            }
+
+            var web = new Web();
+            // 对象冒充可以继承构造函数中的属性和方法;
+            console.log(web.example())
+            // 对象冒充不可以继承原型链上的属性和方法, 以下执行原型链上的方法就会报错;
+            // console.log(web.anestor());
+            
+        
+            
+
+            // Map类, 继承Person类, 原型链继承模式;
+            function Map() {
+                
+            }
+            
+            // 原型链实现继承;
+            Map.prototype = new Person();
+            var map = new Map();
+            // 对象冒充既可以继承构造函数中的属性方法, 也可以继承原型链上的属性方法;
+            console.log(map.example());
+            console.log(map.anestor());
+            
+
+
+
+            // 原型链继承的问题: 实例化子类时无法获取父类的参数, 以下例子证明;
+            // function Father(name, age) {
+            //     this.name = name;
+            //     this.age = age;
+            //     this.run = function () {
+            //         return this.name + '在运动';
+            //     }
+            // }
+
+            // Father.prototype.eat = function () {
+            //     return this.name + '在吃饭';
+            // }
+            
+            // var father = new Father('lincoln', 60);
+            // console.log(father.run());
+            // console.log(father.eat());
+
+            // function Son() {
+                
+            // }
+
+            // Son.prototype = new Father();
+            
+            // var son = new Son('trump', 30);
+            // // 输出undefined在运动;
+            // console.log(son.run());
+            // // 输出undefined在吃饭;
+            // console.log(son.eat());
+
+
+
+
+
+
+            // 由于原型链无法获取父类参数的问题, 通常继承都是使用对象冒充 + 原型链继承模式进行继承;
+            function Father(name, age) {
+                this.name = name;
+                this.age = age;
+                this.run = function () {
+                    return this.name + '在运动';
+                }
+            }
+
+            Father.prototype.eat = function () {
+                return this.name + '在吃饭';
+            }
+            
+            var father = new Father('lincoln', 60);
+            console.log(father.run());
+            console.log(father.eat());
+
+            function Son(name, age) {
+                Father.call(this, name, age);
+            }
+
+            // Son.prototype = new Father();
+            // 其实这里继承只需要继承父类的原型链即可, 因为对象冒充继承已经把构造的方法和属性给继承下来了;
+            Son.prototype = Father.prototype;
+            
+            var son = new Son('trump', 30);
+            // 此时正常输出;
+            console.log(son.run());
+            // 此时正常输出;
+            console.log(son.eat());
+            
+            
+
+
+        
+        
+    </script>
+</body>
+</html>

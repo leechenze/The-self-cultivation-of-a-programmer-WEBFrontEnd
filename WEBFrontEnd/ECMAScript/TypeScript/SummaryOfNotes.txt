@@ -46,6 +46,10 @@
 
 
 
+
+
+
+
 贰.TS中的数据类型;
     
     TypeScript为了使编写的代码更规范, 更利于维护, 增加了类型校验, 在TypeScript中主要给我们以下数据类型;
@@ -193,6 +197,13 @@
 
 
 
+
+
+
+
+
+
+
 叁.TS中的函数
     ES函数的定义:
         函数声明:
@@ -302,13 +313,86 @@
             但是JS中如果出现同名的函数, 后面的会将前面的同名函数覆盖掉;
         TS为了兼容JS, 所以TS重载的写法与Java有区别; 
         
+    
+        以下是函数重载;
+        function getInfo4(name:string):string;
+        function getInfo4(age:number):number;
+        执行时的实参只读重载函数的形参类型声明, 实际函数体的形参类型声明不会在执行时应该用到;
+        也就是说, 函数体是any, 但是函数重载限定是string或number, 那么就只能是重载函数限定的string和number两个参数类型,
+        函数体的any不会对执行时传入的实参生效, :any限定的是重载函数的形参类型声明;
+        
+        function getInfo4(str:any):any{
+            if(typeof str == 'string'){
+                return `我叫:${str}`;
+            }else{
+                return `我的年龄是:${str}`;
+            }
+        }
+        
+        console.log(getInfo4('张三'));
+        console.log(getInfo4(20));
+        
+        传入true就会报错, 因为在重载的方法中,没有声明参数为boolean的函数;
+        console.log(getInfo4(true));
+
+
+
+
+
+    箭头函数;
+        箭头函数中的this指向上下文;
+        setTimeout(function () {
+            console.log('ES5');
+        },1000);
+
+
+        setTimeout(():any => {
+            console.log('Arrow');
+        },1000);
+
         
 
 
-肆
 
 
-伍
+
+
+
+
+
+
+
+
+
+
+肆.ES中的类;
+    请看04章节, 回顾ES中的类, 为TS中的类学习做个铺垫;
+
+
+
+
+
+
+
+
+
+
+
+
+伍.TS中的类
+    类的定义
+
+    继承
+
+    类的修饰符
+
+    静态属性, 静态方法
+
+    抽象类, 继承多太;
+
+
+
+
 
 
 陆
