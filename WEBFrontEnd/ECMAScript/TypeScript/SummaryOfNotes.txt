@@ -596,5 +596,101 @@
 
 
 
-陆.TS中的接口;
+陆.TS中的属性类接口;
+
+    TS中的接口类型如下:
+
+        1.属性类接口;
+
+        2.函数类型接口;
+
+        3.可索引接口;
+
+        4.类类型接口;
+
+        5.接口扩展;
+
+
+
+    接口的作用:  在面向对象编程中, 接口是一种规范的定义, 它定义了行为和动作的规范, 在程序设计中, 接口起到了一种限制和规范的作用;
+    TS中的接口类似于Java, 同时还增加了更灵活的接口类型; 包括属性, 函数, 可索引和类等;
+    接口也是定义标准的, 只不过比起抽象类的范围更加广泛;
+
+    属性类接口;
+
+        属性接口 就是对JSON的约束;
+        function printLabel(labelInfo:{label:string}):void {
+            console.log('printLabel');        
+        }
+
+        错误, 因为形参中规定的JSON的键是label;
+        printLabel({name: '张三'});
+        正确;
+        printLabel({label: '张三'});
+
+
+
+
+
+        对批量方法传入参数进行约束;
+        接口: 行为和动作的规范, 对批量方法的约束;
+        interface关键字定义接口;
+
+        定义属性接口, 定义的键值中一定是以分号结尾, 并不是JOSN中的逗号结尾;
+        一旦接口中定义了, 就是一定要还传入的, 除非用?可选参数来指定当前属性为可选的, 在应用中就可以不传入;
+        interface FullName {
+            firstName:string;
+            secondName?:string;
+        }
+        
+        function printName(name:FullName):void {
+            传入的name这个形参必须是对象, 对象中必须有 firstName 和 secondName, 并且必须是string类型;
+            这个name必须是:FullName, 就相当label必须是:string, 而这个FullName接口是自己定义的, string是系统定义的;
+            console.log(`${name.firstName} === ${name.secondName}`);
+            并且, 如果不安装接口定义的内容走, 比如加了一个age, 虽然实参的对象有age属性, 但是还是会报错,
+            所以, 声明接口就必须要严格按照接口声明的内容走;
+            console.log(`${name.firstName} === ${name.secondName} === ${name.age}`);
+        }
+
+        这样写age会报错;
+        printName({
+            firstName: '张',
+            secondName: '三',
+            age: 20,
+        })
+        所以推荐以下写法, 可以避免这种错误;
+        var obj = {
+            firstName: '张',
+            secondName: '三',
+            age: 20,
+        };
+        printName(obj);
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+柒.函数类型接口;
+    
+
+
+
+
+
+
+
+
+
+
     
