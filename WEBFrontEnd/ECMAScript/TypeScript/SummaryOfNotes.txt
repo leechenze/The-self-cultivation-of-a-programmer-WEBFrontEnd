@@ -714,3 +714,202 @@
 
 
 
+
+
+
+
+
+
+
+捌.TS可索引,类类型接口;
+    可索引接口: 对数组, 对象的约束;
+
+    数组接口;
+        interface UserArr {
+            ind相当于一个变量, 代替索引的意义;
+            :number表示约束索引ind类型, :string表示是约束值类型
+            数组中的索引一定是number类型的, 但是也一定要声明清楚, 如果ind后不声明:number会报错;
+            [ind:number]:string
+            如果声明any便可以在数组中传入任何类型的数组值;
+            [ind:number]:any
+        }
+
+        var arr:UserArr = ['123', '234'];
+        console.log(arr[0]);
+
+
+
+    对象接口;
+        interface UserObj {
+            [ind:string]:string;
+        }
+        对象的键即使不加""系统也是会默认声明为字符串类型的;
+        var obj:UserObj = {
+            name: 'leecs',
+            sex: 'man',
+            hobby: 'football',
+            age: '30',
+        }
+
+        console.log(obj);
+
+
+
+
+类类型接口: 对类进行约束, 和抽象类有异曲同工之妙;
+    
+    interface Animal {
+        定义name属性;
+        name:string;
+        定义eat方法; 参数是string,参数也可以不传入, 但是如果传参务必要是:string或:any类型;
+        声明为一个没有返回值的viod类型的方法, 但允许有返回值, 不会报错;
+        eat(str:string):void;
+        
+    }
+
+
+    注意接口不应该是继承(extends), 而应该是实现(implements);
+    class Dog implements Animal{
+
+        public name:string;
+        constructor(name:string) {
+
+            this.name = name;
+
+        }
+
+        eat(num:any) {
+            console.log(this.name + num + '岁了');
+            return this.name + '吃狗粮';
+        }
+    }
+
+    var dog = new Dog('小黑');
+    console.log(dog.eat(20));
+
+    
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+玖.TS接口扩展;
+    接口扩展: 接口可以继承接口;
+        定义一个Animal接口;
+            interface Animal {
+                eat():void;
+            }
+
+        接口扩展, 接口继承和类继承的关键字相同(extends);
+            interface Person extends Animal {
+
+                work():void;
+                
+            }
+
+        
+        定义一个Web的类, 供Programmer继承用;
+            class Web {
+                public name:string;
+                constructor(name:string) {
+                    this.name = name;
+                }
+
+                coding(code:string) {
+                    return `${this.name+code}`
+                }
+                
+            }    
+
+        
+
+
+
+            
+        定义一个程序员类;
+            当programmer实现person接口时, 因为person接口扩展的animal接口, 所以programmer这个类实现时, 既要实现Person的属性方法,又要实现Animal的属性方法;
+            class Programmer implements Person{
+
+                public name:string;
+                constructor(name:string) {
+                    this.name = name;                
+                }
+
+                两个接口有继承关系, 所以web这个类必须实现的两个接口中的所有属性和方法;
+                eat(){
+                    return this.name + ' 不认识 TypeScript';
+                }
+                work() {
+                    return this.name + ' live JavaScript'
+                }
+                
+            }
+
+            var programmer = new Programmer('leecs');
+            console.log(programmer.work());
+            console.log(programmer.eat());
+
+        
+
+
+
+        
+
+
+
+        在定义一个程序员的类, 要求既要继承Web类, 又要实现Person的接口;
+            class Programmer extends Web implements Person{
+
+                public name:string;
+                constructor(name:string) {
+                    super(name);
+                    this.name = name;
+                }
+
+                两个接口有继承关系, 所以web这个类必须实现的两个接口中的所有属性和方法;
+                eat(){
+                    return this.name + ' 不认识 TypeScript';
+                }
+                work() {
+                    return this.name + ' live JavaScript'
+                }
+                
+            }
+
+            var programmer = new Programmer('leecs');
+            接口的方法;
+            console.log(programmer.eat());
+            console.log(programmer.work());
+            继承Web的方法;
+            console.log(programmer.coding(' learn TypeScript'));
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+拾.TS中的泛型,泛型变量,泛型类;
+    
