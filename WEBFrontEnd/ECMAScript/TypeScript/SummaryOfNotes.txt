@@ -912,4 +912,707 @@
 
 
 拾.TS中的泛型,泛型变量,泛型类;
+    泛型概念: 
+    日常开发中, 我们不仅要创建一致的定义良好的API, 同时也要考虑可重用性, 不仅能够支持当前的数据类型,
+    同时也需要支持未来的可能会存在的未知(不特定)数据类型, 才可以在大型项目开发中游刃有余;
+
+    像C#和Java这样的语言中, 就是使用泛型来创建可从用的组件的, 一个组件可以支持多种类型的数据, 这样用户便可以以自己的数据类型来使用组件;
+
+    通俗解释: 泛型就是解决 类 接口 方法的复用性, 以及对未知(不特定)的数据类型的支持和数据校验;
+
+
+
+    定义泛型函数;
+         <T> 表示泛型, 具体T是什么类型是由调用这个方法的时候决定的, 传入的参数也是泛型, 返回值也定义为泛型;
+        function getData<T>(value:T):T {
+            既然声明了泛型, 那么就要传入什么返回什么, 否则TS将会报错;
+            否则也可以规定它的返回值不是:T泛型, 或是:any即可不限制返回值, 方可返回任意值;
+            return value;
+        }
+
+        以下在调用时候定义了泛型为number, 就表示函数体上定义的泛型<T>就是number类型;
+        console.log(getData<number>(234));
+
+
+
+
+        
+
+    定义泛型类;
+        泛型类: 比如有个最小堆算法, 需要同时支持返回数值和字符串两种类型, 通过类的泛型来实现;
+
+
+        只支持number类型的校验;
+        class MinClass {
+            public list:number[] = [];
+
+            add(num:number) {
+                this.list.push(num);
+            }
+
+            min():number {
+                var minNum = this.list[0];
+
+                for(var i = 0; i < this.list.length; i++ ){
+                    if(minNum > this.list[i]) {
+                        minNum = this.list[i];
+                    }
+                }
+                return minNum;
+            }
+        }
+
+        var minclass = new MinClass();
+        minclass.add(62)
+        minclass.add(23)
+        minclass.add(22)
+        minclass.add(26)
+        minclass.add(34)
+        console.log(minclass.min());
+
+
+
+        
+        实现支持number和string两种类型校验的类, 需要用泛型类实现;
+        class MinClass<T> {
+            public list:T[] = [];
+
+            add(num:T):void {
+                this.list.push(num);
+            }
+
+            min():T {
+                var minNum = this.list[0];
+
+                for(var i = 0; i < this.list.length; i++ ){
+                    if(minNum > this.list[i]) {
+                        minNum = this.list[i];
+                    }
+                }
+                return minNum;
+            }
+        }
+
+        实例化类, 并且指定了类的T类型(泛型)是number;
+        var minclassnum = new MinClass<number>();
+        minclassnum.add(62)
+        minclassnum.add(23)
+        minclassnum.add(12)
+        minclassnum.add(26)
+        minclassnum.add(34)
+        console.log(minclassnum.min());
+        
+
+        实例化类, 并且指定了类的T类型(泛型)是string;
+        普及: 字符串判断大小, 比的是字符串的ASCII码, 
+        var minclassstr = new MinClass<string>();
+        minclassstr.add('a')
+        minclassstr.add('b')
+        minclassstr.add('c')
+        minclassstr.add('d')
+        minclassstr.add('e')
+        console.log(minclassstr.min());
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+拾壹.TS中泛型类接口;
+    定义函数接口
+        interface Config {
+            (value1:string, value2:string):string;
+        }
+
+        var setData:Config = function (value1:string, value2:string):string {
+            return value1 + ' ' + value2;
+        }
+
+        console.log(setData('name', 'hilarie'));
+
+
+
+
+
+
+
+
+    定义泛型函数接口
+        interface Config {
+            <T>(value1:T):T;
+        }
+        var getData:Config = function <T>(value1:T):T {
+            return value1;
+        }
+
+        console.log(getData<string>('asdf'));
+        console.log(getData<number>(123));
+        console.log(getData<any[]>(['asdf',123,true,null]));
+        console.log(getData<object>({name:'hilarie'}));
+
+
+
+
+
+
+    定义泛型函数接口方式二;
+        interface Config<T> {
+            (value:T):T;
+        }
+
+        var myGetData:Config<string> = function <T>(value:T):T {
+            return value;
+        }
+        console.log(myGetData('asdf'));
+
+        var myGetData1:Config<number> = function <T>(value:T):T {
+            return value;
+        }
+        console.log(myGetData1(123));
+
+        或是
+
+        function getData<T>(value:T):T {
+            return value;
+        }
+        var myGetData2:Config<number> = getData;
+        console.log(myGetData1(123));
+        
+
+
+
+
+
+
+        
+        
+        
+    泛型类接口:
+        泛类: 可以帮助开发中避免代码及对不特定数据类型的支持和类型校验, 
+        1.定一个类
+        2.把类作为参数来约束数据传入的类型;
+        
+        定义一个user类和articlecate类, 作用于映射数据库的字段;
+        定义一个mysqldb的类, 作用于操作数据库;
+        然后把user类和articlecate类 作为参数传入到mysqldb中;
+
+
+            定义User类, 或可以理解为一个接口(映射), 用来约束mysqldb的add方法中传入的参数;
+            class User {
+
+                username:string | undefined;
+                password:string | undefined;
+                
+            }
+
+
+            在进行定义一个文章分类的类
+            定义一个文章分类articleCate的映射;
+            class ArticleCate {
+
+                title:string | undefined;
+                desc:string | undefined;
+                status:number | undefined;
+                
+            }
+            
+
+
+
+
+            定义操作user接口(映射)的mysqldb类;
+            class MysqlDb {
+                add(user:User):boolean {
+                    console.log(user);
+                    return true;
+                }
+            }
+            
+            var user = new User();
+            user.username = 'hilarie';
+            user.password = '123';
+            var mysqldb = new MysqlDb();
+            console.log(mysqldb.add(user));
+
+
+
+            定义操作articlecate接口(映射)的mysqldb的类
+            class MysqlDb {
+                add(info:ArticleCate):boolean {
+                    console.log(info);
+                    return true;
+                }
+            }
+            
+            var article = new ArticleCate();
+            article.title = '范冰冰李晨泽热恋';
+            article.desc = '新闻';
+            article.status = 123;
+            var mysqldb = new MysqlDb();
+            console.log(mysqldb.add(article));
+
+
+            
+
+
+
+
+        以上步骤问题显而易见, 每每操作一个数据库表时, 都需要在mysqldb表中重新指定一下传入的数据类型(User或ArticleCate);
+        多了太多冗余的代码, 诸如此类情况, 可以使用泛类接口来实现只封装一次mysqldb, 动态对类类型进行校验;
+
+            定义User类(接口);
+            class User {
+
+                username:string | undefined;
+                password:string | undefined;
+                
+            }
+
+
+            在进行定义一个文章分类的类(接口);
+            这个类, 在实例化的时候增加属性, 所以使用构造函数传入实现;
+            class ArticleCate {
+
+                title:string | undefined;
+                desc:string | undefined;
+                status:number | undefined;
+                
+                定义一个默认参数params对象 为原始的一些参数;
+                constructor(params: {
+                    title:string | undefined,
+                    desc:string | undefined,
+                    status?:number | undefined,
+                }) {
+                    this.title = params.title;
+                    this.desc = params.desc;
+                    this.status = params.status;
+                }
+                
+            }
+        
+
+
+            封装myaqldb类;
+            class MysqlDb<T> {
+                add(msg:T):boolean {
+                    console.log(msg);
+                    return true;
+                }
+            }
+            
+            实例化用户类;
+            var user = new User();
+            user.username = 'hilarie';
+            user.password = '123';
+            var mysqldbuser = new MysqlDb<User>();
+            console.log(mysqldbuser.add(user))
+
+            
+            实例化文章类;
+            var article = new ArticleCate({
+                title: 'trump 赢得连任',
+                desc: 'trump 击败 hilarie 赢得 连任'
+            })
+            
+            var mysqldbarticle = new MysqlDb<ArticleCate>();
+            console.log(mysqldbarticle.add(article))
+            
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+拾贰.TS封装统一操作的底层库;
+    
+    功能定义一个操作数据库的库, 支持Mysql, Mssql, MongoDB;
+    要求: Mysql, Mssql, MongoDB功能相同, 具有add, update, delete get方法; 约束统一的规范,以及代码的重用;
+    解决方案: 需要约束所以需要定义接口, 需要代码重用所以需要泛型;
+
+
+
+    定义接口规范;
+        interface DBI<T>{
+            add(info:T):boolean;
+            update(info:T, id:number):boolean;
+            delete(id:number):boolean;
+            get(id:number):any[];
+        }
+
+    定义操作mysql数据库的类, 注意要实现泛型接口, 这个类也应该是个泛型类;
+
+        class MySqlDB<T> implements DBI<T> {
+            constructor() {
+                console.log('数据库建立连接');
+            }
+            add(info: T): boolean {
+                console.log(info);
+                return true;
+            }
+            update(info: T, id: number): boolean {
+                throw new Error("Method not implemented.");
+            }
+            delete(id: number): boolean {
+                throw new Error("Method not implemented.");
+            }
+            get(id: number): any[] {
+                var list = [
+                    {
+                        title: 'xxx',
+                        desc: 'xxxx',
+                        id:1,
+                    },
+                    {
+                        title: 'xxx',
+                        desc: 'xxxx',
+                        id:2,
+                    },
+                    {
+                        title: 'xxx',
+                        desc: 'xxxx',
+                        id:3,
+                    },
+                    {
+                        title: 'xxx',
+                        desc: 'xxxx',
+                        id:4,
+                    }
+                ]
+                return list;
+            }
+        }
+
+
+    定义操作mssql数据库的类;
+        
+        class MsSqlDB<T> implements DBI<T> {
+            constructor() {
+                console.log('数据库建立连接');
+            }
+            add(info: T): boolean {
+                console.log(info);
+                return true;
+            }
+            update(info: T, id: number): boolean {
+                throw new Error("Method not implemented.");
+            }
+            delete(id: number): boolean {
+                throw new Error("Method not implemented.");
+            }
+            get(id: number): any[] {
+                var list = [
+                    {
+                        title: 'xxx',
+                        desc: 'xxxx',
+                        id:1,
+                    },
+                    {
+                        title: 'xxx',
+                        desc: 'xxxx',
+                        id:2,
+                    },
+                    {
+                        title: 'xxx',
+                        desc: 'xxxx',
+                        id:3,
+                    },
+                    {
+                        title: 'xxx',
+                        desc: 'xxxx',
+                        id:4,
+                    }
+                ]
+                return list;
+            }
+        }
+
+
+
+
+    定义一个User类和数据表做映射;
+        class User{
+            username:string | undefined;
+            password:string | undefined;
+        }
+        var user = new User();
+        user.username = 'hilarie';
+        user.password = '123';
+        
+        var mysql = new MySqlDB<User>();
+        mysql.add(user);
+        var mssql = new MsSqlDB<User>();
+        mssql.add(user);
+        获取list表, ID是4的数据;
+        console.log(mssql.get(4));
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+拾叁.TS模块及封装DB库;
+    ./index.ts
+        模块:
+        就是把公共功能单独抽离成一个文件作为一个模块;
+        模块里面的变量 函数 类等默认是是有的; 如果要在外部访问模块中的数据(变量, 函数, 类);
+        需要通过exprot 暴露模块中的数据(变量, 函数, 类);
+        暴露后通过import 引入模块即可使用模块中暴露的数据(变量, 函数, 类);
+
+
+        现在转换后是一个ES6的代码,不能被浏览器识别, 用node执行, 不在浏览器执行;
+        普通导入 as 关键字用来重命名;导入的变量,函数,类等;
+        import {getData as get, save, dburl as url} from './modules/db';
+        console.log(get());
+        console.log(save());
+        console.log(url);
+
+
+
+        默认导出方式导入;
+        import db from './modules/db';
+        console.log(db.getData());
+        console.log(db.save());
+        console.log(db.dburl);
+
+
+
+
+
+
+
+
+    ./modules/db.ts
+        每一个导出;
+        export var dburl = 'xxxx';
+        export function getData () {
+            console.log('获取数据库数据');
+            return [
+                {
+                    title: '123',
+                },
+                {
+                    title: '234',
+                }
+            ]
+        }
+        export function save() {
+            console.log('保存数据成功');
+        }
+
+
+
+        统一导出
+        var dburl = 'xxxx';
+        function getData () {
+            console.log('获取数据库数据');
+            return [
+                {
+                    title: '123',
+                },
+                {
+                    title: '234',
+                }
+            ]
+        }
+        function save() {
+            console.log('保存数据成功');
+        }
+
+        export {
+            dburl,
+            getData,
+            save
+        }
+
+
+
+        默认导出 export default;
+        export default 每个模块都可以有一个default导出. 默认导出使用default关键字声明;  并且每个模块只能够有一个default导出
+        var dburl = 'xxxx';
+        function getData () {
+            console.log('获取数据库数据');
+            return [
+                {
+                    title: '123',
+                },
+                {
+                    title: '234',
+                }
+            ]
+        }
+        function save() {
+            console.log('保存数据成功');
+        }
+
+        export default {
+            dburl,
+            getData,
+            save
+        }
+
+    
+
+
+    封装DB操作放在了同级目录下, 打开封装DB库目录, 代码执行解读;
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+拾肆.TS中命名空间;
+    命名空间:
+    在代码量较大的情况下, 为了避免变量命名冲突, 可将相似功能的函数, 类, 接口, 等放置到命名空间内;
+    同Java, .net的命名空间一样, TS的命名空间可以将代码包裹起来, 只对外暴露需要在外部访问的对象, 命名空间内的对象 通过export导出到外部;
+    一个模块中可以有多个命名空间;
+
+
+    定义命名空间关键字 namespace 想要在外部访问namespace中的属性时, 需要将这个属性, 变量, 函数或类像是暴露模块那样暴露出去;
+    定义A的空间;
+    namespace A{
+        interface Animal {
+            name:string;
+            eat():void;
+        }
+
+        将Dog这个类从命名空间中暴露出去;
+        export class Dog implements Animal {
+            name: string;
+            constructor(theName: string) {
+                this.name = theName;
+            }
+            eat(): void {
+                console.log(`${this.name}吃狗粮`);
+            }
+            
+        }
+
+        将Cat这个类从命名空间中暴露出去;
+        export class Cat implements Animal {
+            name: string;
+            constructor(theName: string) {
+                this.name = theName;
+            }
+            eat(): void {
+                console.log(`${this.name}吃猫粮`);
+            }
+        }
+    }
+
+
+
+    定义B的空间;
+    namespace B{
+        interface Animal {
+            name:string;
+            eat():void;
+        }
+
+        将Dog这个类从命名空间中暴露出去;
+        export class Dog implements Animal {
+            name: string;
+            constructor(theName: string) {
+                this.name = theName;
+            }
+            eat(): void {
+                console.log(`${this.name}吃狗粮`);
+            }
+            
+        }
+
+        将Cat这个类从命名空间中暴露出去;
+        export class Cat implements Animal {
+            name: string;
+            constructor(theName: string) {
+                this.name = theName;
+            }
+            eat(): void {
+                console.log(`${this.name}吃猫粮`);
+            }
+        }
+    }
+
+
+    访问并执行A空间中的Dog方法;
+    var adog = new A.Dog('john');
+    adog.eat();
+    访问并执行B空间中的Cat方法;
+    var bcat = new B.Cat('tom');
+    bcat.eat();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+拾伍.TS装饰器;
     
