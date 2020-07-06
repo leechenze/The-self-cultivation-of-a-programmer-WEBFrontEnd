@@ -5,3 +5,4 @@ WEBFrontEnd/.DS_Store
 .vscode
 deploy.sh
 .DS_Store
+node_modules
