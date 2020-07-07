@@ -37,4 +37,26 @@
 
         如果在同级目录中没有node_modules目录, 会往上级父级一只查到这个node_modules目录;
         一直找到磁盘根目录, 如果没有node_modules目录; 就会报错;
-        
+
+
+
+
+
+
+
+
+
+
+
+
+壹、贰、叁、肆、伍、陆、柒、捌、玖、拾;
+贰.文件读取
+    fs.readFileSync
+        描述:       同步读取文件;
+        参数:       fs.readFileSync(读取的文件, {flag: 模式, encodin: 编码模式})
+        返回值:     返回 path 的内容
+    fs.readFile
+        描述:       异步读取文件;
+        参数:       fs.readFileSync(读取的文件, {flag: 模式, encodin: 编码模式}, 回调函数);
+        返回值:     返回 path 的内容(通过回调函数);
+    
