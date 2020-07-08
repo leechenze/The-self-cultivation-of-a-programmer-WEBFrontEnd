@@ -61,7 +61,7 @@
             return `${name} --- 年龄保密`;
         }
     }
-    console.log(getInfo3('张三'));
+    // console.log(getInfo3('张三'));
 
 
 
@@ -97,4 +97,55 @@
 
     
 // 函数重载;
+    // 参数不同的重载方法;
+        // 以下是函数重载;
+        function getInfo4(name:string):string;
+        function getInfo4(age:number):number;
+        // 参数只读重载函数的参数类型声明, 实际函数体的参数类型声明不会在执行时应该用到;
+        // 也就是说, 函数体是any, 但是函数重载限定是string或number, 那么就只能是重载限定的string和number两个参数类型,
+        // 函数体的any不会对执行时传入的实参生效, :any限定的是重载函数的形参类型声明;
+        // 
+        function getInfo4(str:any):any{
+            if(typeof str == 'string'){
+                return `我叫:${str}`;
+            }else{
+                return `我的年龄是:${str}`;
+            }
+        }
+        
+        // console.log(getInfo4('张三'));
+        // console.log(getInfo4(20));
+        
+        // 传入true就会报错, 因为在重载的方法中,没有声明参数为boolean的函数;
+        // console.log(getInfo4(true));
+
+
+    // 参数相同的重载方法;
+        function getInfo5(name:string):string;
+        function getInfo5(name:string, age:number):string;
+        function getInfo5(name:any, age?:any):any{
+            if(age){
+                return `我叫${name},我的年龄是${age}`;
+            }else{
+                return `我叫${name},我的年龄保密`;
+            }
+        }
+        
+        // console.log(getInfo5('leecs', 20));
+        
+
+
+
+
+// 箭头函数;
+    // 箭头函数中的this指向上下文;
+    setTimeout(function () {
+        console.log('ES5');
+    },1000);
+
+
+    setTimeout(():any => {
+        console.log('Arrow');
+    },1000);
+
     
