@@ -16,6 +16,7 @@ var fs = require('fs');
 // // 同步读取文件;
 // var fsReadSync = fs.readFileSync('helloworld.txt', {flag: 'r', encoding: 'utf-8'});
 // console.log(fsReadSync + '===== fs.readFileSync');
+
 // // 异步读取文件;
 // var fsRead = fs.readFile('helloworld.txt', {flag: 'r', encoding: 'utf-8'}, function (err, data) {
 //     if(err) {
