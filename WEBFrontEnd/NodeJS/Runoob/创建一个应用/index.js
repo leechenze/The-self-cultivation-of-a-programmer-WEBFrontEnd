@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-10 18:00:33
- * @LastEditTime: 2020-07-10 19:24:52
+ * @LastEditTime: 2020-07-10 19:28:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \The-self-cultivation-of-a-programmer\WEBFrontEnd\NodeJS\Runoob\创建一个应用\index.js
@@ -25,7 +25,6 @@ http.createServer(function (request, response) {
     response.writeHead(200, {'Content-Type': 'text/plain'});
     console.log(request);
     console.log(response);
-    
 
     // 发送响应数据: "Hello World";
     response.end('Hello World');
