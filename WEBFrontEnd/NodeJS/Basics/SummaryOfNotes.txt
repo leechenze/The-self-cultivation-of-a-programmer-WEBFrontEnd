@@ -217,6 +217,54 @@
 
 
 
-壹、贰、叁、肆、伍、陆、柒、捌、玖、拾;
+
 伍.文件流;
     
+    Stream 是一个抽象接口，Node 中有很多对象实现了这个接口。例如，对http 服务器发起请求的request 对象就是一个 Stream，还有stdout（标准输出）。
+
+    创建可写流
+    var ws = fs.createWriteStream(文件路径, {flag: 'w', encoding: 'utf-8'}, function () {})
+    创建可读流
+    var rs = fs.createReadStream(文件路径, {flag: 'r', encoding: 'utf-8'}, function () {})
+
+    管道流:
+        管道提供了一个输出流到输入流的机制。通常我们用于从一个流中获取数据并将数据传递到另外一个流中。
+        管道就是提供了连接写入流和读取流的API, 使用管道可以省略 readwritevideo.js 文件中所有代码步骤;
+        因为管道这个API就是已实现了写入流和读取流的一个封装;
+
+
+        创建可读流;
+        var rs = fs.createReadStream('./video/chrome.mp4', {flag: 'r'});
+        创建可写流;
+        var ws = fs.createWriteStream('./video/newChrome.mp4', {flag: 'w'});
+
+        通过管道直接实现 readwritevideo.js 中的复制操作;
+        rs.pipe(ws);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+壹、贰、叁、肆、伍、陆、柒、捌、玖、拾;
+陆.事件;
+    Node.js 是单进程单线程应用程序，但是因为 V8 引擎提供的异步执行回调接口，通过这些接口可以处理大量的并发，所以性能非常高。
+    Node.js 几乎每一个 API 都是支持回调函数的。
+    Node.js 基本上所有的事件机制都是用设计模式中观察者模式实现。
+    Node.js 单线程类似进入一个while(true)的事件循环，直到没有事件观察者退出，每个异步事件都生成一个事件观察者，如果有事件发生就调用该回调函数.
+    
+
