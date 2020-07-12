@@ -266,5 +266,52 @@
     Node.js 几乎每一个 API 都是支持回调函数的。
     Node.js 基本上所有的事件机制都是用设计模式中观察者模式实现。
     Node.js 单线程类似进入一个while(true)的事件循环，直到没有事件观察者退出，每个异步事件都生成一个事件观察者，如果有事件发生就调用该回调函数.
-    
 
+
+
+    let fs = require('fs');
+    引入事件模块;
+    let events = require('events');
+    const { fstat } = require('fs');
+
+
+
+    初始化事件对象;
+    let ee = new events.EventEmitter();
+
+
+    事件监听器;
+    ee.on('helloSuccess', function (eventMsg) {
+        console.log('\n吃夜宵' + eventMsg + '\n');
+    })
+    ee.on('helloSuccess', function () {
+        console.log('唱K唱K\n');
+    })
+    ee.on('helloSuccess', function () {
+        console.log('CSGOV1\n');
+    })
+    ee.on('helloSuccess', function () {
+        console.log('穿越火线\n');
+    })
+
+
+
+    function promiseReadFile(path) {
+        return new Promise((resolve, reject) => {
+            fs.readFile(path, {flag: 'r', encoding: 'utf-8'}, function (err, data) {
+                if(err){
+                    reject(err);
+                    throw Error(err);
+                }else{
+                    console.log('\n读取文件成功');
+                    resolve(data);
+                }
+            })        
+        })
+    }
+
+
+    promiseReadFile('hello.txt').then((data) => {
+        事件触发器;
+        ee.emit('helloSuccess', data);
+    })
