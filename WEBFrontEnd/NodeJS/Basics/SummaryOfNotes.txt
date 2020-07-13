@@ -178,7 +178,7 @@
     fs.readdir('文件路径', callback(err,files){});
     fs.rmdir('文件路径', callback);
     
-    readline.createInterface({
+    let r1 = readline.createInterface({
         :process指终端进程, 固定写法, 这两个接口必须要指定;
         input:process.stdin,
         output:process.stdout
@@ -335,10 +335,49 @@
 
 
 
-
-
-
-
 壹、贰、叁、肆、伍、陆、柒、捌、玖、拾;
 柒.路径模块&系统模块;
+    __dirname           获得当前执行文件所在目录的完整目录名;
+    __filename          获得当前执行文件的带有完整绝对路径的文件名;
+    process.cwd()       获得当前执行node命令时的目录名;
+
+    
+
+    简单列举path模块: 更多信息查阅文档;
+        path.resolve();             从当前目录下开始拼接;
+        path.join();                给定什么路径参数, 就拼接什么路径参数;
+    
+
+    简单列举OS模块: 更多信息查阅文档;
+        获取cpu信息;
+        console.log(os.cpus());
+        获取内存信息;
+        console.log(os.totalmem());
+        获取系统架构信息;
+        console.log(os.arch());
+        获取剩余内存量;
+        console.log(os.freemem());
+        查看系统平台;
+        console.log(os.platform());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+捌.爬取数据;
     
