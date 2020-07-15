@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-07-15 22:58:37
+ * @LastEditTime: 2020-07-15 23:15:09
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \The-self-cultivation-of-a-programmer\WEBFrontEnd\NodeJS\Basics\08爬取数据\url.js
+ */ 
 // URL模块不同于path, url用来解析网络路径;
 let url = require('url');
 // console.log(url);
