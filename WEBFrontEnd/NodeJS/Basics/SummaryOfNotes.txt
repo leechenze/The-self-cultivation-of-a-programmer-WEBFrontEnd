@@ -380,4 +380,20 @@
 
 
 捌.爬取数据;
-    
+    爬取电影
+        url.js
+
+        axios.js
+            安装axios模块:  cnpm install axios;
+    爬取表情包
+        cheerio.js
+            cheerio 是node的抓取页面模块, 为服务器特别定制的一个jQuery核心实现. 适合各种web爬虫程序;
+            cheerio 就是服务器端的jQuery, 用法也一摸一样, jquery有多好用, 在这里服务器的爬虫就有多好用~~~;
+            安装cheerio:    cnpm install cheerio;
+        
+            
+            
+    反爬虫策略
+
+    爬取音乐
+
