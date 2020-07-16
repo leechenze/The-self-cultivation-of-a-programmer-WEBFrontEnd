@@ -33,6 +33,7 @@ axios.get(httpUrl).then((res) => {
     })
 })
 
+
 // 参数为(请求地址, 要爬取的元素选择器, 要爬取的元素选择器的属性);
 async function parseLink(url, selectorArr, getAttr) {
     let res = await axios.get(url);
