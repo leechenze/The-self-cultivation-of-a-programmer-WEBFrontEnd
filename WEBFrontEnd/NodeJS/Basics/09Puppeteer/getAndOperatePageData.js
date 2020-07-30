@@ -1,6 +1,5 @@
-let puppeteer = require('puppeteer');
-
-
+let puppeteer = require('puppeteer'),
+    cheerio = require('cheerio');
 
 async function test() {
     // 启动浏览器: 返回浏览器实例;
@@ -19,22 +18,20 @@ async function test() {
     // 打开页面;
     let page = await browser.newPage();
     // 设置加载的网站地址;
-    await page.goto('http://www.baidu.com');
-    // 网页截图;
-    await page.screenshot({path: 'screenshot.jpg'});
-
+    await page.goto('https://www.dytt8.net/index.htm');
+    
     // 获取页面内容;
-    page.$$eval('#s-top-left > a', (elements) => {
-        console.log(elements);
-    })
-    page.$eval('#s-top-left', (element) => {
-        console.log(element);
+    page.$$eval('#menu .contain ul li a', (elements) => {
+        elements.forEach((item, ind) => {
+            console.log(item.innerHTML);
+        })
+    });
+
+    // 监听控制台输出;
+    page.on('console', function (eventMsg) {
+        console.log(eventMsg);
     })
     
-    // 监听页面的输出;
-    page.on('console', (param) => {
-        console.log(param);
-    })
 }
 
 test();
