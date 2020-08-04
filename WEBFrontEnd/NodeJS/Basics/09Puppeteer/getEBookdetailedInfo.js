@@ -1,5 +1,6 @@
 let puppeteer = require('puppeteer');
 let axios = require('axios');
+const { at } = require('lodash');
 
 
 (async function () {
@@ -30,17 +31,51 @@ let axios = require('axios');
             let elementHTML = element.innerHTML.substring(1,element.innerHTML.length - 2).trim();
             return elementHTML;
         });
+        page.close();
         return parseInt(pageNum);
     };
-    let pageNum = await getAllNum();
 
 
 
-    // 获取列表页的所有链接;
+    // 获取列表页的链接(num值代表当前第几页);
+    async function pageList(num) {
+        let pageListUrl = 'http://sobooks.cc/page/' + num;
+
+        let page = await browser.newPage();
+        // 访问对应的列表页;
+        await page.goto(pageListUrl);
+        let pageArr = await page.$$eval('.card .card-item .thumb-img > a', (elements) => {
+            let arr = [];
+            elements.forEach((ele,ind) => {
+                let itemObj = {
+                    href: ele.getAttribute('href'),
+                    title: ele.getAttribute('title')
+                }
+                arr.push(itemObj)
+            });
+            return arr;
+        })
+        // 关闭页面;
+        page.close();
+        // 循环数组中pageObj对象,获取详情和地址请求书记详情页;
+        pageArr.forEach((pageObj,ind) => {
+            getPageInfo(pageObj.href, page.title);
+        });
+    }
+    pageList(1);
+
     
-
     // 进入每个电子书的详情页,获取下载电子书的网盘地址;
-
+    async function getPageInfo(pageObjHref, pageObjTitle) {
+        let page = await browser.newPage();
+        await page.goto(pageObjHref);
+        // 获取下载标签(百度网盘, 城通网盘);
+        let aTag = await page.$('.dltable tr:nth-of-type(3) a:last-child');
+        // 获取下载地址;
+        console.log(aTag);
+        // let AHref = await aTag.getProperty('href');
+        // console.log(AHref);
+    }
 
     // 将获取的数据保存到本地(book.txt)文档中;
 
