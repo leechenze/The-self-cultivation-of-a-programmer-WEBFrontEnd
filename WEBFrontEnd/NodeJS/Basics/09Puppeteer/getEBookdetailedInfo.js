@@ -14,7 +14,7 @@ const { at } = require('lodash');
             height: 800,
         },
         // {headless: false}: 设置为有界面, {headless: true}: 设置为无界面, 无界面浏览器性能更高更快, 有界面一般用于调试;
-        headless: true,
+        headless: false,
         // 设置放慢每个步骤的毫秒数, 如果debug调试时可以放开这一项;
         // slowMo: 250
         // 设置延迟;
@@ -113,7 +113,7 @@ const { at } = require('lodash');
             getPageInfo(pageObj.href, pageObj.title);
         });
     }
-    pageList(13);
+    pageList(78);
 
     
     // 进入每个电子书的详情页,获取下载电子书的网盘地址;
@@ -143,19 +143,13 @@ const { at } = require('lodash');
         aHref = aHref._remoteObject.value;
         aHref = aHref.split('?url=')[1];
         // 将下载下来的电子书进行记录写入到book.txt下;
-        let bookContent = `{"href": ${pageObjHref}, "title":${pageObjTitle}}\n`;
+        let bookContent = `{"href": "${aHref}", "title": "${pageObjTitle}"} \n`;
+        // 将获取的数据保存到本地(book.txt)文档中;
         fs.writeFile('book.txt', bookContent, {flag: 'a'}, () => {
             console.log('已将电子书写入 ---- ' + pageObjTitle);
             // 关闭页面;
             page.close();
         })
     }
-
-    // 将获取的数据保存到本地(book.txt)文档中;
-    
-    
-    
-    
-    
     
 })();
