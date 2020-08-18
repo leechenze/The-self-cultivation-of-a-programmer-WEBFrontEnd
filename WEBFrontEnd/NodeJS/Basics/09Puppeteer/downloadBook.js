@@ -53,6 +53,7 @@ const { at } = require('lodash');
         return bookArr;
     }
     
+    // 进入到下载链接页选择下载格式, 这里选择了.epub格式;
     let bookArr = await parseText(), index = 0;
     async function downloadBook() {
         // 根据索引值下载书;
@@ -65,9 +66,42 @@ const { at } = require('lodash');
         // 打开新页面下载书籍;
         let page = await browser.newPage();
         await page.goto(bookObj.href);
+
+        // 等待页面中js通过ajax访问后台之后获取链接地址请求回来的内容;
+        await page.waitForSelector('#table_files tbody .even a',{visible: true});
+        // 等待ajax请求完成之后才能获取到a标签元素, 然后获取a标签的href链接;
+        let elementAHref = await page.$eval('#table_files tbody .even a', (element) => {
+            return element.getAttribute('href');
+        });
+        bookLinkPage(elementAHref);
+        
+    }
+
+    downloadBook();
+
+
+    // 下载电子书;
+    async function bookLinkPage(linkUrl) {
+        let page = await browser.newPage();
+        await page.goto(`https://306t.com${linkUrl}`);
+        // 等待页面中js通过ajax访问后台之后获取链接地址请求回来的内容;
+        await page.waitForSelector('.btn.btn-outline-secondary.fs--1',{visible: true});
+        let downloadBtn = await page.$eval('.btn.btn-outline-secondary.fs--1', (element) => {
+            element.click();
+        })
+
+        // 
+
+        // 监听请求完成;
+        await page.on('requestfinished', (req) => {
+            console.log(`下载已完成${req.url()}`);
+        })
+        
         
     }
     
-    downloadBook();
+    
+    
+    
     
 })();
