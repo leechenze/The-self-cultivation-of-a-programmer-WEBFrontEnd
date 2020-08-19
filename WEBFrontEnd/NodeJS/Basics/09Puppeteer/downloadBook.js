@@ -73,31 +73,59 @@ const { at } = require('lodash');
         let elementAHref = await page.$eval('#table_files tbody .even a', (element) => {
             return element.getAttribute('href');
         });
-        bookLinkPage(elementAHref);
-        
+        bookLinkPage(elementAHref, bookObj.title);
+        page.close();
     }
 
     downloadBook();
 
 
     // 下载电子书;
-    async function bookLinkPage(linkUrl) {
+    async function bookLinkPage(linkUrl,bookTitle) {
         let page = await browser.newPage();
-        await page.goto(`https://306t.com${linkUrl}`);
+
+        // 启用拦截获下载地址;
+        await page.setRequestInterception(true);
+        // 监听请求事件, 并对请求进行拦截;
+        page.on('request', interceptedRequest => {
+            // 通过url模块解析请求地址;
+            let urlObj = url.parse(interceptedRequest.url());
+            if(urlObj.hostname == 'u066.93-cucc-dd.tv002.com') {
+                // 终止电子书下载请求;
+                interceptedRequest.abort();
+
+                let ws = fs.createWriteStream(`./books/${bookTitle}.epub`)
+                axios.get(urlObj.href, {responseType:"stream"}).then((res) => {
+                    res.data.pipe(ws);
+                    res.data.on('close', () => {
+                        console.log(`下载完成: ${bookTitle}.epub`);
+                        ws.close();
+                        page.close();
+                        // 递归调用,循环下载;
+                        downloadBook();
+                    })
+                })
+                
+                
+            }else{
+                interceptedRequest.continue();
+            }
+        })
+
+
+        await page.goto(`https://306t.com${linkUrl}`);        
         // 等待页面中js通过ajax访问后台之后获取链接地址请求回来的内容;
         await page.waitForSelector('.btn.btn-outline-secondary.fs--1',{visible: true});
-        let downloadBtn = await page.$eval('.btn.btn-outline-secondary.fs--1', (element) => {
+        // 点击下载按钮, 进行拦截下载地址,下载到./books目录下;
+        await page.$eval('.btn.btn-outline-secondary.fs--1', (element) => {
             element.click();
         })
 
-        // 
 
         // 监听请求完成;
-        await page.on('requestfinished', (req) => {
-            console.log(`下载已完成${req.url()}`);
-        })
-        
-        
+        // await page.on('requestfinished', (req) => {
+        //     console.log(`下载已完成${req.url()}`);
+        // })
     }
     
     

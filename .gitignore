@@ -1,8 +1,7 @@
 WEBFrontEnd/Webpack/node_modules
-WEBFrontEnd/.history
-WEBFrontEnd/.DS_Store
 .history
 .vscode
+books
 deploy.sh
 .DS_Store
 node_modules
