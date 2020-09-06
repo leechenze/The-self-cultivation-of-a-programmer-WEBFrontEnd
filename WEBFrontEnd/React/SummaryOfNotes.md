@@ -124,25 +124,52 @@
     新建JSXSyntax.js文件;
     
         import React, {Component} from 'react';
+        注意, 一般除了js文件在引入时可以忽略后缀, 样式文件不要忽略后缀;
+        import './assets/css/JSXSyntax.css';
+        import QqImage1 from './assets/images/QQImage1.png';
 
         export default class Jsxsyntax extends Component {
             render () {
                 return (
                     <div id="jsxsyntax">
                         
-                        <p style={{color: 'red', fontSize: '20px'}}>Jsx Syntax attention matters</p>
+                        {/* 注释内容 */}
+                        <p style={{color: 'red', fontSize: '30px'}}>Jsx Syntax attention matters</p>
+                        <p className="p">Jsx Syntax attention matters</p>
+                        <img src={QqImage1} alt=""/>
+                        <br/><br/><br/>
+                        <label htmlFor="username">
+                            用户名: <input type="text" id="username" />
+                        </label>
                         
                     </div>
                 )
             }
         }
 
-        注意如果在JSX中写入行内样式时, 需要在外层加入一层{}, 表示{}中书写JavaScript代码, 而在内层再次传入一个{};
+        注意如果在JSX中写入行内样式时, 需要在外层加入一层{}, 表示{}中书写JavaScript代码, 而在内层再次传入一个对象{};
         样式代码写入到这个对象中, 需要注意样式的写法也不相同, {color: 'red', fontSize: '20px'},
         多个样式要用逗号隔开, 所有拥有连字符的属性需要改为驼峰书写(font-size ==> fontSize);
+        
+        在标签上声明类名改写为 className="类名";
+        表单元素 label标签的 for属性, 改写为 htmlFor="Id";
 
+        引入图片QqImage1, img的src写法 在外层加入{}表示在JSX中书写JavaScript代码;
+        然后src={QqImage1} 即可, 而引入的 QqImage1 等同于一个变量;
+        
+        注释内容写法: {/* 注释内容 */};
+        因为注释格式是js格式, html格式的注释会报错, 所以但凡是 js代码 千篇一律,只需加一个{}即可;
         
         
+
+    Src下新建assets/css/JSXSyntax.css文件;
+        .p{
+            color: blue;
+            font-size: 50px;
+        }
+    
+    
+    
         
         
     
