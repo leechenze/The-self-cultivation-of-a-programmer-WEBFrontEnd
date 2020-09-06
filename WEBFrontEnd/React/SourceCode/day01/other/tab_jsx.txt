@@ -1,0 +1,12 @@
+﻿<div className="tab_con">
+                <div className="tab_btns">
+                    <input type="button" className="active" value="按钮1"/>
+                    <input type="button" value="按钮2"/>
+                    <input type="button" value="按钮3"/>
+                </div>
+                <div className="tab_cons">
+                    <div className="current" >按钮1对应的内容</div>
+                    <div >按钮2对应的内容</div>
+                    <div >按钮3对应的内容</div>
+                </div>
+            </div>
