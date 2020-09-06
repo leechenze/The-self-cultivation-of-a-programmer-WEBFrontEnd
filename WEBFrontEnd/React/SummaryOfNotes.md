@@ -169,7 +169,80 @@
         }
     
     
+
+
+
+### 虚拟DOM和原生DOM分析;
+
+    虚拟DOM高效原因分析:
+        虚拟DOM(就是所谓的JSX语法)本质就是一个JavaScript对象, 当数据和状态发生了变化, 会自动同步到虚拟DOM中, 然后再将仅变化的部分同步到DOM中(整个过程不需要重新渲染DOM树);
+        并且原生DOM对象身上的属性, 拥有二百六十八个属性, 而虚拟DOM对象身上的属性仅仅只有7个, 所以这是促成其高效的很大原因;
+    
+    
+    新建ReactDOM&NativeDOM组件
+        import React from 'react';
+
+        let docDom = document.createElement('div', {style:"color:blue"}, 'docDOM');
+        let reactDom = React.createElement('div', {style:"color:red"}, 'reactDOM');
+
+        let docDomLength = docDom.length || docDom.size || 0;
+        let reactDomLength = reactDom.length || reactDom.size || 0;
+
+        for(let key in docDom) {
+            docDomLength++;
+        }
+        for(let key in reactDom) {
+            reactDomLength++;
+        }
+
+
+        export default class ReactDomAndNativeDOM extends React.Component {
+            render () {
+                console.log(docDom);
+                console.log(reactDom);
+                return (
+                    <div id="ReactDomAndDocDOM">
+                        <p>
+                            The reactDOM length is {reactDomLength}
+                        </p>
+                        <p>
+                            The DocDOM length is {docDomLength}
+                        </p>
+                    </div>
+                )
+            }
+        }
+    
+    index.js
+        
+        let docDom = document.createElement('div', {title: 'docDOM'}, 'docDOM');
+        let reactDom = React.createElement('div', {title: 'reactDOM'}, 'reactDOM');
+
+        ReactDOM.render(
+            reactDom,
+            document.querySelector('#root')
+        );
+
+        以上写法使用JSX语法等同于: 
+        
+        ReactDOM.render(
+            <div title="reactDOM">reactDOM</div>,
+            document.querySelector('#root')
+        );
+
+        所以JSX语法使得避免了很多虚拟DOM的操作, 方便简洁!
+        注意render函数渲染的是虚拟DOM(ReactDOM), 原生DOM无法进行渲染, 并会报错;
+        
+    
+
+        
+    
     
         
-        
+
+
+
+### JSX中插入变量三元运算和数组
+
     
+        

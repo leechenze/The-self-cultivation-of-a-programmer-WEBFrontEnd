@@ -8,7 +8,7 @@ export default class Jsxsyntax extends Component {
     render () {
         return (
             <div id="jsxsyntax">
-
+                
                 {/* 注释内容 */}
                 <p style={{color: 'red', fontSize: '30px'}}>Jsx Syntax attention matters</p>
                 <p className="p">Jsx Syntax attention matters</p>
