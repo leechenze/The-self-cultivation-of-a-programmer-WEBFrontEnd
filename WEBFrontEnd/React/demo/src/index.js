@@ -3,11 +3,18 @@
 // 引入核心模块;
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './App';
+import Jsxsyntax from './JSXSyntax';
+
+
 
 
 // 把对应的内容渲染到root标签上;
 ReactDOM.render(
-    <div>Hello React</div>,
+    <Jsxsyntax></Jsxsyntax>,
     document.querySelector('#root')
 );
+
+
+
 

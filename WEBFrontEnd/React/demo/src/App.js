@@ -1,10 +1,10 @@
-// App组件
+// App组件内容
 
 // 引入核心模块;
 import React from 'react';
 
 // 定义一个组件;
-class App extends React.component {
+class App extends React.Component {
     // 渲染函数
     render() {
         return (
