@@ -6,6 +6,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import Jsxsyntax from './JSXSyntax';
 import ReactDOMAndNativeDOM from './ReactDOM&NativeDOM';
+import TernaryVarArray from './Ternary&Var&Array';
+import UseOfEvents from './UseOfEvents';
 
 
 let docDom = document.createElement('div', {title: 'docDOM'}, 'docDOM');
@@ -17,7 +19,9 @@ ReactDOM.render(
     // <Jsxsyntax></Jsxsyntax>,
     // <ReactDOMAndNativeDOM></ReactDOMAndNativeDOM>,
     // docDom,
-    reactDom,
+    // reactDom,
+    // <TernaryVarArray></TernaryVarArray>,
+    <UseOfEvents></UseOfEvents>,
     document.querySelector('#root')
 );
 

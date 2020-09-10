@@ -244,5 +244,57 @@
 
 ### JSX中插入变量三元运算和数组
 
-    
+    新建Ternary&Var&Array.js
+
+        循环遍历li时, 每一个li身上的属性key需要指定一个其索引(唯一值), 否则警告错误;
+
+        import React,{Component} from 'react';
+
+        let name = 'clinton',
+            age = 20,
+            list = [10, 20, 30, 40];
+        export default class TernaryVarArray extends Component {
+            render () {
+                return (
+                    <div id="ternaryvararray">
+                        <p>姓名: {name}</p>
+                        <p>年龄: {age}</p>
+                        <p>是否大于十八岁: {age > 18 ? '是':'否'}</p>
+
+
+                        <ul>
+                            {
+                                list.map((item, ind) => {
+                                    return (
+                                        <li key={ind}>{item}</li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </div>
+                )
+            }
+        }
         
+
+
+
+
+### 安装React扩展
+
+    InstallReactExtensions.js
+
+        import React, { Component } from 'react'
+
+        export default class InstallReactExtensions extends Component {
+            render() {
+                return (
+                    <div>
+                        安装扩展 ES7 React/Redux/GraphQL/React-Native snippets
+                        使用 rcc 快速生成生成组件代码;
+                    </div>
+                )
+            }
+        }
+
+

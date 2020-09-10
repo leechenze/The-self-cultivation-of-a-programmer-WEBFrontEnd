@@ -17,7 +17,6 @@ export default class Jsxsyntax extends Component {
                 <label htmlFor="username">
                     用户名: <input type="text" id="username" />
                 </label>
-                
             </div>
         )
     }
