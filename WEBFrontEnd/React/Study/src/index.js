@@ -7,7 +7,9 @@ import App from './App';
 import Jsxsyntax from './JSXSyntax';
 import ReactDOMAndNativeDOM from './ReactDOM&NativeDOM';
 import TernaryVarArray from './Ternary&Var&Array';
-import UseOfEvents from './UseOfEvents';
+import EventUsage from './EventUsage';
+import BidirectionalDataBing from './BidirectionalDataBing';
+import TabColumnExample from './TabColumnExample';
 
 
 let docDom = document.createElement('div', {title: 'docDOM'}, 'docDOM');
@@ -21,7 +23,9 @@ ReactDOM.render(
     // docDom,
     // reactDom,
     // <TernaryVarArray></TernaryVarArray>,
-    <UseOfEvents></UseOfEvents>,
+    // <EventUsage></EventUsage>,
+    // <BidirectionalDataBing></BidirectionalDataBing>,
+    <TabColumnExample></TabColumnExample>,
     document.querySelector('#root')
 );
 

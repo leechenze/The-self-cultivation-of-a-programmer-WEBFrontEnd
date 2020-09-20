@@ -298,3 +298,150 @@
         }
 
 
+
+
+
+
+
+### 事件使用
+
+    import React, { Component } from 'react'
+
+    export default class EventUsage extends Component {
+
+        constructor (props) {
+            super(props)
+
+            定义组件状态的数据;
+            this.state = {
+                num: 20,
+            }
+            
+        }
+
+        handleClick() {
+            console.log('点击了按钮');
+        }
+
+        addNum () {
+            设定状态数据
+            this.setState({
+                num: this.state.num + 1,
+            })
+        }
+        
+        render() {
+            return (
+                <div id="eventusage">
+                    <button onClick={this.handleClick}>button</button>
+                    组件状态数据使用;
+                    <p>{this.state.num}</p>
+                    <button onClick={this.addNum.bind(this)}>addNum</button>
+                </div>
+            )
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+### 双向数据绑定
+
+
+    import React, { Component } from 'react'
+
+    export default class BidirectionalDataBing extends Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                val: 'initData',
+            }
+        }
+
+        handleChange(e) {
+            // 获取每次输入时的value
+            console.log(e.target.value);
+            this.setState({
+                val: e.target.value
+            })
+        }
+        
+        render() {
+            return (
+                <div id="bidirectionaldatabing">
+                    {/* 双向数据绑定需要绑定onchange事件, 否则会报警告 */}
+                    <input type="text" value={this.state.val} onChange={this.handleChange.bind(this)}/>
+                    <p>{this.state.val}</p>
+                </div>
+            )
+        }
+    }
+
+
+
+
+
+
+
+
+
+### 表格栏案例
+
+    import React, { Component } from 'react';
+    import './assets/css/tab.css';
+    export default class TabColumnExample extends Component {
+
+        constructor(props) {
+            super(props);
+            this.state = {
+                num: 2
+            }
+        }
+
+        handleClick(curIndex) {
+            // handleClick的curIndex既是在调用时传入的索引;
+            this.setState({
+                num: curIndex
+            })
+        }
+        
+        render() {
+            return (
+                <div className="tabcolumnexample">
+                    <div className="tab_btns">
+                        <input type="button" value="按钮1" className={this.state.num == 1 ? "active" : ''} onClick={this.handleClick.bind(this, 1)} />
+                        <input type="button" value="按钮2" className={this.state.num == 2 ? "active" : ''} onClick={this.handleClick.bind(this, 2)} />
+                        <input type="button" value="按钮3" className={this.state.num == 3 ? "active" : ''} onClick={this.handleClick.bind(this, 3)} />
+                    </div>
+                    <div className="tab_cons">
+                        <div className={this.state.num == 1 ? "current" : ''} >按钮1对应的内容</div>
+                        <div className={this.state.num == 2 ? "current" : ''} >按钮2对应的内容</div>
+                        <div className={this.state.num == 3 ? "current" : ''} >按钮3对应的内容</div>
+                    </div>
+                </div>
+            )
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+### props的使用
+    
+    

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class UseOfEvents extends Component {
+export default class EventUsage extends Component {
 
     constructor (props) {
         super(props)
@@ -25,7 +25,7 @@ export default class UseOfEvents extends Component {
     
     render() {
         return (
-            <div id="useofevents">
+            <div id="eventusage">
                 <button onClick={this.handleClick}>button</button>
                 <p>{this.state.num}</p>
                 <button onClick={this.addNum.bind(this)}>addNum</button>
