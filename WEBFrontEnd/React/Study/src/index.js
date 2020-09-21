@@ -10,6 +10,8 @@ import TernaryVarArray from './Ternary&Var&Array';
 import EventUsage from './EventUsage';
 import BidirectionalDataBing from './BidirectionalDataBing';
 import TabColumnExample from './TabColumnExample';
+import Props from './Props';
+import KeyUsage from './KeyUsage';
 
 
 let docDom = document.createElement('div', {title: 'docDOM'}, 'docDOM');
@@ -25,7 +27,9 @@ ReactDOM.render(
     // <TernaryVarArray></TernaryVarArray>,
     // <EventUsage></EventUsage>,
     // <BidirectionalDataBing></BidirectionalDataBing>,
-    <TabColumnExample></TabColumnExample>,
+    // <TabColumnExample></TabColumnExample>,
+    // <Props></Props>,
+    <KeyUsage></KeyUsage>,
     document.querySelector('#root')
 );
 
