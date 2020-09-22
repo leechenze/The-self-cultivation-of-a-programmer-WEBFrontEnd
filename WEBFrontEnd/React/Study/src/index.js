@@ -26,10 +26,10 @@ ReactDOM.render(
     // reactDom,
     // <TernaryVarArray></TernaryVarArray>,
     // <EventUsage></EventUsage>,
-    // <BidirectionalDataBing></BidirectionalDataBing>,
+    <BidirectionalDataBing></BidirectionalDataBing>,
     // <TabColumnExample></TabColumnExample>,
     // <Props></Props>,
-    <KeyUsage></KeyUsage>,
+    // <KeyUsage></KeyUsage>,
     document.querySelector('#root')
 );
 

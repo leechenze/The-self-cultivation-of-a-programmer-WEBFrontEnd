@@ -309,38 +309,48 @@
 
     export default class EventUsage extends Component {
 
-        constructor (props) {
+        constructor(props) {
             super(props)
 
-            定义组件状态的数据;
+            // 定义组件状态的数据;
             this.state = {
                 num: 20,
             }
-            
+
         }
 
         handleClick() {
             console.log('点击了按钮');
         }
 
-        addNum () {
-            设定状态数据
+        addNum() {
+
             this.setState({
                 num: this.state.num + 1,
             })
         }
-        
+
+        redNum() {
+
+            this.setState({
+                num: this.state.num - 1,
+            })
+            
+        }
+
         render() {
             return (
                 <div id="eventusage">
                     <button onClick={this.handleClick}>button</button>
-                    组件状态数据使用;
                     <p>{this.state.num}</p>
                     <button onClick={this.addNum.bind(this)}>addNum</button>
+                    {/* 不实用bind绑定this时,亦可使用箭头函数矫正this; */}
+                    <button onClick={() => this.redNum()}>redNum</button>
                 </div>
             )
         }
     }
+
 
 
 
@@ -378,6 +388,8 @@
                 <div id="bidirectionaldatabing">
                     {/* 双向数据绑定需要绑定onchange事件, 否则会报警告 */}
                     <input type="text" value={this.state.val} onChange={this.handleChange.bind(this)}/>
+                    {/* 亦可使用箭头函数, 但注意需要传递事件对象e, 不同于上面bing(this)的方式会隐式的传递事件对象e */}
+                    <input type="text" value={this.state.val} onChange={(e) => this.handleChange(e)}/>
                     <p>{this.state.val}</p>
                 </div>
             )
@@ -507,5 +519,65 @@
 
 
 ### keyUsage
-    
-    
+    import React, { Component } from 'react'
+
+    export default class KeyUsage extends Component {
+        constructor(props) {
+            super(props);
+
+            this.state = {
+                list: [
+                    { id: 1, value: '第一个值' },
+                    { id: 2, value: '第二个值' },
+                    { id: 3, value: '第三个值' },
+                ]
+            }
+
+        }
+
+        handlerClick() {
+            this.setState({
+                list: [
+                    { id: 4, value: '第四个值' },
+                    { id: 1, value: '第一个值' },
+                    { id: 2, value: '第二个值' },
+                    { id: 3, value: '第三个值' },
+                ]
+            })
+        }
+
+        render() {
+            return (
+                <div id="keyusage">
+                    <button onClick={this.handlerClick.bind(this)}>button</button>
+                    <ul>
+                        {
+                            this.state.list.map((item, ind) => {
+                                return (
+                                    // key值作用: 在项目中一般指定的是当前的id值, 有利于提高更新效率, 减少不必要的DOM操作;
+                                    // <li key={ind}>
+                                    <li key={item.id}>
+                                        {item.value}
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+                </div>
+            )
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
