@@ -12,7 +12,8 @@ import BidirectionalDataBing from './BidirectionalDataBing';
 import TabColumnExample from './TabColumnExample';
 import Props from './Props';
 import KeyUsage from './KeyUsage';
-
+import VerifyPropsValueType from './VerifyPropsValueType'
+import ContextUsage from './ContextUsage'
 
 let docDom = document.createElement('div', {title: 'docDOM'}, 'docDOM');
 let reactDom = React.createElement('div', {title: 'reactDOM'}, 'reactDOM');
@@ -26,10 +27,12 @@ ReactDOM.render(
     // reactDom,
     // <TernaryVarArray></TernaryVarArray>,
     // <EventUsage></EventUsage>,
-    <BidirectionalDataBing></BidirectionalDataBing>,
+    // <BidirectionalDataBing></BidirectionalDataBing>,
     // <TabColumnExample></TabColumnExample>,
     // <Props></Props>,
     // <KeyUsage></KeyUsage>,
+    // <VerifyPropsValueType></VerifyPropsValueType>,
+    <ContextUsage></ContextUsage>,
     document.querySelector('#root')
 );
 

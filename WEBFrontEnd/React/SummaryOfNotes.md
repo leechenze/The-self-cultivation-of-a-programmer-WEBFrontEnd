@@ -519,6 +519,7 @@
 
 
 ### keyUsage
+
     import React, { Component } from 'react'
 
     export default class KeyUsage extends Component {
@@ -581,3 +582,58 @@
 
 
 
+
+### 子组件中验证props属性值类型;
+
+    注意子组件中的 static propTypes 是一个固定的静态属性, 用来验证或规定props的值类型;
+
+    import React, { Component } from 'react'
+    // 引入prop-types(props类型验证);
+    import PropTypes from 'prop-types'
+
+    class Header extends Component {
+        
+        static propTypes = {
+            // 要验证的属性名;
+            // title: PropTypes.string,
+            title: PropTypes.number,
+        }
+        
+        render() {
+            return (
+                <div>
+                    {this.props.title}
+                </div>
+            )
+        }
+    }
+
+    export default class VerifyPropsValueType extends Component {
+        render() {
+            return (
+                <div id="verifypropsvaluetype">
+                    <Header title={123}></Header>
+                </div>
+            )
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### context ==> props Multistage transmit
+    
+    React 组件之间的通信是基于props的数据传递, 数据需要一级一级从上往下传递, 如果组件级别过多传递就会非常麻烦, React中的 context 可以解决 组件的跨级值传递;
+    
+    
+    
