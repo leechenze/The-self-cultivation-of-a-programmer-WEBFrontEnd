@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 
 class GrandChild extends Component {
 
+    // 子组件中声明context中的属性的类型;
     static contextTypes = {
         title: PropTypes.string,
     }

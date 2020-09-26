@@ -631,9 +631,88 @@
 
 
 
-### context ==> props Multistage transmit
+### context ==> props Multistage transmit (context 解决父子组件跨级多级的数据传输);
     
     React 组件之间的通信是基于props的数据传递, 数据需要一级一级从上往下传递, 如果组件级别过多传递就会非常麻烦, React中的 context 可以解决 组件的跨级值传递;
     
+
+
+    import React, { Component } from 'react'
+    import PropTypes from 'prop-types'
+
+
+    class GrandChild extends Component {
+
+        // 子组件中声明context中的属性的类型;
+        static contextTypes = {
+            title: PropTypes.string,
+        }
+        
+        render() {
+            return (
+                <div>
+                    {/* 传统的方式进行子组件传值 */}
+                    {/* {this.props.title} */}
+
+
+                    {this.context.title}
+                </div>
+            )
+        }
+    }
+
+    class Child extends Component {
+        render() {
+            return (
+                <div>
+                    {/* 传统的方式进行子组件传值 */}
+                    {/* <GrandChild title={this.props.title}></GrandChild> */}
+
+                    <GrandChild></GrandChild>
+                </div>
+            )
+        }
+    }
+
+    export default class ContextUsage extends Component {
+        // 在父组件中规定属性类型;
+        static childContextTypes = {
+            title: PropTypes.string
+        }
+        
+        // 父组件中规定通过context传递给子孙组件的值;
+        getChildContext() {
+            return {
+                title: 'context transmit title'
+            }
+        }
+        
+        render() {
+            return (
+                <div id="contextusage">
+                    {/* 传统的方式进行子组件传值 */}
+                    {/* <Child title="home page content"></Child> */}
+
+                    <Child></Child>
+                </div>
+            )
+        }
+    }
+
     
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 子组件传值给父组件;
