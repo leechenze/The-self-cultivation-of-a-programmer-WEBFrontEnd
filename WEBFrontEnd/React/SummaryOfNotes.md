@@ -242,9 +242,7 @@
 
 
 
-### JSX中插入变量三元运算和数组
-
-    新建Ternary&Var&Array.js
+### JSX中插入变量三元运算和数组(TernaryVarArray)
 
         循环遍历li时, 每一个li身上的属性key需要指定一个其索引(唯一值), 否则警告错误;
 
@@ -280,9 +278,7 @@
 
 
 
-### 安装React扩展
-
-    InstallReactExtensions.js
+### 安装React扩展(InstallReactExtensions)
 
         import React, { Component } from 'react'
 
@@ -303,7 +299,7 @@
 
 
 
-### 事件使用
+### 事件使用(EventUsage)
 
     import React, { Component } from 'react'
 
@@ -362,7 +358,7 @@
 
 
 
-### 双向数据绑定
+### 双向数据绑定(BidirectionalDataBing);
 
 
     import React, { Component } from 'react'
@@ -404,7 +400,7 @@
 
 
 
-### 表格栏案例
+### 表格栏案例(TabColumnExample)
 
     import React, { Component } from 'react';
     import './assets/css/tab.css';
@@ -454,7 +450,7 @@
 
 
 
-### props的使用
+### props的使用(Props);
 
     在子组件中 this.props 既是 调用这个组件时身上的所有属性 (例如: this.props.title);
     在子组件中 this.props.children 既是 父组件下的子元素 (双标签父组件中的内容: <Header>parent assembly content</Header>);
@@ -518,7 +514,7 @@
 
 
 
-### keyUsage
+### React中Key的使用(KeyUsage)
 
     import React, { Component } from 'react'
 
@@ -583,7 +579,7 @@
 
 
 
-### 子组件中验证props属性值类型;
+### 子组件中验证props属性值类型(VerifyPropsValueType);
 
     注意子组件中的 static propTypes 是一个固定的静态属性, 用来验证或规定props的值类型;
 
@@ -631,11 +627,10 @@
 
 
 
-### context ==> props Multistage transmit (context 解决父子组件跨级多级的数据传输);
+### context ==> props Multistage transmit (context 解决父子组件跨级多级的数据传输)(ContextUsage);
     
     React 组件之间的通信是基于props的数据传递, 数据需要一级一级从上往下传递, 如果组件级别过多传递就会非常麻烦, React中的 context 可以解决 组件的跨级值传递;
     
-
 
     import React, { Component } from 'react'
     import PropTypes from 'prop-types'
@@ -715,4 +710,87 @@
 
 
 
-### 子组件传值给父组件;
+### 子组件传值给父组件(ChildValueToParent);
+    // 子组件传值给父组件;
+    react中子组件向父组件传值 是通过在父组件中声明好修改的方法后, 通过props将此方法传递给子组件来调用;
+    以此方式来实现对于父组件中的值的操作;    
+
+    import React, { Component } from 'react'
+
+    class Child extends Component {
+        constructor(props) {
+            super(props);
+
+        }
+        numChildHandle() {
+            // 点击按钮时调用父组件上通过属性传递过来的方法;
+            this.props.numfatherHandle();
+        }
+        strChildHandle() {
+            this.props.strFatherHandle('leechense');
+        }
+        render() {
+            return (
+                <div>
+                    <button onClick={this.numChildHandle.bind(this)}>numBtn</button>
+                    <button onClick={this.props.numfatherHandle.bind(this)}>numBtn</button>
+                    {this.props.children}
+                    <button onClick={this.strChildHandle.bind(this)}>numBtn</button>
+                    <button onClick={this.props.strFatherHandle.bind(this, 'lineLeechense')}>numBtn</button>
+                </div>
+            )
+        }
+    }
+
+
+    export default class ChildValueToParent extends Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                num: 20,
+                str: 'asdf',
+            }
+        }
+
+        // 父组件中创建一份方法给子组件调用;
+        numfatherHandle() {
+            this.setState({
+                num: this.state.num + 1,
+            })
+        }
+        strFatherHandle(value) {
+            this.setState({
+                str: value,
+            })
+        }
+
+        render() {
+            return (
+                <div id="childvaluetoparent">
+                    <Child numfatherHandle={this.numfatherHandle.bind(this)}
+                            strFatherHandle={this.strFatherHandle.bind(this)}>
+                        <br/>
+                        {this.state.num}
+                        <br/>
+                        {this.state.str}
+                        <br/>
+                    </Child>
+                </div>
+            )
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+### React组件声明周期;
+    

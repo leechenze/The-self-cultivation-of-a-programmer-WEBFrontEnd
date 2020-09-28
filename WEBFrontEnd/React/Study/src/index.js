@@ -12,8 +12,9 @@ import BidirectionalDataBing from './BidirectionalDataBing';
 import TabColumnExample from './TabColumnExample';
 import Props from './Props';
 import KeyUsage from './KeyUsage';
-import VerifyPropsValueType from './VerifyPropsValueType'
-import ContextUsage from './ContextUsage'
+import VerifyPropsValueType from './VerifyPropsValueType';
+import ContextUsage from './ContextUsage';
+import ChildValueToParent from './ChildValueToParent';
 
 let docDom = document.createElement('div', {title: 'docDOM'}, 'docDOM');
 let reactDom = React.createElement('div', {title: 'reactDOM'}, 'reactDOM');
@@ -32,7 +33,8 @@ ReactDOM.render(
     // <Props></Props>,
     // <KeyUsage></KeyUsage>,
     // <VerifyPropsValueType></VerifyPropsValueType>,
-    <ContextUsage></ContextUsage>,
+    // <ContextUsage></ContextUsage>,
+    <ChildValueToParent></ChildValueToParent>,
     document.querySelector('#root')
 );
 
