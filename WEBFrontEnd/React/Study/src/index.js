@@ -15,6 +15,9 @@ import KeyUsage from './KeyUsage';
 import VerifyPropsValueType from './VerifyPropsValueType';
 import ContextUsage from './ContextUsage';
 import ChildValueToParent from './ChildValueToParent';
+import ComponentLifecycle from './ComponentLifecycle';
+
+
 
 let docDom = document.createElement('div', {title: 'docDOM'}, 'docDOM');
 let reactDom = React.createElement('div', {title: 'reactDOM'}, 'reactDOM');
@@ -34,7 +37,8 @@ ReactDOM.render(
     // <KeyUsage></KeyUsage>,
     // <VerifyPropsValueType></VerifyPropsValueType>,
     // <ContextUsage></ContextUsage>,
-    <ChildValueToParent></ChildValueToParent>,
+    // <ChildValueToParent></ChildValueToParent>,
+    <ComponentLifecycle></ComponentLifecycle>,
     document.querySelector('#root')
 );
 

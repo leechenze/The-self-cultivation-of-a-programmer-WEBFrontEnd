@@ -792,5 +792,24 @@
 
 
 
-### React组件声明周期;
+### React组件生命周期;
+
+    1.实例化(挂载阶段): 对象创建到完全渲染;
+        construcor
+        componentWillMount
+        rander
+        componentDidMount
+    2.存在起(更新期): 组件状态的改变;
+        props改变时执行的生命周期:
+            componentWillReceiveProps
+        state改变时执行的生命周期:
+            shouldComponentUpdate           特殊的一个生命周期函数, 必须返回true或false, 否则会报错;
+            componentWillUpdate
+            rander
+            componentDidUpdate
+    3.销毁/清除期: 组件使用完毕后, 或者不需要存在页面中, 那么将组件移除, 执行销毁;
+        componentWillUnmount
     
+
+
+
