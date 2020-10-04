@@ -16,7 +16,7 @@ import VerifyPropsValueType from './VerifyPropsValueType';
 import ContextUsage from './ContextUsage';
 import ChildValueToParent from './ChildValueToParent';
 import ComponentLifecycle from './ComponentLifecycle';
-
+import ControlledAndUncontrolled from './ControlledAndUncontrolled'
 
 
 let docDom = document.createElement('div', {title: 'docDOM'}, 'docDOM');
@@ -38,9 +38,19 @@ ReactDOM.render(
     // <VerifyPropsValueType></VerifyPropsValueType>,
     // <ContextUsage></ContextUsage>,
     // <ChildValueToParent></ChildValueToParent>,
-    <ComponentLifecycle></ComponentLifecycle>,
+    // <ComponentLifecycle></ComponentLifecycle>,
+    <ControlledAndUncontrolled></ControlledAndUncontrolled>,
     document.querySelector('#root')
 );
+
+
+// 生命周期的章节;
+// setTimeout(() => {
+//     ReactDOM.render(
+//         <div>Hello World</div>,
+//         document.querySelector('#root')
+//     )
+// },3000);
 
 
 
