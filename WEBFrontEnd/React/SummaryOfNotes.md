@@ -1031,3 +1031,66 @@
 
 
 
+### 路由原理(routerPrinciple.htm);
+
+    http-server -o 启动查看实例;
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <ul>
+            <li>
+                <a href="/#/index">首页</a>
+            </li>
+            <li>
+                <a href="/#/list">列表页</a>
+            </li>
+        </ul>
+        
+        <div id="routerView">
+            
+        </div>
+
+        <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.8.0/jquery-1.8.0.min.js"></script>
+        <script>
+            // 定义一个路由(多个路线, 多个对应关系);
+            let routes = {
+                // url 和 视图的对应关系;
+                "#/index": "./index.htm",
+                "#/list": "./list.html"
+            }
+
+
+            // 以下就是路由原理, 根据上面对应的路由加载对应的路径内容;
+            // 给窗口添加事件, 当哈希值发生变化时, #routerView盒子加载对应的视图;
+            window.addEventListener('hashchange', () => {
+                console.log(location.hash);
+
+                $('#routerView').load(routes[location.hash]);
+                
+            })
+            
+        </script>
+    </body>
+    </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
