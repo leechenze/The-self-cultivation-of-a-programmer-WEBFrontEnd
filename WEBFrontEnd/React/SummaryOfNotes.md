@@ -125,8 +125,8 @@
     
         import React, {Component} from 'react';
         注意, 一般除了js文件在引入时可以忽略后缀, 样式文件不要忽略后缀;
-        import './assets/css/JSXSyntax.css';
-        import QqImage1 from './assets/images/QQImage1.png';
+        import '../assets/css/JSXSyntax.css';
+        import QqImage1 from '../assets/images/QQImage1.png';
 
         export default class Jsxsyntax extends Component {
             render () {
@@ -403,7 +403,7 @@
 ### 表格栏案例(TabColumnExample)
 
     import React, { Component } from 'react';
-    import './assets/css/tab.css';
+    import '../assets/css/tab.css';
     export default class TabColumnExample extends Component {
 
         constructor(props) {
@@ -1078,6 +1078,74 @@
         </script>
     </body>
     </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### React路由搭建(ReactRouter.js);
+    安装React路由;
+    yarn add react-router@3.2.0
+
+    注意以下步骤都写到了ReactRouter中, 包括ReactDOM.render()的渲染方法也从index.js中放到了ReactRouter中
+    但是注意必须要把最后的路由组件ReactRouter导出, 然后在src/index导入, 因为框架最终找的是src/index.js这个主文件;
+
+    两者的区别就是其中一些API有与无的区别, 例如: hashHistory, Switch两个API在 react-router中没有, 而是在react-router-dom中
+    yarn add react-router
+    yarn add react-router-dom
+
+    import React, { Component } from 'react';
+    import ReactDOM from 'react-dom';
+    import {Router, Route, hashHistory, Switch, Redirect} from 'react-router';
+    // 引入对应的路由组件
+    import List from './List'
+    import Home from './Home'
+
+    export default class ReactRouter extends Component {
+        render() {
+            return (
+                <div id="reactrouter">
+                    <ul>
+                        <li><a href="#/index/home">首页</a></li>
+                        <li><a href="#/index/list">列表页</a></li>
+                    </ul>
+                    <hr/>
+                    {/* 路由中的外层的 Route其实就是ReactRouter这个组件, 所以 this.props.children 获取的就是它下面的Home和List */}
+                    {/* 其实组件之间的嵌套就是路由之间的嵌套, 也完全可以把Router这个路由标签写到组件中来, 写法很多样化 */}
+                    {this.props.children}
+                </div>
+            )
+        }
+    }
+
+    // 定义一个路由;
+    let routes = <Router history={hashHistory}>
+        {/* Route 既是 ReactRouter 这个组件 */}
+        <Route path="/index" component={ReactRouter}>
+            {/* Route 既是 Home 和 List 这两个组件的选项, 根据url的变化加载对应的组件 */}
+            <Route path="/index/home" component={Home}></Route>
+            <Route path="/index/list" component={List}></Route>
+        </Route>
+    </Router>;
+
+
+
+    // 不再在index.js中渲染了, 迁移到这里进行渲染, 第一个参数改为变量 routes;
+    ReactDOM.render(routes, document.querySelector('#root'));
+
+
+
 
 
 

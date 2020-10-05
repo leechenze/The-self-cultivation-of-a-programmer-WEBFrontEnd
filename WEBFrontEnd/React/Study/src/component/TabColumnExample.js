@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './assets/css/tab.css';
+import '../assets/css/tab.css';
 export default class TabColumnExample extends Component {
 
     constructor(props) {

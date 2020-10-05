@@ -1,8 +1,8 @@
 // JSX语法
 
 import React, {Component} from 'react';
-import './assets/css/JSXSyntax.css';
-import QqImage1 from './assets/images/QQImage1.png';
+import '../assets/css/JSXSyntax.css';
+import QqImage1 from '../assets/images/QQImage1.png';
 
 export default class Jsxsyntax extends Component {
     render () {

@@ -4,19 +4,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import Jsxsyntax from './JSXSyntax';
-import ReactDOMAndNativeDOM from './ReactDOM&NativeDOM';
-import TernaryVarArray from './Ternary&Var&Array';
-import EventUsage from './EventUsage';
-import BidirectionalDataBing from './BidirectionalDataBing';
-import TabColumnExample from './TabColumnExample';
-import Props from './Props';
-import KeyUsage from './KeyUsage';
-import VerifyPropsValueType from './VerifyPropsValueType';
-import ContextUsage from './ContextUsage';
-import ChildValueToParent from './ChildValueToParent';
-import ComponentLifecycle from './ComponentLifecycle';
-import ControlledAndUncontrolled from './ControlledAndUncontrolled'
+import Jsxsyntax from './component/JSXSyntax';
+import ReactDOMAndNativeDOM from './component/ReactDOM&NativeDOM';
+import TernaryVarArray from './component/Ternary&Var&Array';
+import EventUsage from './component/EventUsage';
+import BidirectionalDataBing from './component/BidirectionalDataBing';
+import TabColumnExample from './component/TabColumnExample';
+import Props from './component/Props';
+import KeyUsage from './component/KeyUsage';
+import VerifyPropsValueType from './component/VerifyPropsValueType';
+import ContextUsage from './component/ContextUsage';
+import ChildValueToParent from './component/ChildValueToParent';
+import ComponentLifecycle from './component/ComponentLifecycle';
+import ControlledAndUncontrolled from './component/ControlledAndUncontrolled'
+import ReactRouter from './reactRouter/ReactRouter'
+
+
 
 
 let docDom = document.createElement('div', {title: 'docDOM'}, 'docDOM');
@@ -24,24 +27,24 @@ let reactDom = React.createElement('div', {title: 'reactDOM'}, 'reactDOM');
 
 
 // 把对应的内容渲染到root标签上;
-ReactDOM.render(
-    // <Jsxsyntax></Jsxsyntax>,
-    // <ReactDOMAndNativeDOM></ReactDOMAndNativeDOM>,
-    // docDom,
-    // reactDom,
-    // <TernaryVarArray></TernaryVarArray>,
-    // <EventUsage></EventUsage>,
-    // <BidirectionalDataBing></BidirectionalDataBing>,
-    // <TabColumnExample></TabColumnExample>,
-    // <Props></Props>,
-    // <KeyUsage></KeyUsage>,
-    // <VerifyPropsValueType></VerifyPropsValueType>,
-    // <ContextUsage></ContextUsage>,
-    // <ChildValueToParent></ChildValueToParent>,
-    // <ComponentLifecycle></ComponentLifecycle>,
-    <ControlledAndUncontrolled></ControlledAndUncontrolled>,
-    document.querySelector('#root')
-);
+// ReactDOM.render(
+//     // <Jsxsyntax></Jsxsyntax>,
+//     // <ReactDOMAndNativeDOM></ReactDOMAndNativeDOM>,
+//     // docDom,
+//     // reactDom,
+//     // <TernaryVarArray></TernaryVarArray>,
+//     // <EventUsage></EventUsage>,
+//     // <BidirectionalDataBing></BidirectionalDataBing>,
+//     // <TabColumnExample></TabColumnExample>,
+//     // <Props></Props>,
+//     // <KeyUsage></KeyUsage>,
+//     // <VerifyPropsValueType></VerifyPropsValueType>,
+//     // <ContextUsage></ContextUsage>,
+//     // <ChildValueToParent></ChildValueToParent>,
+//     // <ComponentLifecycle></ComponentLifecycle>,
+//     <ControlledAndUncontrolled></ControlledAndUncontrolled>,
+//     document.querySelector('#root')
+// );
 
 
 
