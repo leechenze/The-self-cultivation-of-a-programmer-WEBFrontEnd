@@ -1162,3 +1162,108 @@
 
 
 
+### 动态路由(路由传参: Detail.js, ReactRouter.js);
+
+    定义路由, 在path上声明参数规则;
+    <Route path="/index/detail/:newId" component={Detail}></Route>
+    使用链接地址时传参
+    <li><a href="#/index/detail/316">详情页</a></li>
+    在路由对应的视图组件中, 使用this.props获取;
+    {this.props.routeParams.newId}
+
+    
+    Detail.js
+
+        import React, { Component } from 'react'
+
+        export default class Detail extends Component {
+            constructor(props) {
+                super(props);
+                
+            }
+            
+            render() {
+                return (
+                    <div id="detail">
+                        详情页
+                        <br/>
+                        {this.props.routeParams.newId}
+                    </div>
+                )
+            }
+        }
+
+    ReactRouter.js
+
+        import React, { Component } from 'react';
+        import ReactDOM from 'react-dom';
+        import {Router, Route, hashHistory, Switch, Redirect} from 'react-router';
+        // 引入对应的路由组件
+        import Detail from './Detail'
+
+        export default class ReactRouter extends Component {
+            render() {
+                return (
+                    <div id="reactrouter">
+                        <ul>
+                            <li><a href="#/index/home">首页</a></li>
+                            <li><a href="#/index/list">列表页</a></li>
+                            <li><a href="#/index/detail/316">详情页</a></li>
+                        </ul>
+                        <hr/>
+                        {/* 路由中的外层的 Route其实就是ReactRouter这个组件, 所以 this.props.children 获取的就是它下面的Home和List */}
+                        {/* 其实组件之间的嵌套就是路由之间的嵌套, 也完全可以把Router这个路由标签写到组件中来, 写法很多样化 */}
+                        {this.props.children}
+                    </div>
+                )
+            }
+        }
+
+        let routes = <Router history={hashHistory}>
+            {/* Route 既是 ReactRouter 这个组件 */}
+            <Route path="/index" component={ReactRouter}>
+                {/* Route 既是 Home 和 List 这两个组件的选项, 根据url的变化加载对应的组件 */}
+                <Route path="/index/home" component={Home}></Route>
+                <Route path="/index/list" component={List}></Route>
+                <Route path="/index/detail/:newId" component={Detail}></Route>
+            </Route>
+        </Router>;
+
+
+
+
+
+
+
+
+
+
+
+### IndexRoute, IndexRedirect, Link(ReactRouter.js);
+
+
+    Link ==> a, href ==> to;
+
+    {/* <li><a href="#/index/home">首页</a></li>
+    <li><a href="#/index/list">列表页</a></li>
+    <li><a href="#/index/detail/316">详情页</a></li> */}
+
+    <li><Link to="#/index/home">首页</Link></li>
+    <li><Link to="#/index/list">列表页</Link></li>
+    <li><Link to="#/index/detail/316">详情页</Link></li>
+    
+    
+    {/* 路由重定向: IndexReact 在保持/app路径不变的情况下, 设置默认展示的页面 */}
+    <IndexRoute component={Home} />
+    {/* 路由重定向: IndexRedirect 在访问/index时, 直接重定向到 "/index/home"*/}
+    <IndexRedirect to="/index/home" />
+    
+    
+    
+    
+    
+    
+    
+
+
+

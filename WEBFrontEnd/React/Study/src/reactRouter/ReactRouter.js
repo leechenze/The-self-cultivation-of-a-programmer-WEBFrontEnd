@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, hashHistory, Switch, Redirect} from 'react-router';
+import {Router, Route, hashHistory, IndexRoute, IndexRedirect, Link} from 'react-router';
 // 引入对应的路由组件
 import List from './List'
 import Home from './Home'
+import Detail from './Detail'
 
 export default class ReactRouter extends Component {
     render() {
         return (
             <div id="reactrouter">
                 <ul>
-                    <li><a href="#/index/home">首页</a></li>
+                    {/* <li><a href="#/index/home">首页</a></li>
                     <li><a href="#/index/list">列表页</a></li>
+                    <li><a href="#/index/detail/316">详情页</a></li> */}
+
+                    <li><Link to="#/index/home">首页</Link></li>
+                    <li><Link to="#/index/list">列表页</Link></li>
+                    <li><Link to="#/index/detail/316">详情页</Link></li>
+                    
                 </ul>
                 <hr/>
                 {/* 路由中的外层的 Route其实就是ReactRouter这个组件, 所以 this.props.children 获取的就是它下面的Home和List */}
@@ -26,9 +33,14 @@ export default class ReactRouter extends Component {
 let routes = <Router history={hashHistory}>
     {/* Route 既是 ReactRouter 这个组件 */}
     <Route path="/index" component={ReactRouter}>
+        {/* 路由重定向: IndexReact 在保持/app路径不变的情况下, 设置默认展示的页面 */}
+        {/* <IndexRoute component={Home} /> */}
+        {/* 路由重定向: IndexRedirect 在访问/index时, 直接重定向到 "/index/home"*/}
+        <IndexRedirect to="/index/home" />
         {/* Route 既是 Home 和 List 这两个组件的选项, 根据url的变化加载对应的组件 */}
         <Route path="/index/home" component={Home}></Route>
         <Route path="/index/list" component={List}></Route>
+        <Route path="/index/detail/:newId" component={Detail}></Route>
     </Route>
 </Router>;
 
