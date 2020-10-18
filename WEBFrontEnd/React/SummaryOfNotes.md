@@ -1248,11 +1248,11 @@
     <li><a href="#/index/list">列表页</a></li>
     <li><a href="#/index/detail/316">详情页</a></li> */}
 
-    <li><Link to="#/index/home">首页</Link></li>
-    <li><Link to="#/index/list">列表页</Link></li>
-    <li><Link to="#/index/detail/316">详情页</Link></li>
+    <li><Link to="/index/home">首页</Link></li>
+    <li><Link to="/index/list">列表页</Link></li>
+    <li><Link to="/index/detail/316">详情页</Link></li>
     
-    
+    {/* link标签时, 忽略路径前的#符号, a标签需要输入 */}
     {/* 路由重定向: IndexReact 在保持/app路径不变的情况下, 设置默认展示的页面 */}
     <IndexRoute component={Home} />
     {/* 路由重定向: IndexRedirect 在访问/index时, 直接重定向到 "/index/home"*/}

@@ -15,9 +15,10 @@ export default class ReactRouter extends Component {
                     <li><a href="#/index/list">列表页</a></li>
                     <li><a href="#/index/detail/316">详情页</a></li> */}
 
-                    <li><Link to="#/index/home">首页</Link></li>
-                    <li><Link to="#/index/list">列表页</Link></li>
-                    <li><Link to="#/index/detail/316">详情页</Link></li>
+                    {/* link标签时, 忽略路径前的#符号, a标签需要输入 */}
+                    <li><Link to="/index/home">首页</Link></li>
+                    <li><Link to="/index/list">列表页</Link></li>
+                    <li><Link to="/index/detail/316">详情页</Link></li>
                     
                 </ul>
                 <hr/>
