@@ -1241,7 +1241,9 @@
 
 ### IndexRoute, IndexRedirect, Link(ReactRouter.js);
 
-
+    重启后地址栏后需要输入/index, 否则报错'/'与任何路由都不匹配;
+    或者在路径配置中指定path 为默认路径 "/index" 亦可;
+    
     Link ==> a, href ==> to;
 
     {/* <li><a href="#/index/home">首页</a></li>
@@ -1264,6 +1266,9 @@
     
     
     
+
+
+
 
 
 

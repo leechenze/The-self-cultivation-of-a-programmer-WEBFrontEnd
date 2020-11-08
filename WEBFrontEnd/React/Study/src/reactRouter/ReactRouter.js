@@ -33,7 +33,8 @@ export default class ReactRouter extends Component {
 // 定义一个路由;
 let routes = <Router history={hashHistory}>
     {/* Route 既是 ReactRouter 这个组件 */}
-    <Route path="/index" component={ReactRouter}>
+    {/* <Route path="/index" component={ReactRouter}> */}
+    <Route path="/" component={ReactRouter}>
         {/* 路由重定向: IndexReact 在保持/app路径不变的情况下, 设置默认展示的页面 */}
         {/* <IndexRoute component={Home} /> */}
         {/* 路由重定向: IndexRedirect 在访问/index时, 直接重定向到 "/index/home"*/}
