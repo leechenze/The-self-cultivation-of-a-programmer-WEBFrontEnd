@@ -1272,3 +1272,14 @@
 
 
 
+# 创建leereactapp 项目;
+    
+    创建项目;
+    create-react-app leereactapp
+    创建之后在项目中是看不到 webpack 配置的, 因为使用的是 reactcli 脚手架下载下来的一个完整的包, 所以就需要解包脚手架的一个步骤;
+    
+    解包脚手架;
+    yarn eject 或 cnpm run eject
+
+    解包之后, 重新启动项目;
+    
