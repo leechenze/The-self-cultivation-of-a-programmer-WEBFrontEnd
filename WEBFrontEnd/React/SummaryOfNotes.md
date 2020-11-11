@@ -1290,4 +1290,26 @@
 
 ### less and less-loader的安装
 
+    安装less 和 less-loader
+    yarn add less less-loader -D
+
+    把less加载器配置到webpack配置文件中 
+    ==> 
+    config目录下的webpack.config.js文件:
+
+    首先配置变量: 
+    style files regexes
+        const cssRegex = /\.css$/;
+        const cssModuleRegex = /\.module\.css$/;
+        const lessRegex = /\.less$/;
+        const lessModuleRegex = /\.module\.less$/;
+
+    然后配置less-loader;
+        module.rules[1].oneOf下复制sass-loader加载器 更改为 less 的配置;
+    
+
+
+### 项目目录结构搭建
+
+    
     
