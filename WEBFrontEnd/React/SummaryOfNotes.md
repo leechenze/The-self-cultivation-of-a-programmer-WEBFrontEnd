@@ -1305,11 +1305,25 @@
         const lessModuleRegex = /\.module\.less$/;
 
     然后配置less-loader;
-        module.rules[1].oneOf下复制sass-loader加载器 更改为 less 的配置;
-    
 
+        getStyleLoaders 方法形参中添加lessOptions参数;
+
+                        方法中复制一份css选项规则 把css改为less:
+                            {
+                                loader: require.resolve('css-loader'),
+                                options: cssOptions,
+                            },
+                            {
+                                loader: require.resolve('less-loader'),
+                                options: lessOptions,
+                            },
+    
+        module.rules[1].oneOf下复制 css规则 然后将这份规则更改为 less 的配置, 切不可复制sass的配置规则更改less;
+
+    less配置详细参考地址: https://www.jianshu.com/p/bfa308164df4
 
 ### 项目目录结构搭建
 
+    
     
     

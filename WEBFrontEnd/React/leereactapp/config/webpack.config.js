@@ -96,7 +96,7 @@ module.exports = function (webpackEnv) {
     const shouldUseReactRefresh = env.raw.FAST_REFRESH;
 
     // common function to get style loaders
-    const getStyleLoaders = (cssOptions, preProcessor) => {
+    const getStyleLoaders = (cssOptions, lessOptions, preProcessor) => {
         const loaders = [
             isEnvDevelopment && require.resolve('style-loader'),
             isEnvProduction && {
@@ -110,6 +110,10 @@ module.exports = function (webpackEnv) {
             {
                 loader: require.resolve('css-loader'),
                 options: cssOptions,
+            },
+            {
+                loader: require.resolve('less-loader'),
+                options: lessOptions,
             },
             {
                 // Options for PostCSS as we reference these options twice
@@ -487,6 +491,45 @@ module.exports = function (webpackEnv) {
                                 },
                             }),
                         },
+                        
+                        
+                        
+                        // add less-loader 加载器;
+                        {
+                            test: lessRegex,
+                            exclude: lessModuleRegex,
+                            use: getStyleLoaders({
+                                importLoaders: 1,
+                                sourceMap: isEnvProduction
+                                    ? shouldUseSourceMap
+                                    : isEnvDevelopment,
+                            }),
+                            sideEffects: true,
+                        },
+                        // add less-loader 加载器;
+                        {
+                            test: lessModuleRegex,
+                            use: getStyleLoaders({
+                                importLoaders: 1,
+                                sourceMap: isEnvProduction
+                                    ? shouldUseSourceMap
+                                    : isEnvDevelopment,
+                                modules: {
+                                    getLocalIdent: getCSSModuleLocalIdent,
+                                },
+                            }),
+                        },
+
+
+
+
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                         // Opt-in support for SASS (using .scss or .sass extensions).
                         // By default we support SASS Modules with the
                         // extensions .module.scss or .module.sass
@@ -523,22 +566,6 @@ module.exports = function (webpackEnv) {
                                     },
                                 },
                                 'sass-loader'
-                            ),
-                        },
-                        // add less-loader 加载器;
-                        {
-                            test: lessModuleRegex,
-                            use: getStyleLoaders(
-                                {
-                                    importLoaders: 3,
-                                    sourceMap: isEnvProduction
-                                        ? shouldUseSourceMap
-                                        : isEnvDevelopment,
-                                    modules: {
-                                        getLocalIdent: getCSSModuleLocalIdent,
-                                    },
-                                },
-                                'less-loader'
                             ),
                         },
                         // "file" loader makes sure those assets get served by WebpackDevServer.
