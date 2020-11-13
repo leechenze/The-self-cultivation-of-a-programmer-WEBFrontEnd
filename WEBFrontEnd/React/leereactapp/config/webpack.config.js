@@ -492,7 +492,7 @@ module.exports = function (webpackEnv) {
                             }),
                         },
                         
-                        
+
                         
                         // add less-loader 加载器;
                         {
@@ -519,15 +519,6 @@ module.exports = function (webpackEnv) {
                                 },
                             }),
                         },
-
-
-
-
-                        
-                        
-                        
-                        
-                        
                         
                         
                         // Opt-in support for SASS (using .scss or .sass extensions).
