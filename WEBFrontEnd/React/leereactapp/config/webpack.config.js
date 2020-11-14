@@ -506,7 +506,6 @@ module.exports = function (webpackEnv) {
                             }),
                             sideEffects: true,
                         },
-                        
                         // add less-loader 加载器;
                         {
                             test: lessModuleRegex,
