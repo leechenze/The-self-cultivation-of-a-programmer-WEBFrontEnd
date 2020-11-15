@@ -1322,7 +1322,47 @@
 
     less配置详细参考地址: https://www.jianshu.com/p/bfa308164df4
 
+
+
+
+
+
+
+
 ### 项目目录结构搭建
+
+    删除src目录下的所有默认文件, 新建 [assets/fonts,images,styles] [pages] [components]等目录;
+    
+    新建index.js入口文件, index.js:
+
+        // 引入核心组件 {APP};
+        import './pages/app'
+
+        // 引入初始化样式
+
+        // 引入全局样式
+
+
+    新建app.js核心这件, src/pages/app.js:
+    app.js
+
+        import React, { Component } from 'react'
+        import ReactDOM from 'react-dom'
+
+
+        export default class App extends Component {
+            render() {
+                return (
+                    <div>
+                        App
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<App />, document.getElementById("root"));
+
+
 
     
     
