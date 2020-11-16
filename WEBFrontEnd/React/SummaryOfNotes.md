@@ -1453,7 +1453,7 @@
             color: #fff;
         }
 
-    改动全局样式表 core.less:
+    改动全局样式表 core.less: (注意在全局给html,body,#root设置高100%, 这样在LoginPage.less中的高100%才会根据父级);
 
         @charset 'utf-8';
 
@@ -1467,3 +1467,13 @@
             background-color: @color;
         }
 
+
+
+
+
+
+
+
+### 封装IMG组件
+
+    
