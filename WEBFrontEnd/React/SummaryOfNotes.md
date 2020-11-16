@@ -1366,4 +1366,104 @@
 
     
     
+
+
+
+### 测试less语法;
     
+    在src/assets/style目录下新建core.css:
+
+        @charset 'utf-8';
+
+        @color: skyblue;
+
+        body{
+            background-color: @color;
+        }
+    此时背景色就会发生改变;
+
+    
+    
+    
+
+
+
+### 登陆界面的展示;
+    
+    在src/pages目录下新建登陆页 LoginPage.js:
+
+        import React, { Component } from 'react'
+        import '../assets/styles/LoginPage.css'
+
+        export default class LoginPage extends Component {
+            render() {
+                return (
+                    <div className="login-page">
+                        登陆页面
+                    </div>
+                )
+            }
+        }
+
+    
+
+    src/assets目录下新建登陆界面样式表 LoginPage.less: (LoginPage页面专属的样式表, 在JS页面中引入);
+        
+        @charset 'utf-8';
+
+        .login-page{
+            background-color: green;
+        }
+
+    
+
+
+
+
+
+### 登陆界面的展示;
+
+    项目中初始化样式: Normalize.css 
+    地址: http://necolas.github.io/normalize.css
+    
+    npm install normalize.css
+    or
+    yarn add normalize.css
+
+    在入口文件index.js中将 normalize.css文件引入;
+
+        // 引入核心组件 {APP};
+        import './pages/app';
+
+        // 引入初始化样式
+        import 'normalize.css';
+
+        // 引入全局样式
+        import './assets/styles/core.less';
+        此时, padding,margin的默认边距值都会重置;
+
+
+    改动登陆页样式表 LoginPage.less:
+
+        @charset 'utf-8';
+
+        .login-page{
+            height: 100%;
+            background-color: #00439c;
+            color: #fff;
+        }
+
+    改动全局样式表 core.less:
+
+        @charset 'utf-8';
+
+        @color: skyblue;
+
+        html,body,#root{
+            height: 100%;
+        }
+
+        body{
+            background-color: @color;
+        }
+
