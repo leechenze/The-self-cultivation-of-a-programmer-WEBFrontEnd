@@ -2,6 +2,10 @@
 
 @charset "utf-8";
 
+*{
+    box-sizing: border-box;
+}
+
 /* CSS Document */
 
 body,
@@ -18,7 +22,7 @@ h5,
 h6,
 p,
 input {
-    margin: 0
+    margin: 0;
 }
 
 h1,
@@ -74,8 +78,8 @@ a:hover {
 }
 
 a:hover {
-    color: #c9394a;
-    /*text-decoration: underline;*/
+    color: #4073ee;
+    text-decoration: underline;
 }
 
 a:active {
@@ -116,4 +120,10 @@ a:active {
 
 .show {
     display: block
+}
+
+/* 删除滚动条 */
+
+.hide-scroll::-webkit-scrollbar {
+    display: none;
 }
