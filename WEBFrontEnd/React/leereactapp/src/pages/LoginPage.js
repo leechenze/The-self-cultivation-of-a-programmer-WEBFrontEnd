@@ -6,8 +6,6 @@ import '../assets/styles/LoginPage.css'
 // 引入ImgPackage组件;
 import ImgPackage from '../components/ImgPackage'
 
-
-
 export default class LoginPage extends Component {
     render() {
         return (
