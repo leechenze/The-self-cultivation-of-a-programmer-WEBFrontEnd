@@ -1328,7 +1328,6 @@
 
 
 
-
 ### 项目目录结构搭建
 
     删除src目录下的所有默认文件, 新建 [assets/fonts,images,styles] [pages] [components]等目录;
@@ -1370,6 +1369,8 @@
 
 
 ### 测试less语法;
+
+
     
     在src/assets/style目录下新建core.css:
 
@@ -1393,7 +1394,7 @@
     在src/pages目录下新建登陆页 LoginPage.js:
 
         import React, { Component } from 'react'
-        import '../assets/styles/LoginPage.css'
+        import '../assets/styles/LoginPage.less'
 
         export default class LoginPage extends Component {
             render() {
@@ -1476,6 +1477,54 @@
 
 ### 封装IMG组件
     
-    https://blog.csdn.net/hahahhahahahha123456/article/details/103797260?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-5.edu_weight&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-5.edu_weight
+    webpack打包html里面img后src为“[object Module]”问题:
+        https://blog.csdn.net/hahahhahahahha123456/article/details/103797260?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-5.edu_weight&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-5.edu_weight
+
+    
+    改动登陆页 LoginPage.js:
+
+        import React, { Component } from 'react'
+        import '../assets/styles/LoginPage.less'
+        // import LogoImg from '../assets/images/logo.png'
+        // const LogoImg = require("../assets/images/logo.png");
+
+        // 引入ImgPackage组件;
+        import ImgPackage from '../components/ImgPackage'
+
+        export default class LoginPage extends Component {
+            render() {
+                return (
+                    <div className="login-page">
+                        {/* 第一部分: logo */}
+                        {/* <img src={LogoImg} alt="" /> */}
+                        {/* <img src={require("../assets/images/logo.png")} alt="" /> */}
+                        {/* 封装组件 */}
+                        <ImgPackage src="logo.png" />
+                        
+                        {/* 第二部分: form */}
+                        
+                    </div>
+                )
+            }
+        }
+
+
+
+    在src/components目录下新建组件 ImgPackage.js
+        import React, { Component } from 'react'
+
+        export default class ImgPackage extends Component {
+            render() {
+                return (
+                    <div className="img-package">
+                        <img src={require(`../assets/images/${this.props.src}`)} />
+                    </div>
+                )
+            }
+        }
+
+
+
+
 
     
