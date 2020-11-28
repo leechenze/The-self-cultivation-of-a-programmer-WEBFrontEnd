@@ -3,8 +3,12 @@ import '../assets/styles/LoginPage.less'
 // import LogoImg from '../assets/images/logo.png'
 // const LogoImg = require("../assets/images/logo.png");
 
-// 引入ImgPackage组件;
+
+// 组件引入
 import ImgPackage from '../components/ImgPackage'
+import FormInput from '../components/FormInput'
+
+
 
 export default class LoginPage extends Component {
     render() {
@@ -17,7 +21,13 @@ export default class LoginPage extends Component {
                 <ImgPackage src="logo.png" />
                 
                 {/* 第二部分: form */}
-                
+                <form className="login-form">
+                    {/* 用户名输入框 */}
+                    <FormInput />
+                    <FormInput />
+                    {/* 密码输入框 */}
+                    
+                </form>
             </div>
         )
     }

@@ -1,0 +1,23 @@
+.form-input {
+  height: 40px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  display: flex;
+}
+.form-input i {
+  font: bold 20px arial, sans-serif;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+}
+.form-input input {
+  border: 1px solid #fff;
+  height: 100%;
+  box-sizing: border-box;
+  flex: 1;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+}

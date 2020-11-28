@@ -6,4 +6,8 @@
 }
 .login-page .img-package {
   text-align: center;
+  padding-top: 100px;
+}
+.login-page .login-form {
+  margin: 30px 5%;
 }

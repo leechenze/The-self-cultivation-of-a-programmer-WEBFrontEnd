@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import "../assets/fonts/iconfont.css"
+
 import LoginPage from './LoginPage'
 
 
