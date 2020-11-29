@@ -20,7 +20,6 @@ export default class LoginPage extends Component {
                 {/* <img src={require("../assets/images/logo.png")} alt="" /> */}
                 {/* 封装组件 */}
                 <ImgPackage src="logo.png" />
-                
                 {/* 第二部分: form */}
                 <form className="login-form">
                     {/* 用户名输入框 */}

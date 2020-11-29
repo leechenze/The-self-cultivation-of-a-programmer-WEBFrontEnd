@@ -1533,4 +1533,26 @@
 
 
 ### FormInput输入框组件
+### 登陆页布局
+### Antd Mobile安装使用;
+    
+    安装AntdMobile
+    cnpm install antd-mobile -save
+    
+    在index.html 首页中配置HTML模版 (fastclick 是解决移动端默认点击按钮时延迟300ms的情况)
+    <script src="./fastclick.js"></script>
+    <script>
+        if ('addEventListener' in document) {
+            document.addEventListener('DOMContentLoaded', function () {
+                FastClick.attach(document.body);
+            }, false);
+        }
+        处理promise兼容问题;
+        if (!window.Promise) {
+            document.writeln('<script src="./es6-promise.min.js"' + '>' + '<' + '/' + 'script>');
+        }
+    </script>
 
+    index.js中全局引入antd-mobile.css
+
+    

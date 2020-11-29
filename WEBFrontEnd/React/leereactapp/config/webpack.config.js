@@ -112,10 +112,6 @@ module.exports = function (webpackEnv) {
                 options: cssOptions,
             },
             {
-                loader: require.resolve('less-loader'),
-                options: lessOptions,
-            },
-            {
                 // Options for PostCSS as we reference these options twice
                 // Adds vendor prefixing based on your specified browser support in
                 // package.json
@@ -139,6 +135,10 @@ module.exports = function (webpackEnv) {
                     ],
                     sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
                 },
+            },
+            {
+                loader: require.resolve('less-loader'),
+                options: lessOptions,
             },
         ].filter(Boolean);
         if (preProcessor) {
@@ -492,8 +492,8 @@ module.exports = function (webpackEnv) {
                                 },
                             }),
                         },
-                        
-                        
+
+
                         // add less-loader 加载器;
                         {
                             test: lessRegex,
@@ -519,8 +519,8 @@ module.exports = function (webpackEnv) {
                                 },
                             }),
                         },
-                        
-                        
+
+
                         // Opt-in support for SASS (using .scss or .sass extensions).
                         // By default we support SASS Modules with the
                         // extensions .module.scss or .module.sass

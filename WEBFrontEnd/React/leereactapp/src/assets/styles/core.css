@@ -5,6 +5,7 @@ body,
   height: 100%;
 }
 body {
+  touch-action: pan-y;
   background-color: skyblue;
 }
 input {
