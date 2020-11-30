@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { NavBar, Icon, SearchBar } from 'antd-mobile';
 import "../assets/styles/Header.less"
 
-import ImgPackage from "../components/ImgPackage"
+import ImgPackage from "./ImgPackage"
 export default class Header extends Component {
     render() {
         return (

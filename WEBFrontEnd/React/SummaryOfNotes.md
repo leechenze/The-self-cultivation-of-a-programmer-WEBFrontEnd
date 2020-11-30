@@ -1575,3 +1575,11 @@
     flex: 0 1 auto; 知识点 ==> 请您狠狠的点击这里:
     https://www.zhangxinxu.com/wordpress/2019/12/css-flex-deep/
 
+### Carousel部分制作;
+    AntMobile 中的 Carousel基本组件复制过来到Banner组件中;
+    仔细阅读源码, 细节太多, 不做详细解释;
+    
+    
+
+
+
