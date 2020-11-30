@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
-import { NavBar, Icon } from 'antd-mobile';
+import { NavBar, Icon, SearchBar } from 'antd-mobile';
+import "../assets/styles/Header.less"
 
+import ImgPackage from "../components/ImgPackage"
 export default class Header extends Component {
     render() {
         return (
             <div className="header">
                 <NavBar
-                    mode="light"
-                    icon={<Icon type="left" />}
-                    onLeftClick={() => console.log('onLeftClick')}
-                    rightContent={[
-                        <Icon key="0" type="search" style={{ marginRight: '16px' }} />,
-                        <Icon key="1" type="ellipsis" />,
-                    ]}
-                >NavBar</NavBar>
+                    leftContent={
+                        <ImgPackage key="0" src="logo.png" height={30} />
+                    }
+                >
+                    <SearchBar placeholder="Search" maxLength={8} />
+                </NavBar>
             </div>
         )
     }

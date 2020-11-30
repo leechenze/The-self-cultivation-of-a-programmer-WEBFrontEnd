@@ -1,0 +1,33 @@
+@charset "utf-8";
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  touch-action: pan-y;
+  background-color: #00439c;
+}
+input {
+  outline: none;
+}
+.am-navbar.am-navbar-dark {
+  background-color: #00439c;
+}
+.am-navbar.am-navbar-dark .am-navbar-left {
+  flex: initial;
+}
+.am-navbar.am-navbar-dark .am-navbar-title .am-search {
+  flex: 1;
+  background-color: #00439c;
+}
+.am-navbar.am-navbar-dark .am-navbar-title .am-search .am-search-input {
+  flex: initial;
+}
+.am-navbar.am-navbar-dark .am-navbar-title .am-search .am-search-cancel {
+  color: #fff;
+}
+.am-navbar.am-navbar-dark .am-navbar-right {
+  flex: initial;
+  margin: 0;
+}

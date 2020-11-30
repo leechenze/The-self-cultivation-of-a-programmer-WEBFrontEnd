@@ -6,7 +6,7 @@ body,
 }
 body {
   touch-action: pan-y;
-  background-color: skyblue;
+  background-color: #00439c;
 }
 input {
   outline: none;

@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+@import "./core.less";
+
+
+.am-navbar.am-navbar-dark {
+    background-color: @baseDarkBlueColor;
+    .am-navbar-left{
+        // flex: 0 1 auto;  // 默认值 和 initial 作用相同;
+        flex: initial;
+    }
+    .am-navbar-title{
+        .am-search{
+            flex: 1;
+            background-color: @baseDarkBlueColor;
+            .am-search-input{
+                flex: initial;
+            }
+            .am-search-cancel{
+                color: #fff;
+            }
+        }
+    }
+    .am-navbar-right{
+        flex: initial;
+        margin: 0;
+    }
+}

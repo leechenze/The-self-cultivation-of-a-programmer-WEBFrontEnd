@@ -1555,4 +1555,23 @@
 
     index.js中全局引入antd-mobile.css
 
+### 头部组件引入使用&logo&背景色定义
+
+    新建Header.js头部组件:
+        
+        头部组件引入使用结合源码参考官方文档API:
+        https://mobile.ant.design/components/nav-bar-cn/
+
+    core.less中定义项目中多处用到的深蓝色变量: @baseDarkBlueColor;
+    在用到这些变量的页面中的less样式表中 @import "core.less"使用此变量;
+
+### 头部搜索栏完成;
+
+    flex: 0 1 auto; 知识点 ==> 请您狠狠的点击这里:
+    https://www.zhangxinxu.com/wordpress/2019/12/css-flex-deep/
+
+    新建 Header.less 样式表来调整 引入的 Search和NavBar 的默认样式;
     
+    flex: 0 1 auto; 知识点 ==> 请您狠狠的点击这里:
+    https://www.zhangxinxu.com/wordpress/2019/12/css-flex-deep/
+

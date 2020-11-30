@@ -1,4 +1,16 @@
 @charset 'utf-8';
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  touch-action: pan-y;
+  background-color: #00439c;
+}
+input {
+  outline: none;
+}
 .login-page {
   height: 100%;
   background-color: #00439c;
