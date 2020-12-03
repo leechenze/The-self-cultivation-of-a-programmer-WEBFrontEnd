@@ -1,0 +1,30 @@
+@charset "utf-8";
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  touch-action: pan-y;
+  background-color: #00439c;
+}
+input {
+  outline: none;
+}
+.subject {
+  padding-top: 15px;
+}
+.subject .am-flexbox .am-flexbox-item a {
+  display: block;
+  color: #333;
+  text-align: center;
+}
+.subject .am-flexbox .am-flexbox-item a i {
+  display: block;
+  width: 50px;
+  height: 55px;
+  background-image: url(../images/subjectIcons.png);
+  background-size: 350px;
+  background-repeat: no-repeat;
+  margin: 0 auto;
+}
