@@ -3,9 +3,12 @@ import React, { Component } from 'react'
 import "../assets/styles/HomePage.less"
 
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import Banner from '../components/Banner'
 import Subject from '../components/Subject'
 import ImgPackage from '../components/ImgPackage'
+import SubListItem from '../components/SubListItem'
+
 
 import { Flex, Tabs, List } from 'antd-mobile'
 
@@ -70,15 +73,7 @@ export default class HomePage extends Component {
                             this.state.sub_list_data.map((val, ind) => {
                                 return (
                                     <div className="sub-list-main-item" key={ind}>
-                                        <Flex>
-                                            <Flex.Item>
-                                                <ImgPackage src={val.img} height={80} />
-                                            </Flex.Item>
-                                            <Flex.Item>
-                                                <h3>{val.title}</h3>
-                                                <p>{val.des}</p>
-                                            </Flex.Item>
-                                        </Flex>
+                                        <SubListItem ItemObj={val} />
                                     </div>
                                 )
                             })
@@ -181,6 +176,8 @@ export default class HomePage extends Component {
                         </div>
                     </Tabs>
                 </div>
+                {/* Footer */}
+                <Footer />
             </div>
         )
     }

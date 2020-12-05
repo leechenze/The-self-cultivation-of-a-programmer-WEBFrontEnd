@@ -4,13 +4,15 @@ import "../assets/fonts/iconfont.css"
 
 import LoginPage from './LoginPage'
 import HomePage from './HomePage'
+import ListPage from './ListPage'
 
 
 export default class App extends Component {
     render() {
         return (
             // <LoginPage />
-            <HomePage />
+            // <HomePage />
+            <ListPage />
         )
     }
 }

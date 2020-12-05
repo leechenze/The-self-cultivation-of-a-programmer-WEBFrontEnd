@@ -1,0 +1,26 @@
+@charset "utf-8";
+html,
+body,
+#root {
+  height: auto;
+}
+body {
+  touch-action: pan-y;
+  background-color: #00439c;
+}
+input {
+  outline: none;
+}
+.am-navbar .am-navbar-left {
+  padding: 0;
+}
+.footer {
+  background-color: #00439c;
+}
+.footer p {
+  margin: 0;
+  color: #fff;
+  padding: 10px 20px;
+  border-top: 1px solid #acacac;
+  text-align: center;
+}
