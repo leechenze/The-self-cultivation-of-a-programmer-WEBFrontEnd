@@ -2,7 +2,7 @@
 html,
 body,
 #root {
-  height: 100%;
+  height: auto;
 }
 body {
   touch-action: pan-y;
@@ -12,6 +12,71 @@ input {
   outline: none;
 }
 .home-page {
-  height: 100%;
   background-color: #fff;
+}
+.home-page .sub-list {
+  padding: 0 10px;
+}
+.home-page .sub-list .sub-list-header {
+  height: 30px;
+  line-height: 30px;
+  border-top: 1px solid #cfcfcf;
+}
+.home-page .sub-list .sub-list-main .sub-list-main-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid #cfcfcf;
+}
+.home-page .sub-list .sub-list-main .sub-list-main-item .am-flexbox {
+  align-items: stretch;
+}
+.home-page .sub-list .sub-list-main .sub-list-main-item .am-flexbox .am-flexbox-item:nth-of-type(1) {
+  flex: initial;
+}
+.home-page .sub-list .sub-list-main .sub-list-main-item .am-flexbox .am-flexbox-item:nth-of-type(2) {
+  flex: 1;
+}
+.home-page .sub-list .sub-list-main .sub-list-main-item .am-flexbox .am-flexbox-item:nth-of-type(2) h3 {
+  margin: 0;
+}
+.home-page .sub-list .sub-list-main .sub-list-main-item .am-flexbox .am-flexbox-item:nth-of-type(2) p {
+  padding-top: 8px;
+  margin: 0;
+}
+.home-page .sub-tab .am-tabs-default-bar-tab-active {
+  color: #00439c;
+}
+.home-page .sub-tab .am-tabs-default-bar-underline {
+  border-color: #00439c;
+}
+.home-page .sub-tab .am-tabs-content-wrap .sub-tab-flex {
+  padding: 10px;
+}
+.home-page .sub-tab .am-tabs-content-wrap .sub-tab-flex .am-flexbox-item:nth-of-type(1) {
+  flex: 0 1 auto;
+}
+.home-page .sub-tab .am-tabs-content-wrap .sub-tab-flex .am-flexbox-item:nth-of-type(2) {
+  flex: 1;
+}
+.home-page .sub-tab .am-tabs-content-wrap .sub-tab-flex .am-flexbox-item:nth-of-type(2) h3 {
+  margin: 0 0 20px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.home-page .sub-tab .am-tabs-content-wrap .sub-tab-flex .am-flexbox-item:nth-of-type(2) p {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  height: 30px;
+  line-height: 30px;
+}
+.home-page .sub-tab .am-tabs-content-wrap .sub-tab-flex .am-flexbox-item:nth-of-type(2) p span:nth-of-type(2) {
+  height: 30px;
+  line-height: 30px;
+}
+.home-page .sub-tab .am-tabs-content-wrap .sub-tab-flex .am-flexbox-item:nth-of-type(2) p span:nth-of-type(2) .iconfont {
+  font-size: 20px;
 }
