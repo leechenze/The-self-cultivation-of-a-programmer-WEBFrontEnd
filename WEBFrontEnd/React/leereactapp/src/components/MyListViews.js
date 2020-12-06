@@ -61,7 +61,6 @@ export default class MyListViews extends Component {
     }
 
 
-
     render() {
         return (
             <ListView
