@@ -11,3 +11,35 @@ body {
 input {
   outline: none;
 }
+.list-page {
+  background-color: #fff;
+}
+.list-page .sub-list {
+  padding: 0 10px;
+}
+.list-page .sub-list .sub-list-header {
+  height: 30px;
+  line-height: 30px;
+  border-top: 1px solid #cfcfcf;
+}
+.list-page .sub-list .sub-list-main .sub-list-main-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid #cfcfcf;
+}
+.list-page .sub-list .sub-list-main .sub-list-main-item .am-flexbox {
+  align-items: stretch;
+}
+.list-page .sub-list .sub-list-main .sub-list-main-item .am-flexbox .am-flexbox-item:nth-of-type(1) {
+  flex: initial;
+}
+.list-page .sub-list .sub-list-main .sub-list-main-item .am-flexbox .am-flexbox-item:nth-of-type(2) {
+  flex: 1;
+}
+.list-page .sub-list .sub-list-main .sub-list-main-item .am-flexbox .am-flexbox-item:nth-of-type(2) h3 {
+  margin: 0;
+}
+.list-page .sub-list .sub-list-main .sub-list-main-item .am-flexbox .am-flexbox-item:nth-of-type(2) p {
+  padding-top: 8px;
+  margin: 0;
+}

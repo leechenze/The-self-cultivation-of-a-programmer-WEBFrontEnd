@@ -7,7 +7,7 @@ import Footer from '../components/Footer'
 import Banner from '../components/Banner'
 import Subject from '../components/Subject'
 import ImgPackage from '../components/ImgPackage'
-import SubListItem from '../components/SubListItem'
+import SubListMainItem from '../components/SubListMainItem'
 
 
 import { Flex, Tabs, List } from 'antd-mobile'
@@ -72,9 +72,7 @@ export default class HomePage extends Component {
                         {
                             this.state.sub_list_data.map((val, ind) => {
                                 return (
-                                    <div className="sub-list-main-item" key={ind}>
-                                        <SubListItem ItemObj={val} />
-                                    </div>
+                                    <SubListMainItem key={ind} ItemObj={val} />
                                 )
                             })
                         }

@@ -1,47 +1,13 @@
 @charset "utf-8";
 
 @import "./core.less";
+@import "./Global.less";
 
 .home-page{
     background-color: #fff;
 
     // SubList
-    .sub-list{
-        padding: 0 10px;
-        .sub-list-header{
-            height: 30px;
-            line-height: 30px;
-            border-top: 1px solid #cfcfcf;
-        }
-        .sub-list-main{
-            .sub-list-main-item{
-                padding-top: 10px;
-                padding-bottom: 10px;
-                border-top: 1px solid #cfcfcf;
-                .am-flexbox{
-                    align-items: stretch;
-                    .am-flexbox-item:nth-of-type(1){
-                        flex: initial;
-                        .img-package{
-                            img{
-                                
-                            }
-                        }
-                    }
-                    .am-flexbox-item:nth-of-type(2){
-                        flex: 1;
-                        h3{
-                            margin: 0;
-                        }
-                        p{
-                            padding-top: 8px;
-                            margin: 0;
-                        }
-                    }
-                }
-            }
-        }
-    }
+    .sub-list();
 
     // SubTab
     .sub-tab{

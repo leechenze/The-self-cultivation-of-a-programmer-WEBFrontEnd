@@ -1592,7 +1592,8 @@
 
 ### 抽取 列表项(Flex) 为 公共组件 SubListItem;
 
-### SubListItem调整;
+### SubListMainItem样式调整;
+    将 SubListMainItem 组件公用样式抽离出到Global.less中, 有需要用到列表页面的直接调用;
 
 ### ListView 滑动加载更多;
 

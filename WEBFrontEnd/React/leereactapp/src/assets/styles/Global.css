@@ -1,0 +1,13 @@
+@charset 'utf-8';
+html,
+body,
+#root {
+  height: auto;
+}
+body {
+  touch-action: pan-y;
+  background-color: #00439c;
+}
+input {
+  outline: none;
+}

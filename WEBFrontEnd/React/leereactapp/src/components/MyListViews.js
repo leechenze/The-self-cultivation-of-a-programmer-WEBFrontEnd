@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ListView } from 'antd-mobile';
-import SubItemList from './SubListItem'
+import SubListMainItem from './SubListMainItem'
 
 
 
@@ -56,7 +56,7 @@ export default class MyListViews extends Component {
     renderRow(obj) {
         // 这个obj 即是 this.state.dataSource, Antd库默认封装的;
         return (
-            <SubItemList ItemObj={obj} />
+            <SubListMainItem ItemObj={obj} />
         )
     }
 
