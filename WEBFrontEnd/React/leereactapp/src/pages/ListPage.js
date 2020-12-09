@@ -17,7 +17,6 @@ export default class ListPage extends Component {
                         <MyListViews />
                     </div>
                 </div>
-                
             </div>
         )
     }
