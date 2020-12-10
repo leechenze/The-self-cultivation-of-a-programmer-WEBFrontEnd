@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Header from '../components/Header'
 import ImgPackage from '../components/ImgPackage'
+import SubList from '../components/SubList'
 import '../assets/styles/DetailPage.less'
 
 export default class DetailPage extends Component {
@@ -39,6 +40,8 @@ export default class DetailPage extends Component {
                         </span>
                     </p>
                 </article>
+                {/* SubList */}
+                <SubList />
             </div>
         )
     }

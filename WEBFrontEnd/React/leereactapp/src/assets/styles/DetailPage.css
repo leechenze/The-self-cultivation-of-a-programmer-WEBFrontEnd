@@ -1,4 +1,115 @@
 @charset "uft-8";
+html,
+body,
+#root {
+  height: auto;
+}
+body {
+  touch-action: pan-y;
+  background-color: #00439c;
+}
+/* baseCss */
+* {
+  box-sizing: border-box;
+}
+/* CSS Document */
+body,
+ul,
+ol,
+dl,
+li,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+input {
+  margin: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  /*font-size: 100%;*/
+  font-weight: normal;
+  font-family: "Microsoft YaHei";
+}
+img {
+  border: none;
+}
+input,
+button,
+textarea,
+select {
+  *font-size: 100%;
+  border: none;
+  outline: none;
+}
+body {
+  /*background: #fff;*/
+  color: #5e5e5e;
+  font: 14px/24px Microsoft YaHei, SimSun, Arial;
+}
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/*默认a标签样式*/
+a:link,
+a:visited {
+  color: #5e5e5e;
+  text-decoration: none;
+}
+a:hover {
+  /*color:#999;*/
+}
+a:hover {
+  color: #4073ee;
+  text-decoration: underline;
+}
+a:active {
+  color: #666;
+}
+/*浮动和清除浮动*/
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.clear {
+  zoom: 1;
+  white-space: nowrap;
+  width: auto;
+}
+.clear:after {
+  content: "";
+  display: block;
+  height: 0;
+  visibility: visible;
+  clear: both;
+}
+/*显示隐藏*/
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}
+/* 删除滚动条 */
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
 .detail-page article {
   padding: 10px;
   text-align: center;
@@ -8,4 +119,33 @@
 }
 .detail-page article .image-box .img-package img {
   width: 100%;
+}
+.detail-page .sub-list {
+  padding: 0 10px;
+}
+.detail-page .sub-list .sub-list-header {
+  height: 30px;
+  line-height: 30px;
+  border-top: 1px solid #cfcfcf;
+}
+.detail-page .sub-list .sub-list-main .sub-list-main-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid #cfcfcf;
+}
+.detail-page .sub-list .sub-list-main .sub-list-main-item .am-flexbox {
+  align-items: stretch;
+}
+.detail-page .sub-list .sub-list-main .sub-list-main-item .am-flexbox .am-flexbox-item:nth-of-type(1) {
+  flex: initial;
+}
+.detail-page .sub-list .sub-list-main .sub-list-main-item .am-flexbox .am-flexbox-item:nth-of-type(2) {
+  flex: 1;
+}
+.detail-page .sub-list .sub-list-main .sub-list-main-item .am-flexbox .am-flexbox-item:nth-of-type(2) h3 {
+  margin: 0;
+}
+.detail-page .sub-list .sub-list-main .sub-list-main-item .am-flexbox .am-flexbox-item:nth-of-type(2) p {
+  padding-top: 8px;
+  margin: 0;
 }
