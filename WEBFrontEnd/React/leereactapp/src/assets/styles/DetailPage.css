@@ -1,0 +1,11 @@
+@charset "uft-8";
+.detail-page article {
+  padding: 10px;
+  text-align: center;
+}
+.detail-page article p {
+  margin-bottom: 10px;
+}
+.detail-page article .image-box .img-package img {
+  width: 100%;
+}

@@ -1,10 +1,10 @@
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1607156017568'); /* IE9 */
-  src: url('iconfont.eot?t=1607156017568#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAQoAAsAAAAACJwAAAPZAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDMgqELIN2ATYCJAMUCwwABCAFhG0HVhuQBxFVnDHIfgy4G+hk5iYmT68Tc1HlAoNkZpkvn//3yvuQ5AVLZSss9FWamZKDEpmp4JlC/OxJAwQQ5N1aLkpXCBlhoCvGc57mr2RLn2yOMh6nUQoheeH+j/1mRbzRfsTeHZ1eVLRC4giRpCFBIrpMJbUtlJXaN4xdXMbNQABoMJEBUqNWgxYQ4NAWEQBkQN/eXSFiBvASKoFQyzk7OcgiSBB0Nr0OYKH7++QL8ogAKCQGbWWTXjV7oMr73Pc2sxxLBxsFYX82AMw+gAHIAMABMizXMQDMT2SAQZPGc1QBoEGAgvY1qvz7xu9txyGUrEil6f/wAA4KAgYQGVqpAQCogpIceJ9rCkJleagDhcrGUAcClTZU4nyxkkrrKeUH8IPVFOvzQxkoWHpYGEkyosLDI7na2/LEefyb9blbE3zbVhKXN94b2KLN2RTrto0PcKP1/fuxngctQ6EEb7BV24vBIhtDtS88KLzufg3SdU6rYBAgrtahEDK35YMHiNXi/n1ZJ0v+oP4jWweDbY05AcJc2+b6Ad3jt+zeV+bW16lla+E5Oj2/Aq+aTOuE1+Cy8YbbHSt7PHFhPl+C4vVmcEMa2+4Uy54TOGGLyiU6jX4SIWizd6NPOvLsGCVSWdmpRGXR8PJSw7fTyNixe6qhZwV2Z6Ru3JnKltq/bNrMNE3by5fN3FOaN7sNOGaLhoXqmsOGmXULNbQNrjP8sGF1zYaF7Jyq5v/d7MIF5ta5Ns+ShDn1ViA8KtyUpuI1L1+eLpwShan7J8yacKhLlryWxZZNByxcOEBKEReydSHV27atLiWQC+ciO7/K+yHLlXbK8iHulE13Tt/R98kR+abuxBhor2K16DDAecnWsUIAwPLpP5zTTGZV/oS/gfWr0uHOERX+CZ0DAJ78qjbY55w2Tz1F53UqUVv43oU1G7gs1ozSxFpTIDol5SIGUKlNA7xtT7S/flRxtUsBQogLgVKkASMUQ3N8Bkh0BSATKoOmrGK/LgbpI1MBlPEGQET6ABXuFDCRvmiO/4Ek3j/IIuuDplUxJ+pKpGfVCUvGBqoX6DoGYZh55pWfULaupKjYpd2Qsg7DJisnmS4wIPWxJt/lllmAoOjhCG6HzkVIFA3WvFTM6bDK7pX3Tcs6+s5MdQSVGGqAygvQalEg7NZslvr5EyS1nBKV1JU4bxDJ9OBgY2ldA10oQq26c3lNdidtMSYAgUQeOAIbcnoiAil/moFqbEm1iCUHK9RM1FUsx1f5a9wHoNFOlqKEEU4kIkN5GYwOcp6Vdn1lWDwt2TORPRyofbkfZ+XH1uhtpwMAAAA=') format('woff2'),
-  url('iconfont.woff?t=1607156017568') format('woff'),
-  url('iconfont.ttf?t=1607156017568') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
-  url('iconfont.svg?t=1607156017568#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1607603927866'); /* IE9 */
+  src: url('iconfont.eot?t=1607603927866#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAASQAAsAAAAACRAAAAREAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDSAqEfIQ0ATYCJAMYCw4ABCAFhG0HXxvxB8iuMSYy1L0IpYpoit0NuLyofbVEus748XjB89/++N9n5tx5EhPo1Z3I7/QdutvPUElkU77/p1O/LQNQkktpCtBEAIp9UmR+5ysiTwS8dezYhmJ496iFHiANeFl7/Z9U4f5PDlkSzrQEEnhby+AZ5gGXrYQJOTLM2ZXAHuD/c+9em9Metu45eS5zTXrUieLSgAL6ayzhPsgH8m8Ru262ejCBF0OAYNIlEXWU17aCAkXcSgBZFXgWFB4HmsAVAs0u4kBFroGUQHNF/BBcNX5ffjMpwOBZxB1HrswHhT/99xM7a4T1ahhQVucDboeBBUoBCnIQGdjCWIVSDMGf1SX0AUIJxKBVLaP+9/DvQ9+e+I9HI0aEUCkPHrbQfx4C4iBDKIgDRQ++QVE4RsGGhdGwYWAsbCiMg2qxLK7CDSKAx4CEIDJKBSw6/T9uA4M0I0wrSaHGcF2kKrc1reI2bQfjO3Bk9tGlh2cd6lAxIQuz1lvX23710oP2jbFVNHuDbYMfUC3ZZ1mn8gsIdLyXlvUz+eaNfcNOdd1+PWrvdd96lbirO0TskvbXrxkye/rNG2Tp5KtXyKyJly91/ar+Vfb+jtevuzRLjoiYumIAIbebW4W/t7RfLT45pNJF2NSZKWTpdKpSZDkuNlWzbp1Ftn69Vbtxo12+YUOSROPttnOlJUe2j0AfC799KtRqc+fS4P+UJd4xEHa6dEdRkN8/8YNeYcZ+Tbys6ys8NIN8x/5xBYq6u2tDN57QJD2suRra6cipJM/eXKuRzn9tao6PV3xfvzYbJ2lpfgr81KGqeELiq1DdIVmqWwlxz65DhyK6Wv6ts7deMeskqSZTNU5N9RbQRYUr2lRul68fria6jTD30bRF0y4OhunLVbFUE1y5MqgVkxRig6KSrq4SrQhSbAqpW/g7ulneLd8cNdbZ9+zpM/VZmb4mXQrCNGLQXmDoMV1iAuBvdzEIAFtj/uKzMttyzfwNf6IrG9Dn/g8MUQBenyHmU8hmgANvJLPyClFmHNGvWnQ6faMrQwjgqHPVYIBgaQKui0i0z1WF4oDjEwLvSoAhgDSwBJKLVWIpeIRQC45AmiGYEhWHhxCDYBANAorNZyBEOgmGcJ6AJdIjrBI/gUe8P+CIjIFgpjKfMIT8BFUJwSzFPjQ0GQneSJiT3VRltjdjfnyQJW61wWvHJCakUXpKmr9cgcOYVLFLbAKfQSmHOBIJoXJ2ORwMRlCURPzYS1OGKY1mp6ZyUe+U4o2EQEU7AmNRmA8yZDJE4BURxmnTKVVg+c0w3nhBLJKA+pFshxExwuJIuhRpGbAVhnAm1K48JmYCXgaK4iAcIiIEKWc+LCgVIpBo9Hp+mBeVYrhALipbKo3jshpSmjeF1vIcEIx4cydGrKh44iQAt4ajEULlk9mwXwjzhtiwYMTYcPIkVTfJVy0NCSE2Sx5WHxnvFzIAAA==') format('woff2'),
+  url('iconfont.woff?t=1607603927866') format('woff'),
+  url('iconfont.ttf?t=1607603927866') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1607603927866#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -13,6 +13,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-report:before {
+  content: "\e6bf";
 }
 
 .icon-yanjing:before {

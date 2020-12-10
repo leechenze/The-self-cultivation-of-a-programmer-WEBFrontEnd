@@ -1,0 +1,44 @@
+{
+  "id": "2235516",
+  "name": "leereactapp",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1410497",
+      "name": "report",
+      "font_class": "report",
+      "unicode": "e6bf",
+      "unicode_decimal": 59071
+    },
+    {
+      "icon_id": "995255",
+      "name": "eye",
+      "font_class": "yanjing",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "8835963",
+      "name": "时间",
+      "font_class": "shijian-xianxing",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "9712613",
+      "name": "密码",
+      "font_class": "mima4",
+      "unicode": "e6a8",
+      "unicode_decimal": 59048
+    },
+    {
+      "icon_id": "1667289",
+      "name": "手机",
+      "font_class": "shouji2",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    }
+  ]
+}

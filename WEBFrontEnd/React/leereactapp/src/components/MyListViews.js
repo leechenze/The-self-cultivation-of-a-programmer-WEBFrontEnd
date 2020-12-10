@@ -74,9 +74,8 @@ export default class MyListViews extends Component {
         // console.log('reach end', event);
         this.setState({ isLoading: true });
         setTimeout(() => {
-            console.log(this.rData);
             this.rData = { ...this.rData, ...genData(++pageIndex) };
-            console.log(this.rData);
+            // console.log(this.rData);
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(this.rData),
                 isLoading: false,

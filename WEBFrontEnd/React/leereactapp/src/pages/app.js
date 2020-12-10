@@ -5,6 +5,7 @@ import "../assets/fonts/iconfont.css"
 import LoginPage from './LoginPage'
 import HomePage from './HomePage'
 import ListPage from './ListPage'
+import DetailPage from './DetailPage'
 
 
 export default class App extends Component {
@@ -12,7 +13,8 @@ export default class App extends Component {
         return (
             // <LoginPage />
             // <HomePage />
-            <ListPage />
+            // <ListPage />
+            <DetailPage />
         )
     }
 }
