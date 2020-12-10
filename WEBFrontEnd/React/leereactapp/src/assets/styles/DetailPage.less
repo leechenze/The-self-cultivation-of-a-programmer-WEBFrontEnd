@@ -1,32 +1,76 @@
 @charset "uft-8";
 @import "./Global.less";
 
-.detail-page{
+.detail-page {
+
     // 详情页头部
-    .detail-header{
-        
-    }
+    .detail-header {}
+
     // 详情文章
-    article{
+    article {
         padding: 10px;
         text-align: center;
-        h1{
-            
-        }
-        p{
+
+        h1 {}
+
+        p {
             margin-bottom: 10px;
         }
-        .image-box{
-            .img-package{
-                img{
+
+        .image-box {
+            .img-package {
+                img {
                     width: 100%;
                 }
             }
         }
-        .article-box{
-            
-        }
+
+        .article-box {}
     }
+
     // SubList
     .sub-list();
+
+    .comments {
+        padding: 0 10px;
+
+        .comments-header {
+            height: 30px;
+            line-height: 30px;
+            border-top: 1px solid #cfcfcf;
+        }
+
+        .comments-main {
+            .am-flexbox {
+                align-items: stretch;
+
+                .am-flexbox-item:nth-of-type(1) {
+                    flex: initial;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    .img-package {
+                        padding-top: 5px;
+                        img {}
+                    }
+                }
+
+                .am-flexbox-item:nth-of-type(2) {
+                    flex: 1;
+                    p {
+                        padding-top: 5px;
+                        margin: 0;
+                        &:nth-of-type(1){
+                            
+                        }
+                        &:nth-of-type(2){
+                            line-height: 16px;
+                            text-indent: 2em;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }

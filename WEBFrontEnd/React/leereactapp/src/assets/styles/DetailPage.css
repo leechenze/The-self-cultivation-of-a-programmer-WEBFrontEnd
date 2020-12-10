@@ -149,3 +149,34 @@ a:active {
   padding-top: 8px;
   margin: 0;
 }
+.detail-page .comments {
+  padding: 0 10px;
+}
+.detail-page .comments .comments-header {
+  height: 30px;
+  line-height: 30px;
+  border-top: 1px solid #cfcfcf;
+}
+.detail-page .comments .comments-main .am-flexbox {
+  align-items: stretch;
+}
+.detail-page .comments .comments-main .am-flexbox .am-flexbox-item:nth-of-type(1) {
+  flex: initial;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.detail-page .comments .comments-main .am-flexbox .am-flexbox-item:nth-of-type(1) .img-package {
+  padding-top: 5px;
+}
+.detail-page .comments .comments-main .am-flexbox .am-flexbox-item:nth-of-type(2) {
+  flex: 1;
+}
+.detail-page .comments .comments-main .am-flexbox .am-flexbox-item:nth-of-type(2) p {
+  padding-top: 5px;
+  margin: 0;
+}
+.detail-page .comments .comments-main .am-flexbox .am-flexbox-item:nth-of-type(2) p:nth-of-type(2) {
+  line-height: 16px;
+  text-indent: 2em;
+}

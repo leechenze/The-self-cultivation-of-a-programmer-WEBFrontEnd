@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Header from '../components/Header'
 import ImgPackage from '../components/ImgPackage'
 import SubList from '../components/SubList'
+import { Icon, Flex } from 'antd-mobile';
 import '../assets/styles/DetailPage.less'
 
 export default class DetailPage extends Component {
@@ -42,6 +43,29 @@ export default class DetailPage extends Component {
                 </article>
                 {/* SubList */}
                 <SubList />
+                {/* 热门评论 */}
+                <div className="comments">
+                    <div className="comments-header">热门评论</div>
+                    <div className="comments-main">
+                        <Flex>
+                            <Flex.Item>
+                                <ImgPackage src="prettygirl.jpeg" height={50} />
+                            </Flex.Item>
+                            <Flex.Item>
+                                <p className="clear">
+                                    <strong className="fl">Lincoln</strong>
+                                    <span className="fr">
+                                        <span>3</span>
+                                        <i className="iconfont icon-color_fabulous"></i>
+                                    </span>
+                                </p>
+                                <p>
+                                    我会回来。但是你必须耐心等候，等到日头西落，等到天下黄雨，等到音讯断绝，等到记忆空白，等到所有的等待都没有的等待
+                                </p>
+                            </Flex.Item>
+                        </Flex>
+                    </div>
+                </div>
             </div>
         )
     }
