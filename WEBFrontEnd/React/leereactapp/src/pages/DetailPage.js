@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Header from '../components/Header'
 import ImgPackage from '../components/ImgPackage'
 import SubList from '../components/SubList'
-import { Icon, Flex } from 'antd-mobile';
+import { Icon, Flex } from 'antd-mobile'
 import '../assets/styles/DetailPage.less'
 
 export default class DetailPage extends Component {
