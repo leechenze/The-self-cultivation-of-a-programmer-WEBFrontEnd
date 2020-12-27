@@ -9,25 +9,25 @@ export default class Subject extends Component {
                     {/* 第一行 */}
                     <Flex justify="center">
                         <Flex.Item>
-                            <a href="#">
+                            <a href="#/list">
                                 <i style={{backgroundPositionX: '0px'}}></i>
                                 <p>JavaScript</p>
                             </a>
                         </Flex.Item>
                         <Flex.Item>
-                            <a href="#">
+                            <a href="#/list">
                                 <i style={{backgroundPositionX: '-50px'}}></i>
                                 <p>JavaScript</p>
                             </a>
                         </Flex.Item>
                         <Flex.Item>
-                            <a href="#">
+                            <a href="#/list">
                                 <i style={{backgroundPositionX: -100}}></i>
                                 <p>JavaScript</p>
                             </a>
                         </Flex.Item>
                         <Flex.Item>
-                            <a href="#">
+                            <a href="#/list">
                                 <i style={{backgroundPositionX: -150}}></i>
                                 <p>JavaScript</p>
                             </a>
@@ -36,25 +36,25 @@ export default class Subject extends Component {
                     {/* 第二行 */}
                     <Flex justify="center">
                         <Flex.Item>
-                            <a href="#">
+                            <a href="#/list">
                                 <i style={{backgroundPositionX: -200}}></i>
                                 <p>JavaScript</p>
                             </a>
                         </Flex.Item>
                         <Flex.Item>
-                            <a href="#">
+                            <a href="#/list">
                                 <i style={{backgroundPositionX: -250}}></i>
                                 <p>JavaScript</p>
                             </a>
                         </Flex.Item>
                         <Flex.Item>
-                            <a href="#">
+                            <a href="#/list">
                                 <i style={{backgroundPositionX: -300}}></i>
                                 <p>JavaScript</p>
                             </a>
                         </Flex.Item>
                         <Flex.Item>
-                            <a href="#">
+                            <a href="#/list">
                                 
                             </a>
                         </Flex.Item>

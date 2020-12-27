@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 import '../assets/styles/LoginPage.less'
 // import LogoImg from '../assets/images/logo.png'
 // const LogoImg = require("../assets/images/logo.png");
@@ -33,8 +34,7 @@ export default class LoginPage extends Component {
                     {/* 免费注册 和 游客登陆 */}
                     <FormButton>免费注册</FormButton>
                     &emsp;
-                    <FormButton>游客登陆</FormButton>
-                    
+                    <Link to="/home"><FormButton>游客登陆</FormButton></Link>
                 </form>
             </div>
         )
