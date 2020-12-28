@@ -5,6 +5,11 @@ import MyListViews from '../components/MyListViews'
 import "../assets/styles/ListPage.less"
 
 export default class ListPage extends Component {
+
+    componentDidMount() {
+        console.log(this.props.routeParams.subjectId);
+    }
+    
     render() {
         return (
             <div className="list-page">

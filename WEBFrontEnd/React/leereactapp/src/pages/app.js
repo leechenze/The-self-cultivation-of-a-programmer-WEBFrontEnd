@@ -25,7 +25,7 @@ const baseRouter = <Router history={hashHistory}>
     <Route path="/" component={LoginPage}></Route>
     <Route path="/login" component={LoginPage}></Route>
     <Route path="/home" component={HomePage}></Route>
-    <Route path="/list" component={ListPage}></Route>
+    <Route path="/list/:subjectId" component={ListPage}></Route>
     <Route path="/detail" component={DetailPage}></Route>
 </Router>
 

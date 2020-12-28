@@ -1607,3 +1607,25 @@
 ### 路由配置
     yarn add react-router@3.2.0
     
+
+### 页面数据渲染
+    本地数据:
+    public/server/*.json
+    axios请求时路径 /server/*.json;
+
+
+
+### 列表页路由传参
+    Subject.js下 :
+    `#/list/${v.id}`, 传入参数 ==> 每个模块的ID;
+
+    app.js下 :
+    ListPage组件路由的配置后面接收参数 "/list/:subjectId"
+
+    ListPage.js下 :
+    声明周期挂载完成后: 获取参数 this.props.routeParams.subjectId
+    
+
+
+
+### Redux

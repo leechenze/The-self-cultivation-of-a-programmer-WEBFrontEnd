@@ -12,7 +12,7 @@ export default class Subject extends Component {
     }
 
     componentDidMount() {
-        axios.get('/server/subject.json').then((res) => {
+        axios.get('./server/subject.json').then((res) => {
             if (res.status == 200) {
                 this.setState({
                     sub_ject_data: res.data
@@ -31,7 +31,7 @@ export default class Subject extends Component {
                             if (k < 4) {
                                 return (
                                     <Flex.Item key={v.id}>
-                                        <a href="#/list">
+                                        <a href={`#/list/${v.id}`}>
                                             <i style={{ backgroundPositionX: `${k * -50}px` }}></i>
                                             <p>{v.subjectName}</p>
                                         </a>
@@ -74,7 +74,7 @@ export default class Subject extends Component {
                             if (k >= 4) {
                                 return (
                                     <Flex.Item key={v.id}>
-                                        <a href="#/list">
+                                    <a href={`#/list/${v.id}`}>
                                             <i style={{ backgroundPositionX: `${k * -50}px` }}></i>
                                             <p>{v.subjectName}</p>
                                         </a>

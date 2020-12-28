@@ -44,7 +44,7 @@ export default class LoginPage extends Component {
             username: this.state.username,
             password: this.state.password,
         }
-        axios.get('/server/data.json', params).then((res) => {
+        axios.get('./server/data.json', params).then((res) => {
             if(res.data.success) {
                 // login success Tips
                 Toast.success('登陆成功', 1.5, () => { /** 关闭回调 */});
