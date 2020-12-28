@@ -50,6 +50,8 @@ export default class LoginPage extends Component {
                 Toast.success('登陆成功', 1.5, () => { /** 关闭回调 */});
                 // 页面跳转;
                 this.props.router.push('/home');
+            }else{
+                Toast.fail('登陆失败', 1.5);
             }
         })
     }
