@@ -15,10 +15,11 @@ export default class Header extends Component {
                         "":
                         <ImgPackage key="0" src="logo.png" height={30} />
                     }
+                    onLeftClick={() => window.history.go(-1)}
                     icon={this.props.isDetail ? <Icon type="left" /> : "" }
                 >
                     {this.props.isDetail ? 
-                    <ImgPackage key="0" src="logo.png" height={30} /> : 
+                    <a href="#/home"><ImgPackage key="0" src="logo.png" height={30} /></a> : 
                     <SearchBar placeholder="Search" maxLength={8} />}
                 </NavBar>
             </div>

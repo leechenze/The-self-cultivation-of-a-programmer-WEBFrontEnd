@@ -83,12 +83,12 @@ export default class MyListViews extends Component {
         }, 1000);
     }
 
-    renderRow(obj) {
-        // 这个obj 即是 this.state.dataSource, Antd库默认封装的;
-        return (
-            <SubListMainItem ItemObj={obj} />
-        )
-    }
+    // renderRow(obj) {
+    //     // 这个obj 即是 this.state.dataSource, Antd库默认封装的;
+    //     return (
+    //         <SubListMainItem ItemObj={obj} />
+    //     )
+    // }
 
     render() {
 
