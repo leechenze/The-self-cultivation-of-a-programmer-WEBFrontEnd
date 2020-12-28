@@ -13,6 +13,32 @@ import FormButton from '../components/FormButton'
 
 
 export default class LoginPage extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            password: ''
+        }
+
+        this.handleChangeUsername = this.handleChangeUsername.bind(this);
+        this.handleChangePassword = this.handleChangePassword.bind(this);
+    }
+
+    handleChangeUsername(ev) {
+        console.log(ev.target.value);
+        this.setState({
+            username: ev.target.value,
+        })
+    }
+    handleChangePassword(ev) {
+        console.log(ev.target.value);
+        this.setState({
+            password: ev.target.value,
+        })
+    }
+    
+    
     render() {
         return (
             <div className="login-page">
@@ -24,9 +50,9 @@ export default class LoginPage extends Component {
                 {/* 第二部分: form */}
                 <form className="login-form">
                     {/* 用户名输入框 */}
-                    <FormInput type="text" iconClass="shouji2" placeholder="用户名" />
+                    <FormInput type="text" iconclass="shouji2" placeholder="用户名" value={this.state.username} onChange={this.handleChangeUsername}/>
                     {/* 密码输入框 */}
-                    <FormInput type="password" iconClass="mima4" placeholder="密码" />
+                    <FormInput type="password" iconclass="mima4" placeholder="密码" value={this.state.password} onChange={this.handleChangePassword}/>
                     {/* 登陆按钮 */}
                     <FormButton isFull={true}>登录</FormButton>
                     {/* 忘记密码 */}

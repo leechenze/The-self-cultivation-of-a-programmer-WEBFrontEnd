@@ -5,7 +5,7 @@ import { Flex } from 'antd-mobile'
 export default class SubListMainItem extends Component {
     render() {
         return (
-            <div className="sub-list-main-item" key={this.props.key}>
+            <div className="sub-list-main-item">
                 <a href="#/detail">
                     <Flex>
                         <Flex.Item>

@@ -455,7 +455,8 @@
     在子组件中 this.props 既是 调用这个组件时身上的所有属性 (例如: this.props.title);
     在子组件中 this.props.children 既是 父组件下的子元素 (双标签父组件中的内容: <Header>parent assembly content</Header>);
     在子组件中static defaultProps 既是 声明的默认属性, 如果父组件身上未传入值时, 使用props的默认值;
-    
+    属性ref和key, 并不会传给子组件的this.props;
+    子组件中接收 this.props 时, 除了事件方法(onClick,onChange等...)可以使用小驼峰命名外, 其他标签属性(iconClass等...)不可使用驼峰命名法;
 
     
     import React, { Component } from 'react'
