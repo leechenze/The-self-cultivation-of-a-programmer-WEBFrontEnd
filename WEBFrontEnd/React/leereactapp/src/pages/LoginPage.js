@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
 import '../assets/styles/LoginPage.less'
+import axios from 'axios'
+import { Toast } from 'antd-mobile';
+
 // import LogoImg from '../assets/images/logo.png'
 // const LogoImg = require("../assets/images/logo.png");
 
@@ -23,21 +25,34 @@ export default class LoginPage extends Component {
 
         this.handleChangeUsername = this.handleChangeUsername.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     handleChangeUsername(ev) {
-        console.log(ev.target.value);
         this.setState({
             username: ev.target.value,
         })
     }
     handleChangePassword(ev) {
-        console.log(ev.target.value);
         this.setState({
             password: ev.target.value,
         })
     }
-    
+    handleClick(ev) {
+        ev.preventDefault();
+        let params = {
+            username: this.state.username,
+            password: this.state.password,
+        }
+        axios.get('/server/data.json', params).then((res) => {
+            if(res.data.success) {
+                // login success Tips
+                Toast.success('登陆成功', 1.5, () => { /** 关闭回调 */});
+                // 页面跳转;
+                this.props.router.push('/home');
+            }
+        })
+    }
     
     render() {
         return (
@@ -54,13 +69,13 @@ export default class LoginPage extends Component {
                     {/* 密码输入框 */}
                     <FormInput type="password" iconclass="mima4" placeholder="密码" value={this.state.password} onChange={this.handleChangePassword}/>
                     {/* 登陆按钮 */}
-                    <FormButton isFull={true}>登录</FormButton>
+                    <FormButton isFull={true} onClick={this.handleClick} >登录</FormButton>
                     {/* 忘记密码 */}
                     <FormButton type="ordinary">忘记密码</FormButton>
                     {/* 免费注册 和 游客登陆 */}
                     <FormButton>免费注册</FormButton>
                     &emsp;
-                    <Link to="/home"><FormButton>游客登陆</FormButton></Link>
+                    <FormButton>游客登陆</FormButton>
                 </form>
             </div>
         )
