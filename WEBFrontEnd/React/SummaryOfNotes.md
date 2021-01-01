@@ -1629,3 +1629,56 @@
 
 
 ### Redux
+
+    1.安装 Redux
+    yarn add redux
+
+        Redux 是 JavaScript 状态容器，提供项目中的状态管理。 
+
+        redux的三个重要概念：
+
+        **store: 数据仓库**
+
+        **action: 组件的动作名和动作的定义**  (决定了如何修改仓库数据)
+
+        **dispatch: 执行相应的动作action**  （决定了何时修改仓库数据）
+
+        Redux中提供createStore方法用于生成一个store对象，这个函数接受一个初始值state值和一个reducer函数。当用户发出相应的action时，利用传入的reducer函数计算出一个新的state值，并返回。
+
+        使用Redux，我们只获取一次数据并将其存储在一个中心位置，称为 store。然后，任何组件都可以随时使用这些数据。这就像附近有一家超市，我们的厨师可以在那里买到所有的食材。这家超市派卡车从农场大批运回蔬菜和肉类。这比让个别厨师亲自去农场效率高得多。
+
+        store 还是唯一的数据源。组件通常从 store 中获取数据，而不是其他地方。这使得 UI 保持高度统一。
+
+        注意：
+
+        Redux 不只是为 React 而生。一个常见的误解是 Redux 仅用于 React。 听起来Redux在没有React的情况下无法做任何事情。 事实上，正如我们之前所讨论的，Redux在几个重要方面补充了React。 React 是最最常见的 Redux 用例。
+        然而，事实上，Redux可以使用任何前端框架，如Angular、Ember.js 甚至jQuery 或者 普通的JavaScript。
+
+
+    2.安装 React-Redux
+    yarn add react-redux
+
+        为了方便使用，Redux 的作者封装了一个 React 专用的库 React-Redux。这个库是可以选用的。实际项目中，你应该权衡一下，是直接使用 Redux，还是使用 React-Redux。后者虽然提供了便利，但是需要掌握额外的 API，并且要遵守它的组件拆分规范。
+
+        React-Redux 将所有组件分成两大类：UI 组件（presentational component）和容器组件（container component）。
+
+        UI 组件特征：
+
+        - 只负责 UI 的呈现，不带有任何业务逻辑
+        - 没有状态（即不使用`this.state`这个变量）
+        - 所有数据都由参数（`this.props`）提供
+        - 不使用任何 Redux 的 API
+
+        容器组件特征：
+
+        - 负责管理数据和业务逻辑，不负责 UI 的呈现
+        - 带有内部状态
+        - 使用 Redux 的 API
+
+
+        React-Redux 提供`connect`方法，用于从 UI 组件生成容器组件。`connect`的意思，就是将这两种组件连起来。
+
+
+        React-Redux 提供`Provider`组件，可以让容器组件拿到`state` 状态数据。`Provider`包裹了原来项目的根组件。
+
+
