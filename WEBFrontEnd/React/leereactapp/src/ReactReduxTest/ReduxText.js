@@ -1,10 +1,10 @@
 /*
    redux基础
 */
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
-import {createStore} from 'redux'
+import { createStore } from 'redux'
 
 
 
@@ -14,7 +14,7 @@ const reducer = (state, action) => {
     console.log(state, action)
     // 7、回到reducer函数，深拷贝action对象到newState，并返回
     //(此时只是reducer中的参数state发生了变化，而视图组件中的state没有改变，第8步将处理组件中的state)
-    if(action.type === "up"){
+    if (action.type === "up") {
         let newState = JSON.parse(JSON.stringify(state))
         newState.num1 = action.value
         return newState
@@ -24,7 +24,7 @@ const reducer = (state, action) => {
         num1: 20
     }
 }
-
+ 
 //创建一个仓库， 把仓库管理员添请来管理这个仓库
 // 2、创建store仓库
 const store = createStore(reducer)
@@ -32,7 +32,7 @@ const store = createStore(reducer)
 
 
 export default class App extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
 
         // console.log(store.getState())
@@ -51,28 +51,27 @@ export default class App extends Component {
                 {/* 4、 书写组件，填入数据 */}
                 <p>{this.state.num1} </p>
                 {/* 5、业务：点击让num1自增 */}
-                <button onClick={this.changeNumUp}>增加</button>     
+                <button onClick={this.changeNumUp}>增加</button>
             </div>
         )
     }
 
-    changeNumUp(e){
+    changeNumUp(e) {
         // 6、改变数据的时候 需要调用store的dispatch方法，把新的值作为放在对象中传进去
         // 每次调用dispatch, 会在内部调用 图书管理员函数reducer
         const action = {
-            type:'up',
-            value:this.state.num1+1
+            type: 'up',
+            value: this.state.num1 + 1
         }
         store.dispatch(action)  // 每次调用dispatch, 会在内部调用 图书管理员函数reducer
     }
 
-    storeChange(e){
+    storeChange(e) {
         this.setState(store.getState())
     }
-    
 }
 
 
-ReactDOM.render(
-    <App />
-    , document.getElementById('root'));
+// ReactDOM.render(
+//     <App />
+//     , document.getElementById('root'));
