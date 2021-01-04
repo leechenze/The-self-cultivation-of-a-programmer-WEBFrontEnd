@@ -11,9 +11,9 @@ import { Router,Route,hashHistory } from 'react-router'
 // ReduxText
 import ReduxText from '../ReactReduxTest/ReduxText'
 // ReactReduxTextOne;
-
+import ReactReduxTextOne from '../ReactReduxTest/ReactReduxTextOne/base1'
 // ReactReduxTextTwo;
-
+import ReactReduxTextTwo from '../ReactReduxTest/ReactReduxTextTwo/base2'
 
 
 // export default class App extends Component {
@@ -41,5 +41,9 @@ import ReduxText from '../ReactReduxTest/ReduxText'
 // ReactDOM.render(baseRouter, document.getElementById("root"));
 
 
-// 渲染Redux实例
-ReactDOM.render(<ReduxText/>, document.getElementById("root"));
+// // 渲染Redux实例
+// ReactDOM.render(<ReduxText/>, document.getElementById("root"));
+// // 渲染ReactReduxTextOne实例
+// ReactDOM.render(ReactReduxTextOne, document.getElementById("root"));
+// 渲染ReactReduxTextTwo实例
+ReactDOM.render(ReactReduxTextTwo, document.getElementById("root"));
