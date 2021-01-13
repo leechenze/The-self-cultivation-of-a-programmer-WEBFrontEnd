@@ -30,6 +30,7 @@ const mapDispatchToProps = (dispatch) => {
                 //这里其实修改的是props中的myNum
                 value:this.props.myNum+1
             }
+            // dispatch 执行会调用 base2.js中的 reducer函数 而action参数会默认传到reducer形参的第二位(action);
             dispatch(action)
         }
     }

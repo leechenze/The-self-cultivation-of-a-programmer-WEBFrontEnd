@@ -43,7 +43,7 @@ import ReactReduxTextTwo from '../ReactReduxTest/ReactReduxTextTwo/base2'
 
 // // 渲染Redux实例
 // ReactDOM.render(<ReduxText/>, document.getElementById("root"));
-// // 渲染ReactReduxTextOne实例
+// 渲染ReactReduxTextOne实例
 // ReactDOM.render(ReactReduxTextOne, document.getElementById("root"));
 // 渲染ReactReduxTextTwo实例
 ReactDOM.render(ReactReduxTextTwo, document.getElementById("root"));

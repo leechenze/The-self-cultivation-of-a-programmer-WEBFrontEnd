@@ -1682,3 +1682,73 @@
         React-Redux 提供`Provider`组件，可以让容器组件拿到`state` 状态数据。`Provider`包裹了原来项目的根组件。
 
 
+        ReactReduxTextOne/app1.js&base1.js 使用react-redux进行数据展示;
+            
+            app1.js
+
+                import React, { Component } from 'react'
+                import { connect } from 'react-redux'
+
+                class App1 extends Component {
+                    render() {
+                        return (
+                            <div>
+                                {/* 4、改写this.state.myNum为this.props.myNum */}
+                                <p>{this.props.myNum}</p>
+                                <button>增加</button>     
+                            </div>
+                        )
+                    }
+                }
+
+                // 3、定义state数据转props数据的函数
+                const mapStateToProps = (state) => {
+                    return {
+                        myNum: state.num1
+                    }
+                }
+                // 2、使用connect完成连接组件，并把state数据转props数据
+                export default connect(mapStateToProps,null)(App1)
+
+    
+            base1.js
+
+                import React, {Component} from 'react'
+                import ReactDOM from 'react-dom'
+                import {createStore} from 'redux'
+                import { Provider } from 'react-redux'
+                import App1 from "./App1"
+
+                const defaultState = {
+                    num1: 20
+                }
+
+                // 请一个仓库管理员，必须是一个函数
+                const reducer = (state = defaultState, action) => {
+                    return state
+                }
+
+                //创建一个仓库， 把仓库管理员请来管理这个仓库
+                const store = createStore(reducer)
+
+                const App = (
+                    //1、所有组件在Provider组件下
+                    <Provider store={store}>
+                        <App1 />
+                    </Provider>
+                )
+
+                export default App;
+
+
+
+
+
+        
+            
+        
+        ReactReduxTextTwo/app2.js&base2.js 使用react-redux进行数据渲染;
+
+            app2.js
+
+                

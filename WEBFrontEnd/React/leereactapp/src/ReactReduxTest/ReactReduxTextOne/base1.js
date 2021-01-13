@@ -3,7 +3,6 @@
 */
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
-
 import {createStore} from 'redux'
 import { Provider } from 'react-redux'
 import App1 from "./App1"
@@ -15,7 +14,6 @@ const defaultState = {
 
 // 请一个仓库管理员，必须是一个函数
 const reducer = (state = defaultState, action) => {
-
     return state
 }
 
