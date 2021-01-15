@@ -455,7 +455,8 @@
     在子组件中 this.props 既是 调用这个组件时身上的所有属性 (例如: this.props.title);
     在子组件中 this.props.children 既是 父组件下的子元素 (双标签父组件中的内容: <Header>parent assembly content</Header>);
     在子组件中static defaultProps 既是 声明的默认属性, 如果父组件身上未传入值时, 使用props的默认值;
-    
+    属性ref和key, 并不会传给子组件的this.props;
+    子组件中接收 this.props 时, 除了事件方法(onClick,onChange等...)可以使用小驼峰命名外, 其他标签属性(iconClass等...)不可使用驼峰命名法;
 
     
     import React, { Component } from 'react'
@@ -1582,7 +1583,6 @@
 ### Subject学科导航;
 
 
-
 ### 长列表结构布局;
 ### SubTab布局;
 
@@ -1605,6 +1605,227 @@
 
 
 ### 路由配置
+    yarn add react-router@3.2.0
+    
+
+### 页面数据渲染
+    本地数据:
+    public/server/*.json
+    axios请求时路径 /server/*.json;
 
 
 
+### 列表页路由传参
+    Subject.js下 :
+    `#/list/${v.id}`, 传入参数 ==> 每个模块的ID;
+
+    app.js下 :
+    ListPage组件路由的配置后面接收参数 "/list/:subjectId"
+
+    ListPage.js下 :
+    声明周期挂载完成后: 获取参数 this.props.routeParams.subjectId
+    
+
+
+
+### Redux
+
+    1.安装 Redux
+    yarn add redux
+
+        Redux 是 JavaScript 状态容器，提供项目中的状态管理。 
+
+        redux的三个重要概念：
+
+        **store: 数据仓库**
+        
+        **action: 组件的动作名和动作的定义**  (决定了如何修改仓库数据)
+
+        **dispatch: 执行相应的动作action**  （决定了何时修改仓库数据）
+
+        Redux中提供createStore方法用于生成一个store对象，这个函数接受一个初始值state值和一个reducer函数。当用户发出相应的action时，利用传入的reducer函数计算出一个新的state值，并返回。
+
+        使用Redux，我们只获取一次数据并将其存储在一个中心位置，称为 store。然后，任何组件都可以随时使用这些数据。这就像附近有一家超市，我们的厨师可以在那里买到所有的食材。这家超市派卡车从农场大批运回蔬菜和肉类。这比让个别厨师亲自去农场效率高得多。
+
+        store 还是唯一的数据源。组件通常从 store 中获取数据，而不是其他地方。这使得 UI 保持高度统一。
+
+        注意：
+
+        Redux 不只是为 React 而生。一个常见的误解是 Redux 仅用于 React。 听起来Redux在没有React的情况下无法做任何事情。 事实上，正如我们之前所讨论的，Redux在几个重要方面补充了React。 React 是最最常见的 Redux 用例。
+        然而，事实上，Redux可以使用任何前端框架，如Angular、Ember.js 甚至jQuery 或者 普通的JavaScript。
+
+
+    2.安装 React-Redux
+    yarn add react-redux
+
+        为了方便使用，Redux 的作者封装了一个 React 专用的库 React-Redux。这个库是可以选用的。实际项目中，你应该权衡一下，是直接使用 Redux，还是使用 React-Redux。后者虽然提供了便利，但是需要掌握额外的 API，并且要遵守它的组件拆分规范。
+
+        React-Redux 将所有组件分成两大类：UI 组件（presentational component）和容器组件（container component）。
+
+        UI 组件特征：
+
+        - 只负责 UI 的呈现，不带有任何业务逻辑
+        - 没有状态（即不使用`this.state`这个变量）
+        - 所有数据都由参数（`this.props`）提供
+        - 不使用任何 Redux 的 API
+
+        容器组件特征：
+
+        - 负责管理数据和业务逻辑，不负责 UI 的呈现
+        - 带有内部状态
+        - 使用 Redux 的 API
+
+
+        React-Redux 提供`connect`方法，用于从 UI 组件生成容器组件。`connect`的意思，就是将这两种组件连起来。
+
+
+        React-Redux 提供`Provider`组件，可以让容器组件拿到`state` 状态数据。`Provider`包裹了原来项目的根组件。
+
+
+        ReactReduxTextOne/app1.js&base1.js 使用react-redux进行数据展示;
+            
+            app1.js
+
+                import React, { Component } from 'react'
+                import { connect } from 'react-redux'
+
+                class App1 extends Component {
+                    render() {
+                        return (
+                            <div>
+                                {/* 4、改写this.state.myNum为this.props.myNum */}
+                                <p>{this.props.myNum}</p>
+                                <button>增加</button>     
+                            </div>
+                        )
+                    }
+                }
+
+                // 3、定义state数据转props数据的函数
+                const mapStateToProps = (state) => {
+                    return {
+                        myNum: state.num1
+                    }
+                }
+                // 2、使用connect完成连接组件，并把state数据转props数据
+                export default connect(mapStateToProps,null)(App1)
+
+    
+            base1.js
+
+                import React, {Component} from 'react'
+                import ReactDOM from 'react-dom'
+                import {createStore} from 'redux'
+                import { Provider } from 'react-redux'
+                import App1 from "./App1"
+
+                const defaultState = {
+                    num1: 20
+                }
+
+                // 请一个仓库管理员，必须是一个函数
+                const reducer = (state = defaultState, action) => {
+                    return state
+                }
+
+                //创建一个仓库， 把仓库管理员请来管理这个仓库
+                const store = createStore(reducer)
+
+                const App = (
+                    //1、所有组件在Provider组件下
+                    <Provider store={store}>
+                        <App1 />
+                    </Provider>
+                )
+
+                export default App;
+
+
+
+
+
+        
+            
+        
+        ReactReduxTextTwo/app2.js&base2.js 使用react-redux进行数据渲染;
+
+            app2.js
+
+                import React, { Component } from 'react'
+                import { connect } from 'react-redux'
+
+                class App2 extends Component {
+                    render() {
+                        return (
+                            <div>
+                                
+                                <p>{this.props.myNum}</p>
+                                {/* 2、书写点击事件 ，要在以前的this后面加多.props*/}
+                                <button onClick={this.props.handelClick.bind(this)}>增加</button>     
+                            </div> 
+                        )
+                    }
+                }
+
+                const mapStateToProps = (state) => {
+                    return {
+                        myNum: state.num1
+                    }
+                }
+
+                // 1、事件写在mapDispatchToProps函数中
+                const mapDispatchToProps = (dispatch) => {
+                    return {
+                        handelClick(e){
+                            //3、 调用dispatch(action)，将管理状态的方案传当做参数
+                            let action = {
+                                type:'up',
+                                //这里其实修改的是props中的myNum
+                                value:this.props.myNum+1
+                            }
+                            // dispatch 执行会调用 base2.js中的 reducer函数 而action参数会默认传到reducer形参的第二位(action);
+                            dispatch(action)
+                        }
+                    }
+                }
+
+                // connect(展示数据的函数,改变数据的函数)(组件类名)
+                export default connect(mapStateToProps,mapDispatchToProps)(App2)
+
+
+
+            base2.js
+
+                import React, {Component} from 'react'
+                import ReactDOM from 'react-dom'
+
+                import {createStore} from 'redux'
+                import { Provider } from 'react-redux'
+                import App2 from "./App2"
+
+
+                const defaultState = {
+                    num1: 20
+                }
+
+                // 请一个仓库管理员，必须是一个函数
+                const reducer = (state = defaultState, action) => {
+                    if(action.type === "up"){
+                        let newState = JSON.parse(JSON.stringify(state))
+                        newState.num1 = action.value
+                        return newState
+                    }
+                    return state
+                }
+
+                //创建一个仓库， 把仓库管理员请来管理这个仓库
+                const store = createStore(reducer)
+
+
+                const App = (
+                    <Provider store={store}>
+                        <App2 />
+                    </Provider>
+                )
+
+                export default App;

@@ -1,6 +1,5 @@
 // 引入核心组件 {APP};
 import './pages/app';
-
 // 引入AntdMobile测试组件 {AntdMobileTest}
 // import './AntdMobileTest/Button';
 

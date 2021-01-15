@@ -2,7 +2,7 @@
 html,
 body,
 #root {
-  height: auto;
+  height: 100%;
 }
 body {
   touch-action: pan-y;

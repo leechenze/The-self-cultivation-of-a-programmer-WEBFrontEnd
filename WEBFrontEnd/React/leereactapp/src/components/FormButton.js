@@ -7,7 +7,7 @@ export default class FormButton extends Component {
             // 使用三元进行判断是 A标签 或 按钮;
             this.props.type == "ordinary" ? 
             <a className="form-a" href="#">{this.props.children}</a> :
-            <button className={`form-button ${this.props.isFull==true?'full':''}`}>{this.props.children}</button>
+            <button className={`form-button ${this.props.isFull==true?'full':''}`} onClick={this.props.onClick} >{this.props.children}</button>
         )
     }
 }
