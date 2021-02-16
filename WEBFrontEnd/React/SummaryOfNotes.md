@@ -5,11 +5,13 @@
 
 ## 脚手架安装和创建项目
 
+---
 ### 全局安装;
 ```
     cnpm install create-react-app -g
 ```
 
+---
 ### 创建项目;
 
 
@@ -18,6 +20,7 @@
     cnpm install create-react-app -g
 ```
 
+---
 ### Hello React
 
     index.js项目的入口文件(index命名固定);
@@ -40,6 +43,7 @@
     需要注意的是param1来作为根标签使用, 不能出现第二个;
     
     
+    ---
 ### 书写React组件
 
     ReactDOM.render(
@@ -109,6 +113,7 @@
 
 
 
+---
 ### JSX语法糖
     
     实际上这个组件中的这个写法(html和js)揉在一起写这种写法就是JSX, JSX就是一个看起来很像是XML的JavaScript语法扩展, 
@@ -172,6 +177,7 @@
 
 
 
+---
 ### 虚拟DOM和原生DOM分析;
 
     虚拟DOM高效原因分析:
@@ -242,6 +248,7 @@
 
 
 
+---
 ### JSX中插入变量三元运算和数组(TernaryVarArray)
 
         循环遍历li时, 每一个li身上的属性key需要指定一个其索引(唯一值), 否则警告错误;
@@ -278,6 +285,7 @@
 
 
 
+---
 ### 安装React扩展(InstallReactExtensions)
 
         import React, { Component } from 'react'
@@ -299,6 +307,7 @@
 
 
 
+---
 ### 事件使用(EventUsage)
 
     import React, { Component } from 'react'
@@ -358,6 +367,7 @@
 
 
 
+---
 ### 双向数据绑定(BidirectionalDataBing);
 
 
@@ -400,6 +410,7 @@
 
 
 
+---
 ### 表格栏案例(TabColumnExample)
 
     import React, { Component } from 'react';
@@ -450,6 +461,7 @@
 
 
 
+---
 ### props的使用(Props);
 
     在子组件中 this.props 既是 调用这个组件时身上的所有属性 (例如: this.props.title);
@@ -515,6 +527,7 @@
 
 
 
+---
 ### React中Key的使用(KeyUsage)
 
     import React, { Component } from 'react'
@@ -580,6 +593,7 @@
 
 
 
+---
 ### 子组件中验证props属性值类型(VerifyPropsValueType);
 
     注意子组件中的 static propTypes 是一个固定的静态属性, 用来验证或规定props的值类型;
@@ -628,6 +642,7 @@
 
 
 
+---
 ### context ==> props Multistage transmit (context 解决父子组件跨级多级的数据传输)(ContextUsage);
     
     React 组件之间的通信是基于props的数据传递, 数据需要一级一级从上往下传递, 如果组件级别过多传递就会非常麻烦, React中的 context 可以解决 组件的跨级值传递;
@@ -711,6 +726,7 @@
 
 
 
+---
 ### 子组件传值给父组件(ChildValueToParent);
     // 子组件传值给父组件;
     react中子组件向父组件传值 是通过在父组件中声明好修改的方法后, 通过props将此方法传递给子组件来调用;
@@ -793,6 +809,7 @@
 
 
 
+---
 ### React组件生命周期(ComponentLifecycle);
 
     1.实例化(挂载阶段): 对象创建到完全渲染;
@@ -962,6 +979,7 @@
 
 
 
+---
 ### 受控组件和不受控组件(ControlledAndUncontrolled);
 
     受控组件: 和状态紧密相关, 在表单元素中的value和onchange属性是受控组件的必要组成部分;
@@ -1032,6 +1050,7 @@
 
 
 
+---
 ### 路由原理(routerPrinciple.htm);
 
     http-server -o 启动查看实例;
@@ -1095,6 +1114,7 @@
 
 
 
+---
 ### React路由搭建(ReactRouter.js);
     安装React路由;
     yarn add react-router@3.2.0
@@ -1163,6 +1183,7 @@
 
 
 
+---
 ### 动态路由(路由传参: Detail.js, ReactRouter.js);
 
     定义路由, 在path上声明参数规则;
@@ -1240,6 +1261,7 @@
 
 
 
+---
 ### IndexRoute, IndexRedirect, Link(ReactRouter.js);
 
     重启后地址栏后需要输入/index, 否则报错'/'与任何路由都不匹配;
@@ -1275,6 +1297,7 @@
 
 # 创建leereactapp 项目;
     
+    ---
 ### yarn eject 解包项目;
     
     创建项目;
@@ -1289,6 +1312,7 @@
 
 
 
+---
 ### less and less-loader的安装
 
     安装less 和 less-loader
@@ -1329,6 +1353,7 @@
 
 
 
+---
 ### 项目目录结构搭建
 
     删除src目录下的所有默认文件, 新建 [assets/fonts,images,styles] [pages] [components]等目录;
@@ -1369,6 +1394,7 @@
 
 
 
+---
 ### 测试less语法;
 
 
@@ -1390,6 +1416,7 @@
 
 
 
+---
 ### 登陆界面的展示;
     
     在src/pages目录下新建登陆页 LoginPage.js:
@@ -1423,6 +1450,7 @@
 
 
 
+---
 ### 登陆界面的展示;
 
     项目中初始化样式: Normalize.css 
@@ -1476,6 +1504,7 @@
 
 
 
+---
 ### 封装IMG组件
     
     webpack打包html里面img后src为“[object Module]”问题:
@@ -1533,8 +1562,11 @@
 
 
 
+---
 ### FormInput输入框组件
+---
 ### 登陆页布局
+---
 ### Antd Mobile安装使用;
     
     安装AntdMobile
@@ -1556,6 +1588,7 @@
 
     index.js中全局引入antd-mobile.css
 
+---
 ### 头部组件引入使用&logo&背景色定义
 
     新建Header.js头部组件:
@@ -1566,6 +1599,7 @@
     core.less中定义项目中多处用到的深蓝色变量: @baseDarkBlueColor;
     在用到这些变量的页面中的less样式表中 @import "core.less"使用此变量;
 
+---
 ### 头部搜索栏完成;
 
     flex: 0 1 auto; 知识点 ==> 请您狠狠的点击这里:
@@ -1576,38 +1610,50 @@
     flex: 0 1 auto; 知识点 ==> 请您狠狠的点击这里:
     https://www.zhangxinxu.com/wordpress/2019/12/css-flex-deep/
 
+---
 ### Carousel部分制作;
     AntMobile 中的 Carousel基本组件复制过来到Banner组件中;
     仔细阅读源码, 细节太多, 不做详细解释;
     
+    ---
 ### Subject学科导航;
 
 
+---
 ### 长列表结构布局;
+---
 ### SubTab布局;
 
 
+---
 ### 创建ListPage页面
+---
 ### 完善ListViews;
 
+---
 ### 抽取 列表项(Flex) 为 公共组件 SubListItem;
 
+---
 ### SubListMainItem样式调整;
     将 SubListMainItem 组件公用样式抽离出到Global.less中, 有需要用到列表页面的直接调用;
 
+---
 ### ListView 滑动加载更多;
 
 
 
 
 
+---
 ### 详情页/热门评论
 
 
+---
 ### 路由配置
     yarn add react-router@3.2.0
     
 
+---
 ### 页面数据渲染
     本地数据:
     public/server/*.json
@@ -1615,6 +1661,7 @@
 
 
 
+---
 ### 列表页路由传参
     Subject.js下 :
     `#/list/${v.id}`, 传入参数 ==> 每个模块的ID;
@@ -1628,6 +1675,7 @@
 
 
 
+---
 ### Redux
 
     1.安装 Redux
@@ -1829,3 +1877,15 @@
                 )
 
                 export default App;
+
+
+---
+### ReactRedux在subject组件中使用;
+
+---
+### 项目部署;
+
+
+mac 下直接在命令行操作:
+    ssh root@公网ip地址 键入密码
+或者下载操作工具: termius;

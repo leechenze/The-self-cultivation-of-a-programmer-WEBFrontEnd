@@ -10,8 +10,8 @@ import { createStore } from 'redux'
 
 // 请一个仓库管理员，必须是一个函数
 const reducer = (state, action) => {
-    console.log("执行了reducer函数")
-    console.log(state, action)
+    // console.log("执行了reducer函数")
+    // console.log(state, action)
     // 7、回到reducer函数，深拷贝action对象到newState，并返回
     //(此时只是reducer中的参数state发生了变化，而视图组件中的state没有改变，第8步将处理组件中的state)
     if (action.type === "up") {

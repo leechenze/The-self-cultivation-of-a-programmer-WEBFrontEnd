@@ -2,21 +2,23 @@ import React, { Component } from 'react'
 import { Flex } from 'antd-mobile'
 import "../assets/styles/Subject.less"
 import axios from 'axios'
-export default class Subject extends Component {
+import { connect } from 'react-redux';
+class Subject extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            sub_ject_data: []
+            subject_data: []
         }
     }
 
     componentDidMount() {
         axios.get('./server/subject.json').then((res) => {
             if (res.status == 200) {
-                this.setState({
-                    sub_ject_data: res.data
-                })
+                // this.setState({
+                //     subject_data: res.data
+                // })
+                this.props.init_subject_data(res.data);
             }
         })
     }
@@ -27,7 +29,7 @@ export default class Subject extends Component {
                 {/* 第一行 */}
                 <Flex justify="center">
                     {
-                        this.state.sub_ject_data.map((v, k) => {
+                        this.props.subject_data.map((v, k) => {
                             if (k < 4) {
                                 return (
                                     <Flex.Item key={v.id}>
@@ -70,11 +72,11 @@ export default class Subject extends Component {
                 {/* 第二行 */}
                 <Flex justify="center">
                     {
-                        this.state.sub_ject_data.map((v, k) => {
+                        this.props.subject_data.map((v, k) => {
                             if (k >= 4) {
                                 return (
                                     <Flex.Item key={v.id}>
-                                    <a href={`#/list/${v.id}`}>
+                                        <a href={`#/list/${v.id}`}>
                                             <i style={{ backgroundPositionX: `${k * -50}px` }}></i>
                                             <p>{v.subjectName}</p>
                                         </a>
@@ -101,9 +103,30 @@ export default class Subject extends Component {
                             <p>JavaScript</p>
                         </a>
                     </Flex.Item>*/}
-                    <Flex.Item></Flex.Item> 
+                    <Flex.Item></Flex.Item>
                 </Flex>
             </div>
         )
     }
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        subject_data: state.subject_data
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        init_subject_data(res_data){
+            let action = {
+                type:'init_subject_data',
+                value:res_data
+            }
+            dispatch(action)
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Subject);
