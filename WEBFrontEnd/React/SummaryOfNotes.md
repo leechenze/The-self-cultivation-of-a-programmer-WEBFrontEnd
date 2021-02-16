@@ -1886,6 +1886,76 @@
 ### 项目部署;
 
 
-mac 下直接在命令行操作:
-    ssh root@公网ip地址 键入密码
-或者下载操作工具: termius;
+---
+### 购买服务器
+
+- 选择云服务器:阿里云服务器 <https://www.aliyun.com>
+- 个人免费获取 [<https://free.aliyun.com/>]
+
+购买之后在首页（右上角）=》控制台 （左边）=》实例，就可以看到我们买到的服务器
+
+---
+### 配置服务器
+
+接下来做服务器的配置：
+
+
+
+![1573614137033](assets/1573614137033.png)
+
+![1573614980743](assets/1573614980743.png)
+
+![1573615640745](assets/1573615640745.png)
+
+![1573614022540](assets/1573614022540.png)
+
+---
+### 远程连接到服务器
+
+后续操作：
+
+打开终断输入：
+
+ssh root@公网ip地址
+键入密码
+
+看到root@xxxxxxxxxxxxxxxxxxxxxxx:~#      表示登录成功
+
+---
+### 部署项目需要的环境
+
+1、在终端执行以下命令，将自动进行nvm的安装：
+root@iZwcccccvxw0wcddjrvoeZ:~# wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+
+**注意：   安装完成后直接关闭终断。打开终断通过ssh重新登录**
+
+2、使用nvm安装node版本
+root@iZwcccccvxw0wcddjrvoeZ:~# NVM_NODEJS_ORG_MIRROR=http://nodejs.org/dist nvm install v10.15.0
+
+3、修改npm为国内镜像
+root@iZwcccccvxw0wcddjrvoeZ:~# npm config set registry "http://registry.npm.taobao.org/"
+
+4、安装serve
+root@iZwcccccvxw0wcddjrvoeZ:~# npm install -g serve
+
+---
+### 上传项目
+
+在本地项目目录下 进行 yarn build 产生一个 build文件夹。
+
+我们要把这个build文件夹上传到服务器上
+
+打开FileZilla, 将build包拖拽至root目录下;
+
+![1573617550673](assets/1573617550673.png)
+
+![1573617845449](assets/1573617845449.png)
+
+等待上传成功即可
+
+---
+### 启动项目
+
+将build文件上传到Linux家目录下，运行程序：
+
+root@iZwcccccvxw0wcddjrvoeZ:~# serve -s  ./build 
