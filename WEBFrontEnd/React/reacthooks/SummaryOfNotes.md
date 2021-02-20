@@ -154,6 +154,83 @@
     useEffect 对应的生命周期是: componentDidUpdate;
     两者用法包括传递的参数都是一样的;
     
+    import React, { Component, useState, useEffect, useMemo } from 'react'
+
+    export default function UseMemo() {
+        const [zuxian, setZuxian] = useState('zuxian is waiting for the guests')
+        const [zhiling, setZhiling] = useState('Zhiling is waiting for the guests')
+
+        return (
+            <>
+                <button onClick={() => { setZuxian(new Date().getTime()) }}>zuxian</button>
+                <button onClick={() => { setZhiling(new Date().getTime() + '    zhiling came to me') }}>zhiling</button>
+
+                <ChildCom name={zuxian}>
+                    {zhiling}
+                </ChildCom>
+
+            </>
+        )
+    }
+
+    export function ChildCom({ name, children }) {
+        // props中解构出(name和children);
+        function changeZuxian(name) {
+            console.log('Here her is, Zuxian came to me');
+            return name + '      Zuxian came to me'
+        }
+
+        // const actionZuxian = useEffect(() => changeZuxian(name), [name]);
+        const actionZuxian = useMemo(() => changeZuxian(name), [name]);
+
+        // 此时用useMemo实现的是当点击志玲时不会触发祖贤;
+        // 如果使用useEffect时, 就不会展示actionZuxian, 因为useEffect是在挂载和更新完成之后触发的函数
+        
+        return (
+            <>
+                <div>{actionZuxian}</div>
+                <div>{children}</div>
+            </>
+        )
+    }
     
-### UseReducer;
-### UseReducer;
+    
+    
+    
+    
+    
+    
+### UseRef;
+
+    import React, { Component, useEffect, useState, useRef } from 'react'
+
+    export default function UseRef() {
+        const inputEle = useRef(null);
+        const showFont = () => {
+            inputEle.current.value = 'Hello Lee';
+        }
+
+        const [text, setText] = useState('Lee');
+        const textRef = useRef();
+
+        useEffect(() => {
+            textRef.current = text;
+            console.log('textRef.current: ', textRef.current);
+        })
+        
+        
+        return (
+            <>
+                <input ref={inputEle} type="text" />
+                <button onClick={showFont}>showFont in inputBox</button>
+                <br/><br/>
+                <input value={text} type="text" onChange={(e) => {setText(e.target.value)}} />
+            </>
+        )
+    }
+
+### UseCallback & Hook Custom Function;
+
+    useCallback:
+        会缓存方法, useMemo是缓存状态或者属性的;
+

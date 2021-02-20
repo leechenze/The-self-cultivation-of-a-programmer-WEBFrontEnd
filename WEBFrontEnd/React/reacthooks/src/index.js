@@ -8,4 +8,5 @@ import UseReducer from './UseReducer'
 import ReducerExample from './ReducerExample/Index';
 import UseMemo from './UseMemo'
 import UseRef from './UseRef'
-ReactDOM.render(<UseRef />, document.getElementById('root'));
+import UseCallbackAndCustom from './UseCallbackAndCustom'
+ReactDOM.render(<UseCallbackAndCustom />, document.getElementById('root'));
