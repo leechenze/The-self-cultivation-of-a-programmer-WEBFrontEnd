@@ -6,4 +6,6 @@ import UseEffect from './UseEffect'
 import UseContext from './UseContext'
 import UseReducer from './UseReducer'
 import ReducerExample from './ReducerExample/Index';
-ReactDOM.render(<ReducerExample />, document.getElementById('root'));
+import UseMemo from './UseMemo'
+import UseRef from './UseRef'
+ReactDOM.render(<UseRef />, document.getElementById('root'));

@@ -147,3 +147,13 @@
 
     export default ReducerDemo;
 
+
+### UseMemo
+
+    useMemo   对应的生命周期是: shouldComponentUpdate;
+    useEffect 对应的生命周期是: componentDidUpdate;
+    两者用法包括传递的参数都是一样的;
+    
+    
+### UseReducer;
+### UseReducer;
