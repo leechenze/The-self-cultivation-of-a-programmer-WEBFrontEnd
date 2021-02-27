@@ -153,9 +153,9 @@ index.tsx中的Table数据放在了reducer中,
 ---
 ## 处理添加逻辑
 ---
-## HTTP状态错误处理&提示优化;
+## HTTP状态错误处理&提示优化&loading状态;
 ---
-## Modal弹框组件
+## TypeScript声明补充;
 ---
 ## Modal弹框组件
 ---

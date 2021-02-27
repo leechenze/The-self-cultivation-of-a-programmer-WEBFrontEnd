@@ -1,5 +1,6 @@
 import { Effect, ImmerReducer, Reducer, Subscription } from 'umi';
 import { getRemoteList, editRecordList, delRecordList, addRecordList } from './service';
+import { message } from 'antd'
 interface UserModelType {
     namespace: 'users',
     state: {},
@@ -30,31 +31,47 @@ const UserModel: UserModelType = {
         *getRemote({ type, payload }, { put, call }) {
             // 在effects中找services时使用call;
             const data = yield call(getRemoteList);
-            console.log(data);
-            yield put({
-                type: 'getList',
-                payload: {
-                    data: data.data
-                },
-            })
+            if (data) {
+                yield put({
+                    type: 'getList',
+                    payload: {
+                        data: data.data
+                    },
+                })
+            }
         },
         *editRecord({ payload: { id, values } }, { put, call }) {
             const data = yield call(editRecordList, { id, values })
-            yield put({
-                type: 'getRemote',
-            })
+            if (data) {
+                message.success("Edit successfully");
+                yield put({
+                    type: 'getRemote',
+                })
+            } else {
+                message.error("Edit Failed");
+            }
         },
         *delRecord({ payload: { record } }, { put, call }) {
             const data = yield call(delRecordList, record);
-            yield put({
-                type: 'getRemote',
-            })
+            if (data) {
+                message.success("Delete successfully");
+                yield put({
+                    type: 'getRemote',
+                })
+            } else {
+                message.error("Delete Failed");
+            }
         },
         *addRecord({ payload: { values } }, { put, call }) {
             const data = yield call(addRecordList, values);
-            yield put({
-                type: 'getRemote',
-            })
+            if (data) {
+                message.success("Add successfully");
+                yield put({
+                    type: 'getRemote',
+                })
+            } else {
+                message.error("Add Failed");
+            }
         }
     },
     subscriptions: {

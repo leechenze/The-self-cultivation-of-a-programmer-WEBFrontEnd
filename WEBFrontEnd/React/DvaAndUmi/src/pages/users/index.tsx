@@ -3,7 +3,7 @@ import { Table, Tag, Space, Popconfirm, Button } from 'antd';
 import { connect } from 'umi'
 import UserModal from './components/UserModal'
 
-const index = ({ users, dispatch }) => {
+const index = ({ users, dispatch, userListLoading }) => {
 
     const { data } = users;
     const [modalVisible, setModalVisible] = useState(false);
@@ -71,7 +71,16 @@ const index = ({ users, dispatch }) => {
     // 修改逻辑&添加逻辑;
     const onFinish = values => {
 
+
+        dispatch({
+            type: 'users/addRecord',
+            payload: {
+                values: values,
+            }
+        })
+        
         if (record) {
+            console.log('users/editRecord');
             dispatch({
                 type: 'users/editRecord',
                 payload: {
@@ -80,6 +89,7 @@ const index = ({ users, dispatch }) => {
                 }
             })
         } else {
+            console.log('users/addRecord');
             dispatch({
                 type: 'users/addRecord',
                 payload: {
@@ -95,14 +105,15 @@ const index = ({ users, dispatch }) => {
         <div className="list-table">
             <Button type="primary" onClick={addHandler}>Add</Button>
             {/* rowKey需要定义否则将警告定义key */}
-            <Table columns={columns} dataSource={data} rowKey='id' />
+            <Table columns={columns} dataSource={data} rowKey='id' loading={userListLoading}/>
             <UserModal visible={modalVisible} onFinish={onFinish} onOk={() => { setModalVisible(false) }} onCancel={() => { setModalVisible(false) }} record={record}></UserModal>
         </div>
     )
 }
-const mapStateToProps = ({ users }) => {
+const mapStateToProps = ({ users, loading }) => {
     return {
         users,
+        userListLoading: loading.models.users
     }
 }
 
