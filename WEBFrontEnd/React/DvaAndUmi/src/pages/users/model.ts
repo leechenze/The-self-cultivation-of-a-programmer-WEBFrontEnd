@@ -1,6 +1,24 @@
 import { Effect, ImmerReducer, Reducer, Subscription } from 'umi';
 import { getRemoteList, editRecordList, delRecordList, addRecordList } from './service';
 import { message } from 'antd'
+
+interface SingleUserType {
+    id: number,
+    name: string,
+    emial: string,
+    create_time: string,
+    update_time: string,
+    status: number,
+}
+interface UserState {
+    data: SingleUserType[],
+    mate: {
+        total: number,
+        per_page: number,
+        page: number,
+    }
+}
+
 interface UserModelType {
     namespace: 'users',
     state: {},
