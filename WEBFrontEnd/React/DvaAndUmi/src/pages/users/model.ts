@@ -10,7 +10,9 @@ interface SingleUserType {
     update_time: string,
     status: number,
 }
-interface UserState {
+
+// 将接口导出后可以直接在 umi 模块中导入使用: (import { connect, Dispatch, UserState} from 'umi')
+export interface UserState {
     data: SingleUserType[],
     mate: {
         total: number,
@@ -21,7 +23,7 @@ interface UserState {
 
 interface UserModelType {
     namespace: 'users',
-    state: {},
+    state: UserState,
     reducers: {
         getList: Reducer,
     },
@@ -39,6 +41,12 @@ interface UserModelType {
 const UserModel: UserModelType = {
     namespace: 'users',
     state: {
+        data: [],
+        mate: {
+            total: 0,
+            per_page: 5,
+            page: 1
+        }
     },
     reducers: {
         getList(state, { type, payload }) {

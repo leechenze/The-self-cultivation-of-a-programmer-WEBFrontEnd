@@ -1,13 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, FC } from 'react'
 import { Table, Tag, Space, Popconfirm, Button } from 'antd';
-import { connect } from 'umi'
+import { connect, Dispatch, UserState, Loading } from 'umi'
 import UserModal from './components/UserModal'
 
-const index = ({ users, dispatch, userListLoading }) => {
+interface UserPageProps {
+    users: UserState,
+    dispatch: Dispatch,
+    userListLoading: Boolean,
+}
+const index: FC<UserPageProps> = ({ users, dispatch, userListLoading }) => {
 
     const { data } = users;
     const [modalVisible, setModalVisible] = useState(false);
-    const [record, setRecord]: any = useState({});
+    const [record, setRecord] = useState({});
 
     const columns = [
         {
@@ -78,7 +83,7 @@ const index = ({ users, dispatch, userListLoading }) => {
                 values: values,
             }
         })
-        
+
         if (record) {
             console.log('users/editRecord');
             dispatch({
@@ -105,12 +110,14 @@ const index = ({ users, dispatch, userListLoading }) => {
         <div className="list-table">
             <Button type="primary" onClick={addHandler}>Add</Button>
             {/* rowKey需要定义否则将警告定义key */}
-            <Table columns={columns} dataSource={data} rowKey='id' loading={userListLoading}/>
+            <Table columns={columns} dataSource={data} rowKey='id' loading={userListLoading} />
             <UserModal visible={modalVisible} onFinish={onFinish} onOk={() => { setModalVisible(false) }} onCancel={() => { setModalVisible(false) }} record={record}></UserModal>
         </div>
     )
 }
-const mapStateToProps = ({ users, loading }) => {
+
+// 这种定义和 FC<UserPageProps> 的泛型定义类似;
+const mapStateToProps = ({ users, loading } : {users: UserState, loading: Loading}) => {
     return {
         users,
         userListLoading: loading.models.users
