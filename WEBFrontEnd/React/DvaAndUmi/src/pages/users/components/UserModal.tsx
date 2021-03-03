@@ -1,7 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, FC } from 'react'
 import { Modal, Form, Input } from 'antd';
+import { SingleUserType, FormValues } from '../format'
 
-export const userModal = (props) => {
+interface UserModalProps {
+    visible: boolean,
+    record: SingleUserType | undefined | any,
+    onFinish: (values: FormValues) => void,
+    onOk: () => void,
+    // 意为: 一个函数没有参数, 并且没有返回值;
+    onCancel: () => void,
+}
+
+export const userModal: FC<UserModalProps> = (props) => {
 
     const [form] = Form.useForm();
 

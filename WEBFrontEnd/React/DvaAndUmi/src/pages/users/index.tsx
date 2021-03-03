@@ -1,18 +1,20 @@
 import React, { useState, FC } from 'react'
 import { Table, Tag, Space, Popconfirm, Button } from 'antd';
 import { connect, Dispatch, UserState, Loading } from 'umi'
+import { SingleUserType, FormValues } from './format'
 import UserModal from './components/UserModal'
 
 interface UserPageProps {
     users: UserState,
     dispatch: Dispatch,
-    userListLoading: Boolean,
+    userListLoading: boolean,
 }
 const index: FC<UserPageProps> = ({ users, dispatch, userListLoading }) => {
 
     const { data } = users;
     const [modalVisible, setModalVisible] = useState(false);
-    const [record, setRecord] = useState({});
+    // hooks函数定义TS类型语法如下 useHooks<类型定义>(), | 代表或;
+    const [record, setRecord] = useState<SingleUserType | undefined>(undefined);
 
     const columns = [
         {
@@ -33,7 +35,7 @@ const index: FC<UserPageProps> = ({ users, dispatch, userListLoading }) => {
         {
             title: 'Action',
             key: 'action',
-            render: (text, record) => (
+            render: (text: string, record: SingleUserType) => (
                 <Space size="middle">
                     {/* 此处注意使用函数的方式,来执行 editModalVisible */}
                     <a onClick={() => { editModalVisible(record) }}>Edit</a>
@@ -53,8 +55,7 @@ const index: FC<UserPageProps> = ({ users, dispatch, userListLoading }) => {
     ];
 
     // 删除逻辑
-    const confirm = (record) => {
-        console.log(record);
+    const confirm = (record: SingleUserType) => {
         dispatch({
             type: 'users/delRecord',
             payload: {
@@ -63,7 +64,7 @@ const index: FC<UserPageProps> = ({ users, dispatch, userListLoading }) => {
         })
     }
 
-    const editModalVisible = (record) => {
+    const editModalVisible = (record: SingleUserType) => {
         setModalVisible(true);
         setRecord(record);
     }
@@ -71,12 +72,11 @@ const index: FC<UserPageProps> = ({ users, dispatch, userListLoading }) => {
     // 添加按钮
     const addHandler = () => {
         setModalVisible(true);
-        setRecord({});
+        setRecord(undefined);
     }
     // 修改逻辑&添加逻辑;
-    const onFinish = values => {
-
-
+    const onFinish = (values: FormValues) => {
+        console.log(values);
         dispatch({
             type: 'users/addRecord',
             payload: {
@@ -117,7 +117,7 @@ const index: FC<UserPageProps> = ({ users, dispatch, userListLoading }) => {
 }
 
 // 这种定义和 FC<UserPageProps> 的泛型定义类似;
-const mapStateToProps = ({ users, loading } : {users: UserState, loading: Loading}) => {
+const mapStateToProps = ({ users, loading }: { users: UserState, loading: Loading }) => {
     return {
         users,
         userListLoading: loading.models.users

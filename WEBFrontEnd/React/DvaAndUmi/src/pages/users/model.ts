@@ -1,15 +1,8 @@
 import { Effect, ImmerReducer, Reducer, Subscription } from 'umi';
 import { getRemoteList, editRecordList, delRecordList, addRecordList } from './service';
-import { message } from 'antd'
+import { message } from 'antd';
+import { SingleUserType } from './format'
 
-interface SingleUserType {
-    id: number,
-    name: string,
-    emial: string,
-    create_time: string,
-    update_time: string,
-    status: number,
-}
 
 // 将接口导出后可以直接在 umi 模块中导入使用: (import { connect, Dispatch, UserState} from 'umi')
 export interface UserState {

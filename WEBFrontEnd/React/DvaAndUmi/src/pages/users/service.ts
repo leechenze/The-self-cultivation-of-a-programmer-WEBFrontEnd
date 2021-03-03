@@ -3,9 +3,10 @@
 
 import request, { extend } from 'umi-request';
 import { message } from 'antd';
+import { FormValues } from './format'
 
 
-const errorHandler = function (error) {
+const errorHandler = function (error: any) {
     // HTTP状态码错误判断
     if (error.response.status > 400) {
         console.log(error.response.status);
@@ -36,7 +37,7 @@ export const getRemoteList = async () => {
 }
 
 // 修改逻辑;
-export const editRecordList = async ({ id, values }) => {
+export const editRecordList = async ({ id, values }: {id:number,values: FormValues}) => {
     return extendRequest(`/api/users/${id}`, {
         method: 'PUT',
         data: values
@@ -52,7 +53,7 @@ export const editRecordList = async ({ id, values }) => {
 }
 
 // 删除逻辑;
-export const delRecordList = async (values) => {
+export const delRecordList = async (values: FormValues) => {
     return extendRequest(`/api/users/${values.id}`, {
         method: 'DELETE',
     }).then(function (response) {
@@ -67,7 +68,7 @@ export const delRecordList = async (values) => {
 }
 
 // 添加逻辑;
-export const addRecordList = async (values) => {
+export const addRecordList = async (values: FormValues) => {
     return extendRequest(`/api/users/`, {
         method: 'POST',
         data: values
