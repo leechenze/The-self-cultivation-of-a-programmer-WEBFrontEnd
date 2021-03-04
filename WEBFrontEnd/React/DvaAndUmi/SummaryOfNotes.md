@@ -157,6 +157,12 @@ index.tsx中的Table数据放在了reducer中,
 ---
 ## TypeScript声明补充;
 ---
-## Modal弹框组件
+## ProTable组件&分页
 ---
-## Modal弹框组件
+## 独立pagination组件及错误修正
+---
+## 优化Modal关闭时机&提交loading
+---
+## 重写reload及DatePicker赋值;
+---
+## 拓展: antd—Pro,useModal

@@ -24,8 +24,8 @@ const extendRequest = extend({ errorHandler });
 
 // effects调用接口时一般都是异步函数, 这里使用async/await函数处理;
 // 获取列表;
-export const getRemoteList = async () => {
-    return extendRequest('/api/users', {
+export const getRemoteList = async ({page, per_page}) => {
+    return extendRequest(`/api/users?page=${page}&per_page=${per_page}`, {
         method: 'GET',
     }).then(function (response) {
         // console.log(response);

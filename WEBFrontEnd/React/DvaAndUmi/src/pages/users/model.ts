@@ -7,7 +7,7 @@ import { SingleUserType } from './format'
 // 将接口导出后可以直接在 umi 模块中导入使用: (import { connect, Dispatch, UserState} from 'umi')
 export interface UserState {
     data: SingleUserType[],
-    mate: {
+    meta: {
         total: number,
         per_page: number,
         page: number,
@@ -35,7 +35,7 @@ const UserModel: UserModelType = {
     namespace: 'users',
     state: {
         data: [],
-        mate: {
+        meta: {
             total: 0,
             per_page: 5,
             page: 1
@@ -43,7 +43,7 @@ const UserModel: UserModelType = {
     },
     reducers: {
         getList(state, { type, payload }) {
-            return payload;
+            return payload.data;
         }
     },
     effects: {
@@ -54,7 +54,7 @@ const UserModel: UserModelType = {
                 yield put({
                     type: 'getList',
                     payload: {
-                        data: data.data
+                        data: data
                     },
                 })
             }
@@ -97,9 +97,9 @@ const UserModel: UserModelType = {
         setup({ dispatch, history }) {
             return history.listen(({ pathname }, action) => {
                 if (pathname === '/users') {
-                    dispatch({
-                        type: 'getRemote'
-                    })
+                    // dispatch({
+                    //     type: 'getRemote'
+                    // })
                 }
             })
         }

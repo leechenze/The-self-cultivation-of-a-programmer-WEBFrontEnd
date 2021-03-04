@@ -4,7 +4,7 @@ import { SingleUserType, FormValues } from '../format'
 
 interface UserModalProps {
     visible: boolean,
-    record: SingleUserType | undefined | any,
+    record: SingleUserType | any,
     onFinish: (values: FormValues) => void,
     onOk: () => void,
     // 意为: 一个函数没有参数, 并且没有返回值;

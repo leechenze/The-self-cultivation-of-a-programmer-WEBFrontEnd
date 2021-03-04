@@ -1,7 +1,11 @@
 import React, { useState, FC } from 'react'
 import { Table, Tag, Space, Popconfirm, Button } from 'antd';
+// type: The dataType of the TypeScript Language is imported
+import type { ProColumns, ActionType } from '@ant-design/pro-table';
+import ProTable, { TableDropdown } from '@ant-design/pro-table';
 import { connect, Dispatch, UserState, Loading } from 'umi'
-import { SingleUserType, FormValues } from './format'
+import { getRemoteList } from './service';
+import type { SingleUserType, FormValues } from './format'
 import UserModal from './components/UserModal'
 
 interface UserPageProps {
@@ -14,7 +18,7 @@ const index: FC<UserPageProps> = ({ users, dispatch, userListLoading }) => {
     const { data } = users;
     const [modalVisible, setModalVisible] = useState(false);
     // hooks函数定义TS类型语法如下 useHooks<类型定义>(), | 代表或;
-    const [record, setRecord] = useState<SingleUserType | undefined>(undefined);
+    const [record, setRecord] = useState<SingleUserType | any>({});
 
     const columns = [
         {
@@ -72,7 +76,7 @@ const index: FC<UserPageProps> = ({ users, dispatch, userListLoading }) => {
     // 添加按钮
     const addHandler = () => {
         setModalVisible(true);
-        setRecord(undefined);
+        setRecord({});
     }
     // 修改逻辑&添加逻辑;
     const onFinish = (values: FormValues) => {
@@ -105,12 +109,41 @@ const index: FC<UserPageProps> = ({ users, dispatch, userListLoading }) => {
         setModalVisible(false);
     }
 
+    // Pro Table
+    const tableRequestHandle = async ({pageSize, current}) => {
+
+        console.log(pageSize, current);
+
+        // Pro Table 的request 有个获取不到数据的坑, 在这个函数体执行前, 会执行subscriptions,
+        // 而后会执行 Pro Table 的request 也就是这个函数体, 最后才会执行返回数据的getList;
+        // 所以这里数据获取直接从service中导入请求接口, 传入pageSize, current参数进行数据请求;
+        
+        const users = await getRemoteList({
+            page: current,
+            per_page: pageSize,
+        });
+
+        console.log(users);
+        
+        return {
+            data: users.data,
+            success: true,
+            total: users.meta.total,
+        }
+    }
 
     return (
         <div className="list-table">
             <Button type="primary" onClick={addHandler}>Add</Button>
             {/* rowKey需要定义否则将警告定义key */}
-            <Table columns={columns} dataSource={data} rowKey='id' loading={userListLoading} />
+            <ProTable
+                columns={columns}
+                // dataSource={data}
+                rowKey='id'
+                loading={userListLoading}
+                request={tableRequestHandle}
+                search={false}
+            />
             <UserModal visible={modalVisible} onFinish={onFinish} onOk={() => { setModalVisible(false) }} onCancel={() => { setModalVisible(false) }} record={record}></UserModal>
         </div>
     )
