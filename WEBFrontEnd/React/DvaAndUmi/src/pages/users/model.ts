@@ -37,7 +37,7 @@ const UserModel: UserModelType = {
         data: [],
         meta: {
             total: 0,
-            per_page: 5,
+            per_page: 10,
             page: 1
         }
     },
@@ -47,9 +47,9 @@ const UserModel: UserModelType = {
         }
     },
     effects: {
-        *getRemote({ type, payload }, { put, call }) {
+        *getRemote({ type, payload: { page, per_page } }, { put, call }) {
             // 在effects中找services时使用call;
-            const data = yield call(getRemoteList);
+            const data = yield call(getRemoteList, {page, per_page});
             if (data) {
                 yield put({
                     type: 'getList',
@@ -62,21 +62,31 @@ const UserModel: UserModelType = {
         *editRecord({ payload: { id, values } }, { put, call }) {
             const data = yield call(editRecordList, { id, values })
             if (data) {
-                message.success("Edit successfully");
+                const { page, per_page } = yield select(state => state.users.meta);
                 yield put({
                     type: 'getRemote',
+                    payload: {
+                        page,
+                        per_page
+                    }
                 })
+                message.success("Edit successfully");
             } else {
                 message.error("Edit Failed");
             }
         },
-        *delRecord({ payload: { record } }, { put, call }) {
+        *delRecord({ payload: { record } }, { put, call, select }) {
             const data = yield call(delRecordList, record);
             if (data) {
-                message.success("Delete successfully");
+                const { page, per_page } = yield select(state => state.users.meta);
                 yield put({
                     type: 'getRemote',
+                    payload: {
+                        page,
+                        per_page
+                    }
                 })
+                message.success("Delete successfully");
             } else {
                 message.error("Delete Failed");
             }
@@ -84,10 +94,15 @@ const UserModel: UserModelType = {
         *addRecord({ payload: { values } }, { put, call }) {
             const data = yield call(addRecordList, values);
             if (data) {
-                message.success("Add successfully");
+                const { page, per_page } = yield select(state => state.users.meta);
                 yield put({
                     type: 'getRemote',
+                    payload: {
+                        page,
+                        per_page
+                    }
                 })
+                message.success("Add successfully");
             } else {
                 message.error("Add Failed");
             }
