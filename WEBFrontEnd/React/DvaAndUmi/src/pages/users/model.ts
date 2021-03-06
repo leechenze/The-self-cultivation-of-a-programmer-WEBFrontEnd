@@ -3,7 +3,6 @@ import { getRemoteList, editRecordList, delRecordList, addRecordList } from './s
 import { message } from 'antd';
 import { SingleUserType } from './format'
 
-
 // 将接口导出后可以直接在 umi 模块中导入使用: (import { connect, Dispatch, UserState} from 'umi')
 export interface UserState {
     data: SingleUserType[],
@@ -59,7 +58,7 @@ const UserModel: UserModelType = {
                 })
             }
         },
-        *editRecord({ payload: { id, values } }, { put, call }) {
+        *editRecord({ payload: { id, values } }, { put, call, select }) {
             const data = yield call(editRecordList, { id, values })
             if (data) {
                 const { page, per_page } = yield select(state => state.users.meta);
@@ -91,7 +90,7 @@ const UserModel: UserModelType = {
                 message.error("Delete Failed");
             }
         },
-        *addRecord({ payload: { values } }, { put, call }) {
+        *addRecord({ payload: { values } }, { put, call, select }) {
             const data = yield call(addRecordList, values);
             if (data) {
                 const { page, per_page } = yield select(state => state.users.meta);
@@ -112,9 +111,13 @@ const UserModel: UserModelType = {
         setup({ dispatch, history }) {
             return history.listen(({ pathname }, action) => {
                 if (pathname === '/users') {
-                    // dispatch({
-                    //     type: 'getRemote'
-                    // })
+                    dispatch({
+                        type: 'getRemote',
+                        payload: {
+                            page: 1,
+                            per_page: 5
+                        }
+                    })
                 }
             })
         }

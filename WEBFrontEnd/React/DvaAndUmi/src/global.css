@@ -6,3 +6,7 @@
     border-radius: 5px;
     padding: 10px;
 }
+.pagination{
+    text-align: right;
+    padding-top: 10px;
+}

@@ -9,6 +9,7 @@ interface UserModalProps {
     onOk: () => void,
     // 意为: 一个函数没有参数, 并且没有返回值;
     onCancel: () => void,
+    confirmLoading: boolean
 }
 
 export const userModal: FC<UserModalProps> = (props) => {
@@ -30,6 +31,12 @@ export const userModal: FC<UserModalProps> = (props) => {
         form.submit();
     }
 
+
+    const layout = {
+        labelCol: { span: 5 },
+        wrapperCol: { span: 19 }
+    }
+
     return (
         <Modal title="Basic Modal"
             visible={props.visible}
@@ -39,9 +46,11 @@ export const userModal: FC<UserModalProps> = (props) => {
             // Warning: Instance created by useForm is not connect to any Form element. Forget to pass form prop?
             // 因为你在调用 form 方法时，Modal 还未初始化导致 form 没有关联任何 Form 组件。你可以通过给 Modal 设置 forceRender 将其预渲染
             forceRender
+            confirmLoading={props.confirmLoading}
         >
             {JSON.stringify(props.record)}
             <Form
+                {...layout}
                 form={form}
                 name="basic"
                 initialValues={props.record}
@@ -76,7 +85,7 @@ export const userModal: FC<UserModalProps> = (props) => {
                     <Input />
                 </Form.Item>
             </Form>
-        </Modal>
+        </Modal >
     )
 }
 

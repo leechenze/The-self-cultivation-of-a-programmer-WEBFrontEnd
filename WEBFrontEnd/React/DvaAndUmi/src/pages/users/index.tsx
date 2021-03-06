@@ -1,10 +1,10 @@
-import React, { useState, FC } from 'react'
-import { Table, Tag, Space, Popconfirm, Button } from 'antd';
+import React, { useState, useRef, FC } from 'react'
+import { Table, Tag, Space, Popconfirm, Button, Pagination, message } from 'antd';
 // type: The dataType of the TypeScript Language is imported
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable, { TableDropdown } from '@ant-design/pro-table';
 import { connect, Dispatch, UserState, Loading } from 'umi'
-import { getRemoteList } from './service';
+import { getRemoteList, addRecordList, editRecordList } from './service';
 import type { SingleUserType, FormValues } from './format'
 import UserModal from './components/UserModal'
 
@@ -13,12 +13,23 @@ interface UserPageProps {
     dispatch: Dispatch,
     userListLoading: boolean,
 }
+interface ActionType {
+    reload: (resetPageIndex?: boolean) => void;
+    reloadAndRest: () => void;
+    reset: () => void;
+    clearSelected?: () => void;
+    // startEditable: (rowKey: Key) => boolean;
+    // cancelEditable: (rowKey: Key) => boolean;
+}
+
 const index: FC<UserPageProps> = ({ users, dispatch, userListLoading }) => {
 
-    const { data } = users;
+    const { data, meta } = users;
     const [modalVisible, setModalVisible] = useState(false);
+    const [confirmLoading, setConfirmLoading] = useState(false);
     // hooks函数定义TS类型语法如下 useHooks<类型定义>(), | 代表或;
     const [record, setRecord] = useState<SingleUserType | any>({});
+    const proTableRef = useRef<ActionType>();
 
     const columns = [
         {
@@ -78,53 +89,93 @@ const index: FC<UserPageProps> = ({ users, dispatch, userListLoading }) => {
         setModalVisible(true);
         setRecord({});
     }
+    // 重载按钮
+    const reloadHandler = () => {
+        proTableRef.current.reload();
+    }
+
     // 修改逻辑&添加逻辑;
-    const onFinish = (values: FormValues) => {
-        console.log(values);
+    const onFinish = async (values: FormValues) => {
         dispatch({
             type: 'users/addRecord',
             payload: {
                 values: values,
             }
         })
+        setConfirmLoading(true);
+        if (Object.keys(record).length) {
+            // 编辑;
+            let id = record.id;
+            const result = await editRecordList({ id, values });
+            if (result) {
+                await dispatch({
+                    type: 'users/getRemote',
+                    payload: {
+                        page: meta.page,
+                        per_page: meta.per_page,
+                    }
+                })
+                await setModalVisible(false);
+                await message.success('Edit Success')
 
-        if (record) {
-            console.log('users/editRecord');
-            dispatch({
-                type: 'users/editRecord',
-                payload: {
-                    values: values,
-                    id: record.id
-                }
-            })
+            } else {
+                setModalVisible(true);
+                message.error('Edit Error');
+            }
+            setConfirmLoading(false);
+            // dispatch({
+            //     type: 'users/editRecord',
+            //     payload: {
+            //         values: values,
+            //         id: record.id
+            //     }
+            // })
         } else {
-            console.log('users/addRecord');
-            dispatch({
-                type: 'users/addRecord',
-                payload: {
-                    values: values,
-                }
-            })
+            // 添加
+            let id = record.id;
+            const result = await addRecordList({ id, values });
+            if (result) {
+                await dispatch({
+                    type: 'users/getRemote',
+                    payload: {
+                        page: meta.page,
+                        per_page: meta.per_page,
+                    }
+                })
+                await setModalVisible(false);
+                await message.success('Add Success')
+
+            } else {
+                setModalVisible(true);
+                message.error('Add Error');
+            }
+            setConfirmLoading(false);
+            // dispatch({
+            //     type: 'users/addRecord',
+            //     payload: {
+            //         values: values,
+            //     }
+            // })
         }
         setModalVisible(false);
     }
 
     // Pro Table
-    const tableRequestHandle = async ({pageSize, current}) => {
+    const tableRequestHandle = async ({ pageSize, current }) => {
 
         console.log(pageSize, current);
 
         // Pro Table 的request 有个获取不到数据的坑, 在这个函数体执行前, 会执行subscriptions,
         // 而后会执行 Pro Table 的request 也就是这个函数体, 最后才会执行返回数据的getList;
         // 所以这里数据获取直接从service中导入请求接口, 传入pageSize, current参数进行数据请求;
-        
+
         const users = await getRemoteList({
             page: current,
             per_page: pageSize,
         });
 
         console.log(users);
-        
+
         return {
             data: users.data,
             success: true,
@@ -132,19 +183,77 @@ const index: FC<UserPageProps> = ({ users, dispatch, userListLoading }) => {
         }
     }
 
+    const paginationHandle = (page, pageSize) => {
+        dispatch({
+            type: 'users/getRemote',
+            payload: {
+                page,
+                per_page: pageSize,
+            }
+        })
+    }
+
+    const pageSizeHandle = (current, size) => {
+        dispatch({
+            type: 'users/getRemote',
+            payload: {
+                page: current,
+                per_page: size,
+            }
+        })
+    }
+
     return (
         <div className="list-table">
-            <Button type="primary" onClick={addHandler}>Add</Button>
+            {/* <Button type="primary" onClick={reloadHandler}>Reload</Button> */}
             {/* rowKey需要定义否则将警告定义key */}
             <ProTable
                 columns={columns}
-                // dataSource={data}
+                dataSource={data}
                 rowKey='id'
                 loading={userListLoading}
-                request={tableRequestHandle}
+                // request={tableRequestHandle}
                 search={false}
+                actionRef={proTableRef}
+                pagination={false}
+                options={{
+                    density: true,
+                    fullScreen: true,
+                    reload: () => {
+                        dispatch({
+                            type: 'users/getRemote',
+                            payload: {
+                                page: meta.page,
+                                per_page: meta.per_page,
+                            }
+                        })
+                    },
+                    setting: true,
+                }}
+                toolBarRender={() => [
+                    <Button type="primary" onClick={addHandler}>Add</Button>
+                ]}
+                headerTitle='User List'
             />
-            <UserModal visible={modalVisible} onFinish={onFinish} onOk={() => { setModalVisible(false) }} onCancel={() => { setModalVisible(false) }} record={record}></UserModal>
+            <Pagination
+                className="pagination"
+                total={meta.total}
+                current={meta.page}
+                pageSize={meta.per_page}
+                pageSizeOptions={['5', '10', '15', '20']}
+                onChange={paginationHandle}
+                onShowSizeChange={pageSizeHandle}
+                showSizeChanger
+                showQuickJumper
+                showTotal={total => `Total ${total} items`}
+            />
+            <UserModal visible={modalVisible}
+                onFinish={onFinish}
+                onOk={() => { setModalVisible(false) }}
+                onCancel={() => { setModalVisible(false) }}
+                record={record}
+                confirmLoading={confirmLoading}
+            />
         </div>
     )
 }

@@ -166,3 +166,4 @@ index.tsx中的Table数据放在了reducer中,
 ## 重写reload及DatePicker赋值;
 ---
 ## 拓展: antd—Pro,useModal
+    亏多吃, 坑多踩, 文档要多看~
