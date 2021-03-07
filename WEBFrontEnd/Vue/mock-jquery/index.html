@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.8.0/jquery-1.8.0.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/Mock.js/1.0.0/mock-min.js"></script>
+</head>
+
+<body>
+    <!-- 通过一个全局变量, 在mock/index.js中控制MOCK是否启用, 道理如VUE中的process.env.MOCK -->
+    <script>MOCK = 'true'</script>
+    <script src="./mock/index.js"></script>
+    <script>
+        $.ajax({
+            url: '/user/userinfo',
+            method: 'get',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    </script>
+</body>
+
+</html>
