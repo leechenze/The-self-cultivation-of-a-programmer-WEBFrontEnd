@@ -1,0 +1,754 @@
+博学之, 审问之, 慎思之, 明辨之, 笃行之;
+壹、贰、叁、肆、伍、陆、柒、捌、玖、拾;
+
+
+
+壹.模块导入和导出
+    Node采用的是commonJS的规范, 一般将代码拆分到不同的JS文件中, 每一个文件就是一个模块, 文件路径就是模块名;
+    在编写每个模块时, 都有require, exports, modules三个系统的变量可供使用, 
+    核心模块(已封装好的内置模块);
+    自定义的模块;
+    第三方模块(npm下载下来的模块);
+
+    require
+        require函数用来在一个模块中引入另一个模块, 传入一个模块名, 返回一个模块导出对象, 模块名可用相对路径, 也可用绝对路径;
+        作用一: 执行导入的模块中的代码;
+        作用二: 返回导入模块中的接口对象;
+    
+
+    exports
+        exports对象用来导出当前模块的公共方法和属性, 另个模块通过require使用当前模块时, 得到的就是当前模块的exports对象;
+
+
+    module.exports
+        module.exports用来导出一个默认对象, 没有指定对象名称, 常见于修改模块的原始导出对象;
+        解释: module.exports导出整个对象,也可单个属性导出, 但export只能导出单个属, 不能导出整个对象;
+        
+
+    模块初始化:
+        一个模块中的代码仅在模块第一次被使用时被执行一次; 并且在使用过程中进行初始化, 之后缓存起来便于后续继续使用;
+        解释: 当require()导入时就会将exports中的代码执行一次, 如果同一个文件导入两次, 代码仍只会执行一次;
+                
+
+
+    第三方模块(npm下载下来的模块);
+        require函数会优先查找node_modules中的包, 并不用输入node_modules的具体模块路径(太麻烦了);require会自动帮助查找;
+        所以通过npm下载的 node_modules 模块只需要引入包名即可自动查到;
+
+        如果在同级目录中没有node_modules目录, 会往上级父级一只查到这个node_modules目录;
+        一直找到磁盘根目录, 如果没有node_modules目录; 就会报错;
+
+
+
+
+
+
+
+
+
+
+
+
+
+贰.文件读取
+    fs.readFileSync
+        描述:       同步读取文件;
+        参数:       fs.readFileSync(读取的文件, {flag: 模式, encodin: 编码模式})
+        返回值:     返回 path 的内容
+    fs.readFile
+        描述:       异步读取文件;
+        参数:       fs.readFileSync(读取的文件, {flag: 模式, encodin: 编码模式}, 回调函数);
+        返回值:     返回 path 的内容(通过回调函数);
+
+
+
+
+
+
+
+
+
+
+叁.文件写入
+    新建write.js 用来操作 write.txt的写入;
+        fs.writeFile('文件路径', '写入内容', {flag: 'a', encoding:'utf-8'}, callback(err)());
+        文件路径不存在时, 就会自动创建这个文件;
+        
+        连续写入内容时, 因为是异步不造成后面的代码阻塞, 所以为了保证顺序, 需要用在回调中持续写入;
+        这样会造成地狱回调, 所以还是需promise封装;
+
+        
+        promise封装以上步骤, 为了避免以上那样的地狱回调;
+        function writefs(path, content){
+            return new Promise(function (resolve, reject) {
+                fs.writeFile(path, content, {flag: 'a', encoding: 'utf-8'}, function (err) {
+                    if(err) {
+                        reject(err);
+                        throw Error(err);
+                    }else{
+                        resolve(err);
+                        console.log('写入内容成功');
+                    }
+                })
+            })    
+        }
+
+        通过async进行阻塞代码执行, 即可解决地狱回调;
+        async function writeList() {
+            await writefs('./write.txt', '今晚上吃什么\n');
+            await writefs('./write.txt', '红烧狮子头把\n');
+            await writefs('./write.txt', '今吃蒜茄子, 没算不行, 买去\n');
+        }
+        writeList();
+
+
+
+
+    新建delete.js文件用来删除操作;
+        fs.unlink(删除文件的路径, callback);
+        谨慎操作, 删除之后, 无法恢复, 回收站找不到删除的文件;
+        
+
+
+    新建buffer.js文件;
+        buffer: 数组的数据的二进制的存储, 效率很高,速度很快;
+        1.数组不能进行二进制数据的操作;
+        2.js数组不像java, python等语言效率高, js为了弥补这个缺点, 能够对二进制进行快速的数据操作, 提升数组性能, 就有了buffer;
+        buffer绘制内存空间开辟出固定大小的内存; 
+
+            var str = 'helloworld';
+            把helloworld存放到buffer中;
+            var buf = Buffer.from(str);
+            console.log(buf);
+            buf会将str以十六进制显示, 是因为二进制太长了;
+            输出buffer内容;
+            console.log(buf.toString());
+
+
+
+
+
+            开辟buffer(缓存区), 之前版本是new Buffer();实例一个buffer, 现在已经废弃掉了, 使用Buffer.alloc(size);
+            开辟一个buffer长度为20的buffer(缓冲区), 也可以说是(20个字节), 其实就是buf数组长度为20;
+            let buf = Buffer.alloc(20);
+            现在buffer就是一个数组, 所以: 可以操作每一位:
+            buf[0] = 10;
+            buf[1] = 15;
+            console.log(buf);
+            输出结果为:<Buffer 0a 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00>
+            因为是十六进制, 所以10 == 0a, 15 == 0f, 16 == 10;
+
+            buf[0] = 255;
+            console.log(buf);
+            输出为ff; 色码#ffffff转换就是(255,255,255); 其实255 == ff; 相对十六进制来说;
+            buf[0] = 256;
+            console.log(buf);
+            输出为100, 但是显示00, 原因在于十六进制最多显示两位, 所以看不到1, 只能看到00;
+            buf[0] = 356;
+            console.log(buf);
+            输出为ff;
+
+
+
+            let buf = Buffer.allocUnsafe(20);
+            Unsafe意在创建一个不会置空的buffer, 会遗留之前程序的内容, 所以不太安全, 但是不用每一位索引都置空, 所以会比alloc效率快一点;
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+肆.输入输出;
+    fs.readdir('文件路径', callback(err,files){});
+    fs.rmdir('文件路径', callback);
+    
+    let r1 = readline.createInterface({
+        :process指终端进程, 固定写法, 这两个接口必须要指定;
+        input:process.stdin,
+        output:process.stdout
+    })
+
+
+
+    question事件: 输入内容;
+    r1设置提问事件;
+    r1.question('今晚吃什么', function (answer) {
+        console.log(`答复${answer}`);
+        r1.close();
+    })
+    绑定结束事件;
+    r1.on('colse', function () {
+        process.exit(0);
+    });
+
+
+    命令行会输出: 今晚吃什么: 后面跟着什么答复, 回答就是答复;
+    如果没有 r1.close事件的process.exit(0) 这一步骤;
+    进程将不会结束, 有procexx.exit(0)这一步时, 答复往后就会自动关闭;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+伍.文件流;
+    
+    Stream 是一个抽象接口，Node 中有很多对象实现了这个接口。例如，对http 服务器发起请求的request 对象就是一个 Stream，还有stdout（标准输出）。
+
+    创建可写流
+    var ws = fs.createWriteStream(文件路径, {flag: 'w', encoding: 'utf-8'}, function () {})
+    创建可读流
+    var rs = fs.createReadStream(文件路径, {flag: 'r', encoding: 'utf-8'}, function () {})
+
+    管道流:
+        管道提供了一个输出流到输入流的机制。通常我们用于从一个流中获取数据并将数据传递到另外一个流中。
+        管道就是提供了连接写入流和读取流的API, 使用管道可以省略 readwritevideo.js 文件中所有代码步骤;
+        因为管道这个API就是已实现了写入流和读取流的一个封装;
+
+
+        创建可读流;
+        var rs = fs.createReadStream('./video/chrome.mp4', {flag: 'r'});
+        创建可写流;
+        var ws = fs.createWriteStream('./video/newChrome.mp4', {flag: 'w'});
+
+        通过管道直接实现 readwritevideo.js 中的复制操作;
+        rs.pipe(ws);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+陆.事件;
+    Node.js 是单进程单线程应用程序，但是因为 V8 引擎提供的异步执行回调接口，通过这些接口可以处理大量的并发，所以性能非常高。
+    Node.js 几乎每一个 API 都是支持回调函数的。
+    Node.js 基本上所有的事件机制都是用设计模式中观察者模式实现。
+    Node.js 单线程类似进入一个while(true)的事件循环，直到没有事件观察者退出，每个异步事件都生成一个事件观察者，如果有事件发生就调用该回调函数.
+
+
+    可以首先看原理篇: principle.js;
+
+
+    let fs = require('fs');
+    引入事件模块;
+    let events = require('events');
+    const { fstat } = require('fs');
+
+
+
+    初始化事件对象;
+    let ee = new events.EventEmitter();
+
+
+    事件监听器;
+    ee.on('helloSuccess', function (eventMsg) {
+        console.log('\n吃夜宵' + eventMsg + '\n');
+    })
+    ee.on('helloSuccess', function () {
+        console.log('唱K唱K\n');
+    })
+    ee.on('helloSuccess', function () {
+        console.log('CSGOV1\n');
+    })
+    ee.on('helloSuccess', function () {
+        console.log('穿越火线\n');
+    })
+
+
+
+    function promiseReadFile(path) {
+        return new Promise((resolve, reject) => {
+            fs.readFile(path, {flag: 'r', encoding: 'utf-8'}, function (err, data) {
+                if(err){
+                    reject(err);
+                    throw Error(err);
+                }else{
+                    console.log('\n读取文件成功');
+                    resolve(data);
+                }
+            })        
+        })
+    }
+
+
+    promiseReadFile('hello.txt').then((data) => {
+        事件触发器;
+        ee.emit('helloSuccess', data);
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+柒.路径模块&系统模块;
+    __dirname           获得当前执行文件所在目录的完整目录名;
+    __filename          获得当前执行文件的带有完整绝对路径的文件名;
+    process.cwd()       获得当前执行node命令时的目录名;
+
+    
+
+    简单列举path模块: 更多信息查阅文档;
+        path.resolve();             从当前目录下开始拼接;
+        path.join();                给定什么路径参数, 就拼接什么路径参数;
+    
+
+    简单列举OS模块: 更多信息查阅文档;
+        获取cpu信息;
+        console.log(os.cpus());
+        获取内存信息;
+        console.log(os.totalmem());
+        获取系统架构信息;
+        console.log(os.arch());
+        获取剩余内存量;
+        console.log(os.freemem());
+        查看系统平台;
+        console.log(os.platform());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+捌.爬取数据;
+    爬取电影
+        url.js
+        
+        axios.js
+            安装axios模块:  cnpm install axios;
+    爬取表情包
+        cheerio.js
+            cheerio 是node的抓取页面模块, 为服务器特别定制的一个jQuery核心实现.适合各种web爬虫程序;
+            cheerio 就是服务器端的jQuery, 用法也一摸一样, jquery有多好用, 在这里服务器的爬虫就有多好用~~~;
+            安装cheerio:    cnpm install cheerio;
+
+
+
+        获取HTML文档内容, 内容获取和jquery是一样的;
+        const cheerio = require('cheerio'),
+            axios = require('axios'),
+            fs = require('fs'),
+            url = require('url'),
+            path = require('path');
+
+
+
+
+        封装延迟函数为promise对象
+        function lcWait(milliSeconds) {
+            return new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    resolve('成功执行延迟函数, 延迟: ' + milliSeconds);
+                },milliSeconds);
+            })
+        }
+
+
+
+        spider();
+        爬取所有页面图片;
+        async function spider() {
+
+            获取页面的长度(有几个页面);
+            let httpUrl = 'https://www.doutula.com/article/list/?page=2';
+            let res = await axios.get(httpUrl);
+            let $ = cheerio.load(res.data);
+            let PageSize = $('.pagination li.page-item').eq($('.pagination li').length - 2).find('a').text();
+
+            for (let i = 1; i <= parseInt(PageSize); i++) {
+                因为页数太多所以502错误, 这里先执行一条; 
+                if (i == 1) {
+                    getPageList(i);
+                }
+
+                使用延迟函数获取所有数据;
+                await lcWait(3000);
+                getPageList(i);
+            }
+        }
+
+
+        请求每一页的数据
+        async function getPageList(pageNum) {
+
+            let httpUrl = 'https://www.doutula.com/article/list/?page=' + pageNum;
+
+            axios.get(httpUrl).then((res) => {
+                console.log(res.data);
+                cheerio解析html文档, 规定使用cheerio加载html文档, 即可使用$对象(cherrio == jquery);
+                let $ = cheerio.load(res.data);
+                获取每一页中的a链接🔗模块;
+                $('#home .col-sm-9 a.list-group-item').each(async (ind, ele) => {
+                    获取每一页中的a链接地址;
+                    let pageALinkUrl = $(ele).attr('href');
+                    获取每一页中的a链接模块标题;
+                    let pageALinktitle = $(ele).find('.random_title').text();
+                    匹配所有无数次零个或n个为数字的字符;
+                    let reg = /(.*?)\d/igs;
+                    reg匹配每一页中的a链接模块标题;
+                    pageALinktitle = reg.exec(pageALinktitle)[1];
+                    创建目录用来存储爬取到的图片;
+                    fs.mkdir('./images/' + pageALinktitle, (err) => {
+                        if (err) {
+                            throw Error(err);
+                        } else {
+                            console.log(`创建${pageALinktitle}目录成功`);
+                        }
+                    });
+                    使用延迟函数获取所有数据;
+                    await lcWait(50);
+                    获取每一个a链接模块中的图片地址;
+                    parseLink(pageALinkUrl, '.pic-content .artile_des img', 'src', pageALinktitle);
+                })
+            })
+        }
+
+
+
+        参数为(请求地址, 要爬取的元素选择器, 要爬取的元素选择器的属性);
+        async function parseLink(url, selectorArr, getAttr, writeDirName) {
+            let res = await axios.get(url);
+            let $ = cheerio.load(res.data);
+            $(selectorArr).each((ind, ele) => {
+                获取图片链接;
+                let imgUrl = $(ele).attr(getAttr);
+                获取图片扩展名
+                let imgExtName = path.extname(imgUrl);
+                创建写入文件流(路径写入的路径和扩展名);
+                let ws = fs.createWriteStream(`./images/${writeDirName}/${writeDirName}-${ind}${imgExtName}`, { flag: 'a' });
+                { responseType: 'stream' } 这个参数规定以流的形式写入;
+                axios.get(imgUrl, { responseType: 'stream' }).then(function (res) {
+                    res.data.pipe(ws);
+                    监听当写入完成时关闭;
+                    res.data.on('close', () => {
+                        关闭写入流;
+                        ws.close();
+                    })
+                })
+            })
+        }
+
+
+
+        
+
+    反爬策略
+        所谓的反扒机制就是需要在axios中这只代理, 使用多个不同的ip(代理)进行爬取, 使用一个ip进行爬取大量的数据时,
+        当网站解析道是同一个ip时,会对这个ip进行502的限制, 导致爬取失败;
+    
+    
+
+    爬取音乐
+        echo.js: 爬取echo网站中的音乐;
+        
+        const axios = require('axios');
+        const fs = require('fs');
+        const path = require('path');
+
+        获取音乐相关信息, 通过音乐相关信息获取音频地址;
+        获取音乐列表, 通过音乐列表获取大量的音乐信息;
+
+        通过音乐分类页, 获取音乐列表;
+        async function getPage(num) {
+            let httpUrl = `https://www.app-echo.com/api/recommend/sound-day?page=${num}`;
+            let res = await axios.get(httpUrl);
+            res.data.list.forEach((item, ind) => {
+                获取每一首的名称;
+                let title = item.sound.name;
+                获取每一首的地址;
+                let mp3Url = item.sound.source;
+                下载每一首音乐;
+                downloadMusic(mp3Url, title);
+                记录每一首音乐名称;
+                let mp3Name = `${title}${path.extname(mp3Url).split('?')[0]}\n\n\n\n\n`;
+                将每一个音乐的名字记录到一个txt中;
+                fs.writeFile(`./music.txt`, mp3Name, {flag:'a'}, function () {
+                    console.log(`${mp3Name}写入完成`);
+                    当遍历完成结束终端进程;
+                    process.exit(0);
+                });
+            });
+        }
+
+        下载音乐;
+        async function downloadMusic(mp3Url, title) {
+            创建写入流;
+            let ws = fs.createWriteStream(`./music/${title}${path.extname(mp3Url).split('?')[0]}`)
+            mp3是二进制的数据, 所以需要用流的形式进行存放;
+            axios.get(mp3Url, {responseType: 'stream'}).then((res) => {
+                res.data.pipe(ws);
+                res.data.on('close', () => {
+                    ws.close();
+                })
+            });
+        }
+
+        getPage(1);
+
+
+
+
+
+
+玖.Puppeteer;
+    Puppeteer是一个无界面模式的chrome浏览器, 称之为无头浏览器;
+    无界面模式: 不用打开谷歌浏览器即可进行操作谷歌浏览器;
+    
+    下载puppeteer: 因为要模拟浏览器环境, 所以大小相当于一个chrome, 耐心等候...
+    cnpm install puppeteer
+
+
+
+    
+    index.js:
+        
+        let puppeteer = require('puppeteer');
+        
+        async function test() {
+            启动浏览器: 返回浏览器实例;
+            let browser = puppeteer.launch();
+            let puppeteerOption = {
+                设置有界面模式下的视窗宽高;
+                defaultViewport: {
+                    width: 1400,
+                    height: 800,
+                },
+                {headless: false}: 设置为有界面, {headless: true}: 设置为无界面, 无界面浏览器性能更高更快, 有界面一般用于调试;
+                headless: false
+            }
+            let browser = await puppeteer.launch(puppeteerOption);
+
+            打开页面;
+            let page = await browser.newPage();
+            设置加载的网站地址;
+            await page.goto('http://www.baidu.com');
+            网页截图;
+            await page.screenshot({path: 'screenshot.jpg'});
+
+            获取页面内容 ($$表示获取集合, $表示获取单个元素), eval可以使得函数体中的代码在浏览器中运行;
+            page.$$eval('#s-top-left > a', (elements) => {
+                console.log(elements);
+            })
+            page.$eval('#s-top-left', (element) => {
+                console.log(element);
+            })
+            
+            监听页面的输出;
+            page.on('console', (param) => {
+                console.log(param);
+            })
+            
+        }
+
+        test();
+
+
+
+
+
+    getAndOperatePageData.js
+        let puppeteer = require('puppeteer'),
+            cheerio = require('cheerio');
+        const { padEnd } = require('lodash');
+
+        async function test() {
+            // 启动浏览器: 返回浏览器实例;
+            // let browser = puppeteer.launch();
+            let puppeteerOption = {
+                // 设置有界面模式下的视窗宽高;
+                defaultViewport: {
+                    width: 1400,
+                    height: 800,
+                },
+                // {headless: false}: 设置为有界面, {headless: true}: 设置为无界面, 无界面浏览器性能更高更快, 有界面一般用于调试;
+                headless: false,
+                // 设置放慢每个步骤的毫秒数;
+                slowMo: 250
+            }
+            let browser = await puppeteer.launch(puppeteerOption);
+
+            // 打开页面;
+            let page = await browser.newPage();
+            // 设置加载的网站地址;
+            await page.goto('https://www.dytt8.net/index.htm');
+            
+
+            
+            // // 获取页面内容(通过goto打开页面进行跳转);
+            // let elements = await page.$$eval('#menu .contain ul li a', (elements) => {
+            //     // 创建一个数组搜集元素信息(地址,内容);
+            //     var eles = [];
+            //     elements.forEach((item, ind) => {
+            //         if(item.getAttribute('href') != '#'){
+            //             let eleObj = {
+            //                 href: item.href,
+            //                 text: item.innerText,
+            //             }
+            //             eles.push(eleObj);
+            //         }
+            //     })
+            //     return eles;
+            // });
+            // // 打开国内页面;
+            // let gnPage = await browser.newPage();
+            // await gnPage.goto(elements[2].href);
+
+
+
+
+
+
+            // 获取页面对象(通过点击页面进行跳转);
+            // let elementHandle = await page.$$('#menu .contain ul li a');
+            // elementHandle[2].click();
+            
+            
+            
+            
+            // 通过表单输入进行搜索;
+            // 获取搜索框;
+            let inputEle = await page.$('.searchl .formhue');
+            // 光标聚焦在输入框;
+            await inputEle.focus();
+            // 往输入框输入内容;
+            await page.keyboard.type('蝙蝠侠');
+            // 获取点击按钮;
+            let btnEle = await page.$('.searchr input[name=Submit]');
+            // 按钮触发点击;
+            await btnEle.click();
+            
+        }
+
+        test();
+
+
+
+
+
+
+
+    getEBookdetailedInfo.js
+        
+
+
+
+
+拾.协议&服务器
+    TCP/IP 协议族的组成, 这个协议组中前后端开发需要了解应用层和传输层, 网络工程师的工作在网络层,数据链路层和物理层;
+    应用层
+        HTTP            互联网协议
+        FTP             文件传输协议
+        TFTP            
+        SMTP            邮件传输协议
+        SNMP
+        DNS             域名解析协议
+
+    ===========================================================================
+
+    传输层
+        TCP             
+        UDP
+
+    ===========================================================================
+
+    网络层
+        ICMP
+        IGMP
+        IP
+
+    ===========================================================================
+
+    数据链路层/物理层
+        ARP
+        RARP
+
+    ===========================================================================
+
+
+
+    ipv4地址范围:
+        1.1.1.1  ==>  255.255.255.255
+        范围大概在四十二亿左右
+    ipv6地址范围更加广泛;
+    
+    可以通过配置本机的host文件, 指定域名或者ip;
+
+    HTTP状态码:
+        1xx: 指示信息--表示已接收请求,继续处理;
+        2xx: 成功--成功接收;
+        3xx: 重定向--重定向到其他地址;
+        4xx: 客户端错误--比如路径错误等;
+        1xx: 服务端错误--未能实现合法请求;
+    
+    Node下的http模块:
+        用于创建服务器
+
+        
