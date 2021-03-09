@@ -751,4 +751,14 @@
     Node下的http模块:
         用于创建服务器
 
-        
+        新建index 一个demo文件;
+
+        新建server目录进行node服务器 涉及动态和静态的封装;
+            static      服务器静态资源目录;
+                QQImage2.jpg
+                style.css
+                test.html
+            index.js    入口程序
+            IcApp.js    服务器构造封装
+            
+            
