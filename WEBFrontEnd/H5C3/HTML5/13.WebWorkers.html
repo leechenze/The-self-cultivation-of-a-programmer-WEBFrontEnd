@@ -1,11 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    
-</body>
+  </head>
+  <body>
+    <div>加载成功</div>
+    <script>
+      /**
+       * @description: 综合执行 耗时七秒
+       */
+
+      function fb(n) {
+        if (n == 1 || n == 2) {
+          return 1;
+        }
+        return fb(n - 1) + fb(n - 2);
+      }
+      console.time("FB执行时间");
+      var result = fb(43);
+      var result = fb(43);
+      var result = fb(43);
+      console.timeEnd("FB执行时间");
+      
+      /* ============================================================================== */
+      
+      /**
+       * @description: 多线程执行 耗时两秒
+       */
+
+      // var firstWorker = new Worker("js/WebWorker/first-worker.js");
+      // var secondWorker = new Worker("js/WebWorker/second-worker.js");
+      // var thirdWorker = new Worker("js/WebWorker/third-worker.js");
+      // firstWorker.onmessage = (e) => {
+      //   console.log(e.data);
+      // };
+      // secondWorker.onmessage = (e) => {
+      //   console.log(e.data);
+      // };
+      // thirdWorker.onmessage = (e) => {
+      //   console.log(e.data);
+      // };
+    </script>
+  </body>
 </html>
