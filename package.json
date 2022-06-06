@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@angular/cli": "^14.0.0",
     "prop-types": "^15.7.2",
     "props-type": "^1.0.1"
   }
