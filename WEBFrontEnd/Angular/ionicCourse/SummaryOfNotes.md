@@ -6,6 +6,11 @@
 
 
 壹.Ionic环境搭建&创建项目
+
+  Cordova 是⽤ Web 技术（ HTML，CSS 和 JS ）构建移动应⽤的平台。
+  我们可以认为Cordova 是⼀个容器，⽤于将的 Web 应⽤移植到移动端，
+  同时⽀持移动端的原生功能（例如：定位、蓝⽛、摄像头等).
+
   安装全局Ionic环境;
     npm install -g cordova ionic
   创建项目
@@ -21,14 +26,14 @@
   
   e2e                     端对端测试文件
   node_modules            项目依赖包
-  resources               android/ios资源 (更换图标,启动动画);
+  resources               android/ios资源 (更换图标,启动动画)(ionic cordova resources -icon 后会生成)
   src                     
     test.ts               单元测试文件
     polyfills.ts          Angular需要的填充, 并在应用程序之前加载
   www                     静态目录, ionic build --prod 生成的单页面静态资源文件
   platforms               生成Android/Ios安装包需要的资源 (cordova platform add android 后会生成)
-  plugins                 插件目录, 放置cordova安装的插件
-  config.xml              打包成app的配置文件
+  plugins                 插件目录, 放置cordova安装的插件 (cordova plugin add xxx)
+  config.xml              打包成app的配置文件 (ionic cordova resources -icon 后会生成)
   package.json
   ionic.config.json       ionic配置文件
   angular.json            angular配置文件
