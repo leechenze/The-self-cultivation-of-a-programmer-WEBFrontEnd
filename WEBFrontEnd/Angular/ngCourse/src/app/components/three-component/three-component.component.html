@@ -1,0 +1,82 @@
+
+
+<div>
+  <p>userName : {{userName}}</p>
+  <p>userAge : {{userInfo.userAge}}</p>
+  <hr>
+  <div title="this`s Title">cursor slide move show title</div>
+  <div [title]="dynamicTitle">cursor slide move show title</div>
+  <hr>
+  <div [innerHTML]="htmlCon" class="textColorRed"></div>
+  <p>{{htmlCon}}</p>
+  <hr>
+  <!-- 模版语法支持做简单运算 -->
+  1+2={{1+2}}
+  <hr>
+  <!-- ngFor -->
+  <ol>
+    <li *ngFor="let item of renderArr;let ind = index">
+      {{ind}} -- {{item}}
+    </li>
+    <li *ngFor="let item of renderUser">
+      {{item.username}} -- {{item.age}}
+    </li>
+  </ol>
+  <hr>
+  <img [src]="localImgSrc" alt="">
+  <img [src]="onLineImgSrc" alt="">
+  <hr>
+  <!-- ngIf -->
+  <hr>
+  <h1 *ngIf="flag" class="textColorRed">flag true</h1>
+  <h1 *ngIf="!flag" class="textColorRed">flag false</h1>
+  <hr>
+  <!-- ngSwitch -->
+  <hr>
+  <span [ngSwitch]="orderStatus">
+    <p *ngSwitchCase="0">
+      orderStatus is {{orderStatus}}
+    </p>
+    <p *ngSwitchCase="1">
+      orderStatus is {{orderStatus}}
+    </p>
+    <p *ngSwitchDefault>
+      orderStatus is {{orderStatus}}
+    </p>
+  </span>
+  <hr>
+  <!-- ngClass ngStyle -->
+  <hr>
+  <div [ngClass]="{'textColorGreen': true}">ngClass</div>
+  <div [ngClass]="{'textColorYellow': flag, 'textColorBlue': !flag}">ngClass flag is {{flag}}</div>
+  <li *ngFor="let item of renderClassArr;let ind = index" [ngClass]="{'textColorGreen': ind==0,'textColorRed': ind==1,'textColorBlue': ind==2}">
+    {{ind}} -- {{item}}
+  </li>
+  <hr>
+  <!-- ngClass ngStyle -->
+  <hr>
+  <p style="color: blue;">ngStyle</p>
+  <p [ngStyle]="{'color': 'red'}">ngStyle</p>
+  <p [ngStyle]="{'color': ngStyleAttr}">ngStyle</p>
+  <hr>
+  <!-- 管道 -->
+  <hr>
+  <p>{{today | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+  <hr>
+  <!-- 事件 -->
+  <hr>
+    {{eventText}}
+    <button (click)="run()">run change Handle</button>
+  <hr>
+  <!-- 表单事件&事件对象 -->
+  <hr>
+    <input type="text" (keydown)="keyDownHandle($event)">
+  <hr>
+  <!-- 双向事件绑定 -->
+  <!-- 注意在app.module.ts 中 FormsModule的引入 -->
+  <hr>
+    <input type="text" [(ngModel)]="ngModelText">
+    {{ngModelText}}
+  <hr>
+</div>
+

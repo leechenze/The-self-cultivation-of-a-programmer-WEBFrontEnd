@@ -1,20 +1,31 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NewsComponent } from './components/news/news.component';
+import { ThreeComponentComponent } from './components/three-component/three-component.component';
 
 
 /** NgModule 装饰器 */
 @NgModule({
+  /** 配置项目组件 */
   declarations: [
-    AppComponent
+    AppComponent,
+    NewsComponent,
+    ThreeComponentComponent
   ],
+  /** 配置项目运行以来 */
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
+  /** 配置项目运行服务 */
   providers: [],
+  /** 指定应用的主视图, 通过引导根appModule来启动应用默认加载的组件 */
   bootstrap: [AppComponent]
 })
+/** 根模块不需要到处任何东西, 因为其他组件不需要导入根模块 */
 export class AppModule { }

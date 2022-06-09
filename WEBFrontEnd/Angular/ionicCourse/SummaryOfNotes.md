@@ -17,6 +17,8 @@
     ionic start myAppName blank           空应用
     ionic start myAppName tabs            带有tabs的应用
     ionic start myAppName sidemenu        带有sidemenu的应用
+  创建组件
+    ng generate component component/header
   运行项目
     ionic serve
 
