@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
+/** 引入表单模块, 才可以使用双向数据绑定 */
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NewsComponent } from './components/news/news.component';
 import { ThreeComponentComponent } from './components/three-component/three-component.component';
+import { FormComponentComponent } from './components/form-component/form-component.component';
 
 
 /** NgModule 装饰器 */
@@ -14,7 +17,8 @@ import { ThreeComponentComponent } from './components/three-component/three-comp
   declarations: [
     AppComponent,
     NewsComponent,
-    ThreeComponentComponent
+    ThreeComponentComponent,
+    FormComponentComponent
   ],
   /** 配置项目运行以来 */
   imports: [

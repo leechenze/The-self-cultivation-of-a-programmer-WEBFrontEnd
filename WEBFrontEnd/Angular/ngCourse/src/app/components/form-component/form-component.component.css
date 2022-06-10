@@ -1,0 +1,39 @@
+.form-component h2 {
+  text-align: center;
+}
+
+.form-component .people-list {
+  border: 1px solid #000;
+  text-align: center;
+  padding: 10px 30px;
+  overflow: hidden;
+  text-overflow: wrap;
+}
+
+.form-component .people-list ul {
+  padding: 0;
+}
+
+.form-component .people-list ul li {
+  height: 50px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.form-component .people-list ul li label {
+  text-align: left;
+  width: 20%;
+}
+
+.form-component .people-list ul li input[type="text"] {
+  width: 75%;
+}
+
+.form-component .people-list ul li span {
+  margin-right: 10px;
+}
+
+.form-component .people-list pre {
+  text-align: left;
+}

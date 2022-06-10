@@ -1,0 +1,42 @@
+.form-component{
+  h2{
+    text-align: center;
+  }
+  .people-list{
+    border: 1px solid #000;
+    text-align: center;
+    padding: 10px 30px;
+    overflow: hidden;
+    text-overflow: wrap;
+    ul{
+      padding: 0;
+      li{
+        height: 50px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        label{
+          text-align: left;
+          width: 20%;
+        }
+        input{
+          &[type="text"]{
+            width: 75%;
+          }
+          &[type="radio"]{
+
+          }
+        }
+        span{
+          margin-right: 10px;
+        }
+      }
+    }
+    button{
+      
+    }
+    pre{
+      text-align: left;
+    }
+  }
+}
