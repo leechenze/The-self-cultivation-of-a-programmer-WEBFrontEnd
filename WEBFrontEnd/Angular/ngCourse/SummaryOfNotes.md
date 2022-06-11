@@ -89,8 +89,7 @@
 
 肆.表单(form-component)
 伍.todoList(search-todo-list)
-
-
-
-
-
+陆.Angular-Service&数据持久化
+  服务生成命令 (生成一个storage的服务)
+  ng generate service services/storage
+  

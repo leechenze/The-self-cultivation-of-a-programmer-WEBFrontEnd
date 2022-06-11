@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StorageService } from '../../services/storage.service'
 
 @Component({
   selector: 'app-search-todo-list',
@@ -13,9 +14,15 @@ export class SearchTodoListComponent implements OnInit {
   // title为事项名称, type为事项类型(false:待办, true:已办)
   public todoList:Array<any> = [];
 
-  constructor() { }
+  // 使用 storage 服务
+  constructor(public storage:StorageService) {
+
+  }
 
   ngOnInit(): void {
+    // 数据持久化处理
+    this.todoList = this.storage.get('todoList') ? JSON.parse(this.storage.get('todoList')) : [];
+    this.historyList = this.storage.get('historyList') ? JSON.parse(this.storage.get('historyList')) : [];
   }
   
   doSearch() {
@@ -26,10 +33,12 @@ export class SearchTodoListComponent implements OnInit {
       }
       this.historyList.push(this.keywords);
       this.keywords = '';
-    }
+      this.storage.set('historyList', JSON.stringify(this.historyList));
+    } 
   }
   delSearch(index:number):void {
     this.historyList.splice(index, 1);
+    this.storage.set('historyList', JSON.stringify(this.historyList));
   }
   doadd(ev:any) {
     if(this.todoKeyWord!="") {
@@ -56,14 +65,16 @@ export class SearchTodoListComponent implements OnInit {
           this.todoKeyWord = '';
         }
       }
+      this.storage.set('todoList', JSON.stringify(this.todoList));
       return;
     }
     alert('请输入非空事项');
   }
   delToDoList(index:number):void {
     this.todoList.splice(index, 1);
+    this.storage.set('todoList', JSON.stringify(this.todoList));
   }
-  tempHandle() {
-    console.log(this.todoList);
+  changeTypeHandle():void {
+    this.storage.set('todoList', JSON.stringify(this.todoList));
   }
 }

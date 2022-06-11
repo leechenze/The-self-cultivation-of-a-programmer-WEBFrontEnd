@@ -12,6 +12,12 @@ import { FormComponentComponent } from './components/form-component/form-compone
 import { SearchTodoListComponent } from './components/search-todo-list/search-todo-list.component';
 
 
+/** 引入并配置Service */
+import { StorageService } from './services/storage.service'
+
+
+
+
 /** NgModule 装饰器 */
 @NgModule({
   /** 配置项目组件 */
@@ -29,7 +35,7 @@ import { SearchTodoListComponent } from './components/search-todo-list/search-to
     FormsModule
   ],
   /** 配置项目运行服务 */
-  providers: [],
+  providers: [StorageService],
   /** 指定应用的主视图, 通过引导根appModule来启动应用默认加载的组件 */
   bootstrap: [AppComponent]
 })
