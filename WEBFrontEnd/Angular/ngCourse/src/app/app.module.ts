@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { NewsComponent } from './components/news/news.component';
 import { ThreeComponentComponent } from './components/three-component/three-component.component';
 import { FormComponentComponent } from './components/form-component/form-component.component';
+import { SearchTodoListComponent } from './components/search-todo-list/search-todo-list.component';
 
 
 /** NgModule 装饰器 */
@@ -18,7 +19,8 @@ import { FormComponentComponent } from './components/form-component/form-compone
     AppComponent,
     NewsComponent,
     ThreeComponentComponent,
-    FormComponentComponent
+    FormComponentComponent,
+    SearchTodoListComponent
   ],
   /** 配置项目运行以来 */
   imports: [
