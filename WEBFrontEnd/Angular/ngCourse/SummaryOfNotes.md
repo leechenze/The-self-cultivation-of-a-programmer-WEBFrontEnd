@@ -89,7 +89,11 @@
 
 肆.表单(form-component)
 伍.todoList(search-todo-list)
-陆.Angular-Service&数据持久化
+陆.Angular-Service&数据持久化(search-todo-list)
   服务生成命令 (生成一个storage的服务)
   ng generate service services/storage
+  
+柒.Angular-Dom&执行C3动画(dom-component)
+  Angular中对DOM的操作可以使用原生JS操作, 也可以使用Angular内置的 @ViewChild 进行操作;
+  
   

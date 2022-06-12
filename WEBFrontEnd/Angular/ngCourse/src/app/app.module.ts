@@ -13,7 +13,8 @@ import { SearchTodoListComponent } from './components/search-todo-list/search-to
 
 
 /** 引入并配置Service */
-import { StorageService } from './services/storage.service'
+import { StorageService } from './services/storage.service';
+import { DomComponentComponent } from './components/dom-component/dom-component.component'
 
 
 
@@ -26,7 +27,8 @@ import { StorageService } from './services/storage.service'
     NewsComponent,
     ThreeComponentComponent,
     FormComponentComponent,
-    SearchTodoListComponent
+    SearchTodoListComponent,
+    DomComponentComponent
   ],
   /** 配置项目运行以来 */
   imports: [
