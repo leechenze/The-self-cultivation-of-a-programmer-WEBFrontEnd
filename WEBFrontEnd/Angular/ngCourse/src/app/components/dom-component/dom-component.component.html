@@ -1,1 +1,11 @@
-<p>dom-component works!</p>
+<div class="app-dom-component">
+
+  <div id="getDom" *ngIf="true">getDom box</div>
+  
+  <div #viewChildBox>viewChild Box</div>
+  
+  <hr>
+  <!-- Animate -->
+  <aside #asideCom>侧边栏</aside>
+  <button (click)="toggleHandleAside()">操作侧边栏</button>
+</div>

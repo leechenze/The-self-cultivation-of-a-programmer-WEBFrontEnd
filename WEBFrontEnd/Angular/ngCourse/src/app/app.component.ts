@@ -1,5 +1,5 @@
 /** 引入核心模块 */
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   /** 使用组件的名称 */
@@ -11,6 +11,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ngCourse';
+  @ViewChild('appDomComponent') appDomComponentRef:any;
+  
   /** 构造函数 */
   constructor() {}
+
+  ngOnInit() {}
+  ngAfterViewInit(): void {
+    console.log(this.appDomComponentRef.run());
+  }
 }
