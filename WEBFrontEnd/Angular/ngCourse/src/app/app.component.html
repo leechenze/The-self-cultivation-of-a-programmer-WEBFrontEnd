@@ -9,6 +9,32 @@
   <!-- <app-three-component></app-three-component> -->
   <!-- <app-form-component></app-form-component> -->
   <!-- <app-search-todo-list></app-search-todo-list> -->
-  <app-dom-component #appDomComponent></app-dom-component>
+  <!-- <app-dom-component #appDomComponent></app-dom-component> -->
+
+  <!-- <app-communication-component [showTitle]="title" (changeCount)="changeCount($event)">
+  </app-communication-component>
+  <div>{{count}}</div> -->
+
+  <div class="route-change-container">
+    <ul>
+      <li>
+
+
+
+        <!-- 1个参数可以优先用动态路由，2个以上还是用query更加方便点 -->
+        <!--routerLink将你定义的路由连接到模板文件中-->
+        <!-- 一个参数传递方式, 需要配置路由文件中的 /:id 后缀 -->
+        <!-- <a [routerLink]="['/goodsList', paramId]">切换到商品列表组件</a>  -->
+        <!-- 多个参数传递方式 -->
+        <a [routerLink]="['/goodsList']" [queryParams]="{name: 'leejee', age:10}">切换到商品列表组件</a> 
+        
+        
+        
+      </li>
+      <li>
+        <a routerLink="/personalCenter">切换到个人中心组件</a>
+      </li>
+    </ul>
+  </div>
 </div>
 <router-outlet></router-outlet>

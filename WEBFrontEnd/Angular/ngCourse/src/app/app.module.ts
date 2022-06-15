@@ -14,23 +14,29 @@ import { SearchTodoListComponent } from './components/search-todo-list/search-to
 
 /** 引入并配置Service */
 import { StorageService } from './services/storage.service';
-import { DomComponentComponent } from './components/dom-component/dom-component.component'
+import { DomComponentComponent } from './components/dom-component/dom-component.component';
+import { CommunicationComponentComponent } from './components/communication-component/communication-component.component';
+import { GoodsListComponent } from './components/goods-list-component/goods-list-component.component';
+import { PersonalCenterComponent } from './components/personal-center-component/personal-center-component.component'
 
 
 
 
 /** NgModule 装饰器 */
 @NgModule({
-  /** 配置项目组件 */
+  /** 项目组件声明 */
   declarations: [
     AppComponent,
     NewsComponent,
     ThreeComponentComponent,
     FormComponentComponent,
     SearchTodoListComponent,
-    DomComponentComponent
+    DomComponentComponent,
+    CommunicationComponentComponent,
+    GoodsListComponent,
+    PersonalCenterComponent
   ],
-  /** 配置项目运行以来 */
+  /** 配置项目运行依赖 */
   imports: [
     BrowserModule,
     AppRoutingModule,

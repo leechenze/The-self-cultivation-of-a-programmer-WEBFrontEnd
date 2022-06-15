@@ -1,0 +1,36 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router'; // 引入ActivatedRoute
+
+@Component({
+  selector: 'app-goods-list-component',
+  templateUrl: './goods-list-component.component.html',
+  styleUrls: ['./goods-list-component.component.scss']
+})
+export class GoodsListComponent implements OnInit {
+
+  constructor(
+    private route: ActivatedRoute, // 依赖注入这个服务
+  ) { }
+
+  // 在初始化的生命周期中去获取url的路由信息
+  public ngOnInit(): void {
+    // 第一种获取参数的方式
+    const params = this.route.snapshot.params;
+    const queryParams = this.route.snapshot.queryParams;
+    console.log(params);
+    console.log(queryParams);
+    
+    // 第二种获取参数的方式
+    this.route.params.subscribe(params => {
+      console.log(params);
+    });
+    this.route.queryParams.subscribe(params => {
+      console.log(params);
+    });
+  }
+
+  goToPersonalPage():void {
+    
+  }
+  
+}

@@ -96,4 +96,5 @@
 柒.Angular-Dom&执行C3动画(dom-component)
   Angular中对DOM的操作可以使用原生JS操作, 也可以使用Angular内置的 @ViewChild 进行操作;
   
-  
+捌.组件通讯&生命周期(communication-component & app.component)
+玖.路由()

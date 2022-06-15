@@ -1,0 +1,11 @@
+<div class="communication">
+  <h3>双向数据绑定 ngModelChange 监听</h3>
+  <input type="text" [(ngModel)]="ngModelListener" (ngModelChange)="ngModelListenerHandle($event)">
+  <hr>
+  <h3>父组件中的title是</h3>
+  <p>{{showTitle}}</p>
+  <hr>
+  <h3>像父组件传递数据</h3>
+  <button (click)="addCount()">submit</button>
+  <hr>
+</div>
