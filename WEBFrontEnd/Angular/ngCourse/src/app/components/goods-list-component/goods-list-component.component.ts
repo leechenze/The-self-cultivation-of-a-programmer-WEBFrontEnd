@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'; // 引入ActivatedRoute
+import { ActivatedRoute, Router } from '@angular/router'; // 引入ActivatedRoute
 
 @Component({
   selector: 'app-goods-list-component',
@@ -10,6 +10,7 @@ export class GoodsListComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute, // 依赖注入这个服务
+    private router:Router
   ) { }
 
   // 在初始化的生命周期中去获取url的路由信息
@@ -30,7 +31,8 @@ export class GoodsListComponent implements OnInit {
   }
 
   goToPersonalPage():void {
-    
+    // this.router.navigate([`personalCenter`],{queryParams:{name: 'leeJee', age:40}});
+    this.router.navigateByUrl('personalCenter?name=leeJee&age=30');
   }
   
 }

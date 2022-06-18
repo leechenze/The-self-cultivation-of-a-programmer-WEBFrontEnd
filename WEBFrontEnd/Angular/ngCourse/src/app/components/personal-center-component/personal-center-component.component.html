@@ -1,4 +1,15 @@
 <div class="personal-center-component">
-  personal-center-component
+  <span>personal-center-component</span>
+  <hr>
   <button (click)="goToGoodsList()">goToGoodsList</button>
+  <hr>
+  <ul>
+    <li>
+      <a [routerLink]="['personalCenter/personalDetail']">跳转到个人中心详情</a>
+    </li>
+    <li>
+      <a [routerLink]="['personalCenter/personalSetting']">跳转到个人中心设置</a>
+    </li>
+  </ul>
+  <router-outlet></router-outlet>
 </div>

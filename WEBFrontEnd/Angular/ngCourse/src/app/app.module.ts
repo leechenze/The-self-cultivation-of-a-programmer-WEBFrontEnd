@@ -1,23 +1,22 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-
 /** 引入表单模块, 才可以使用双向数据绑定 */
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NewsComponent } from './components/news/news.component';
 import { ThreeComponentComponent } from './components/three-component/three-component.component';
 import { FormComponentComponent } from './components/form-component/form-component.component';
 import { SearchTodoListComponent } from './components/search-todo-list/search-todo-list.component';
-
-
 /** 引入并配置Service */
 import { StorageService } from './services/storage.service';
 import { DomComponentComponent } from './components/dom-component/dom-component.component';
 import { CommunicationComponentComponent } from './components/communication-component/communication-component.component';
 import { GoodsListComponent } from './components/goods-list-component/goods-list-component.component';
-import { PersonalCenterComponent } from './components/personal-center-component/personal-center-component.component'
+import { PersonalCenterComponent } from './components/personal-center-component/personal-center-component.component';
+import { PageNotFoundComponent } from './components/page-not-found-component/page-not-found-component.component';
+import { PersonalDetailComponent } from './components/personal-detail/personal-detail.component';
+import { PersonalSettingComponent } from './components/personal-setting/personal-setting.component'
 
 
 
@@ -34,7 +33,10 @@ import { PersonalCenterComponent } from './components/personal-center-component/
     DomComponentComponent,
     CommunicationComponentComponent,
     GoodsListComponent,
-    PersonalCenterComponent
+    PersonalCenterComponent,
+    PageNotFoundComponent,
+    PersonalDetailComponent,
+    PersonalSettingComponent
   ],
   /** 配置项目运行依赖 */
   imports: [

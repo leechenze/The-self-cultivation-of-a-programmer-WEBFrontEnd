@@ -4,19 +4,49 @@ import { RouterModule, Routes } from '@angular/router';
 // 组件引入
 import { GoodsListComponent } from './components/goods-list-component/goods-list-component.component';
 import { PersonalCenterComponent } from './components/personal-center-component/personal-center-component.component'
+import { PageNotFoundComponent } from './components/page-not-found-component/page-not-found-component.component'
+import { PersonalDetailComponent } from './components/personal-detail/personal-detail.component'
+import { PersonalSettingComponent } from './components/personal-setting/personal-setting.component'
 
 
 // 配置路由列表
 const routes: Routes = [
+  /** 静态路由 */
   {
     // path: 'goodsList/:id', // 定义路由名称
     path: 'goodsList', // 定义路由名称
-    component: GoodsListComponent, // 指定显示的那个组件
+    // component: GoodsListComponent, // 指定显示的那个组件
+    loadChildren: () => import('./components/goods-list-component/goods-list-component.module').then(m => m.GoodsListComponentModule),
   },
   {
     path: 'personalCenter', // 定义路由名称
-    component: PersonalCenterComponent, // 指定显示的那个组件
-  }
+    // component: PersonalCenterComponent, // 指定显示的那个组件
+    loadChildren: () => import('./components/personal-center-component/personal-center-component.module').then(m => m.PersonalCenterComponentModule),
+    // children: [
+    //   {
+    //     path: 'personalCenter/personalDetail',
+    //     component: PersonalDetailComponent,
+    //   },
+    //   {
+    //     path: 'personalCenter/personalSetting',
+    //     component: PersonalSettingComponent,
+    //   },
+    //   /** 默认空路径路由 */
+    //   {
+    //     path: 'personalCenter',
+    //     redirectTo: '/personalCenter/personalDetail',
+    //     pathMatch: 'full'
+    //   },
+    // ]
+  },
+  /** 默认空路径路由 */
+  {
+    path: '',
+    redirectTo: 'personalCenter',
+    pathMatch: 'full'
+  },
+  /** 通配符路由 */
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({

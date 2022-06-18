@@ -97,4 +97,30 @@
   Angular中对DOM的操作可以使用原生JS操作, 也可以使用Angular内置的 @ViewChild 进行操作;
   
 捌.组件通讯&生命周期(communication-component & app.component)
-玖.路由()
+
+
+
+
+
+
+
+
+
+
+玖.路由(goods-list & personal-center & detail & setting & page-not-found)
+  通配符路由(**) 
+    可以匹配所有路由 当其他路由都没有匹配对的时候 Route会跳转指定的Component
+  路由嵌套
+    子路由和其它路由一样, 同时需要 path 和 component. 
+    唯一的区别是你要把子路由放在父路由的 children 数组中
+  路由懒加载
+    你可以配置路由定义来实现惰性加载模块，这意味着 Angular只会在需要时才加载这些模块，而不是在应用启动时就加载全部
+      1.先给之前的两个页面组件增加一个module文件，然后routes中使用loadChildren代替component进行配置
+        loadChildren: () => import('./goods-list/goods-list.module')
+                      .then(m => m.GoodListModule)
+      2.在之前的两个页面组件中添加路由模块文件，添加一个指向该组件的路由。
+        import { Routes, RouterModule } from '@angular/router';
+        imports: [
+          RouterModule.forChild(routes),
+        ],
+        exports: [RouterModule],
