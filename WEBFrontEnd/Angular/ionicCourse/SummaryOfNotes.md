@@ -41,3 +41,29 @@
   angular.json            angular配置文件
   karma.conf.js           测试相关的配置文件
 
+
+
+
+
+
+
+叁.页面创建&跳转&自定义公共模块&数据渲染
+  ionic generate page news                        新建news页面
+  图标库地址:
+    https://ionic.io/ionicons
+  官网地址:
+    https://ionicframework.com/
+  ionic generate module modules/slide             新建slide模块
+    
+  自定义公共模块注意:
+    declarations 声明对应组件
+    exports 暴露对应组件
+    在使用的页面中引入对应模块, selector 就是应用的标签名
+  
+  
+  
+
+
+
+肆.颜色&按钮&图标
+  
