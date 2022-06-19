@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { GoodsListComponent } from './goods-list-component.component';
-import { GoodsListService } from './goods-list-component.service';
+import { RxJsComponent } from './rx-js-component.component';
+
 
 const routes: Routes = [
   {
     path: '',
-    component: GoodsListComponent
+    component: RxJsComponent
   },
 ];
 
@@ -18,6 +18,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
   ],
   exports: [RouterModule],
-  providers: [GoodsListService]
 })
-export class GoodsListComponentModule { }
+export class RxJsModule { }
+
+
+

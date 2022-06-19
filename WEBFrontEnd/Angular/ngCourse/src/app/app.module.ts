@@ -3,20 +3,24 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+/** 引入并配置Service */
+import { StorageService } from './services/storage.service';
+import { RequestService } from './services/request.service';
+import { HttpClientModule } from '@angular/common/http';
+/** Component */
 import { AppComponent } from './app.component';
 import { NewsComponent } from './components/news/news.component';
 import { ThreeComponentComponent } from './components/three-component/three-component.component';
 import { FormComponentComponent } from './components/form-component/form-component.component';
 import { SearchTodoListComponent } from './components/search-todo-list/search-todo-list.component';
-/** 引入并配置Service */
-import { StorageService } from './services/storage.service';
 import { DomComponentComponent } from './components/dom-component/dom-component.component';
 import { CommunicationComponentComponent } from './components/communication-component/communication-component.component';
 import { GoodsListComponent } from './components/goods-list-component/goods-list-component.component';
 import { PersonalCenterComponent } from './components/personal-center-component/personal-center-component.component';
 import { PageNotFoundComponent } from './components/page-not-found-component/page-not-found-component.component';
 import { PersonalDetailComponent } from './components/personal-detail/personal-detail.component';
-import { PersonalSettingComponent } from './components/personal-setting/personal-setting.component'
+import { PersonalSettingComponent } from './components/personal-setting/personal-setting.component';
+import { RxJsComponent } from './components/rx-js-component/rx-js-component.component'
 
 
 
@@ -36,16 +40,18 @@ import { PersonalSettingComponent } from './components/personal-setting/personal
     PersonalCenterComponent,
     PageNotFoundComponent,
     PersonalDetailComponent,
-    PersonalSettingComponent
+    PersonalSettingComponent,
+    RxJsComponent
   ],
   /** 配置项目运行依赖 */
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
   ],
   /** 配置项目运行服务 */
-  providers: [StorageService],
+  providers: [StorageService,RequestService],
   /** 指定应用的主视图, 通过引导根appModule来启动应用默认加载的组件 */
   bootstrap: [AppComponent]
 })

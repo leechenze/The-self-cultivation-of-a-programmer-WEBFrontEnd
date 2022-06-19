@@ -13,6 +13,10 @@ import { PersonalSettingComponent } from './components/personal-setting/personal
 const routes: Routes = [
   /** 静态路由 */
   {
+    path: 'rxJs', // 定义路由名称
+    loadChildren: () => import('./components/rx-js-component/rx-js-component.module').then(m => m.RxJsModule),
+  },
+  {
     // path: 'goodsList/:id', // 定义路由名称
     path: 'goodsList', // 定义路由名称
     // component: GoodsListComponent, // 指定显示的那个组件
@@ -42,7 +46,7 @@ const routes: Routes = [
   /** 默认空路径路由 */
   {
     path: '',
-    redirectTo: 'personalCenter',
+    redirectTo: 'rxJs',
     pathMatch: 'full'
   },
   /** 通配符路由 */
