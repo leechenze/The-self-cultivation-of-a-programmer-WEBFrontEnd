@@ -44,20 +44,20 @@ export class RxJsComponent implements OnInit {
     // })
 
     // RxJs工具方法
-    let streem1 = this.request.getRxJsGetDataNum();
-    streem1.pipe(
-      filter((value:number):boolean => {
-        if(value % 2 === 0){
-          return true;
-        }
-        return false;
-      }),
-      map((value:number):number => {
-        return value * value;
-      })
-    ).subscribe((data:number) => {
-      console.log(data);
-    })
+    // let streem1 = this.request.getRxJsGetDataNum();
+    // streem1.pipe(
+    //   filter((value:number):boolean => {
+    //     if(value % 2 === 0){
+    //       return true;
+    //     }
+    //     return false;
+    //   }),
+    //   map((value:number):number => {
+    //     return value * value;
+    //   })
+    // ).subscribe((data:number) => {
+    //   console.log(data);
+    // })
   }
   public ngOnDestroy(): void {
     // 一般取消订阅在销毁周期时执行 streem.unsubscribe();
