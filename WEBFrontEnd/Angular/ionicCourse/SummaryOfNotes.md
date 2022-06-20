@@ -66,4 +66,21 @@
 
 
 肆.颜色&按钮&图标
-  
+  内置组件:
+    ion-header
+    ion-footer
+    ion-content
+    ion-toolbar
+    ion-title
+    ion-buttons
+    ion-back-button
+  内置颜色
+    primary           蓝色
+    secondary         浅蓝色
+    tertiary          深蓝色
+    seccess           成功
+    warning           警告
+    danger            报错
+    dark              深色
+    medium            灰色
+    light             白色

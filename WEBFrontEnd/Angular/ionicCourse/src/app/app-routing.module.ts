@@ -10,6 +10,10 @@ const routes: Routes = [
     path: 'news',
     loadChildren: () => import('./news/news.module').then( m => m.NewsPageModule)
   },
+  {
+    path: 'icon-button-color',
+    loadChildren: () => import('./study/icon-button-color/icon-button-color.module').then( m => m.IconButtonColorPageModule)
+  },
 ];
 @NgModule({
   imports: [
