@@ -10,6 +10,7 @@
     <canvas id="webgl" width="500" height="500" style="background-color: #0d72da"></canvas>
     <!-- 顶点着色器源码 -->
     <script id="vertexShader" type="x-shader/x-vertex">
+      // precision highp float;
       //attribute声明vec4类型变量apos
       attribute vec4 apos;
       // attribute声明顶点颜色变量
@@ -18,8 +19,8 @@
       attribute vec4 a_normal;
       // uniform声明平行光颜色变量
       uniform vec3 u_lightColor;
-      //平行光方向
-      uniform vec3 u_lightDirection;
+      // uniform声明平行光颜色变量
+      uniform vec3 u_lightPosition;
       //varying声明顶点颜色插值后变量
       varying vec4 v_color;
       void main() {
@@ -45,8 +46,10 @@
         gl_Position = mx*my*apos;
         // 顶点法向量进行矩阵变换，然后归一化
         vec3 normal = normalize((mx*my*a_normal).xyz);
+        // 计算点光源照射顶点的方向并归一化
+        vec3 lightDirection = normalize(vec3(gl_Position) - u_lightPosition);
         // 计算平行光方向向量和顶点法向量的点积
-        float dot = max(dot(u_lightDirection, normal), 0.0);
+        float dot = max(dot(lightDirection, normal), 0.0);
         // 计算反射后的颜色
         vec3 reflectedLight = u_lightColor * a_color.rgb * dot;
         //颜色插值计算
@@ -89,15 +92,12 @@
         var a_color = gl.getAttribLocation(program,'a_color');
         var a_normal = gl.getAttribLocation(program,'a_normal');
         var u_lightColor = gl.getUniformLocation(program,'u_lightColor');
-        var u_lightDirection = gl.getUniformLocation(program,'u_lightDirection');
-    
+        var u_lightPosition = gl.getUniformLocation(program,'u_lightPosition');
         /**
-         * 给平行光传入颜色和方向数据，RGB(1,1,1),单位向量(x,y,z)
+         * 传入点光源颜色数据、位置数据
          **/
         gl.uniform3f(u_lightColor, 1.0, 1.0, 1.0);
-        //保证向量(x,y,z)的长度为1，即单位向量
-        var x = 1/Math.sqrt(15), y = 2/Math.sqrt(15), z = 3/Math.sqrt(15);
-        gl.uniform3f(u_lightDirection,x,y,-z);
+        gl.uniform3f(u_lightPosition, 2.0, 3.0, 4.0);
     
         /**
          创建顶点位置数据数组data,Javascript中小数点前面的0可以省略
