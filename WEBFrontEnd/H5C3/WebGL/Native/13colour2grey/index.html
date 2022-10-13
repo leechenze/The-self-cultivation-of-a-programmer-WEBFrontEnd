@@ -12,7 +12,7 @@
       id="webgl"
       width="500"
       height="500"
-      style="background-color: #aaaaaa"
+      style="background-color: #0d72da"
     ></canvas>
 
     <!-- 顶点着色器源码 -->
@@ -36,8 +36,12 @@
       // 纹理图片像素数据
       uniform sampler2D u_Sampler;
       void main() {
-        // 采集纹素，逐片元赋值像素值
-        gl_FragColor = texture2D(u_Sampler,v_TexCoord);
+        //采集纹素
+        vec4 texture = texture2D(u_Sampler,v_TexCoord);
+        //计算RGB三个分量光能量之和，也就是亮度
+        float luminance = 0.299*texture.r+0.587*texture.g+0.114*texture.b;
+        //逐片元赋值，RGB相同均为亮度值，用黑白两色表达图片的明暗变化
+        gl_FragColor = vec4(luminance,luminance,luminance,1);
       }
     </script>
 
@@ -77,6 +81,10 @@
         0.5, //右上角——v2
         0.5,
         -0.5, //右下角——v3
+        // -0.5, 0.7,//左上角——v0
+        // -0.5,-0.7,//左下角——v1
+        // 0.5,  0.7,//右上角——v2
+        // 0.5, -0.7 //右下角——v3
       ]);
       /**
        * 创建UV纹理坐标数据textureData
@@ -95,27 +103,27 @@
        * 加载纹理图像像素数据
        **/
       var image = new Image();
-      image.src = "../images/texture.jpg"; //设置图片路径
+      image.src = "../images/texture1.jpg"; //设置图片路径
       image.onload = texture; //图片加载成功后执行texture函数
       /**
-     创建缓冲区buffer，向顶点着色器传入顶点位置数据data
-     **/
+         创建缓冲区buffer，向顶点着色器传入顶点位置数据data
+         **/
       var buffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
       gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
       gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
       gl.enableVertexAttribArray(a_Position);
       /**
-     创建缓冲区textureBuffer，向顶点着色器传入顶点纹理坐标数据textureData
-     **/
+         创建缓冲区textureBuffer，向顶点着色器传入顶点纹理坐标数据textureData
+         **/
       var textureBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, textureBuffer);
       gl.bufferData(gl.ARRAY_BUFFER, textureData, gl.STATIC_DRAW);
       gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, false, 0, 0);
       gl.enableVertexAttribArray(a_TexCoord);
       /**
-     创建缓冲区textureBuffer，传入图片纹理数据，然后执行绘制方法drawArrays()
-     **/
+         创建缓冲区textureBuffer，传入图片纹理数据，然后执行绘制方法drawArrays()
+         **/
       function texture() {
         var texture = gl.createTexture(); //创建纹理图像缓冲区
         gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true); //纹理图片上下反转
@@ -139,8 +147,8 @@
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       }
       /**
-     初始化函数initShader()
-     **/
+         初始化函数initShader()
+         **/
       function initShader(gl, vertexShaderSource, fragmentShaderSource) {
         var vertexShader = gl.createShader(gl.VERTEX_SHADER);
         var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
