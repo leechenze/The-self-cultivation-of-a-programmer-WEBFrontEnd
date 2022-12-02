@@ -36180,14 +36180,3707 @@ if (typeof window !== 'undefined') {
     window.__THREE__ = REVISION;
   }
 }
-},{}],"main.js":[function(require,module,exports) {
+},{}],"../../ThreeSrcCode/src/math/MathUtils.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.RAD2DEG = exports.DEG2RAD = void 0;
+exports.ceilPowerOfTwo = ceilPowerOfTwo;
+exports.clamp = clamp;
+exports.damp = damp;
+exports.degToRad = degToRad;
+exports.denormalize = denormalize;
+exports.euclideanModulo = euclideanModulo;
+exports.floorPowerOfTwo = floorPowerOfTwo;
+exports.generateUUID = generateUUID;
+exports.inverseLerp = inverseLerp;
+exports.isPowerOfTwo = isPowerOfTwo;
+exports.lerp = lerp;
+exports.mapLinear = mapLinear;
+exports.normalize = normalize;
+exports.pingpong = pingpong;
+exports.radToDeg = radToDeg;
+exports.randFloat = randFloat;
+exports.randFloatSpread = randFloatSpread;
+exports.randInt = randInt;
+exports.seededRandom = seededRandom;
+exports.setQuaternionFromProperEuler = setQuaternionFromProperEuler;
+exports.smootherstep = smootherstep;
+exports.smoothstep = smoothstep;
+var _lut = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '0a', '0b', '0c', '0d', '0e', '0f', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '1a', '1b', '1c', '1d', '1e', '1f', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '2a', '2b', '2c', '2d', '2e', '2f', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '3a', '3b', '3c', '3d', '3e', '3f', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '4a', '4b', '4c', '4d', '4e', '4f', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '5a', '5b', '5c', '5d', '5e', '5f', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '6a', '6b', '6c', '6d', '6e', '6f', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '7a', '7b', '7c', '7d', '7e', '7f', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '8a', '8b', '8c', '8d', '8e', '8f', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '9a', '9b', '9c', '9d', '9e', '9f', 'a0', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'aa', 'ab', 'ac', 'ad', 'ae', 'af', 'b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'ba', 'bb', 'bc', 'bd', 'be', 'bf', 'c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'ca', 'cb', 'cc', 'cd', 'ce', 'cf', 'd0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9', 'da', 'db', 'dc', 'dd', 'de', 'df', 'e0', 'e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'e7', 'e8', 'e9', 'ea', 'eb', 'ec', 'ed', 'ee', 'ef', 'f0', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'fa', 'fb', 'fc', 'fd', 'fe', 'ff'];
+var _seed = 1234567;
+var DEG2RAD = Math.PI / 180;
+exports.DEG2RAD = DEG2RAD;
+var RAD2DEG = 180 / Math.PI;
+
+// http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript/21963136#21963136
+exports.RAD2DEG = RAD2DEG;
+function generateUUID() {
+  var d0 = Math.random() * 0xffffffff | 0;
+  var d1 = Math.random() * 0xffffffff | 0;
+  var d2 = Math.random() * 0xffffffff | 0;
+  var d3 = Math.random() * 0xffffffff | 0;
+  var uuid = _lut[d0 & 0xff] + _lut[d0 >> 8 & 0xff] + _lut[d0 >> 16 & 0xff] + _lut[d0 >> 24 & 0xff] + '-' + _lut[d1 & 0xff] + _lut[d1 >> 8 & 0xff] + '-' + _lut[d1 >> 16 & 0x0f | 0x40] + _lut[d1 >> 24 & 0xff] + '-' + _lut[d2 & 0x3f | 0x80] + _lut[d2 >> 8 & 0xff] + '-' + _lut[d2 >> 16 & 0xff] + _lut[d2 >> 24 & 0xff] + _lut[d3 & 0xff] + _lut[d3 >> 8 & 0xff] + _lut[d3 >> 16 & 0xff] + _lut[d3 >> 24 & 0xff];
+
+  // .toLowerCase() here flattens concatenated strings to save heap memory space.
+  return uuid.toLowerCase();
+}
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+// compute euclidean modulo of m % n
+// https://en.wikipedia.org/wiki/Modulo_operation
+function euclideanModulo(n, m) {
+  return (n % m + m) % m;
+}
+
+// Linear mapping from range <a1, a2> to range <b1, b2>
+function mapLinear(x, a1, a2, b1, b2) {
+  return b1 + (x - a1) * (b2 - b1) / (a2 - a1);
+}
+
+// https://www.gamedev.net/tutorials/programming/general-and-gameplay-programming/inverse-lerp-a-super-useful-yet-often-overlooked-function-r5230/
+function inverseLerp(x, y, value) {
+  if (x !== y) {
+    return (value - x) / (y - x);
+  } else {
+    return 0;
+  }
+}
+
+// https://en.wikipedia.org/wiki/Linear_interpolation
+function lerp(x, y, t) {
+  return (1 - t) * x + t * y;
+}
+
+// http://www.rorydriscoll.com/2016/03/07/frame-rate-independent-damping-using-lerp/
+function damp(x, y, lambda, dt) {
+  return lerp(x, y, 1 - Math.exp(-lambda * dt));
+}
+
+// https://www.desmos.com/calculator/vcsjnyz7x4
+function pingpong(x) {
+  var length = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  return length - Math.abs(euclideanModulo(x, length * 2) - length);
+}
+
+// http://en.wikipedia.org/wiki/Smoothstep
+function smoothstep(x, min, max) {
+  if (x <= min) return 0;
+  if (x >= max) return 1;
+  x = (x - min) / (max - min);
+  return x * x * (3 - 2 * x);
+}
+function smootherstep(x, min, max) {
+  if (x <= min) return 0;
+  if (x >= max) return 1;
+  x = (x - min) / (max - min);
+  return x * x * x * (x * (x * 6 - 15) + 10);
+}
+
+// Random integer from <low, high> interval
+function randInt(low, high) {
+  return low + Math.floor(Math.random() * (high - low + 1));
+}
+
+// Random float from <low, high> interval
+function randFloat(low, high) {
+  return low + Math.random() * (high - low);
+}
+
+// Random float from <-range/2, range/2> interval
+function randFloatSpread(range) {
+  return range * (0.5 - Math.random());
+}
+
+// Deterministic pseudo-random float in the interval [ 0, 1 ]
+function seededRandom(s) {
+  if (s !== undefined) _seed = s;
+
+  // Mulberry32 generator
+
+  var t = _seed += 0x6D2B79F5;
+  t = Math.imul(t ^ t >>> 15, t | 1);
+  t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+  return ((t ^ t >>> 14) >>> 0) / 4294967296;
+}
+function degToRad(degrees) {
+  return degrees * DEG2RAD;
+}
+function radToDeg(radians) {
+  return radians * RAD2DEG;
+}
+function isPowerOfTwo(value) {
+  return (value & value - 1) === 0 && value !== 0;
+}
+function ceilPowerOfTwo(value) {
+  return Math.pow(2, Math.ceil(Math.log(value) / Math.LN2));
+}
+function floorPowerOfTwo(value) {
+  return Math.pow(2, Math.floor(Math.log(value) / Math.LN2));
+}
+function setQuaternionFromProperEuler(q, a, b, c, order) {
+  // Intrinsic Proper Euler Angles - see https://en.wikipedia.org/wiki/Euler_angles
+
+  // rotations are applied to the axes in the order specified by 'order'
+  // rotation by angle 'a' is applied first, then by angle 'b', then by angle 'c'
+  // angles are in radians
+
+  var cos = Math.cos;
+  var sin = Math.sin;
+  var c2 = cos(b / 2);
+  var s2 = sin(b / 2);
+  var c13 = cos((a + c) / 2);
+  var s13 = sin((a + c) / 2);
+  var c1_3 = cos((a - c) / 2);
+  var s1_3 = sin((a - c) / 2);
+  var c3_1 = cos((c - a) / 2);
+  var s3_1 = sin((c - a) / 2);
+  switch (order) {
+    case 'XYX':
+      q.set(c2 * s13, s2 * c1_3, s2 * s1_3, c2 * c13);
+      break;
+    case 'YZY':
+      q.set(s2 * s1_3, c2 * s13, s2 * c1_3, c2 * c13);
+      break;
+    case 'ZXZ':
+      q.set(s2 * c1_3, s2 * s1_3, c2 * s13, c2 * c13);
+      break;
+    case 'XZX':
+      q.set(c2 * s13, s2 * s3_1, s2 * c3_1, c2 * c13);
+      break;
+    case 'YXY':
+      q.set(s2 * c3_1, c2 * s13, s2 * s3_1, c2 * c13);
+      break;
+    case 'ZYZ':
+      q.set(s2 * s3_1, s2 * c3_1, c2 * s13, c2 * c13);
+      break;
+    default:
+      console.warn('THREE.MathUtils: .setQuaternionFromProperEuler() encountered an unknown order: ' + order);
+  }
+}
+function denormalize(value, array) {
+  switch (array.constructor) {
+    case Float32Array:
+      return value;
+    case Uint16Array:
+      return value / 65535.0;
+    case Uint8Array:
+      return value / 255.0;
+    case Int16Array:
+      return Math.max(value / 32767.0, -1.0);
+    case Int8Array:
+      return Math.max(value / 127.0, -1.0);
+    default:
+      throw new Error('Invalid component type.');
+  }
+}
+function normalize(value, array) {
+  switch (array.constructor) {
+    case Float32Array:
+      return value;
+    case Uint16Array:
+      return Math.round(value * 65535.0);
+    case Uint8Array:
+      return Math.round(value * 255.0);
+    case Int16Array:
+      return Math.round(value * 32767.0);
+    case Int8Array:
+      return Math.round(value * 127.0);
+    default:
+      throw new Error('Invalid component type.');
+  }
+}
+},{}],"../../ThreeSrcCode/src/math/Quaternion.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Quaternion = void 0;
+var MathUtils = _interopRequireWildcard(require("./MathUtils.js"));
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator.return && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, catch: function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+var Quaternion = /*#__PURE__*/function (_Symbol$iterator) {
+  function Quaternion() {
+    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    var z = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+    var w = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+    _classCallCheck(this, Quaternion);
+    this.isQuaternion = true;
+    this._x = x;
+    this._y = y;
+    this._z = z;
+    this._w = w;
+  }
+  _createClass(Quaternion, [{
+    key: "x",
+    get: function get() {
+      return this._x;
+    },
+    set: function set(value) {
+      this._x = value;
+      this._onChangeCallback();
+    }
+  }, {
+    key: "y",
+    get: function get() {
+      return this._y;
+    },
+    set: function set(value) {
+      this._y = value;
+      this._onChangeCallback();
+    }
+  }, {
+    key: "z",
+    get: function get() {
+      return this._z;
+    },
+    set: function set(value) {
+      this._z = value;
+      this._onChangeCallback();
+    }
+  }, {
+    key: "w",
+    get: function get() {
+      return this._w;
+    },
+    set: function set(value) {
+      this._w = value;
+      this._onChangeCallback();
+    }
+  }, {
+    key: "set",
+    value: function set(x, y, z, w) {
+      this._x = x;
+      this._y = y;
+      this._z = z;
+      this._w = w;
+      this._onChangeCallback();
+      return this;
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      return new this.constructor(this._x, this._y, this._z, this._w);
+    }
+  }, {
+    key: "copy",
+    value: function copy(quaternion) {
+      this._x = quaternion.x;
+      this._y = quaternion.y;
+      this._z = quaternion.z;
+      this._w = quaternion.w;
+      this._onChangeCallback();
+      return this;
+    }
+  }, {
+    key: "setFromEuler",
+    value: function setFromEuler(euler, update) {
+      var x = euler._x,
+        y = euler._y,
+        z = euler._z,
+        order = euler._order;
+
+      // http://www.mathworks.com/matlabcentral/fileexchange/
+      // 	20696-function-to-convert-between-dcm-euler-angles-quaternions-and-euler-vectors/
+      //	content/SpinCalc.m
+
+      var cos = Math.cos;
+      var sin = Math.sin;
+      var c1 = cos(x / 2);
+      var c2 = cos(y / 2);
+      var c3 = cos(z / 2);
+      var s1 = sin(x / 2);
+      var s2 = sin(y / 2);
+      var s3 = sin(z / 2);
+      switch (order) {
+        case 'XYZ':
+          this._x = s1 * c2 * c3 + c1 * s2 * s3;
+          this._y = c1 * s2 * c3 - s1 * c2 * s3;
+          this._z = c1 * c2 * s3 + s1 * s2 * c3;
+          this._w = c1 * c2 * c3 - s1 * s2 * s3;
+          break;
+        case 'YXZ':
+          this._x = s1 * c2 * c3 + c1 * s2 * s3;
+          this._y = c1 * s2 * c3 - s1 * c2 * s3;
+          this._z = c1 * c2 * s3 - s1 * s2 * c3;
+          this._w = c1 * c2 * c3 + s1 * s2 * s3;
+          break;
+        case 'ZXY':
+          this._x = s1 * c2 * c3 - c1 * s2 * s3;
+          this._y = c1 * s2 * c3 + s1 * c2 * s3;
+          this._z = c1 * c2 * s3 + s1 * s2 * c3;
+          this._w = c1 * c2 * c3 - s1 * s2 * s3;
+          break;
+        case 'ZYX':
+          this._x = s1 * c2 * c3 - c1 * s2 * s3;
+          this._y = c1 * s2 * c3 + s1 * c2 * s3;
+          this._z = c1 * c2 * s3 - s1 * s2 * c3;
+          this._w = c1 * c2 * c3 + s1 * s2 * s3;
+          break;
+        case 'YZX':
+          this._x = s1 * c2 * c3 + c1 * s2 * s3;
+          this._y = c1 * s2 * c3 + s1 * c2 * s3;
+          this._z = c1 * c2 * s3 - s1 * s2 * c3;
+          this._w = c1 * c2 * c3 - s1 * s2 * s3;
+          break;
+        case 'XZY':
+          this._x = s1 * c2 * c3 - c1 * s2 * s3;
+          this._y = c1 * s2 * c3 - s1 * c2 * s3;
+          this._z = c1 * c2 * s3 + s1 * s2 * c3;
+          this._w = c1 * c2 * c3 + s1 * s2 * s3;
+          break;
+        default:
+          console.warn('THREE.Quaternion: .setFromEuler() encountered an unknown order: ' + order);
+      }
+      if (update !== false) this._onChangeCallback();
+      return this;
+    }
+  }, {
+    key: "setFromAxisAngle",
+    value: function setFromAxisAngle(axis, angle) {
+      // http://www.euclideanspace.com/maths/geometry/rotations/conversions/angleToQuaternion/index.htm
+
+      // assumes axis is normalized
+
+      var halfAngle = angle / 2,
+        s = Math.sin(halfAngle);
+      this._x = axis.x * s;
+      this._y = axis.y * s;
+      this._z = axis.z * s;
+      this._w = Math.cos(halfAngle);
+      this._onChangeCallback();
+      return this;
+    }
+  }, {
+    key: "setFromRotationMatrix",
+    value: function setFromRotationMatrix(m) {
+      // http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/index.htm
+
+      // assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
+
+      var te = m.elements,
+        m11 = te[0],
+        m12 = te[4],
+        m13 = te[8],
+        m21 = te[1],
+        m22 = te[5],
+        m23 = te[9],
+        m31 = te[2],
+        m32 = te[6],
+        m33 = te[10],
+        trace = m11 + m22 + m33;
+      if (trace > 0) {
+        var s = 0.5 / Math.sqrt(trace + 1.0);
+        this._w = 0.25 / s;
+        this._x = (m32 - m23) * s;
+        this._y = (m13 - m31) * s;
+        this._z = (m21 - m12) * s;
+      } else if (m11 > m22 && m11 > m33) {
+        var _s = 2.0 * Math.sqrt(1.0 + m11 - m22 - m33);
+        this._w = (m32 - m23) / _s;
+        this._x = 0.25 * _s;
+        this._y = (m12 + m21) / _s;
+        this._z = (m13 + m31) / _s;
+      } else if (m22 > m33) {
+        var _s2 = 2.0 * Math.sqrt(1.0 + m22 - m11 - m33);
+        this._w = (m13 - m31) / _s2;
+        this._x = (m12 + m21) / _s2;
+        this._y = 0.25 * _s2;
+        this._z = (m23 + m32) / _s2;
+      } else {
+        var _s3 = 2.0 * Math.sqrt(1.0 + m33 - m11 - m22);
+        this._w = (m21 - m12) / _s3;
+        this._x = (m13 + m31) / _s3;
+        this._y = (m23 + m32) / _s3;
+        this._z = 0.25 * _s3;
+      }
+      this._onChangeCallback();
+      return this;
+    }
+  }, {
+    key: "setFromUnitVectors",
+    value: function setFromUnitVectors(vFrom, vTo) {
+      // assumes direction vectors vFrom and vTo are normalized
+
+      var r = vFrom.dot(vTo) + 1;
+      if (r < Number.EPSILON) {
+        // vFrom and vTo point in opposite directions
+
+        r = 0;
+        if (Math.abs(vFrom.x) > Math.abs(vFrom.z)) {
+          this._x = -vFrom.y;
+          this._y = vFrom.x;
+          this._z = 0;
+          this._w = r;
+        } else {
+          this._x = 0;
+          this._y = -vFrom.z;
+          this._z = vFrom.y;
+          this._w = r;
+        }
+      } else {
+        // crossVectors( vFrom, vTo ); // inlined to avoid cyclic dependency on Vector3
+
+        this._x = vFrom.y * vTo.z - vFrom.z * vTo.y;
+        this._y = vFrom.z * vTo.x - vFrom.x * vTo.z;
+        this._z = vFrom.x * vTo.y - vFrom.y * vTo.x;
+        this._w = r;
+      }
+      return this.normalize();
+    }
+  }, {
+    key: "angleTo",
+    value: function angleTo(q) {
+      return 2 * Math.acos(Math.abs(MathUtils.clamp(this.dot(q), -1, 1)));
+    }
+  }, {
+    key: "rotateTowards",
+    value: function rotateTowards(q, step) {
+      var angle = this.angleTo(q);
+      if (angle === 0) return this;
+      var t = Math.min(1, step / angle);
+      this.slerp(q, t);
+      return this;
+    }
+  }, {
+    key: "identity",
+    value: function identity() {
+      return this.set(0, 0, 0, 1);
+    }
+  }, {
+    key: "invert",
+    value: function invert() {
+      // quaternion is assumed to have unit length
+
+      return this.conjugate();
+    }
+  }, {
+    key: "conjugate",
+    value: function conjugate() {
+      this._x *= -1;
+      this._y *= -1;
+      this._z *= -1;
+      this._onChangeCallback();
+      return this;
+    }
+  }, {
+    key: "dot",
+    value: function dot(v) {
+      return this._x * v._x + this._y * v._y + this._z * v._z + this._w * v._w;
+    }
+  }, {
+    key: "lengthSq",
+    value: function lengthSq() {
+      return this._x * this._x + this._y * this._y + this._z * this._z + this._w * this._w;
+    }
+  }, {
+    key: "length",
+    value: function length() {
+      return Math.sqrt(this._x * this._x + this._y * this._y + this._z * this._z + this._w * this._w);
+    }
+  }, {
+    key: "normalize",
+    value: function normalize() {
+      var l = this.length();
+      if (l === 0) {
+        this._x = 0;
+        this._y = 0;
+        this._z = 0;
+        this._w = 1;
+      } else {
+        l = 1 / l;
+        this._x = this._x * l;
+        this._y = this._y * l;
+        this._z = this._z * l;
+        this._w = this._w * l;
+      }
+      this._onChangeCallback();
+      return this;
+    }
+  }, {
+    key: "multiply",
+    value: function multiply(q) {
+      return this.multiplyQuaternions(this, q);
+    }
+  }, {
+    key: "premultiply",
+    value: function premultiply(q) {
+      return this.multiplyQuaternions(q, this);
+    }
+  }, {
+    key: "multiplyQuaternions",
+    value: function multiplyQuaternions(a, b) {
+      // from http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/code/index.htm
+
+      var qax = a._x,
+        qay = a._y,
+        qaz = a._z,
+        qaw = a._w;
+      var qbx = b._x,
+        qby = b._y,
+        qbz = b._z,
+        qbw = b._w;
+      this._x = qax * qbw + qaw * qbx + qay * qbz - qaz * qby;
+      this._y = qay * qbw + qaw * qby + qaz * qbx - qax * qbz;
+      this._z = qaz * qbw + qaw * qbz + qax * qby - qay * qbx;
+      this._w = qaw * qbw - qax * qbx - qay * qby - qaz * qbz;
+      this._onChangeCallback();
+      return this;
+    }
+  }, {
+    key: "slerp",
+    value: function slerp(qb, t) {
+      if (t === 0) return this;
+      if (t === 1) return this.copy(qb);
+      var x = this._x,
+        y = this._y,
+        z = this._z,
+        w = this._w;
+
+      // http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/slerp/
+
+      var cosHalfTheta = w * qb._w + x * qb._x + y * qb._y + z * qb._z;
+      if (cosHalfTheta < 0) {
+        this._w = -qb._w;
+        this._x = -qb._x;
+        this._y = -qb._y;
+        this._z = -qb._z;
+        cosHalfTheta = -cosHalfTheta;
+      } else {
+        this.copy(qb);
+      }
+      if (cosHalfTheta >= 1.0) {
+        this._w = w;
+        this._x = x;
+        this._y = y;
+        this._z = z;
+        return this;
+      }
+      var sqrSinHalfTheta = 1.0 - cosHalfTheta * cosHalfTheta;
+      if (sqrSinHalfTheta <= Number.EPSILON) {
+        var s = 1 - t;
+        this._w = s * w + t * this._w;
+        this._x = s * x + t * this._x;
+        this._y = s * y + t * this._y;
+        this._z = s * z + t * this._z;
+        this.normalize();
+        this._onChangeCallback();
+        return this;
+      }
+      var sinHalfTheta = Math.sqrt(sqrSinHalfTheta);
+      var halfTheta = Math.atan2(sinHalfTheta, cosHalfTheta);
+      var ratioA = Math.sin((1 - t) * halfTheta) / sinHalfTheta,
+        ratioB = Math.sin(t * halfTheta) / sinHalfTheta;
+      this._w = w * ratioA + this._w * ratioB;
+      this._x = x * ratioA + this._x * ratioB;
+      this._y = y * ratioA + this._y * ratioB;
+      this._z = z * ratioA + this._z * ratioB;
+      this._onChangeCallback();
+      return this;
+    }
+  }, {
+    key: "slerpQuaternions",
+    value: function slerpQuaternions(qa, qb, t) {
+      return this.copy(qa).slerp(qb, t);
+    }
+  }, {
+    key: "random",
+    value: function random() {
+      // Derived from http://planning.cs.uiuc.edu/node198.html
+      // Note, this source uses w, x, y, z ordering,
+      // so we swap the order below.
+
+      var u1 = Math.random();
+      var sqrt1u1 = Math.sqrt(1 - u1);
+      var sqrtu1 = Math.sqrt(u1);
+      var u2 = 2 * Math.PI * Math.random();
+      var u3 = 2 * Math.PI * Math.random();
+      return this.set(sqrt1u1 * Math.cos(u2), sqrtu1 * Math.sin(u3), sqrtu1 * Math.cos(u3), sqrt1u1 * Math.sin(u2));
+    }
+  }, {
+    key: "equals",
+    value: function equals(quaternion) {
+      return quaternion._x === this._x && quaternion._y === this._y && quaternion._z === this._z && quaternion._w === this._w;
+    }
+  }, {
+    key: "fromArray",
+    value: function fromArray(array) {
+      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      this._x = array[offset];
+      this._y = array[offset + 1];
+      this._z = array[offset + 2];
+      this._w = array[offset + 3];
+      this._onChangeCallback();
+      return this;
+    }
+  }, {
+    key: "toArray",
+    value: function toArray() {
+      var array = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      array[offset] = this._x;
+      array[offset + 1] = this._y;
+      array[offset + 2] = this._z;
+      array[offset + 3] = this._w;
+      return array;
+    }
+  }, {
+    key: "fromBufferAttribute",
+    value: function fromBufferAttribute(attribute, index) {
+      this._x = attribute.getX(index);
+      this._y = attribute.getY(index);
+      this._z = attribute.getZ(index);
+      this._w = attribute.getW(index);
+      return this;
+    }
+  }, {
+    key: "_onChange",
+    value: function _onChange(callback) {
+      this._onChangeCallback = callback;
+      return this;
+    }
+  }, {
+    key: "_onChangeCallback",
+    value: function _onChangeCallback() {}
+  }, {
+    key: _Symbol$iterator,
+    value: /*#__PURE__*/_regeneratorRuntime().mark(function value() {
+      return _regeneratorRuntime().wrap(function value$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return this._x;
+            case 2:
+              _context.next = 4;
+              return this._y;
+            case 4:
+              _context.next = 6;
+              return this._z;
+            case 6:
+              _context.next = 8;
+              return this._w;
+            case 8:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, value, this);
+    })
+  }], [{
+    key: "slerpFlat",
+    value: function slerpFlat(dst, dstOffset, src0, srcOffset0, src1, srcOffset1, t) {
+      // fuzz-free, array-based Quaternion SLERP operation
+
+      var x0 = src0[srcOffset0 + 0],
+        y0 = src0[srcOffset0 + 1],
+        z0 = src0[srcOffset0 + 2],
+        w0 = src0[srcOffset0 + 3];
+      var x1 = src1[srcOffset1 + 0],
+        y1 = src1[srcOffset1 + 1],
+        z1 = src1[srcOffset1 + 2],
+        w1 = src1[srcOffset1 + 3];
+      if (t === 0) {
+        dst[dstOffset + 0] = x0;
+        dst[dstOffset + 1] = y0;
+        dst[dstOffset + 2] = z0;
+        dst[dstOffset + 3] = w0;
+        return;
+      }
+      if (t === 1) {
+        dst[dstOffset + 0] = x1;
+        dst[dstOffset + 1] = y1;
+        dst[dstOffset + 2] = z1;
+        dst[dstOffset + 3] = w1;
+        return;
+      }
+      if (w0 !== w1 || x0 !== x1 || y0 !== y1 || z0 !== z1) {
+        var s = 1 - t;
+        var cos = x0 * x1 + y0 * y1 + z0 * z1 + w0 * w1,
+          dir = cos >= 0 ? 1 : -1,
+          sqrSin = 1 - cos * cos;
+
+        // Skip the Slerp for tiny steps to avoid numeric problems:
+        if (sqrSin > Number.EPSILON) {
+          var sin = Math.sqrt(sqrSin),
+            len = Math.atan2(sin, cos * dir);
+          s = Math.sin(s * len) / sin;
+          t = Math.sin(t * len) / sin;
+        }
+        var tDir = t * dir;
+        x0 = x0 * s + x1 * tDir;
+        y0 = y0 * s + y1 * tDir;
+        z0 = z0 * s + z1 * tDir;
+        w0 = w0 * s + w1 * tDir;
+
+        // Normalize in case we just did a lerp:
+        if (s === 1 - t) {
+          var f = 1 / Math.sqrt(x0 * x0 + y0 * y0 + z0 * z0 + w0 * w0);
+          x0 *= f;
+          y0 *= f;
+          z0 *= f;
+          w0 *= f;
+        }
+      }
+      dst[dstOffset] = x0;
+      dst[dstOffset + 1] = y0;
+      dst[dstOffset + 2] = z0;
+      dst[dstOffset + 3] = w0;
+    }
+  }, {
+    key: "multiplyQuaternionsFlat",
+    value: function multiplyQuaternionsFlat(dst, dstOffset, src0, srcOffset0, src1, srcOffset1) {
+      var x0 = src0[srcOffset0];
+      var y0 = src0[srcOffset0 + 1];
+      var z0 = src0[srcOffset0 + 2];
+      var w0 = src0[srcOffset0 + 3];
+      var x1 = src1[srcOffset1];
+      var y1 = src1[srcOffset1 + 1];
+      var z1 = src1[srcOffset1 + 2];
+      var w1 = src1[srcOffset1 + 3];
+      dst[dstOffset] = x0 * w1 + w0 * x1 + y0 * z1 - z0 * y1;
+      dst[dstOffset + 1] = y0 * w1 + w0 * y1 + z0 * x1 - x0 * z1;
+      dst[dstOffset + 2] = z0 * w1 + w0 * z1 + x0 * y1 - y0 * x1;
+      dst[dstOffset + 3] = w0 * w1 - x0 * x1 - y0 * y1 - z0 * z1;
+      return dst;
+    }
+  }]);
+  return Quaternion;
+}(Symbol.iterator);
+exports.Quaternion = Quaternion;
+},{"./MathUtils.js":"../../ThreeSrcCode/src/math/MathUtils.js"}],"../../ThreeSrcCode/src/math/Vector3.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Vector3 = void 0;
+var MathUtils = _interopRequireWildcard(require("./MathUtils.js"));
+var _Quaternion = require("./Quaternion.js");
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator.return && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, catch: function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+var Vector3 = /*#__PURE__*/function (_Symbol$iterator) {
+  function Vector3() {
+    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    var z = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+    _classCallCheck(this, Vector3);
+    Vector3.prototype.isVector3 = true;
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
+  _createClass(Vector3, [{
+    key: "set",
+    value: function set(x, y, z) {
+      if (z === undefined) z = this.z; // sprite.scale.set(x,y)
+
+      this.x = x;
+      this.y = y;
+      this.z = z;
+      return this;
+    }
+  }, {
+    key: "setScalar",
+    value: function setScalar(scalar) {
+      this.x = scalar;
+      this.y = scalar;
+      this.z = scalar;
+      return this;
+    }
+  }, {
+    key: "setX",
+    value: function setX(x) {
+      this.x = x;
+      return this;
+    }
+  }, {
+    key: "setY",
+    value: function setY(y) {
+      this.y = y;
+      return this;
+    }
+  }, {
+    key: "setZ",
+    value: function setZ(z) {
+      this.z = z;
+      return this;
+    }
+  }, {
+    key: "setComponent",
+    value: function setComponent(index, value) {
+      switch (index) {
+        case 0:
+          this.x = value;
+          break;
+        case 1:
+          this.y = value;
+          break;
+        case 2:
+          this.z = value;
+          break;
+        default:
+          throw new Error('index is out of range: ' + index);
+      }
+      return this;
+    }
+  }, {
+    key: "getComponent",
+    value: function getComponent(index) {
+      switch (index) {
+        case 0:
+          return this.x;
+        case 1:
+          return this.y;
+        case 2:
+          return this.z;
+        default:
+          throw new Error('index is out of range: ' + index);
+      }
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      return new this.constructor(this.x, this.y, this.z);
+    }
+  }, {
+    key: "copy",
+    value: function copy(v) {
+      this.x = v.x;
+      this.y = v.y;
+      this.z = v.z;
+      return this;
+    }
+  }, {
+    key: "add",
+    value: function add(v) {
+      this.x += v.x;
+      this.y += v.y;
+      this.z += v.z;
+      return this;
+    }
+  }, {
+    key: "addScalar",
+    value: function addScalar(s) {
+      this.x += s;
+      this.y += s;
+      this.z += s;
+      return this;
+    }
+  }, {
+    key: "addVectors",
+    value: function addVectors(a, b) {
+      this.x = a.x + b.x;
+      this.y = a.y + b.y;
+      this.z = a.z + b.z;
+      return this;
+    }
+  }, {
+    key: "addScaledVector",
+    value: function addScaledVector(v, s) {
+      this.x += v.x * s;
+      this.y += v.y * s;
+      this.z += v.z * s;
+      return this;
+    }
+  }, {
+    key: "sub",
+    value: function sub(v) {
+      this.x -= v.x;
+      this.y -= v.y;
+      this.z -= v.z;
+      return this;
+    }
+  }, {
+    key: "subScalar",
+    value: function subScalar(s) {
+      this.x -= s;
+      this.y -= s;
+      this.z -= s;
+      return this;
+    }
+  }, {
+    key: "subVectors",
+    value: function subVectors(a, b) {
+      this.x = a.x - b.x;
+      this.y = a.y - b.y;
+      this.z = a.z - b.z;
+      return this;
+    }
+  }, {
+    key: "multiply",
+    value: function multiply(v) {
+      this.x *= v.x;
+      this.y *= v.y;
+      this.z *= v.z;
+      return this;
+    }
+  }, {
+    key: "multiplyScalar",
+    value: function multiplyScalar(scalar) {
+      this.x *= scalar;
+      this.y *= scalar;
+      this.z *= scalar;
+      return this;
+    }
+  }, {
+    key: "multiplyVectors",
+    value: function multiplyVectors(a, b) {
+      this.x = a.x * b.x;
+      this.y = a.y * b.y;
+      this.z = a.z * b.z;
+      return this;
+    }
+  }, {
+    key: "applyEuler",
+    value: function applyEuler(euler) {
+      return this.applyQuaternion(_quaternion.setFromEuler(euler));
+    }
+  }, {
+    key: "applyAxisAngle",
+    value: function applyAxisAngle(axis, angle) {
+      return this.applyQuaternion(_quaternion.setFromAxisAngle(axis, angle));
+    }
+  }, {
+    key: "applyMatrix3",
+    value: function applyMatrix3(m) {
+      var x = this.x,
+        y = this.y,
+        z = this.z;
+      var e = m.elements;
+      this.x = e[0] * x + e[3] * y + e[6] * z;
+      this.y = e[1] * x + e[4] * y + e[7] * z;
+      this.z = e[2] * x + e[5] * y + e[8] * z;
+      return this;
+    }
+  }, {
+    key: "applyNormalMatrix",
+    value: function applyNormalMatrix(m) {
+      return this.applyMatrix3(m).normalize();
+    }
+  }, {
+    key: "applyMatrix4",
+    value: function applyMatrix4(m) {
+      var x = this.x,
+        y = this.y,
+        z = this.z;
+      var e = m.elements;
+      var w = 1 / (e[3] * x + e[7] * y + e[11] * z + e[15]);
+      this.x = (e[0] * x + e[4] * y + e[8] * z + e[12]) * w;
+      this.y = (e[1] * x + e[5] * y + e[9] * z + e[13]) * w;
+      this.z = (e[2] * x + e[6] * y + e[10] * z + e[14]) * w;
+      return this;
+    }
+  }, {
+    key: "applyQuaternion",
+    value: function applyQuaternion(q) {
+      var x = this.x,
+        y = this.y,
+        z = this.z;
+      var qx = q.x,
+        qy = q.y,
+        qz = q.z,
+        qw = q.w;
+
+      // calculate quat * vector
+
+      var ix = qw * x + qy * z - qz * y;
+      var iy = qw * y + qz * x - qx * z;
+      var iz = qw * z + qx * y - qy * x;
+      var iw = -qx * x - qy * y - qz * z;
+
+      // calculate result * inverse quat
+
+      this.x = ix * qw + iw * -qx + iy * -qz - iz * -qy;
+      this.y = iy * qw + iw * -qy + iz * -qx - ix * -qz;
+      this.z = iz * qw + iw * -qz + ix * -qy - iy * -qx;
+      return this;
+    }
+  }, {
+    key: "project",
+    value: function project(camera) {
+      return this.applyMatrix4(camera.matrixWorldInverse).applyMatrix4(camera.projectionMatrix);
+    }
+  }, {
+    key: "unproject",
+    value: function unproject(camera) {
+      return this.applyMatrix4(camera.projectionMatrixInverse).applyMatrix4(camera.matrixWorld);
+    }
+  }, {
+    key: "transformDirection",
+    value: function transformDirection(m) {
+      // input: THREE.Matrix4 affine matrix
+      // vector interpreted as a direction
+
+      var x = this.x,
+        y = this.y,
+        z = this.z;
+      var e = m.elements;
+      this.x = e[0] * x + e[4] * y + e[8] * z;
+      this.y = e[1] * x + e[5] * y + e[9] * z;
+      this.z = e[2] * x + e[6] * y + e[10] * z;
+      return this.normalize();
+    }
+  }, {
+    key: "divide",
+    value: function divide(v) {
+      this.x /= v.x;
+      this.y /= v.y;
+      this.z /= v.z;
+      return this;
+    }
+  }, {
+    key: "divideScalar",
+    value: function divideScalar(scalar) {
+      return this.multiplyScalar(1 / scalar);
+    }
+  }, {
+    key: "min",
+    value: function min(v) {
+      this.x = Math.min(this.x, v.x);
+      this.y = Math.min(this.y, v.y);
+      this.z = Math.min(this.z, v.z);
+      return this;
+    }
+  }, {
+    key: "max",
+    value: function max(v) {
+      this.x = Math.max(this.x, v.x);
+      this.y = Math.max(this.y, v.y);
+      this.z = Math.max(this.z, v.z);
+      return this;
+    }
+  }, {
+    key: "clamp",
+    value: function clamp(min, max) {
+      // assumes min < max, componentwise
+
+      this.x = Math.max(min.x, Math.min(max.x, this.x));
+      this.y = Math.max(min.y, Math.min(max.y, this.y));
+      this.z = Math.max(min.z, Math.min(max.z, this.z));
+      return this;
+    }
+  }, {
+    key: "clampScalar",
+    value: function clampScalar(minVal, maxVal) {
+      this.x = Math.max(minVal, Math.min(maxVal, this.x));
+      this.y = Math.max(minVal, Math.min(maxVal, this.y));
+      this.z = Math.max(minVal, Math.min(maxVal, this.z));
+      return this;
+    }
+  }, {
+    key: "clampLength",
+    value: function clampLength(min, max) {
+      var length = this.length();
+      return this.divideScalar(length || 1).multiplyScalar(Math.max(min, Math.min(max, length)));
+    }
+  }, {
+    key: "floor",
+    value: function floor() {
+      this.x = Math.floor(this.x);
+      this.y = Math.floor(this.y);
+      this.z = Math.floor(this.z);
+      return this;
+    }
+  }, {
+    key: "ceil",
+    value: function ceil() {
+      this.x = Math.ceil(this.x);
+      this.y = Math.ceil(this.y);
+      this.z = Math.ceil(this.z);
+      return this;
+    }
+  }, {
+    key: "round",
+    value: function round() {
+      this.x = Math.round(this.x);
+      this.y = Math.round(this.y);
+      this.z = Math.round(this.z);
+      return this;
+    }
+  }, {
+    key: "roundToZero",
+    value: function roundToZero() {
+      this.x = this.x < 0 ? Math.ceil(this.x) : Math.floor(this.x);
+      this.y = this.y < 0 ? Math.ceil(this.y) : Math.floor(this.y);
+      this.z = this.z < 0 ? Math.ceil(this.z) : Math.floor(this.z);
+      return this;
+    }
+  }, {
+    key: "negate",
+    value: function negate() {
+      this.x = -this.x;
+      this.y = -this.y;
+      this.z = -this.z;
+      return this;
+    }
+  }, {
+    key: "dot",
+    value: function dot(v) {
+      return this.x * v.x + this.y * v.y + this.z * v.z;
+    }
+
+    // TODO lengthSquared?
+  }, {
+    key: "lengthSq",
+    value: function lengthSq() {
+      return this.x * this.x + this.y * this.y + this.z * this.z;
+    }
+  }, {
+    key: "length",
+    value: function length() {
+      return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+    }
+  }, {
+    key: "manhattanLength",
+    value: function manhattanLength() {
+      return Math.abs(this.x) + Math.abs(this.y) + Math.abs(this.z);
+    }
+  }, {
+    key: "normalize",
+    value: function normalize() {
+      return this.divideScalar(this.length() || 1);
+    }
+  }, {
+    key: "setLength",
+    value: function setLength(length) {
+      return this.normalize().multiplyScalar(length);
+    }
+  }, {
+    key: "lerp",
+    value: function lerp(v, alpha) {
+      this.x += (v.x - this.x) * alpha;
+      this.y += (v.y - this.y) * alpha;
+      this.z += (v.z - this.z) * alpha;
+      return this;
+    }
+  }, {
+    key: "lerpVectors",
+    value: function lerpVectors(v1, v2, alpha) {
+      this.x = v1.x + (v2.x - v1.x) * alpha;
+      this.y = v1.y + (v2.y - v1.y) * alpha;
+      this.z = v1.z + (v2.z - v1.z) * alpha;
+      return this;
+    }
+  }, {
+    key: "cross",
+    value: function cross(v) {
+      return this.crossVectors(this, v);
+    }
+  }, {
+    key: "crossVectors",
+    value: function crossVectors(a, b) {
+      var ax = a.x,
+        ay = a.y,
+        az = a.z;
+      var bx = b.x,
+        by = b.y,
+        bz = b.z;
+      this.x = ay * bz - az * by;
+      this.y = az * bx - ax * bz;
+      this.z = ax * by - ay * bx;
+      return this;
+    }
+  }, {
+    key: "projectOnVector",
+    value: function projectOnVector(v) {
+      var denominator = v.lengthSq();
+      if (denominator === 0) return this.set(0, 0, 0);
+      var scalar = v.dot(this) / denominator;
+      return this.copy(v).multiplyScalar(scalar);
+    }
+  }, {
+    key: "projectOnPlane",
+    value: function projectOnPlane(planeNormal) {
+      _vector.copy(this).projectOnVector(planeNormal);
+      return this.sub(_vector);
+    }
+  }, {
+    key: "reflect",
+    value: function reflect(normal) {
+      // reflect incident vector off plane orthogonal to normal
+      // normal is assumed to have unit length
+
+      return this.sub(_vector.copy(normal).multiplyScalar(2 * this.dot(normal)));
+    }
+  }, {
+    key: "angleTo",
+    value: function angleTo(v) {
+      var denominator = Math.sqrt(this.lengthSq() * v.lengthSq());
+      if (denominator === 0) return Math.PI / 2;
+      var theta = this.dot(v) / denominator;
+
+      // clamp, to handle numerical problems
+
+      return Math.acos(MathUtils.clamp(theta, -1, 1));
+    }
+  }, {
+    key: "distanceTo",
+    value: function distanceTo(v) {
+      return Math.sqrt(this.distanceToSquared(v));
+    }
+  }, {
+    key: "distanceToSquared",
+    value: function distanceToSquared(v) {
+      var dx = this.x - v.x,
+        dy = this.y - v.y,
+        dz = this.z - v.z;
+      return dx * dx + dy * dy + dz * dz;
+    }
+  }, {
+    key: "manhattanDistanceTo",
+    value: function manhattanDistanceTo(v) {
+      return Math.abs(this.x - v.x) + Math.abs(this.y - v.y) + Math.abs(this.z - v.z);
+    }
+  }, {
+    key: "setFromSpherical",
+    value: function setFromSpherical(s) {
+      return this.setFromSphericalCoords(s.radius, s.phi, s.theta);
+    }
+  }, {
+    key: "setFromSphericalCoords",
+    value: function setFromSphericalCoords(radius, phi, theta) {
+      var sinPhiRadius = Math.sin(phi) * radius;
+      this.x = sinPhiRadius * Math.sin(theta);
+      this.y = Math.cos(phi) * radius;
+      this.z = sinPhiRadius * Math.cos(theta);
+      return this;
+    }
+  }, {
+    key: "setFromCylindrical",
+    value: function setFromCylindrical(c) {
+      return this.setFromCylindricalCoords(c.radius, c.theta, c.y);
+    }
+  }, {
+    key: "setFromCylindricalCoords",
+    value: function setFromCylindricalCoords(radius, theta, y) {
+      this.x = radius * Math.sin(theta);
+      this.y = y;
+      this.z = radius * Math.cos(theta);
+      return this;
+    }
+  }, {
+    key: "setFromMatrixPosition",
+    value: function setFromMatrixPosition(m) {
+      var e = m.elements;
+      this.x = e[12];
+      this.y = e[13];
+      this.z = e[14];
+      return this;
+    }
+  }, {
+    key: "setFromMatrixScale",
+    value: function setFromMatrixScale(m) {
+      var sx = this.setFromMatrixColumn(m, 0).length();
+      var sy = this.setFromMatrixColumn(m, 1).length();
+      var sz = this.setFromMatrixColumn(m, 2).length();
+      this.x = sx;
+      this.y = sy;
+      this.z = sz;
+      return this;
+    }
+  }, {
+    key: "setFromMatrixColumn",
+    value: function setFromMatrixColumn(m, index) {
+      return this.fromArray(m.elements, index * 4);
+    }
+  }, {
+    key: "setFromMatrix3Column",
+    value: function setFromMatrix3Column(m, index) {
+      return this.fromArray(m.elements, index * 3);
+    }
+  }, {
+    key: "setFromEuler",
+    value: function setFromEuler(e) {
+      this.x = e._x;
+      this.y = e._y;
+      this.z = e._z;
+      return this;
+    }
+  }, {
+    key: "equals",
+    value: function equals(v) {
+      return v.x === this.x && v.y === this.y && v.z === this.z;
+    }
+  }, {
+    key: "fromArray",
+    value: function fromArray(array) {
+      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      this.x = array[offset];
+      this.y = array[offset + 1];
+      this.z = array[offset + 2];
+      return this;
+    }
+  }, {
+    key: "toArray",
+    value: function toArray() {
+      var array = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      array[offset] = this.x;
+      array[offset + 1] = this.y;
+      array[offset + 2] = this.z;
+      return array;
+    }
+  }, {
+    key: "fromBufferAttribute",
+    value: function fromBufferAttribute(attribute, index) {
+      this.x = attribute.getX(index);
+      this.y = attribute.getY(index);
+      this.z = attribute.getZ(index);
+      return this;
+    }
+  }, {
+    key: "random",
+    value: function random() {
+      this.x = Math.random();
+      this.y = Math.random();
+      this.z = Math.random();
+      return this;
+    }
+  }, {
+    key: "randomDirection",
+    value: function randomDirection() {
+      // Derived from https://mathworld.wolfram.com/SpherePointPicking.html
+
+      var u = (Math.random() - 0.5) * 2;
+      var t = Math.random() * Math.PI * 2;
+      var f = Math.sqrt(1 - Math.pow(u, 2));
+      this.x = f * Math.cos(t);
+      this.y = f * Math.sin(t);
+      this.z = u;
+      return this;
+    }
+  }, {
+    key: _Symbol$iterator,
+    value: /*#__PURE__*/_regeneratorRuntime().mark(function value() {
+      return _regeneratorRuntime().wrap(function value$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return this.x;
+            case 2:
+              _context.next = 4;
+              return this.y;
+            case 4:
+              _context.next = 6;
+              return this.z;
+            case 6:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, value, this);
+    })
+  }]);
+  return Vector3;
+}(Symbol.iterator);
+exports.Vector3 = Vector3;
+var _vector = /*@__PURE__*/new Vector3();
+var _quaternion = /*@__PURE__*/new _Quaternion.Quaternion();
+},{"./MathUtils.js":"../../ThreeSrcCode/src/math/MathUtils.js","./Quaternion.js":"../../ThreeSrcCode/src/math/Quaternion.js"}],"../../ThreeSrcCode/src/math/Matrix4.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Matrix4 = void 0;
+var _Vector = require("./Vector3.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+var Matrix4 = /*#__PURE__*/function () {
+  function Matrix4() {
+    _classCallCheck(this, Matrix4);
+    Matrix4.prototype.isMatrix4 = true;
+    this.elements = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+  }
+  _createClass(Matrix4, [{
+    key: "set",
+    value: function set(n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, n34, n41, n42, n43, n44) {
+      var te = this.elements;
+      te[0] = n11;
+      te[4] = n12;
+      te[8] = n13;
+      te[12] = n14;
+      te[1] = n21;
+      te[5] = n22;
+      te[9] = n23;
+      te[13] = n24;
+      te[2] = n31;
+      te[6] = n32;
+      te[10] = n33;
+      te[14] = n34;
+      te[3] = n41;
+      te[7] = n42;
+      te[11] = n43;
+      te[15] = n44;
+      return this;
+    }
+  }, {
+    key: "identity",
+    value: function identity() {
+      this.set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+      return this;
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      return new Matrix4().fromArray(this.elements);
+    }
+  }, {
+    key: "copy",
+    value: function copy(m) {
+      var te = this.elements;
+      var me = m.elements;
+      te[0] = me[0];
+      te[1] = me[1];
+      te[2] = me[2];
+      te[3] = me[3];
+      te[4] = me[4];
+      te[5] = me[5];
+      te[6] = me[6];
+      te[7] = me[7];
+      te[8] = me[8];
+      te[9] = me[9];
+      te[10] = me[10];
+      te[11] = me[11];
+      te[12] = me[12];
+      te[13] = me[13];
+      te[14] = me[14];
+      te[15] = me[15];
+      return this;
+    }
+  }, {
+    key: "copyPosition",
+    value: function copyPosition(m) {
+      var te = this.elements,
+        me = m.elements;
+      te[12] = me[12];
+      te[13] = me[13];
+      te[14] = me[14];
+      return this;
+    }
+  }, {
+    key: "setFromMatrix3",
+    value: function setFromMatrix3(m) {
+      var me = m.elements;
+      this.set(me[0], me[3], me[6], 0, me[1], me[4], me[7], 0, me[2], me[5], me[8], 0, 0, 0, 0, 1);
+      return this;
+    }
+  }, {
+    key: "extractBasis",
+    value: function extractBasis(xAxis, yAxis, zAxis) {
+      xAxis.setFromMatrixColumn(this, 0);
+      yAxis.setFromMatrixColumn(this, 1);
+      zAxis.setFromMatrixColumn(this, 2);
+      return this;
+    }
+  }, {
+    key: "makeBasis",
+    value: function makeBasis(xAxis, yAxis, zAxis) {
+      this.set(xAxis.x, yAxis.x, zAxis.x, 0, xAxis.y, yAxis.y, zAxis.y, 0, xAxis.z, yAxis.z, zAxis.z, 0, 0, 0, 0, 1);
+      return this;
+    }
+  }, {
+    key: "extractRotation",
+    value: function extractRotation(m) {
+      // this method does not support reflection matrices
+
+      var te = this.elements;
+      var me = m.elements;
+      var scaleX = 1 / _v1.setFromMatrixColumn(m, 0).length();
+      var scaleY = 1 / _v1.setFromMatrixColumn(m, 1).length();
+      var scaleZ = 1 / _v1.setFromMatrixColumn(m, 2).length();
+      te[0] = me[0] * scaleX;
+      te[1] = me[1] * scaleX;
+      te[2] = me[2] * scaleX;
+      te[3] = 0;
+      te[4] = me[4] * scaleY;
+      te[5] = me[5] * scaleY;
+      te[6] = me[6] * scaleY;
+      te[7] = 0;
+      te[8] = me[8] * scaleZ;
+      te[9] = me[9] * scaleZ;
+      te[10] = me[10] * scaleZ;
+      te[11] = 0;
+      te[12] = 0;
+      te[13] = 0;
+      te[14] = 0;
+      te[15] = 1;
+      return this;
+    }
+  }, {
+    key: "makeRotationFromEuler",
+    value: function makeRotationFromEuler(euler) {
+      var te = this.elements;
+      var x = euler.x,
+        y = euler.y,
+        z = euler.z;
+      var a = Math.cos(x),
+        b = Math.sin(x);
+      var c = Math.cos(y),
+        d = Math.sin(y);
+      var e = Math.cos(z),
+        f = Math.sin(z);
+      if (euler.order === 'XYZ') {
+        var ae = a * e,
+          af = a * f,
+          be = b * e,
+          bf = b * f;
+        te[0] = c * e;
+        te[4] = -c * f;
+        te[8] = d;
+        te[1] = af + be * d;
+        te[5] = ae - bf * d;
+        te[9] = -b * c;
+        te[2] = bf - ae * d;
+        te[6] = be + af * d;
+        te[10] = a * c;
+      } else if (euler.order === 'YXZ') {
+        var ce = c * e,
+          cf = c * f,
+          de = d * e,
+          df = d * f;
+        te[0] = ce + df * b;
+        te[4] = de * b - cf;
+        te[8] = a * d;
+        te[1] = a * f;
+        te[5] = a * e;
+        te[9] = -b;
+        te[2] = cf * b - de;
+        te[6] = df + ce * b;
+        te[10] = a * c;
+      } else if (euler.order === 'ZXY') {
+        var _ce = c * e,
+          _cf = c * f,
+          _de = d * e,
+          _df = d * f;
+        te[0] = _ce - _df * b;
+        te[4] = -a * f;
+        te[8] = _de + _cf * b;
+        te[1] = _cf + _de * b;
+        te[5] = a * e;
+        te[9] = _df - _ce * b;
+        te[2] = -a * d;
+        te[6] = b;
+        te[10] = a * c;
+      } else if (euler.order === 'ZYX') {
+        var _ae = a * e,
+          _af = a * f,
+          _be = b * e,
+          _bf = b * f;
+        te[0] = c * e;
+        te[4] = _be * d - _af;
+        te[8] = _ae * d + _bf;
+        te[1] = c * f;
+        te[5] = _bf * d + _ae;
+        te[9] = _af * d - _be;
+        te[2] = -d;
+        te[6] = b * c;
+        te[10] = a * c;
+      } else if (euler.order === 'YZX') {
+        var ac = a * c,
+          ad = a * d,
+          bc = b * c,
+          bd = b * d;
+        te[0] = c * e;
+        te[4] = bd - ac * f;
+        te[8] = bc * f + ad;
+        te[1] = f;
+        te[5] = a * e;
+        te[9] = -b * e;
+        te[2] = -d * e;
+        te[6] = ad * f + bc;
+        te[10] = ac - bd * f;
+      } else if (euler.order === 'XZY') {
+        var _ac = a * c,
+          _ad = a * d,
+          _bc = b * c,
+          _bd = b * d;
+        te[0] = c * e;
+        te[4] = -f;
+        te[8] = d * e;
+        te[1] = _ac * f + _bd;
+        te[5] = a * e;
+        te[9] = _ad * f - _bc;
+        te[2] = _bc * f - _ad;
+        te[6] = b * e;
+        te[10] = _bd * f + _ac;
+      }
+
+      // bottom row
+      te[3] = 0;
+      te[7] = 0;
+      te[11] = 0;
+
+      // last column
+      te[12] = 0;
+      te[13] = 0;
+      te[14] = 0;
+      te[15] = 1;
+      return this;
+    }
+  }, {
+    key: "makeRotationFromQuaternion",
+    value: function makeRotationFromQuaternion(q) {
+      return this.compose(_zero, q, _one);
+    }
+  }, {
+    key: "lookAt",
+    value: function lookAt(eye, target, up) {
+      var te = this.elements;
+      _z.subVectors(eye, target);
+      if (_z.lengthSq() === 0) {
+        // eye and target are in the same position
+
+        _z.z = 1;
+      }
+      _z.normalize();
+      _x.crossVectors(up, _z);
+      if (_x.lengthSq() === 0) {
+        // up and z are parallel
+
+        if (Math.abs(up.z) === 1) {
+          _z.x += 0.0001;
+        } else {
+          _z.z += 0.0001;
+        }
+        _z.normalize();
+        _x.crossVectors(up, _z);
+      }
+      _x.normalize();
+      _y.crossVectors(_z, _x);
+      te[0] = _x.x;
+      te[4] = _y.x;
+      te[8] = _z.x;
+      te[1] = _x.y;
+      te[5] = _y.y;
+      te[9] = _z.y;
+      te[2] = _x.z;
+      te[6] = _y.z;
+      te[10] = _z.z;
+      return this;
+    }
+  }, {
+    key: "multiply",
+    value: function multiply(m) {
+      return this.multiplyMatrices(this, m);
+    }
+  }, {
+    key: "premultiply",
+    value: function premultiply(m) {
+      return this.multiplyMatrices(m, this);
+    }
+  }, {
+    key: "multiplyMatrices",
+    value: function multiplyMatrices(a, b) {
+      var ae = a.elements;
+      var be = b.elements;
+      var te = this.elements;
+      var a11 = ae[0],
+        a12 = ae[4],
+        a13 = ae[8],
+        a14 = ae[12];
+      var a21 = ae[1],
+        a22 = ae[5],
+        a23 = ae[9],
+        a24 = ae[13];
+      var a31 = ae[2],
+        a32 = ae[6],
+        a33 = ae[10],
+        a34 = ae[14];
+      var a41 = ae[3],
+        a42 = ae[7],
+        a43 = ae[11],
+        a44 = ae[15];
+      var b11 = be[0],
+        b12 = be[4],
+        b13 = be[8],
+        b14 = be[12];
+      var b21 = be[1],
+        b22 = be[5],
+        b23 = be[9],
+        b24 = be[13];
+      var b31 = be[2],
+        b32 = be[6],
+        b33 = be[10],
+        b34 = be[14];
+      var b41 = be[3],
+        b42 = be[7],
+        b43 = be[11],
+        b44 = be[15];
+      te[0] = a11 * b11 + a12 * b21 + a13 * b31 + a14 * b41;
+      te[4] = a11 * b12 + a12 * b22 + a13 * b32 + a14 * b42;
+      te[8] = a11 * b13 + a12 * b23 + a13 * b33 + a14 * b43;
+      te[12] = a11 * b14 + a12 * b24 + a13 * b34 + a14 * b44;
+      te[1] = a21 * b11 + a22 * b21 + a23 * b31 + a24 * b41;
+      te[5] = a21 * b12 + a22 * b22 + a23 * b32 + a24 * b42;
+      te[9] = a21 * b13 + a22 * b23 + a23 * b33 + a24 * b43;
+      te[13] = a21 * b14 + a22 * b24 + a23 * b34 + a24 * b44;
+      te[2] = a31 * b11 + a32 * b21 + a33 * b31 + a34 * b41;
+      te[6] = a31 * b12 + a32 * b22 + a33 * b32 + a34 * b42;
+      te[10] = a31 * b13 + a32 * b23 + a33 * b33 + a34 * b43;
+      te[14] = a31 * b14 + a32 * b24 + a33 * b34 + a34 * b44;
+      te[3] = a41 * b11 + a42 * b21 + a43 * b31 + a44 * b41;
+      te[7] = a41 * b12 + a42 * b22 + a43 * b32 + a44 * b42;
+      te[11] = a41 * b13 + a42 * b23 + a43 * b33 + a44 * b43;
+      te[15] = a41 * b14 + a42 * b24 + a43 * b34 + a44 * b44;
+      return this;
+    }
+  }, {
+    key: "multiplyScalar",
+    value: function multiplyScalar(s) {
+      var te = this.elements;
+      te[0] *= s;
+      te[4] *= s;
+      te[8] *= s;
+      te[12] *= s;
+      te[1] *= s;
+      te[5] *= s;
+      te[9] *= s;
+      te[13] *= s;
+      te[2] *= s;
+      te[6] *= s;
+      te[10] *= s;
+      te[14] *= s;
+      te[3] *= s;
+      te[7] *= s;
+      te[11] *= s;
+      te[15] *= s;
+      return this;
+    }
+  }, {
+    key: "determinant",
+    value: function determinant() {
+      var te = this.elements;
+      var n11 = te[0],
+        n12 = te[4],
+        n13 = te[8],
+        n14 = te[12];
+      var n21 = te[1],
+        n22 = te[5],
+        n23 = te[9],
+        n24 = te[13];
+      var n31 = te[2],
+        n32 = te[6],
+        n33 = te[10],
+        n34 = te[14];
+      var n41 = te[3],
+        n42 = te[7],
+        n43 = te[11],
+        n44 = te[15];
+
+      //TODO: make this more efficient
+      //( based on http://www.euclideanspace.com/maths/algebra/matrix/functions/inverse/fourD/index.htm )
+
+      return n41 * (+n14 * n23 * n32 - n13 * n24 * n32 - n14 * n22 * n33 + n12 * n24 * n33 + n13 * n22 * n34 - n12 * n23 * n34) + n42 * (+n11 * n23 * n34 - n11 * n24 * n33 + n14 * n21 * n33 - n13 * n21 * n34 + n13 * n24 * n31 - n14 * n23 * n31) + n43 * (+n11 * n24 * n32 - n11 * n22 * n34 - n14 * n21 * n32 + n12 * n21 * n34 + n14 * n22 * n31 - n12 * n24 * n31) + n44 * (-n13 * n22 * n31 - n11 * n23 * n32 + n11 * n22 * n33 + n13 * n21 * n32 - n12 * n21 * n33 + n12 * n23 * n31);
+    }
+  }, {
+    key: "transpose",
+    value: function transpose() {
+      var te = this.elements;
+      var tmp;
+      tmp = te[1];
+      te[1] = te[4];
+      te[4] = tmp;
+      tmp = te[2];
+      te[2] = te[8];
+      te[8] = tmp;
+      tmp = te[6];
+      te[6] = te[9];
+      te[9] = tmp;
+      tmp = te[3];
+      te[3] = te[12];
+      te[12] = tmp;
+      tmp = te[7];
+      te[7] = te[13];
+      te[13] = tmp;
+      tmp = te[11];
+      te[11] = te[14];
+      te[14] = tmp;
+      return this;
+    }
+  }, {
+    key: "setPosition",
+    value: function setPosition(x, y, z) {
+      var te = this.elements;
+      if (x.isVector3) {
+        te[12] = x.x;
+        te[13] = x.y;
+        te[14] = x.z;
+      } else {
+        te[12] = x;
+        te[13] = y;
+        te[14] = z;
+      }
+      return this;
+    }
+  }, {
+    key: "invert",
+    value: function invert() {
+      // based on http://www.euclideanspace.com/maths/algebra/matrix/functions/inverse/fourD/index.htm
+      var te = this.elements,
+        n11 = te[0],
+        n21 = te[1],
+        n31 = te[2],
+        n41 = te[3],
+        n12 = te[4],
+        n22 = te[5],
+        n32 = te[6],
+        n42 = te[7],
+        n13 = te[8],
+        n23 = te[9],
+        n33 = te[10],
+        n43 = te[11],
+        n14 = te[12],
+        n24 = te[13],
+        n34 = te[14],
+        n44 = te[15],
+        t11 = n23 * n34 * n42 - n24 * n33 * n42 + n24 * n32 * n43 - n22 * n34 * n43 - n23 * n32 * n44 + n22 * n33 * n44,
+        t12 = n14 * n33 * n42 - n13 * n34 * n42 - n14 * n32 * n43 + n12 * n34 * n43 + n13 * n32 * n44 - n12 * n33 * n44,
+        t13 = n13 * n24 * n42 - n14 * n23 * n42 + n14 * n22 * n43 - n12 * n24 * n43 - n13 * n22 * n44 + n12 * n23 * n44,
+        t14 = n14 * n23 * n32 - n13 * n24 * n32 - n14 * n22 * n33 + n12 * n24 * n33 + n13 * n22 * n34 - n12 * n23 * n34;
+      var det = n11 * t11 + n21 * t12 + n31 * t13 + n41 * t14;
+      if (det === 0) return this.set(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+      var detInv = 1 / det;
+      te[0] = t11 * detInv;
+      te[1] = (n24 * n33 * n41 - n23 * n34 * n41 - n24 * n31 * n43 + n21 * n34 * n43 + n23 * n31 * n44 - n21 * n33 * n44) * detInv;
+      te[2] = (n22 * n34 * n41 - n24 * n32 * n41 + n24 * n31 * n42 - n21 * n34 * n42 - n22 * n31 * n44 + n21 * n32 * n44) * detInv;
+      te[3] = (n23 * n32 * n41 - n22 * n33 * n41 - n23 * n31 * n42 + n21 * n33 * n42 + n22 * n31 * n43 - n21 * n32 * n43) * detInv;
+      te[4] = t12 * detInv;
+      te[5] = (n13 * n34 * n41 - n14 * n33 * n41 + n14 * n31 * n43 - n11 * n34 * n43 - n13 * n31 * n44 + n11 * n33 * n44) * detInv;
+      te[6] = (n14 * n32 * n41 - n12 * n34 * n41 - n14 * n31 * n42 + n11 * n34 * n42 + n12 * n31 * n44 - n11 * n32 * n44) * detInv;
+      te[7] = (n12 * n33 * n41 - n13 * n32 * n41 + n13 * n31 * n42 - n11 * n33 * n42 - n12 * n31 * n43 + n11 * n32 * n43) * detInv;
+      te[8] = t13 * detInv;
+      te[9] = (n14 * n23 * n41 - n13 * n24 * n41 - n14 * n21 * n43 + n11 * n24 * n43 + n13 * n21 * n44 - n11 * n23 * n44) * detInv;
+      te[10] = (n12 * n24 * n41 - n14 * n22 * n41 + n14 * n21 * n42 - n11 * n24 * n42 - n12 * n21 * n44 + n11 * n22 * n44) * detInv;
+      te[11] = (n13 * n22 * n41 - n12 * n23 * n41 - n13 * n21 * n42 + n11 * n23 * n42 + n12 * n21 * n43 - n11 * n22 * n43) * detInv;
+      te[12] = t14 * detInv;
+      te[13] = (n13 * n24 * n31 - n14 * n23 * n31 + n14 * n21 * n33 - n11 * n24 * n33 - n13 * n21 * n34 + n11 * n23 * n34) * detInv;
+      te[14] = (n14 * n22 * n31 - n12 * n24 * n31 - n14 * n21 * n32 + n11 * n24 * n32 + n12 * n21 * n34 - n11 * n22 * n34) * detInv;
+      te[15] = (n12 * n23 * n31 - n13 * n22 * n31 + n13 * n21 * n32 - n11 * n23 * n32 - n12 * n21 * n33 + n11 * n22 * n33) * detInv;
+      return this;
+    }
+  }, {
+    key: "scale",
+    value: function scale(v) {
+      var te = this.elements;
+      var x = v.x,
+        y = v.y,
+        z = v.z;
+      te[0] *= x;
+      te[4] *= y;
+      te[8] *= z;
+      te[1] *= x;
+      te[5] *= y;
+      te[9] *= z;
+      te[2] *= x;
+      te[6] *= y;
+      te[10] *= z;
+      te[3] *= x;
+      te[7] *= y;
+      te[11] *= z;
+      return this;
+    }
+  }, {
+    key: "getMaxScaleOnAxis",
+    value: function getMaxScaleOnAxis() {
+      var te = this.elements;
+      var scaleXSq = te[0] * te[0] + te[1] * te[1] + te[2] * te[2];
+      var scaleYSq = te[4] * te[4] + te[5] * te[5] + te[6] * te[6];
+      var scaleZSq = te[8] * te[8] + te[9] * te[9] + te[10] * te[10];
+      return Math.sqrt(Math.max(scaleXSq, scaleYSq, scaleZSq));
+    }
+  }, {
+    key: "makeTranslation",
+    value: function makeTranslation(x, y, z) {
+      this.set(1, 0, 0, x, 0, 1, 0, y, 0, 0, 1, z, 0, 0, 0, 1);
+      return this;
+    }
+  }, {
+    key: "makeRotationX",
+    value: function makeRotationX(theta) {
+      var c = Math.cos(theta),
+        s = Math.sin(theta);
+      this.set(1, 0, 0, 0, 0, c, -s, 0, 0, s, c, 0, 0, 0, 0, 1);
+      return this;
+    }
+  }, {
+    key: "makeRotationY",
+    value: function makeRotationY(theta) {
+      var c = Math.cos(theta),
+        s = Math.sin(theta);
+      this.set(c, 0, s, 0, 0, 1, 0, 0, -s, 0, c, 0, 0, 0, 0, 1);
+      return this;
+    }
+  }, {
+    key: "makeRotationZ",
+    value: function makeRotationZ(theta) {
+      var c = Math.cos(theta),
+        s = Math.sin(theta);
+      this.set(c, -s, 0, 0, s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+      return this;
+    }
+  }, {
+    key: "makeRotationAxis",
+    value: function makeRotationAxis(axis, angle) {
+      // Based on http://www.gamedev.net/reference/articles/article1199.asp
+
+      var c = Math.cos(angle);
+      var s = Math.sin(angle);
+      var t = 1 - c;
+      var x = axis.x,
+        y = axis.y,
+        z = axis.z;
+      var tx = t * x,
+        ty = t * y;
+      this.set(tx * x + c, tx * y - s * z, tx * z + s * y, 0, tx * y + s * z, ty * y + c, ty * z - s * x, 0, tx * z - s * y, ty * z + s * x, t * z * z + c, 0, 0, 0, 0, 1);
+      return this;
+    }
+  }, {
+    key: "makeScale",
+    value: function makeScale(x, y, z) {
+      this.set(x, 0, 0, 0, 0, y, 0, 0, 0, 0, z, 0, 0, 0, 0, 1);
+      return this;
+    }
+  }, {
+    key: "makeShear",
+    value: function makeShear(xy, xz, yx, yz, zx, zy) {
+      this.set(1, yx, zx, 0, xy, 1, zy, 0, xz, yz, 1, 0, 0, 0, 0, 1);
+      return this;
+    }
+  }, {
+    key: "compose",
+    value: function compose(position, quaternion, scale) {
+      var te = this.elements;
+      var x = quaternion._x,
+        y = quaternion._y,
+        z = quaternion._z,
+        w = quaternion._w;
+      var x2 = x + x,
+        y2 = y + y,
+        z2 = z + z;
+      var xx = x * x2,
+        xy = x * y2,
+        xz = x * z2;
+      var yy = y * y2,
+        yz = y * z2,
+        zz = z * z2;
+      var wx = w * x2,
+        wy = w * y2,
+        wz = w * z2;
+      var sx = scale.x,
+        sy = scale.y,
+        sz = scale.z;
+      te[0] = (1 - (yy + zz)) * sx;
+      te[1] = (xy + wz) * sx;
+      te[2] = (xz - wy) * sx;
+      te[3] = 0;
+      te[4] = (xy - wz) * sy;
+      te[5] = (1 - (xx + zz)) * sy;
+      te[6] = (yz + wx) * sy;
+      te[7] = 0;
+      te[8] = (xz + wy) * sz;
+      te[9] = (yz - wx) * sz;
+      te[10] = (1 - (xx + yy)) * sz;
+      te[11] = 0;
+      te[12] = position.x;
+      te[13] = position.y;
+      te[14] = position.z;
+      te[15] = 1;
+      return this;
+    }
+  }, {
+    key: "decompose",
+    value: function decompose(position, quaternion, scale) {
+      var te = this.elements;
+      var sx = _v1.set(te[0], te[1], te[2]).length();
+      var sy = _v1.set(te[4], te[5], te[6]).length();
+      var sz = _v1.set(te[8], te[9], te[10]).length();
+
+      // if determine is negative, we need to invert one scale
+      var det = this.determinant();
+      if (det < 0) sx = -sx;
+      position.x = te[12];
+      position.y = te[13];
+      position.z = te[14];
+
+      // scale the rotation part
+      _m1.copy(this);
+      var invSX = 1 / sx;
+      var invSY = 1 / sy;
+      var invSZ = 1 / sz;
+      _m1.elements[0] *= invSX;
+      _m1.elements[1] *= invSX;
+      _m1.elements[2] *= invSX;
+      _m1.elements[4] *= invSY;
+      _m1.elements[5] *= invSY;
+      _m1.elements[6] *= invSY;
+      _m1.elements[8] *= invSZ;
+      _m1.elements[9] *= invSZ;
+      _m1.elements[10] *= invSZ;
+      quaternion.setFromRotationMatrix(_m1);
+      scale.x = sx;
+      scale.y = sy;
+      scale.z = sz;
+      return this;
+    }
+  }, {
+    key: "makePerspective",
+    value: function makePerspective(left, right, top, bottom, near, far) {
+      var te = this.elements;
+      var x = 2 * near / (right - left);
+      var y = 2 * near / (top - bottom);
+      var a = (right + left) / (right - left);
+      var b = (top + bottom) / (top - bottom);
+      var c = -(far + near) / (far - near);
+      var d = -2 * far * near / (far - near);
+      te[0] = x;
+      te[4] = 0;
+      te[8] = a;
+      te[12] = 0;
+      te[1] = 0;
+      te[5] = y;
+      te[9] = b;
+      te[13] = 0;
+      te[2] = 0;
+      te[6] = 0;
+      te[10] = c;
+      te[14] = d;
+      te[3] = 0;
+      te[7] = 0;
+      te[11] = -1;
+      te[15] = 0;
+      return this;
+    }
+  }, {
+    key: "makeOrthographic",
+    value: function makeOrthographic(left, right, top, bottom, near, far) {
+      var te = this.elements;
+      var w = 1.0 / (right - left);
+      var h = 1.0 / (top - bottom);
+      var p = 1.0 / (far - near);
+      var x = (right + left) * w;
+      var y = (top + bottom) * h;
+      var z = (far + near) * p;
+      te[0] = 2 * w;
+      te[4] = 0;
+      te[8] = 0;
+      te[12] = -x;
+      te[1] = 0;
+      te[5] = 2 * h;
+      te[9] = 0;
+      te[13] = -y;
+      te[2] = 0;
+      te[6] = 0;
+      te[10] = -2 * p;
+      te[14] = -z;
+      te[3] = 0;
+      te[7] = 0;
+      te[11] = 0;
+      te[15] = 1;
+      return this;
+    }
+  }, {
+    key: "equals",
+    value: function equals(matrix) {
+      var te = this.elements;
+      var me = matrix.elements;
+      for (var i = 0; i < 16; i++) {
+        if (te[i] !== me[i]) return false;
+      }
+      return true;
+    }
+  }, {
+    key: "fromArray",
+    value: function fromArray(array) {
+      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      for (var i = 0; i < 16; i++) {
+        this.elements[i] = array[i + offset];
+      }
+      return this;
+    }
+  }, {
+    key: "toArray",
+    value: function toArray() {
+      var array = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      var te = this.elements;
+      array[offset] = te[0];
+      array[offset + 1] = te[1];
+      array[offset + 2] = te[2];
+      array[offset + 3] = te[3];
+      array[offset + 4] = te[4];
+      array[offset + 5] = te[5];
+      array[offset + 6] = te[6];
+      array[offset + 7] = te[7];
+      array[offset + 8] = te[8];
+      array[offset + 9] = te[9];
+      array[offset + 10] = te[10];
+      array[offset + 11] = te[11];
+      array[offset + 12] = te[12];
+      array[offset + 13] = te[13];
+      array[offset + 14] = te[14];
+      array[offset + 15] = te[15];
+      return array;
+    }
+  }]);
+  return Matrix4;
+}();
+exports.Matrix4 = Matrix4;
+var _v1 = /*@__PURE__*/new _Vector.Vector3();
+var _m1 = /*@__PURE__*/new Matrix4();
+var _zero = /*@__PURE__*/new _Vector.Vector3(0, 0, 0);
+var _one = /*@__PURE__*/new _Vector.Vector3(1, 1, 1);
+var _x = /*@__PURE__*/new _Vector.Vector3();
+var _y = /*@__PURE__*/new _Vector.Vector3();
+var _z = /*@__PURE__*/new _Vector.Vector3();
+},{"./Vector3.js":"../../ThreeSrcCode/src/math/Vector3.js"}],"../../ThreeSrcCode/src/core/EventDispatcher.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.EventDispatcher = void 0;
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+/**
+ * https://github.com/mrdoob/eventdispatcher.js/
+ */
+var EventDispatcher = /*#__PURE__*/function () {
+  function EventDispatcher() {
+    _classCallCheck(this, EventDispatcher);
+  }
+  _createClass(EventDispatcher, [{
+    key: "addEventListener",
+    value: function addEventListener(type, listener) {
+      if (this._listeners === undefined) this._listeners = {};
+      var listeners = this._listeners;
+      if (listeners[type] === undefined) {
+        listeners[type] = [];
+      }
+      if (listeners[type].indexOf(listener) === -1) {
+        listeners[type].push(listener);
+      }
+    }
+  }, {
+    key: "hasEventListener",
+    value: function hasEventListener(type, listener) {
+      if (this._listeners === undefined) return false;
+      var listeners = this._listeners;
+      return listeners[type] !== undefined && listeners[type].indexOf(listener) !== -1;
+    }
+  }, {
+    key: "removeEventListener",
+    value: function removeEventListener(type, listener) {
+      if (this._listeners === undefined) return;
+      var listeners = this._listeners;
+      var listenerArray = listeners[type];
+      if (listenerArray !== undefined) {
+        var index = listenerArray.indexOf(listener);
+        if (index !== -1) {
+          listenerArray.splice(index, 1);
+        }
+      }
+    }
+  }, {
+    key: "dispatchEvent",
+    value: function dispatchEvent(event) {
+      if (this._listeners === undefined) return;
+      var listeners = this._listeners;
+      var listenerArray = listeners[event.type];
+      if (listenerArray !== undefined) {
+        event.target = this;
+
+        // Make a copy, in case listeners are removed while iterating.
+        var array = listenerArray.slice(0);
+        for (var i = 0, l = array.length; i < l; i++) {
+          array[i].call(this, event);
+        }
+        event.target = null;
+      }
+    }
+  }]);
+  return EventDispatcher;
+}();
+exports.EventDispatcher = EventDispatcher;
+},{}],"../../ThreeSrcCode/src/math/Euler.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Euler = void 0;
+var _Quaternion = require("./Quaternion.js");
+var _Matrix = require("./Matrix4.js");
+var _MathUtils = require("./MathUtils.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator.return && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, catch: function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+var _matrix = /*@__PURE__*/new _Matrix.Matrix4();
+var _quaternion = /*@__PURE__*/new _Quaternion.Quaternion();
+var Euler = /*#__PURE__*/function (_Symbol$iterator) {
+  function Euler() {
+    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    var z = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+    var order = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : Euler.DefaultOrder;
+    _classCallCheck(this, Euler);
+    this.isEuler = true;
+    this._x = x;
+    this._y = y;
+    this._z = z;
+    this._order = order;
+  }
+  _createClass(Euler, [{
+    key: "x",
+    get: function get() {
+      return this._x;
+    },
+    set: function set(value) {
+      this._x = value;
+      this._onChangeCallback();
+    }
+  }, {
+    key: "y",
+    get: function get() {
+      return this._y;
+    },
+    set: function set(value) {
+      this._y = value;
+      this._onChangeCallback();
+    }
+  }, {
+    key: "z",
+    get: function get() {
+      return this._z;
+    },
+    set: function set(value) {
+      this._z = value;
+      this._onChangeCallback();
+    }
+  }, {
+    key: "order",
+    get: function get() {
+      return this._order;
+    },
+    set: function set(value) {
+      this._order = value;
+      this._onChangeCallback();
+    }
+  }, {
+    key: "set",
+    value: function set(x, y, z) {
+      var order = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this._order;
+      this._x = x;
+      this._y = y;
+      this._z = z;
+      this._order = order;
+      this._onChangeCallback();
+      return this;
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      return new this.constructor(this._x, this._y, this._z, this._order);
+    }
+  }, {
+    key: "copy",
+    value: function copy(euler) {
+      this._x = euler._x;
+      this._y = euler._y;
+      this._z = euler._z;
+      this._order = euler._order;
+      this._onChangeCallback();
+      return this;
+    }
+  }, {
+    key: "setFromRotationMatrix",
+    value: function setFromRotationMatrix(m) {
+      var order = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._order;
+      var update = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+      // assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
+
+      var te = m.elements;
+      var m11 = te[0],
+        m12 = te[4],
+        m13 = te[8];
+      var m21 = te[1],
+        m22 = te[5],
+        m23 = te[9];
+      var m31 = te[2],
+        m32 = te[6],
+        m33 = te[10];
+      switch (order) {
+        case 'XYZ':
+          this._y = Math.asin((0, _MathUtils.clamp)(m13, -1, 1));
+          if (Math.abs(m13) < 0.9999999) {
+            this._x = Math.atan2(-m23, m33);
+            this._z = Math.atan2(-m12, m11);
+          } else {
+            this._x = Math.atan2(m32, m22);
+            this._z = 0;
+          }
+          break;
+        case 'YXZ':
+          this._x = Math.asin(-(0, _MathUtils.clamp)(m23, -1, 1));
+          if (Math.abs(m23) < 0.9999999) {
+            this._y = Math.atan2(m13, m33);
+            this._z = Math.atan2(m21, m22);
+          } else {
+            this._y = Math.atan2(-m31, m11);
+            this._z = 0;
+          }
+          break;
+        case 'ZXY':
+          this._x = Math.asin((0, _MathUtils.clamp)(m32, -1, 1));
+          if (Math.abs(m32) < 0.9999999) {
+            this._y = Math.atan2(-m31, m33);
+            this._z = Math.atan2(-m12, m22);
+          } else {
+            this._y = 0;
+            this._z = Math.atan2(m21, m11);
+          }
+          break;
+        case 'ZYX':
+          this._y = Math.asin(-(0, _MathUtils.clamp)(m31, -1, 1));
+          if (Math.abs(m31) < 0.9999999) {
+            this._x = Math.atan2(m32, m33);
+            this._z = Math.atan2(m21, m11);
+          } else {
+            this._x = 0;
+            this._z = Math.atan2(-m12, m22);
+          }
+          break;
+        case 'YZX':
+          this._z = Math.asin((0, _MathUtils.clamp)(m21, -1, 1));
+          if (Math.abs(m21) < 0.9999999) {
+            this._x = Math.atan2(-m23, m22);
+            this._y = Math.atan2(-m31, m11);
+          } else {
+            this._x = 0;
+            this._y = Math.atan2(m13, m33);
+          }
+          break;
+        case 'XZY':
+          this._z = Math.asin(-(0, _MathUtils.clamp)(m12, -1, 1));
+          if (Math.abs(m12) < 0.9999999) {
+            this._x = Math.atan2(m32, m22);
+            this._y = Math.atan2(m13, m11);
+          } else {
+            this._x = Math.atan2(-m23, m33);
+            this._y = 0;
+          }
+          break;
+        default:
+          console.warn('THREE.Euler: .setFromRotationMatrix() encountered an unknown order: ' + order);
+      }
+      this._order = order;
+      if (update === true) this._onChangeCallback();
+      return this;
+    }
+  }, {
+    key: "setFromQuaternion",
+    value: function setFromQuaternion(q, order, update) {
+      _matrix.makeRotationFromQuaternion(q);
+      return this.setFromRotationMatrix(_matrix, order, update);
+    }
+  }, {
+    key: "setFromVector3",
+    value: function setFromVector3(v) {
+      var order = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._order;
+      return this.set(v.x, v.y, v.z, order);
+    }
+  }, {
+    key: "reorder",
+    value: function reorder(newOrder) {
+      // WARNING: this discards revolution information -bhouston
+
+      _quaternion.setFromEuler(this);
+      return this.setFromQuaternion(_quaternion, newOrder);
+    }
+  }, {
+    key: "equals",
+    value: function equals(euler) {
+      return euler._x === this._x && euler._y === this._y && euler._z === this._z && euler._order === this._order;
+    }
+  }, {
+    key: "fromArray",
+    value: function fromArray(array) {
+      this._x = array[0];
+      this._y = array[1];
+      this._z = array[2];
+      if (array[3] !== undefined) this._order = array[3];
+      this._onChangeCallback();
+      return this;
+    }
+  }, {
+    key: "toArray",
+    value: function toArray() {
+      var array = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      array[offset] = this._x;
+      array[offset + 1] = this._y;
+      array[offset + 2] = this._z;
+      array[offset + 3] = this._order;
+      return array;
+    }
+  }, {
+    key: "_onChange",
+    value: function _onChange(callback) {
+      this._onChangeCallback = callback;
+      return this;
+    }
+  }, {
+    key: "_onChangeCallback",
+    value: function _onChangeCallback() {}
+  }, {
+    key: _Symbol$iterator,
+    value: /*#__PURE__*/_regeneratorRuntime().mark(function value() {
+      return _regeneratorRuntime().wrap(function value$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return this._x;
+            case 2:
+              _context.next = 4;
+              return this._y;
+            case 4:
+              _context.next = 6;
+              return this._z;
+            case 6:
+              _context.next = 8;
+              return this._order;
+            case 8:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, value, this);
+    }) // @deprecated since r138, 02cf0df1cb4575d5842fef9c85bb5a89fe020d53
+  }, {
+    key: "toVector3",
+    value: function toVector3() {
+      console.error('THREE.Euler: .toVector3() has been removed. Use Vector3.setFromEuler() instead');
+    }
+  }]);
+  return Euler;
+}(Symbol.iterator);
+exports.Euler = Euler;
+Euler.DefaultOrder = 'XYZ';
+Euler.RotationOrders = ['XYZ', 'YZX', 'ZXY', 'XZY', 'YXZ', 'ZYX'];
+},{"./Quaternion.js":"../../ThreeSrcCode/src/math/Quaternion.js","./Matrix4.js":"../../ThreeSrcCode/src/math/Matrix4.js","./MathUtils.js":"../../ThreeSrcCode/src/math/MathUtils.js"}],"../../ThreeSrcCode/src/core/Layers.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Layers = void 0;
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+var Layers = /*#__PURE__*/function () {
+  function Layers() {
+    _classCallCheck(this, Layers);
+    this.mask = 1 | 0;
+  }
+  _createClass(Layers, [{
+    key: "set",
+    value: function set(channel) {
+      this.mask = (1 << channel | 0) >>> 0;
+    }
+  }, {
+    key: "enable",
+    value: function enable(channel) {
+      this.mask |= 1 << channel | 0;
+    }
+  }, {
+    key: "enableAll",
+    value: function enableAll() {
+      this.mask = 0xffffffff | 0;
+    }
+  }, {
+    key: "toggle",
+    value: function toggle(channel) {
+      this.mask ^= 1 << channel | 0;
+    }
+  }, {
+    key: "disable",
+    value: function disable(channel) {
+      this.mask &= ~(1 << channel | 0);
+    }
+  }, {
+    key: "disableAll",
+    value: function disableAll() {
+      this.mask = 0;
+    }
+  }, {
+    key: "test",
+    value: function test(layers) {
+      return (this.mask & layers.mask) !== 0;
+    }
+  }, {
+    key: "isEnabled",
+    value: function isEnabled(channel) {
+      return (this.mask & (1 << channel | 0)) !== 0;
+    }
+  }]);
+  return Layers;
+}();
+exports.Layers = Layers;
+},{}],"../../ThreeSrcCode/src/math/Matrix3.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Matrix3 = void 0;
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+var Matrix3 = /*#__PURE__*/function () {
+  function Matrix3() {
+    _classCallCheck(this, Matrix3);
+    Matrix3.prototype.isMatrix3 = true;
+    this.elements = [1, 0, 0, 0, 1, 0, 0, 0, 1];
+  }
+  _createClass(Matrix3, [{
+    key: "set",
+    value: function set(n11, n12, n13, n21, n22, n23, n31, n32, n33) {
+      var te = this.elements;
+      te[0] = n11;
+      te[1] = n21;
+      te[2] = n31;
+      te[3] = n12;
+      te[4] = n22;
+      te[5] = n32;
+      te[6] = n13;
+      te[7] = n23;
+      te[8] = n33;
+      return this;
+    }
+  }, {
+    key: "identity",
+    value: function identity() {
+      this.set(1, 0, 0, 0, 1, 0, 0, 0, 1);
+      return this;
+    }
+  }, {
+    key: "copy",
+    value: function copy(m) {
+      var te = this.elements;
+      var me = m.elements;
+      te[0] = me[0];
+      te[1] = me[1];
+      te[2] = me[2];
+      te[3] = me[3];
+      te[4] = me[4];
+      te[5] = me[5];
+      te[6] = me[6];
+      te[7] = me[7];
+      te[8] = me[8];
+      return this;
+    }
+  }, {
+    key: "extractBasis",
+    value: function extractBasis(xAxis, yAxis, zAxis) {
+      xAxis.setFromMatrix3Column(this, 0);
+      yAxis.setFromMatrix3Column(this, 1);
+      zAxis.setFromMatrix3Column(this, 2);
+      return this;
+    }
+  }, {
+    key: "setFromMatrix4",
+    value: function setFromMatrix4(m) {
+      var me = m.elements;
+      this.set(me[0], me[4], me[8], me[1], me[5], me[9], me[2], me[6], me[10]);
+      return this;
+    }
+  }, {
+    key: "multiply",
+    value: function multiply(m) {
+      return this.multiplyMatrices(this, m);
+    }
+  }, {
+    key: "premultiply",
+    value: function premultiply(m) {
+      return this.multiplyMatrices(m, this);
+    }
+  }, {
+    key: "multiplyMatrices",
+    value: function multiplyMatrices(a, b) {
+      var ae = a.elements;
+      var be = b.elements;
+      var te = this.elements;
+      var a11 = ae[0],
+        a12 = ae[3],
+        a13 = ae[6];
+      var a21 = ae[1],
+        a22 = ae[4],
+        a23 = ae[7];
+      var a31 = ae[2],
+        a32 = ae[5],
+        a33 = ae[8];
+      var b11 = be[0],
+        b12 = be[3],
+        b13 = be[6];
+      var b21 = be[1],
+        b22 = be[4],
+        b23 = be[7];
+      var b31 = be[2],
+        b32 = be[5],
+        b33 = be[8];
+      te[0] = a11 * b11 + a12 * b21 + a13 * b31;
+      te[3] = a11 * b12 + a12 * b22 + a13 * b32;
+      te[6] = a11 * b13 + a12 * b23 + a13 * b33;
+      te[1] = a21 * b11 + a22 * b21 + a23 * b31;
+      te[4] = a21 * b12 + a22 * b22 + a23 * b32;
+      te[7] = a21 * b13 + a22 * b23 + a23 * b33;
+      te[2] = a31 * b11 + a32 * b21 + a33 * b31;
+      te[5] = a31 * b12 + a32 * b22 + a33 * b32;
+      te[8] = a31 * b13 + a32 * b23 + a33 * b33;
+      return this;
+    }
+  }, {
+    key: "multiplyScalar",
+    value: function multiplyScalar(s) {
+      var te = this.elements;
+      te[0] *= s;
+      te[3] *= s;
+      te[6] *= s;
+      te[1] *= s;
+      te[4] *= s;
+      te[7] *= s;
+      te[2] *= s;
+      te[5] *= s;
+      te[8] *= s;
+      return this;
+    }
+  }, {
+    key: "determinant",
+    value: function determinant() {
+      var te = this.elements;
+      var a = te[0],
+        b = te[1],
+        c = te[2],
+        d = te[3],
+        e = te[4],
+        f = te[5],
+        g = te[6],
+        h = te[7],
+        i = te[8];
+      return a * e * i - a * f * h - b * d * i + b * f * g + c * d * h - c * e * g;
+    }
+  }, {
+    key: "invert",
+    value: function invert() {
+      var te = this.elements,
+        n11 = te[0],
+        n21 = te[1],
+        n31 = te[2],
+        n12 = te[3],
+        n22 = te[4],
+        n32 = te[5],
+        n13 = te[6],
+        n23 = te[7],
+        n33 = te[8],
+        t11 = n33 * n22 - n32 * n23,
+        t12 = n32 * n13 - n33 * n12,
+        t13 = n23 * n12 - n22 * n13,
+        det = n11 * t11 + n21 * t12 + n31 * t13;
+      if (det === 0) return this.set(0, 0, 0, 0, 0, 0, 0, 0, 0);
+      var detInv = 1 / det;
+      te[0] = t11 * detInv;
+      te[1] = (n31 * n23 - n33 * n21) * detInv;
+      te[2] = (n32 * n21 - n31 * n22) * detInv;
+      te[3] = t12 * detInv;
+      te[4] = (n33 * n11 - n31 * n13) * detInv;
+      te[5] = (n31 * n12 - n32 * n11) * detInv;
+      te[6] = t13 * detInv;
+      te[7] = (n21 * n13 - n23 * n11) * detInv;
+      te[8] = (n22 * n11 - n21 * n12) * detInv;
+      return this;
+    }
+  }, {
+    key: "transpose",
+    value: function transpose() {
+      var tmp;
+      var m = this.elements;
+      tmp = m[1];
+      m[1] = m[3];
+      m[3] = tmp;
+      tmp = m[2];
+      m[2] = m[6];
+      m[6] = tmp;
+      tmp = m[5];
+      m[5] = m[7];
+      m[7] = tmp;
+      return this;
+    }
+  }, {
+    key: "getNormalMatrix",
+    value: function getNormalMatrix(matrix4) {
+      return this.setFromMatrix4(matrix4).invert().transpose();
+    }
+  }, {
+    key: "transposeIntoArray",
+    value: function transposeIntoArray(r) {
+      var m = this.elements;
+      r[0] = m[0];
+      r[1] = m[3];
+      r[2] = m[6];
+      r[3] = m[1];
+      r[4] = m[4];
+      r[5] = m[7];
+      r[6] = m[2];
+      r[7] = m[5];
+      r[8] = m[8];
+      return this;
+    }
+  }, {
+    key: "setUvTransform",
+    value: function setUvTransform(tx, ty, sx, sy, rotation, cx, cy) {
+      var c = Math.cos(rotation);
+      var s = Math.sin(rotation);
+      this.set(sx * c, sx * s, -sx * (c * cx + s * cy) + cx + tx, -sy * s, sy * c, -sy * (-s * cx + c * cy) + cy + ty, 0, 0, 1);
+      return this;
+    }
+
+    //
+  }, {
+    key: "scale",
+    value: function scale(sx, sy) {
+      this.premultiply(_m3.makeScale(sx, sy));
+      return this;
+    }
+  }, {
+    key: "rotate",
+    value: function rotate(theta) {
+      this.premultiply(_m3.makeRotation(-theta));
+      return this;
+    }
+  }, {
+    key: "translate",
+    value: function translate(tx, ty) {
+      this.premultiply(_m3.makeTranslation(tx, ty));
+      return this;
+    }
+
+    // for 2D Transforms
+  }, {
+    key: "makeTranslation",
+    value: function makeTranslation(x, y) {
+      this.set(1, 0, x, 0, 1, y, 0, 0, 1);
+      return this;
+    }
+  }, {
+    key: "makeRotation",
+    value: function makeRotation(theta) {
+      // counterclockwise
+
+      var c = Math.cos(theta);
+      var s = Math.sin(theta);
+      this.set(c, -s, 0, s, c, 0, 0, 0, 1);
+      return this;
+    }
+  }, {
+    key: "makeScale",
+    value: function makeScale(x, y) {
+      this.set(x, 0, 0, 0, y, 0, 0, 0, 1);
+      return this;
+    }
+
+    //
+  }, {
+    key: "equals",
+    value: function equals(matrix) {
+      var te = this.elements;
+      var me = matrix.elements;
+      for (var i = 0; i < 9; i++) {
+        if (te[i] !== me[i]) return false;
+      }
+      return true;
+    }
+  }, {
+    key: "fromArray",
+    value: function fromArray(array) {
+      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      for (var i = 0; i < 9; i++) {
+        this.elements[i] = array[i + offset];
+      }
+      return this;
+    }
+  }, {
+    key: "toArray",
+    value: function toArray() {
+      var array = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      var te = this.elements;
+      array[offset] = te[0];
+      array[offset + 1] = te[1];
+      array[offset + 2] = te[2];
+      array[offset + 3] = te[3];
+      array[offset + 4] = te[4];
+      array[offset + 5] = te[5];
+      array[offset + 6] = te[6];
+      array[offset + 7] = te[7];
+      array[offset + 8] = te[8];
+      return array;
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      return new this.constructor().fromArray(this.elements);
+    }
+  }]);
+  return Matrix3;
+}();
+exports.Matrix3 = Matrix3;
+var _m3 = /*@__PURE__*/new Matrix3();
+},{}],"../../ThreeSrcCode/src/core/Object3D.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Object3D = void 0;
+var _Quaternion = require("../math/Quaternion.js");
+var _Vector = require("../math/Vector3.js");
+var _Matrix = require("../math/Matrix4.js");
+var _EventDispatcher2 = require("./EventDispatcher.js");
+var _Euler = require("../math/Euler.js");
+var _Layers = require("./Layers.js");
+var _Matrix2 = require("../math/Matrix3.js");
+var MathUtils = _interopRequireWildcard(require("../math/MathUtils.js"));
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+var _object3DId = 0;
+var _v1 = /*@__PURE__*/new _Vector.Vector3();
+var _q1 = /*@__PURE__*/new _Quaternion.Quaternion();
+var _m1 = /*@__PURE__*/new _Matrix.Matrix4();
+var _target = /*@__PURE__*/new _Vector.Vector3();
+var _position = /*@__PURE__*/new _Vector.Vector3();
+var _scale = /*@__PURE__*/new _Vector.Vector3();
+var _quaternion = /*@__PURE__*/new _Quaternion.Quaternion();
+var _xAxis = /*@__PURE__*/new _Vector.Vector3(1, 0, 0);
+var _yAxis = /*@__PURE__*/new _Vector.Vector3(0, 1, 0);
+var _zAxis = /*@__PURE__*/new _Vector.Vector3(0, 0, 1);
+var _addedEvent = {
+  type: 'added'
+};
+var _removedEvent = {
+  type: 'removed'
+};
+var Object3D = /*#__PURE__*/function (_EventDispatcher) {
+  _inherits(Object3D, _EventDispatcher);
+  var _super = _createSuper(Object3D);
+  function Object3D() {
+    var _this;
+    _classCallCheck(this, Object3D);
+    _this = _super.call(this);
+    _this.isObject3D = true;
+    Object.defineProperty(_assertThisInitialized(_this), 'id', {
+      value: _object3DId++
+    });
+    _this.uuid = MathUtils.generateUUID();
+    _this.name = '';
+    _this.type = 'Object3D';
+    _this.parent = null;
+    _this.children = [];
+    _this.up = Object3D.DefaultUp.clone();
+    var position = new _Vector.Vector3();
+    var rotation = new _Euler.Euler();
+    var quaternion = new _Quaternion.Quaternion();
+    var scale = new _Vector.Vector3(1, 1, 1);
+    function onRotationChange() {
+      quaternion.setFromEuler(rotation, false);
+    }
+    function onQuaternionChange() {
+      rotation.setFromQuaternion(quaternion, undefined, false);
+    }
+    rotation._onChange(onRotationChange);
+    quaternion._onChange(onQuaternionChange);
+    Object.defineProperties(_assertThisInitialized(_this), {
+      position: {
+        configurable: true,
+        enumerable: true,
+        value: position
+      },
+      rotation: {
+        configurable: true,
+        enumerable: true,
+        value: rotation
+      },
+      quaternion: {
+        configurable: true,
+        enumerable: true,
+        value: quaternion
+      },
+      scale: {
+        configurable: true,
+        enumerable: true,
+        value: scale
+      },
+      modelViewMatrix: {
+        value: new _Matrix.Matrix4()
+      },
+      normalMatrix: {
+        value: new _Matrix2.Matrix3()
+      }
+    });
+    _this.matrix = new _Matrix.Matrix4();
+    _this.matrixWorld = new _Matrix.Matrix4();
+    _this.matrixAutoUpdate = Object3D.DefaultMatrixAutoUpdate;
+    _this.matrixWorldNeedsUpdate = false;
+    _this.matrixWorldAutoUpdate = Object3D.DefaultMatrixWorldAutoUpdate; // checked by the renderer
+
+    _this.layers = new _Layers.Layers();
+    _this.visible = true;
+    _this.castShadow = false;
+    _this.receiveShadow = false;
+    _this.frustumCulled = true;
+    _this.renderOrder = 0;
+    _this.animations = [];
+    _this.userData = {};
+    return _this;
+  }
+  _createClass(Object3D, [{
+    key: "onBeforeRender",
+    value: function onBeforeRender( /* renderer, scene, camera, geometry, material, group */) {}
+  }, {
+    key: "onAfterRender",
+    value: function onAfterRender( /* renderer, scene, camera, geometry, material, group */) {}
+  }, {
+    key: "applyMatrix4",
+    value: function applyMatrix4(matrix) {
+      if (this.matrixAutoUpdate) this.updateMatrix();
+      this.matrix.premultiply(matrix);
+      this.matrix.decompose(this.position, this.quaternion, this.scale);
+    }
+  }, {
+    key: "applyQuaternion",
+    value: function applyQuaternion(q) {
+      this.quaternion.premultiply(q);
+      return this;
+    }
+  }, {
+    key: "setRotationFromAxisAngle",
+    value: function setRotationFromAxisAngle(axis, angle) {
+      // assumes axis is normalized
+
+      this.quaternion.setFromAxisAngle(axis, angle);
+    }
+  }, {
+    key: "setRotationFromEuler",
+    value: function setRotationFromEuler(euler) {
+      this.quaternion.setFromEuler(euler, true);
+    }
+  }, {
+    key: "setRotationFromMatrix",
+    value: function setRotationFromMatrix(m) {
+      // assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
+
+      this.quaternion.setFromRotationMatrix(m);
+    }
+  }, {
+    key: "setRotationFromQuaternion",
+    value: function setRotationFromQuaternion(q) {
+      // assumes q is normalized
+
+      this.quaternion.copy(q);
+    }
+  }, {
+    key: "rotateOnAxis",
+    value: function rotateOnAxis(axis, angle) {
+      // rotate object on axis in object space
+      // axis is assumed to be normalized
+
+      _q1.setFromAxisAngle(axis, angle);
+      this.quaternion.multiply(_q1);
+      return this;
+    }
+  }, {
+    key: "rotateOnWorldAxis",
+    value: function rotateOnWorldAxis(axis, angle) {
+      // rotate object on axis in world space
+      // axis is assumed to be normalized
+      // method assumes no rotated parent
+
+      _q1.setFromAxisAngle(axis, angle);
+      this.quaternion.premultiply(_q1);
+      return this;
+    }
+  }, {
+    key: "rotateX",
+    value: function rotateX(angle) {
+      return this.rotateOnAxis(_xAxis, angle);
+    }
+  }, {
+    key: "rotateY",
+    value: function rotateY(angle) {
+      return this.rotateOnAxis(_yAxis, angle);
+    }
+  }, {
+    key: "rotateZ",
+    value: function rotateZ(angle) {
+      return this.rotateOnAxis(_zAxis, angle);
+    }
+  }, {
+    key: "translateOnAxis",
+    value: function translateOnAxis(axis, distance) {
+      // translate object by distance along axis in object space
+      // axis is assumed to be normalized
+
+      _v1.copy(axis).applyQuaternion(this.quaternion);
+      this.position.add(_v1.multiplyScalar(distance));
+      return this;
+    }
+  }, {
+    key: "translateX",
+    value: function translateX(distance) {
+      return this.translateOnAxis(_xAxis, distance);
+    }
+  }, {
+    key: "translateY",
+    value: function translateY(distance) {
+      return this.translateOnAxis(_yAxis, distance);
+    }
+  }, {
+    key: "translateZ",
+    value: function translateZ(distance) {
+      return this.translateOnAxis(_zAxis, distance);
+    }
+  }, {
+    key: "localToWorld",
+    value: function localToWorld(vector) {
+      return vector.applyMatrix4(this.matrixWorld);
+    }
+  }, {
+    key: "worldToLocal",
+    value: function worldToLocal(vector) {
+      return vector.applyMatrix4(_m1.copy(this.matrixWorld).invert());
+    }
+  }, {
+    key: "lookAt",
+    value: function lookAt(x, y, z) {
+      // This method does not support objects having non-uniformly-scaled parent(s)
+
+      if (x.isVector3) {
+        _target.copy(x);
+      } else {
+        _target.set(x, y, z);
+      }
+      var parent = this.parent;
+      this.updateWorldMatrix(true, false);
+      _position.setFromMatrixPosition(this.matrixWorld);
+      if (this.isCamera || this.isLight) {
+        _m1.lookAt(_position, _target, this.up);
+      } else {
+        _m1.lookAt(_target, _position, this.up);
+      }
+      this.quaternion.setFromRotationMatrix(_m1);
+      if (parent) {
+        _m1.extractRotation(parent.matrixWorld);
+        _q1.setFromRotationMatrix(_m1);
+        this.quaternion.premultiply(_q1.invert());
+      }
+    }
+  }, {
+    key: "add",
+    value: function add(object) {
+      if (arguments.length > 1) {
+        for (var i = 0; i < arguments.length; i++) {
+          this.add(arguments[i]);
+        }
+        return this;
+      }
+      if (object === this) {
+        console.error('THREE.Object3D.add: object can\'t be added as a child of itself.', object);
+        return this;
+      }
+      if (object && object.isObject3D) {
+        if (object.parent !== null) {
+          object.parent.remove(object);
+        }
+        object.parent = this;
+        this.children.push(object);
+        object.dispatchEvent(_addedEvent);
+      } else {
+        console.error('THREE.Object3D.add: object not an instance of THREE.Object3D.', object);
+      }
+      return this;
+    }
+  }, {
+    key: "remove",
+    value: function remove(object) {
+      if (arguments.length > 1) {
+        for (var i = 0; i < arguments.length; i++) {
+          this.remove(arguments[i]);
+        }
+        return this;
+      }
+      var index = this.children.indexOf(object);
+      if (index !== -1) {
+        object.parent = null;
+        this.children.splice(index, 1);
+        object.dispatchEvent(_removedEvent);
+      }
+      return this;
+    }
+  }, {
+    key: "removeFromParent",
+    value: function removeFromParent() {
+      var parent = this.parent;
+      if (parent !== null) {
+        parent.remove(this);
+      }
+      return this;
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      for (var i = 0; i < this.children.length; i++) {
+        var object = this.children[i];
+        object.parent = null;
+        object.dispatchEvent(_removedEvent);
+      }
+      this.children.length = 0;
+      return this;
+    }
+  }, {
+    key: "attach",
+    value: function attach(object) {
+      // adds object as a child of this, while maintaining the object's world transform
+
+      // Note: This method does not support scene graphs having non-uniformly-scaled nodes(s)
+
+      this.updateWorldMatrix(true, false);
+      _m1.copy(this.matrixWorld).invert();
+      if (object.parent !== null) {
+        object.parent.updateWorldMatrix(true, false);
+        _m1.multiply(object.parent.matrixWorld);
+      }
+      object.applyMatrix4(_m1);
+      this.add(object);
+      object.updateWorldMatrix(false, true);
+      return this;
+    }
+  }, {
+    key: "getObjectById",
+    value: function getObjectById(id) {
+      return this.getObjectByProperty('id', id);
+    }
+  }, {
+    key: "getObjectByName",
+    value: function getObjectByName(name) {
+      return this.getObjectByProperty('name', name);
+    }
+  }, {
+    key: "getObjectByProperty",
+    value: function getObjectByProperty(name, value) {
+      if (this[name] === value) return this;
+      for (var i = 0, l = this.children.length; i < l; i++) {
+        var child = this.children[i];
+        var object = child.getObjectByProperty(name, value);
+        if (object !== undefined) {
+          return object;
+        }
+      }
+      return undefined;
+    }
+  }, {
+    key: "getWorldPosition",
+    value: function getWorldPosition(target) {
+      this.updateWorldMatrix(true, false);
+      return target.setFromMatrixPosition(this.matrixWorld);
+    }
+  }, {
+    key: "getWorldQuaternion",
+    value: function getWorldQuaternion(target) {
+      this.updateWorldMatrix(true, false);
+      this.matrixWorld.decompose(_position, target, _scale);
+      return target;
+    }
+  }, {
+    key: "getWorldScale",
+    value: function getWorldScale(target) {
+      this.updateWorldMatrix(true, false);
+      this.matrixWorld.decompose(_position, _quaternion, target);
+      return target;
+    }
+  }, {
+    key: "getWorldDirection",
+    value: function getWorldDirection(target) {
+      this.updateWorldMatrix(true, false);
+      var e = this.matrixWorld.elements;
+      return target.set(e[8], e[9], e[10]).normalize();
+    }
+  }, {
+    key: "raycast",
+    value: function raycast( /* raycaster, intersects */) {}
+  }, {
+    key: "traverse",
+    value: function traverse(callback) {
+      callback(this);
+      var children = this.children;
+      for (var i = 0, l = children.length; i < l; i++) {
+        children[i].traverse(callback);
+      }
+    }
+  }, {
+    key: "traverseVisible",
+    value: function traverseVisible(callback) {
+      if (this.visible === false) return;
+      callback(this);
+      var children = this.children;
+      for (var i = 0, l = children.length; i < l; i++) {
+        children[i].traverseVisible(callback);
+      }
+    }
+  }, {
+    key: "traverseAncestors",
+    value: function traverseAncestors(callback) {
+      var parent = this.parent;
+      if (parent !== null) {
+        callback(parent);
+        parent.traverseAncestors(callback);
+      }
+    }
+  }, {
+    key: "updateMatrix",
+    value: function updateMatrix() {
+      this.matrix.compose(this.position, this.quaternion, this.scale);
+      this.matrixWorldNeedsUpdate = true;
+    }
+  }, {
+    key: "updateMatrixWorld",
+    value: function updateMatrixWorld(force) {
+      if (this.matrixAutoUpdate) this.updateMatrix();
+      if (this.matrixWorldNeedsUpdate || force) {
+        if (this.parent === null) {
+          this.matrixWorld.copy(this.matrix);
+        } else {
+          this.matrixWorld.multiplyMatrices(this.parent.matrixWorld, this.matrix);
+        }
+        this.matrixWorldNeedsUpdate = false;
+        force = true;
+      }
+
+      // update children
+
+      var children = this.children;
+      for (var i = 0, l = children.length; i < l; i++) {
+        var child = children[i];
+        if (child.matrixWorldAutoUpdate === true || force === true) {
+          child.updateMatrixWorld(force);
+        }
+      }
+    }
+  }, {
+    key: "updateWorldMatrix",
+    value: function updateWorldMatrix(updateParents, updateChildren) {
+      var parent = this.parent;
+      if (updateParents === true && parent !== null && parent.matrixWorldAutoUpdate === true) {
+        parent.updateWorldMatrix(true, false);
+      }
+      if (this.matrixAutoUpdate) this.updateMatrix();
+      if (this.parent === null) {
+        this.matrixWorld.copy(this.matrix);
+      } else {
+        this.matrixWorld.multiplyMatrices(this.parent.matrixWorld, this.matrix);
+      }
+
+      // update children
+
+      if (updateChildren === true) {
+        var children = this.children;
+        for (var i = 0, l = children.length; i < l; i++) {
+          var child = children[i];
+          if (child.matrixWorldAutoUpdate === true) {
+            child.updateWorldMatrix(false, true);
+          }
+        }
+      }
+    }
+  }, {
+    key: "toJSON",
+    value: function toJSON(meta) {
+      // meta is a string when called from JSON.stringify
+      var isRootObject = meta === undefined || typeof meta === 'string';
+      var output = {};
+
+      // meta is a hash used to collect geometries, materials.
+      // not providing it implies that this is the root object
+      // being serialized.
+      if (isRootObject) {
+        // initialize meta obj
+        meta = {
+          geometries: {},
+          materials: {},
+          textures: {},
+          images: {},
+          shapes: {},
+          skeletons: {},
+          animations: {},
+          nodes: {}
+        };
+        output.metadata = {
+          version: 4.5,
+          type: 'Object',
+          generator: 'Object3D.toJSON'
+        };
+      }
+
+      // standard Object3D serialization
+
+      var object = {};
+      object.uuid = this.uuid;
+      object.type = this.type;
+      if (this.name !== '') object.name = this.name;
+      if (this.castShadow === true) object.castShadow = true;
+      if (this.receiveShadow === true) object.receiveShadow = true;
+      if (this.visible === false) object.visible = false;
+      if (this.frustumCulled === false) object.frustumCulled = false;
+      if (this.renderOrder !== 0) object.renderOrder = this.renderOrder;
+      if (JSON.stringify(this.userData) !== '{}') object.userData = this.userData;
+      object.layers = this.layers.mask;
+      object.matrix = this.matrix.toArray();
+      if (this.matrixAutoUpdate === false) object.matrixAutoUpdate = false;
+
+      // object specific properties
+
+      if (this.isInstancedMesh) {
+        object.type = 'InstancedMesh';
+        object.count = this.count;
+        object.instanceMatrix = this.instanceMatrix.toJSON();
+        if (this.instanceColor !== null) object.instanceColor = this.instanceColor.toJSON();
+      }
+
+      //
+
+      function serialize(library, element) {
+        if (library[element.uuid] === undefined) {
+          library[element.uuid] = element.toJSON(meta);
+        }
+        return element.uuid;
+      }
+      if (this.isScene) {
+        if (this.background) {
+          if (this.background.isColor) {
+            object.background = this.background.toJSON();
+          } else if (this.background.isTexture) {
+            object.background = this.background.toJSON(meta).uuid;
+          }
+        }
+        if (this.environment && this.environment.isTexture && this.environment.isRenderTargetTexture !== true) {
+          object.environment = this.environment.toJSON(meta).uuid;
+        }
+      } else if (this.isMesh || this.isLine || this.isPoints) {
+        object.geometry = serialize(meta.geometries, this.geometry);
+        var parameters = this.geometry.parameters;
+        if (parameters !== undefined && parameters.shapes !== undefined) {
+          var shapes = parameters.shapes;
+          if (Array.isArray(shapes)) {
+            for (var i = 0, l = shapes.length; i < l; i++) {
+              var shape = shapes[i];
+              serialize(meta.shapes, shape);
+            }
+          } else {
+            serialize(meta.shapes, shapes);
+          }
+        }
+      }
+      if (this.isSkinnedMesh) {
+        object.bindMode = this.bindMode;
+        object.bindMatrix = this.bindMatrix.toArray();
+        if (this.skeleton !== undefined) {
+          serialize(meta.skeletons, this.skeleton);
+          object.skeleton = this.skeleton.uuid;
+        }
+      }
+      if (this.material !== undefined) {
+        if (Array.isArray(this.material)) {
+          var uuids = [];
+          for (var _i = 0, _l = this.material.length; _i < _l; _i++) {
+            uuids.push(serialize(meta.materials, this.material[_i]));
+          }
+          object.material = uuids;
+        } else {
+          object.material = serialize(meta.materials, this.material);
+        }
+      }
+
+      //
+
+      if (this.children.length > 0) {
+        object.children = [];
+        for (var _i2 = 0; _i2 < this.children.length; _i2++) {
+          object.children.push(this.children[_i2].toJSON(meta).object);
+        }
+      }
+
+      //
+
+      if (this.animations.length > 0) {
+        object.animations = [];
+        for (var _i3 = 0; _i3 < this.animations.length; _i3++) {
+          var animation = this.animations[_i3];
+          object.animations.push(serialize(meta.animations, animation));
+        }
+      }
+      if (isRootObject) {
+        var geometries = extractFromCache(meta.geometries);
+        var materials = extractFromCache(meta.materials);
+        var textures = extractFromCache(meta.textures);
+        var images = extractFromCache(meta.images);
+        var _shapes = extractFromCache(meta.shapes);
+        var skeletons = extractFromCache(meta.skeletons);
+        var animations = extractFromCache(meta.animations);
+        var nodes = extractFromCache(meta.nodes);
+        if (geometries.length > 0) output.geometries = geometries;
+        if (materials.length > 0) output.materials = materials;
+        if (textures.length > 0) output.textures = textures;
+        if (images.length > 0) output.images = images;
+        if (_shapes.length > 0) output.shapes = _shapes;
+        if (skeletons.length > 0) output.skeletons = skeletons;
+        if (animations.length > 0) output.animations = animations;
+        if (nodes.length > 0) output.nodes = nodes;
+      }
+      output.object = object;
+      return output;
+
+      // extract data from the cache hash
+      // remove metadata on each item
+      // and return as array
+      function extractFromCache(cache) {
+        var values = [];
+        for (var key in cache) {
+          var data = cache[key];
+          delete data.metadata;
+          values.push(data);
+        }
+        return values;
+      }
+    }
+  }, {
+    key: "clone",
+    value: function clone(recursive) {
+      return new this.constructor().copy(this, recursive);
+    }
+  }, {
+    key: "copy",
+    value: function copy(source) {
+      var recursive = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      this.name = source.name;
+      this.up.copy(source.up);
+      this.position.copy(source.position);
+      this.rotation.order = source.rotation.order;
+      this.quaternion.copy(source.quaternion);
+      this.scale.copy(source.scale);
+      this.matrix.copy(source.matrix);
+      this.matrixWorld.copy(source.matrixWorld);
+      this.matrixAutoUpdate = source.matrixAutoUpdate;
+      this.matrixWorldNeedsUpdate = source.matrixWorldNeedsUpdate;
+      this.matrixWorldAutoUpdate = source.matrixWorldAutoUpdate;
+      this.layers.mask = source.layers.mask;
+      this.visible = source.visible;
+      this.castShadow = source.castShadow;
+      this.receiveShadow = source.receiveShadow;
+      this.frustumCulled = source.frustumCulled;
+      this.renderOrder = source.renderOrder;
+      this.userData = JSON.parse(JSON.stringify(source.userData));
+      if (recursive === true) {
+        for (var i = 0; i < source.children.length; i++) {
+          var child = source.children[i];
+          this.add(child.clone());
+        }
+      }
+      return this;
+    }
+  }]);
+  return Object3D;
+}(_EventDispatcher2.EventDispatcher);
+exports.Object3D = Object3D;
+Object3D.DefaultUp = /*@__PURE__*/new _Vector.Vector3(0, 1, 0);
+Object3D.DefaultMatrixAutoUpdate = true;
+Object3D.DefaultMatrixWorldAutoUpdate = true;
+},{"../math/Quaternion.js":"../../ThreeSrcCode/src/math/Quaternion.js","../math/Vector3.js":"../../ThreeSrcCode/src/math/Vector3.js","../math/Matrix4.js":"../../ThreeSrcCode/src/math/Matrix4.js","./EventDispatcher.js":"../../ThreeSrcCode/src/core/EventDispatcher.js","../math/Euler.js":"../../ThreeSrcCode/src/math/Euler.js","./Layers.js":"../../ThreeSrcCode/src/core/Layers.js","../math/Matrix3.js":"../../ThreeSrcCode/src/math/Matrix3.js","../math/MathUtils.js":"../../ThreeSrcCode/src/math/MathUtils.js"}],"../../ThreeSrcCode/src/cameras/Camera.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Camera = void 0;
+var _Matrix = require("../math/Matrix4.js");
+var _Object3D2 = require("../core/Object3D.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _get() { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get.bind(); } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(arguments.length < 3 ? target : receiver); } return desc.value; }; } return _get.apply(this, arguments); }
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+var Camera = /*#__PURE__*/function (_Object3D) {
+  _inherits(Camera, _Object3D);
+  var _super = _createSuper(Camera);
+  function Camera() {
+    var _this;
+    _classCallCheck(this, Camera);
+    _this = _super.call(this);
+    _this.isCamera = true;
+    _this.type = 'Camera';
+    _this.matrixWorldInverse = new _Matrix.Matrix4();
+    _this.projectionMatrix = new _Matrix.Matrix4();
+    _this.projectionMatrixInverse = new _Matrix.Matrix4();
+    return _this;
+  }
+  _createClass(Camera, [{
+    key: "copy",
+    value: function copy(source, recursive) {
+      _get(_getPrototypeOf(Camera.prototype), "copy", this).call(this, source, recursive);
+      this.matrixWorldInverse.copy(source.matrixWorldInverse);
+      this.projectionMatrix.copy(source.projectionMatrix);
+      this.projectionMatrixInverse.copy(source.projectionMatrixInverse);
+      return this;
+    }
+  }, {
+    key: "getWorldDirection",
+    value: function getWorldDirection(target) {
+      this.updateWorldMatrix(true, false);
+      var e = this.matrixWorld.elements;
+      return target.set(-e[8], -e[9], -e[10]).normalize();
+    }
+  }, {
+    key: "updateMatrixWorld",
+    value: function updateMatrixWorld(force) {
+      _get(_getPrototypeOf(Camera.prototype), "updateMatrixWorld", this).call(this, force);
+      this.matrixWorldInverse.copy(this.matrixWorld).invert();
+    }
+  }, {
+    key: "updateWorldMatrix",
+    value: function updateWorldMatrix(updateParents, updateChildren) {
+      _get(_getPrototypeOf(Camera.prototype), "updateWorldMatrix", this).call(this, updateParents, updateChildren);
+      this.matrixWorldInverse.copy(this.matrixWorld).invert();
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      return new this.constructor().copy(this);
+    }
+  }]);
+  return Camera;
+}(_Object3D2.Object3D);
+exports.Camera = Camera;
+},{"../math/Matrix4.js":"../../ThreeSrcCode/src/math/Matrix4.js","../core/Object3D.js":"../../ThreeSrcCode/src/core/Object3D.js"}],"main.js":[function(require,module,exports) {
 "use strict";
 
 var THREE = _interopRequireWildcard(require("three"));
+var _Camera = require("../../ThreeSrcCode/src/cameras/Camera");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-console.log(THREE);
-},{"three":"../node_modules/three/build/three.module.js"}],"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+/**
+ * 1.创建场景
+ */
+var scene = new THREE.Scene();
+
+/**
+ * 2.创建相机(
+ */
+// 创建透视相机; (角度, 宽高比,近端参, 远端参;)
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+// 设置相机位置; (x,y,z);
+camera.position.set(0, 0, 10);
+// 把相机添加到场景中
+scene.add(camera);
+
+/**
+ * 3.场景中添加物体
+ */
+// 创建几何体; (x,y,z);
+var cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+// 创建基础网格材质
+var cubeMertrial = new THREE.MeshBasicMaterial({
+  color: 0xffff00
+});
+// 根据几何体和材质创建物体; (几何体Obj, 材质Obj);
+var cube = new THREE.Mesh(cubeGeometry, cubeMertrial);
+// 将几何体添加至场景中
+scene.add(cube);
+
+/**
+ * 4.初始化渲染器
+ */
+// 创建渲染器;
+var renderer = new THREE.WebGLRenderer();
+// 设置渲染尺寸大小; (画布宽, 画布高);
+renderer.setSize(window.innerWidth, window.innerHeight);
+console.log(renderer);
+console.log(renderer.domElement);
+// 将webgl渲染的canvas内容添加到body元素上
+document.body.appendChild(renderer.domElement);
+// 最后使用渲染器,通过相机将场景渲染进来
+renderer.render(scene, camera);
+},{"three":"../node_modules/three/build/three.module.js","../../ThreeSrcCode/src/cameras/Camera":"../../ThreeSrcCode/src/cameras/Camera.js"}],"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
