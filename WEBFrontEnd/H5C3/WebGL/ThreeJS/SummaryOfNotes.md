@@ -2,6 +2,9 @@
 壹. 贰. 叁. 肆. 伍. 陆. 柒. 捌. 玖. 拾;
 
 壹.下载 ThreeJs 到本地 (ThreeSrcCode)
+  GitHub地址: https://github.com/mrdoob/three.js/
+  Git下载地址: git@github.com:mrdoob/three.js.git
+  
   主要目录
   📁	
   docs/
@@ -25,7 +28,7 @@
     three 三维图形库
   
 叁.使用three渲染第一个场景和物体
-  
+
 
 
 
