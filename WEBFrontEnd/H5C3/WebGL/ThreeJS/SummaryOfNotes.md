@@ -182,7 +182,9 @@ three 三维图形库
   const mesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
   scene.add(mesh);
 
-拾柒.生成炫酷三角形科技物体
+拾柒.生成炫酷三角形科技物体(14.main.js);
+  
+  
   
 
 拾捌.
