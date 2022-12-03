@@ -52,6 +52,7 @@ for (let i = 0; i < 50; i++) {
   const mesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
   scene.add(mesh);
 }
+
 /**
  * 4.初始化渲染器
  */

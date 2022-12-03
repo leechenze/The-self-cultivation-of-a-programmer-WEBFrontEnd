@@ -183,9 +183,28 @@ three 三维图形库
   scene.add(mesh);
 
 拾柒.生成炫酷三角形科技物体(14.main.js);
-  
-  
-  
+  for (let i = 0; i < 50; i++) {
+    const cubeGeometry = new THREE.BufferGeometry();
+    // 创建顶点集合(传数字时表示长度为9的数组);
+    const vertices = new Float32Array(9);
+    for (let j = 0; j < 9; j++) {
+      vertices[j] = Math.random() * 5 - 2.5;
+    }
+    // 设置顶点位置,规定每三个值作为一个顶点属性;
+    cubeGeometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
+    // 创建基础网格材质
+    const cubeMaterial = new THREE.MeshBasicMaterial({
+      color: new THREE.Color(
+        Math.random() * 5,
+        Math.random() * 5,
+        Math.random() * 5
+      ),
+      transparent: true,
+      opacity: 0.6,
+    });
+    const mesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
+    scene.add(mesh);
+  }
 
 拾捌.
 

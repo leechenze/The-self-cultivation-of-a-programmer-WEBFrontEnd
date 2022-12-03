@@ -44915,6 +44915,7 @@ for (var i = 0; i < 50; i++) {
   var mesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
   scene.add(mesh);
 }
+
 /**
  * 4.初始化渲染器
  */
