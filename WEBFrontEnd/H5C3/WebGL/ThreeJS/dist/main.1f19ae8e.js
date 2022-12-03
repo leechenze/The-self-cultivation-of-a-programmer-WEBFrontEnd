@@ -44896,25 +44896,16 @@ scene.add(camera);
 /**
  * 3.场景中添加物体
  */
-// 循环创建缓冲区集合体
-for (var i = 0; i < 50; i++) {
-  var cubeGeometry = new THREE.BufferGeometry();
-  // 创建顶点集合(传数字时表示长度为9的数组);
-  var vertices = new Float32Array(9);
-  for (var j = 0; j < 9; j++) {
-    vertices[j] = Math.random() * 5 - 2.5;
-  }
-  // 设置顶点位置,规定每三个值作为一个顶点属性;
-  cubeGeometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
-  // 创建基础网格材质
-  var cubeMaterial = new THREE.MeshBasicMaterial({
-    color: new THREE.Color(Math.random() * 5, Math.random() * 5, Math.random() * 5),
-    transparent: true,
-    opacity: 0.6
-  });
-  var mesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
-  scene.add(mesh);
-}
+// 导入纹理
+var textureLoader = new THREE.TextureLoader();
+var doorColorTexture = textureLoader.load("./textures/alphaMap.jpg");
+var cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+var cubeMaterial = new THREE.MeshBasicMaterial({
+  color: "#ffff00",
+  map: doorColorTexture
+});
+var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+scene.add(cube);
 
 /**
  * 4.初始化渲染器
