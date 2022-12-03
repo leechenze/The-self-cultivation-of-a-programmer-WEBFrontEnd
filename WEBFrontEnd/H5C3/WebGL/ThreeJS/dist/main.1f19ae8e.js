@@ -44884,7 +44884,7 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 var scene = new THREE.Scene();
 
 /**
- * 2.创建相机(
+ * 2.创建相机
  */
 // 创建透视相机; (角度, 宽高比,近端参, 远端参;)
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -44896,16 +44896,18 @@ scene.add(camera);
 /**
  * 3.场景中添加物体
  */
-// 创建几何体; (width,height,depth);
-var cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+// 创建缓冲区集合体
+var cubeGeometry = new THREE.BufferGeometry(1, 1, 1);
+// 根据集几何体和材质创建物体
+var vertices = new Float32Array([-1, -1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, -1, 1, 1, -1, -1, 1]);
+// 设置顶点位置,规定每三个值作为一个顶点属性;
+cubeGeometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
 // 创建基础网格材质
 var cubeMaterial = new THREE.MeshBasicMaterial({
   color: 0xffff00
 });
-// 根据几何体和材质创建物体; (几何体Obj, 材质Obj);
-var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-// 将几何体添加至场景中
-scene.add(cube);
+var mesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
+scene.add(mesh);
 
 /**
  * 4.初始化渲染器

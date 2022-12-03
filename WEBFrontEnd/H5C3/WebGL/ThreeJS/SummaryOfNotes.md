@@ -161,5 +161,44 @@ three 三维图形库
     let folder = GUI.addFolder("SetCube");
     folder.add(...);
     
-拾伍.
-拾陆.
+拾伍.掌握几何体顶点_UV_法向属性
+  解释:
+    UV:
+    法向:
+    集合体顶点: 绘制一个物体所用的每个点都是顶点
+  
+拾陆.BufferGeometry设置顶点创建矩形(13.main.js)
+  const cubeGeometry = new THREE.BufferGeometry();
+  const vertices = new FLoat32Array([
+    -1, -1, 1,
+    1, -1, 1,
+    1, 1, 1,
+    1, 1, 1,
+    -1, 1, 1,
+    -1, -1, 1
+  ])
+  cubeGeometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
+  const cubeMaterial = new THREE.MeshBasicMaterial({color: 0xffff00});
+  const mesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
+  scene.add(mesh);
+
+拾柒.生成炫酷三角形科技物体
+  
+
+拾捌.
+
+拾玖.
+
+贰拾.
+
+贰拾壹.
+
+贰拾贰.
+
+贰拾叁.
+
+贰拾肆.
+
+贰拾伍.
+
+贰拾陆.
