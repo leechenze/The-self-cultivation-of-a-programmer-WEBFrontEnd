@@ -44898,7 +44898,19 @@ scene.add(camera);
  */
 // 导入纹理
 var textureLoader = new THREE.TextureLoader();
-var doorColorTexture = textureLoader.load("./textures/alphaMap.jpg");
+var doorColorTexture = textureLoader.load("./textures/fruits.jpg");
+// 纹理偏移
+// doorColorTexture.offset.x = 0.5;
+// doorColorTexture.offset.y = 0.5;
+// 设置纹理旋转原点
+doorColorTexture.center.set(0.5, 0.5);
+// 纹理旋转
+doorColorTexture.rotation = Math.PI / 4;
+// 纹理重复
+doorColorTexture.repeat.set(2, 3);
+// 镜像重复
+doorColorTexture.wrapS = THREE.MirroredRepeatWrapping;
+doorColorTexture.wrapT = THREE.RepeatWrapping;
 var cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
 var cubeMaterial = new THREE.MeshBasicMaterial({
   color: "#ffff00",

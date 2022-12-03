@@ -244,9 +244,23 @@
       map: doorColorTexture,
     });
 
-贰拾.
+贰拾.详解纹理偏移&旋转&重复(16.main.js);
+  纹理偏移
+    doorColorTexture.offset.x = 0.5;
+    doorColorTexture.offset.y = 0.5;
+  设置纹理旋转原点
+    doorColorTexture.center.set(0.5, 0.5);
+  纹理旋转
+    doorColorTexture.rotation = Math.PI / 4;
+  纹理重复
+    doorColorTexture.repeat.set(2, 3);
+  镜像重复
+    doorColorTexture.wrapS = THREE.MirroredRepeatWrapping;
+    doorColorTexture.wrapT = THREE.RepeatWrapping;
+  
 
-贰拾壹.
+贰拾壹.设置纹理显示算法与mipmap(17.main.js);
+  
 
 贰拾贰.
 
