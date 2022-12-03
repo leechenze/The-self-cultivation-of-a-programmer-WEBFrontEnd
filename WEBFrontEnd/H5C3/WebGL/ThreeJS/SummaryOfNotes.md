@@ -139,8 +139,27 @@ three 三维图形库
   });
 
 拾叁.调用JS接口控制画布全屏和退出全屏(11.main.js);
-  
-  
-拾肆.
+  window.addEventListener("dblclick", () => {
+    // 判断是否在全屏状态(返回全屏元素DOM);
+    if (document.fullscreenElement) {
+      // 在全屏状态时退出全屏
+      document.exitFullscreen();
+    } else {
+      // 不再全屏状态时开启全屏
+      renderer.domElement.requestFullscreen();
+    }
+  });
+
+拾肆.应用图形用户界面更改变量(12.main.js)
+  导入GUI库
+    import * as dat from "dat.gui";
+  创建GUI
+    const GUI = new dat.GUI();
+  添加位移属性控制
+    GUI.add(cube.position, "x")
+  添加文件夹
+    let folder = GUI.addFolder("SetCube");
+    folder.add(...);
+    
 拾伍.
 拾陆.

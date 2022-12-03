@@ -3,8 +3,6 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 // 导入GSAP动画库
 import gsap from "gsap";
-// 导入GUI图形操作库
-import * as dat from "dat.gui";
 
 /**
  * 1.创建场景
@@ -62,6 +60,7 @@ renderer.render(scene, camera);
 /**
  * 添加坐标轴辅助器
  */
+
 const axesHelper = new THREE.AxesHelper(5);
 scene.add(axesHelper);
 
@@ -93,7 +92,7 @@ window.addEventListener("resize", () => {
 /**
  * 双击控制全屏模式
  */
-window.addEventListener("contextmenu", () => {
+window.addEventListener("dblclick", () => {
   // 判断是否在全屏状态(返回全屏元素DOM);
   if (document.fullscreenElement) {
     // 在全屏状态时退出全屏

@@ -37,6 +37,40 @@ const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 // 将几何体添加至场景中
 scene.add(cube);
+console.log(cube);
+/**
+ * 创建GUI
+ */
+const GUI = new dat.GUI();
+// 添加物体位置控制
+GUI.add(cube.position, "x")
+  .min(0)
+  .max(5)
+  .step(0.01)
+  .name("ChangeX")
+  .onChange((val) => {
+    console.log("改变时触发", val);
+  })
+  .onFinishChange((val) => {
+    console.log("改变并完全停下时触发", val);
+  });
+let params = {
+  color: "#ff0",
+  fn: () => {
+    gsap.to(cube.position, { x: 5, duration: 2, yoyo: true, repeat: -1 });
+  },
+};
+// 添加物体颜色控制
+GUI.addColor(params, "color").onChange((val) => {
+  cube.material.color.set(val);
+});
+// 添加物体隐藏显示控制
+GUI.add(cube, "visible").name("ShowOrHide");
+// 添加按钮点击触发某个事件
+GUI.add(params, "fn").name("ClickRun");
+// 添加文件夹
+let folder = GUI.addFolder("SetCube");
+folder.add(cube.material, "wireframe").name("SetWireframe");
 
 /**
  * 4.初始化渲染器
