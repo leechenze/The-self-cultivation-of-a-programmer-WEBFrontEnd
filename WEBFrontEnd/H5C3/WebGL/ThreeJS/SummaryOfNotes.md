@@ -300,9 +300,21 @@
     new THREE.BufferAttribute(cubeGeometry.attributes.uv.array, 2)
   );
   
-贰拾肆.详解PBR物理渲染(20.main.js);
+贰拾肆.详解PBR物理渲染
+  PBR基于物理渲染,之前的渲染是在模仿灯光的外观,PBR是模仿光的实际行为,使看起来更真实
+  主要表现:
+    灯光属性: 直接照明,间接照明,直接高光,间接高光,阴影,环境光闭塞
+    表面属性: 基础设,法线,高光,粗糙度,金属度
   
+贰拾伍.标准网络材质与光照物理效果(20.main.js);
+  光照场景必须是由(标准材质呈现MeshStandardMaterial);
+  环境光照(四面八方的打过来的光);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(ambientLight);
+  直线光照(设置位置来自[10,10,10]的光照)
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight.position.set(10, 10, 10);
+    scene.add(directionalLight);
 
-贰拾伍.
-
-贰拾陆.
+贰拾陆.置换贴图和顶点细分设置
+  

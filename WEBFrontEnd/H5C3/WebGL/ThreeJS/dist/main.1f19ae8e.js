@@ -44902,7 +44902,7 @@ var texture = textureLoader.load("./textures/fruits.jpg");
 var alphaTexture = textureLoader.load("./textures/grid1.png");
 var aoTexture = textureLoader.load("textures/grid2.png");
 var cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
-var cubeMaterial = new THREE.MeshBasicMaterial({
+var cubeMaterial = new THREE.MeshStandardMaterial({
   color: "#ffff00",
   map: texture,
   transparent: true,
@@ -44910,13 +44910,23 @@ var cubeMaterial = new THREE.MeshBasicMaterial({
   opacity: 0.8,
   aoMap: aoTexture,
   aoMapIntensity: 0.9
-  // side: THREE.DoubleSide,
 });
 // aoMap需要第二组uv进行设置
 cubeGeometry.setAttribute("uv2", new THREE.BufferAttribute(cubeGeometry.attributes.uv.array, 2));
 cubeMaterial.side = THREE.DoubleSide;
 var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 scene.add(cube);
+
+/**
+ * 添加光照场景
+ */
+// 环境光照(四面八方的打过来的光);
+// const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+// scene.add(ambientLight);
+// 直线光照
+var directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+directionalLight.position.set(10, 10, 10);
+scene.add(directionalLight);
 
 /**
  * 4.初始化渲染器
