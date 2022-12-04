@@ -281,10 +281,27 @@
   });
   OR: cubeMaterial.side = THREE.DoubleSide; 构造后的实例对象也可设值
   
-贰拾叁.环境遮挡贴图与强度
+贰拾叁.环境遮挡贴图与强度(19.main.js);
+  第一组uv控制的是颜色贴图,第二组uv控制的是光照效果.
+  const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+  const cubeMaterial = new THREE.MeshBasicMaterial({
+    color: "#ffff00",
+    map: texture,
+    transparent: true,
+    alphaMap: alphaTexture,
+    opacity: 0.8,
+    aoMap: aoTexture,
+    aoMapIntensity: 0.9,
+    side: THREE.DoubleSide,
+  });
+  aoMap需要第二组uv进行设置
+  cubeGeometry.setAttribute(
+    "uv2",
+    new THREE.BufferAttribute(cubeGeometry.attributes.uv.array, 2)
+  );
   
-
-贰拾肆.
+贰拾肆.详解PBR物理渲染(20.main.js);
+  
 
 贰拾伍.
 

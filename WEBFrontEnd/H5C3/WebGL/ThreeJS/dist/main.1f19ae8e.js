@@ -44900,16 +44900,20 @@ scene.add(camera);
 var textureLoader = new THREE.TextureLoader();
 var texture = textureLoader.load("./textures/fruits.jpg");
 var alphaTexture = textureLoader.load("./textures/grid1.png");
+var aoTexture = textureLoader.load("textures/grid2.png");
 var cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
 var cubeMaterial = new THREE.MeshBasicMaterial({
   color: "#ffff00",
   map: texture,
   transparent: true,
   alphaMap: alphaTexture,
-  opacity: 0.8
+  opacity: 0.8,
+  aoMap: aoTexture,
+  aoMapIntensity: 0.9
   // side: THREE.DoubleSide,
 });
-
+// aoMap需要第二组uv进行设置
+cubeGeometry.setAttribute("uv2", new THREE.BufferAttribute(cubeGeometry.attributes.uv.array, 2));
 cubeMaterial.side = THREE.DoubleSide;
 var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 scene.add(cube);
