@@ -44896,12 +44896,16 @@ scene.add(camera);
 /**
  * 3.场景中添加物体
  */
-// 导入纹理
 var textureLoader = new THREE.TextureLoader();
+// 导入纹理贴图
 var texture = textureLoader.load("./textures/fruits.jpg");
+// 导入透明贴图
 var alphaTexture = textureLoader.load("./textures/grid1.png");
-var aoTexture = textureLoader.load("textures/grid2.png");
-var cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+// 导入环境贴图
+var aoTexture = textureLoader.load("./textures/grid2.png");
+// 导入置换贴图
+var heightTexture = textureLoader.load("./textures/fruits2.png");
+var cubeGeometry = new THREE.BoxGeometry(1, 1, 1, 100, 100, 100);
 var cubeMaterial = new THREE.MeshStandardMaterial({
   color: "#ffff00",
   map: texture,
@@ -44909,7 +44913,9 @@ var cubeMaterial = new THREE.MeshStandardMaterial({
   alphaMap: alphaTexture,
   opacity: 0.8,
   aoMap: aoTexture,
-  aoMapIntensity: 0.9
+  aoMapIntensity: 0.9,
+  displacementMap: heightTexture,
+  displacementScale: 0.08
 });
 // aoMap需要第二组uv进行设置
 cubeGeometry.setAttribute("uv2", new THREE.BufferAttribute(cubeGeometry.attributes.uv.array, 2));

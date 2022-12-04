@@ -283,22 +283,22 @@
   
 贰拾叁.环境遮挡贴图与强度(19.main.js);
   第一组uv控制的是颜色贴图,第二组uv控制的是光照效果.
-  const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
-  const cubeMaterial = new THREE.MeshBasicMaterial({
-    color: "#ffff00",
-    map: texture,
-    transparent: true,
-    alphaMap: alphaTexture,
-    opacity: 0.8,
-    aoMap: aoTexture,
-    aoMapIntensity: 0.9,
-    side: THREE.DoubleSide,
-  });
+    const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+    const cubeMaterial = new THREE.MeshBasicMaterial({
+      color: "#ffff00",
+      map: texture,
+      transparent: true,
+      alphaMap: alphaTexture,
+      opacity: 0.8,
+      aoMap: aoTexture,
+      aoMapIntensity: 0.9,
+      side: THREE.DoubleSide,
+    });
   aoMap需要第二组uv进行设置
-  cubeGeometry.setAttribute(
-    "uv2",
-    new THREE.BufferAttribute(cubeGeometry.attributes.uv.array, 2)
-  );
+    cubeGeometry.setAttribute(
+      "uv2",
+      new THREE.BufferAttribute(cubeGeometry.attributes.uv.array, 2)
+    );
   
 贰拾肆.详解PBR物理渲染
   PBR基于物理渲染,之前的渲染是在模仿灯光的外观,PBR是模仿光的实际行为,使看起来更真实
@@ -316,5 +316,48 @@
     directionalLight.position.set(10, 10, 10);
     scene.add(directionalLight);
 
-贰拾陆.置换贴图和顶点细分设置
+贰拾陆.置换贴图和顶点细分设置(21.main.js);
+  导入置换贴图(与透明贴图同理,要求贴图黑白色,要凸出的部分呈白色,其他区域为黑色)
+    let heightTexture = textureLoader.load("./textures/fruits2.png");
+  创建几何体时还需设置segments参数(100,100,100),这样增加顶点才可达到效果
+    const cubeGeometry = new THREE.BoxGeometry(1, 1, 1, 100, 100, 100);
+    const cubeMaterial = new THREE.MeshStandardMaterial({
+      color: "#ffff00",
+      map: texture,
+      transparent: true,
+      alphaMap: alphaTexture,
+      opacity: 0.8,
+      aoMap: aoTexture,
+      aoMapIntensity: 0.9,
+      displacementMap: heightTexture,
+      displacementScale: 0.08,
+    });
+
+贰拾柒.设置粗糙度与粗糙度贴图(22.main.js);
   
+
+贰拾捌.
+
+贰拾玖.
+
+叁拾.
+
+叁拾壹.
+
+叁拾贰.
+
+叁拾叁.
+
+叁拾肆.
+
+叁拾伍.
+
+叁拾陆.
+
+叁拾柒.
+
+叁拾捌.
+
+叁拾玖.
+
+肆拾.
