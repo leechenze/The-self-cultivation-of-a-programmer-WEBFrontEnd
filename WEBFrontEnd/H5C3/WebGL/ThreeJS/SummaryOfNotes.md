@@ -300,7 +300,8 @@
       new THREE.BufferAttribute(cubeGeometry.attributes.uv.array, 2)
     );
   
-贰拾肆.详解PBR物理渲染
+贰拾肆.详解PBR物理渲染;
+  physically based rendering
   PBR基于物理渲染,之前的渲染是在模仿灯光的外观,PBR是模仿光的实际行为,使看起来更真实
   主要表现:
     灯光属性: 直接照明,间接照明,直接高光,间接高光,阴影,环境光闭塞
@@ -352,9 +353,27 @@
     });
 
 贰拾捌.设置金属度与金属度贴图(23.main.js);
-  
+  导入金属贴图
+    let metalnessTexture = textureLoader.load("./texture/fruits2.png");
+  金属贴图会呈现黑色,在光照下才会显示
+    const cubeMaterial = new THREE.MeshStandardMaterial({
+      color: "#ffff00",
+      map: texture,
+      transparent: true,
+      alphaMap: alphaTexture,
+      // opacity: 0.8,
+      aoMap: aoTexture,
+      aoMapIntensity: 0.9,
+      displacementMap: heightTexture,
+      displacementScale: 0.03,
+      roughness: 1,
+      roughnessMap: roughnessTexture,
+      metalness: 1,
+      metalnessMap: metalnessTexture,
+    });
 
-贰拾玖.
+贰拾玖.法线贴图应用
+  
 
 叁拾.
 
