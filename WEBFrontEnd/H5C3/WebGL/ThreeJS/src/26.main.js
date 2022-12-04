@@ -31,6 +31,7 @@ scene.add(camera);
 /**
  * 3.场景中添加物体
  */
+
 const rgbeLoader = new RGBELoader();
 rgbeLoader
   .loadAsync("textures/equirectangular/quarry_01_1k.hdr")

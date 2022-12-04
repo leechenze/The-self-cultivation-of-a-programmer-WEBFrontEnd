@@ -462,10 +462,29 @@
     scene.add(directionalLight);
 
 叁拾贰.经纬线映射贴图与HDR(26.main.js);
+  HDR:高动态范围显示技术
+    简单说就是.hdr后缀的文件包含了比较全面的光照信息,一个hdr文件即有白天状态下的场景,又有夜晚状态的场景
+    用RGBELoader对hdr文件进行加载和处理
+  导入RGBELoader
+    import RGBELoader from "three/examples/jsm/loaders/RGBELoader";
   
-  
+    const rgbeLoader = new RGBELoader();
+    rgbeLoader
+      .loadAsync("textures/equirectangular/quarry_01_1k.hdr")
+      .then((texture) => {
+        // 纹理映射方法,声明球形投影映射效果;
+        texture.mapping = THREE.EquirectangularReflectionMapping;
+        // 添加场景背景
+        scene.background = texture;
+        // 给所有物体添加默认环境贴图,如果物体材质上有环境贴图那就用材质的贴图,如果没有就用场景贴图
+        scene.environment = texture;
+      });
+  总结:
+    cubeTextureLoader是分别定义正负xyz轴六个面进行映射
+    dataTextureLoader是对一整张图片进行映射,一整张图展开后就是一个全景图;平面世界地图就是类似原理
 
-叁拾叁.
+叁拾叁.灯光与阴影的关系设置(27.main.js);
+  
 
 叁拾肆.
 
