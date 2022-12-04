@@ -282,7 +282,7 @@
   OR: cubeMaterial.side = THREE.DoubleSide; 构造后的实例对象也可设值
   
 贰拾叁.环境遮挡贴图与强度(19.main.js);
-  第一组uv控制的是颜色贴图,第二组uv控制的是光照效果.
+  第一组uv控制的是颜色贴图,第二组uv控制的是光照效果;在基础材质下生效;
     const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
     const cubeMaterial = new THREE.MeshBasicMaterial({
       color: "#ffff00",
@@ -334,9 +334,25 @@
     });
 
 贰拾柒.设置粗糙度与粗糙度贴图(22.main.js);
-  
+  导入粗糙贴图(与置换贴图同理); !!! fruits3图片不生效 !!!
+    let roughnessTexture = textureLoader.load("./texture/fruits3.png");
+  0表示镜面反射(更光滑更明显),1表示漫反射(光照更粗糙更模糊)
+    const cubeMaterial = new THREE.MeshStandardMaterial({
+      color: "#ffff00",
+      map: texture,
+      transparent: true,
+      alphaMap: alphaTexture,
+      opacity: 0.8,
+      aoMap: aoTexture,
+      aoMapIntensity: 0.9,
+      displacementMap: heightTexture,
+      displacementScale: 0.03,
+      roughness: 1,
+      roughnessMap: roughnessTexture,
+    });
 
-贰拾捌.
+贰拾捌.设置金属度与金属度贴图(23.main.js);
+  
 
 贰拾玖.
 

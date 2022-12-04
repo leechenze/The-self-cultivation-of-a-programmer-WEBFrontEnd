@@ -44905,6 +44905,8 @@ var alphaTexture = textureLoader.load("./textures/grid1.png");
 var aoTexture = textureLoader.load("./textures/grid2.png");
 // 导入置换贴图
 var heightTexture = textureLoader.load("./textures/fruits2.png");
+// 导入粗糙贴图
+var roughnessTexture = textureLoader.load("./texture/fruits3.png");
 var cubeGeometry = new THREE.BoxGeometry(1, 1, 1, 100, 100, 100);
 var cubeMaterial = new THREE.MeshStandardMaterial({
   color: "#ffff00",
@@ -44915,7 +44917,9 @@ var cubeMaterial = new THREE.MeshStandardMaterial({
   aoMap: aoTexture,
   aoMapIntensity: 0.9,
   displacementMap: heightTexture,
-  displacementScale: 0.08
+  displacementScale: 0.03,
+  roughness: 1,
+  roughnessMap: roughnessTexture
 });
 // aoMap需要第二组uv进行设置
 cubeGeometry.setAttribute("uv2", new THREE.BufferAttribute(cubeGeometry.attributes.uv.array, 2));
