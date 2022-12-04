@@ -42,6 +42,8 @@ let heightTexture = textureLoader.load("./textures/fruits2.png");
 let roughnessTexture = textureLoader.load("./texture/fruits3.png");
 // 导入金属贴图
 let metalnessTexture = textureLoader.load("./texture/fruits2.png");
+// 导入法线贴图
+let normalTexture = textureLoader.load("./texture/fruits2.png");
 
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1, 100, 100, 100);
 const cubeMaterial = new THREE.MeshStandardMaterial({
@@ -58,6 +60,7 @@ const cubeMaterial = new THREE.MeshStandardMaterial({
   roughnessMap: roughnessTexture,
   metalness: 1,
   metalnessMap: metalnessTexture,
+  normalMap: normalTexture,
 });
 // aoMap需要第二组uv进行设置
 cubeGeometry.setAttribute(

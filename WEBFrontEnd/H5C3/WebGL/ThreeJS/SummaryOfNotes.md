@@ -353,7 +353,7 @@
     });
 
 贰拾捌.设置金属度与金属度贴图(23.main.js);
-  导入金属贴图
+  导入金属贴图()
     let metalnessTexture = textureLoader.load("./texture/fruits2.png");
   金属贴图会呈现黑色,在光照下才会显示
     const cubeMaterial = new THREE.MeshStandardMaterial({
@@ -361,7 +361,7 @@
       map: texture,
       transparent: true,
       alphaMap: alphaTexture,
-      // opacity: 0.8,
+      opacity: 0.8,
       aoMap: aoTexture,
       aoMapIntensity: 0.9,
       displacementMap: heightTexture,
@@ -373,7 +373,29 @@
     });
 
 贰拾玖.法线贴图应用
-  
+  法线贴图没有制作,这里只是简单示例代码应用,同粗糙和金属贴图一致;
+  罗列一些贴图资源地址：
+    https://www.poliigon.com/
+    https://www.arroway-textures.ch/
+    https://3dtextures.me/
+  导入法线贴图
+    let normalTexture = textureLoader.load("./texture/fruits2.png");
+  const cubeMaterial = new THREE.MeshStandardMaterial({
+    color: "#ffff00",
+    map: texture,
+    transparent: true,
+    alphaMap: alphaTexture,
+    opacity: 0.8,
+    aoMap: aoTexture,
+    aoMapIntensity: 0.9,
+    displacementMap: heightTexture,
+    displacementScale: 0.03,
+    roughness: 1,
+    roughnessMap: roughnessTexture,
+    metalness: 1,
+    metalnessMap: metalnessTexture,
+    normalMap: normalTexture,
+  });
 
 叁拾.
 
