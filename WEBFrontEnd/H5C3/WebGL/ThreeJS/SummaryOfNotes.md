@@ -419,7 +419,6 @@
       );
     声明纹理加载器时传入加载管理器
       const textureLoader = new THREE.TextureLoader(loadingManager);
-  
   方式二:
     let texture = textureLoader.load(
       "./textures/fruits.jpg"
@@ -428,11 +427,43 @@
         eventCollection.onError
     );
 
+叁拾壹.详解环境纹理(25.main.js);
+  px:  positive 正 X 轴
+  nx:  negative 负 X 轴
+  py:  positive 正 Y 轴
+  ny:  negative 负 Y 轴
+  pz:  positive 正 Z 轴
+  nz:  negative 负 Z 轴
+  设置Cube纹理加载器
+    const cubeTextureLoader = new THREE.CubeTextureLoader();
+    const environmentMapTexture = cubeTextureLoader.load([
+      "textures/cube/Park3Med/px.jpg",
+      "textures/cube/Park3Med/nx.jpg",
+      "textures/cube/Park3Med/py.jpg",
+      "textures/cube/Park3Med/ny.jpg",
+      "textures/cube/Park3Med/pz.jpg",
+      "textures/cube/Park3Med/nz.jpg",
+    ]);
+  创建球形物体
+    const sphereGeometry = new THREE.SphereGeometry(1, 20, 20);
+    const sphereMaterial = new THREE.MeshStandardMaterial({
+      metalness: 0.8,
+      roughness: 0,
+      envMap: environmentMapTexture,
+    });
+    const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+    scene.add(sphereMesh);
+  环境光照(四面八方的打过来的光);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(ambientLight);
+  直线光照
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight.position.set(10, 10, 10);
+    scene.add(directionalLight);
+
+叁拾贰.经纬线映射贴图与HDR(26.main.js);
   
-
-叁拾壹.(25.main.js);
-
-叁拾贰.
+  
 
 叁拾叁.
 

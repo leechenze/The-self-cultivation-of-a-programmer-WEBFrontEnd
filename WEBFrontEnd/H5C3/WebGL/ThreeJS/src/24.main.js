@@ -56,6 +56,7 @@ const loadingManager = new THREE.LoadingManager(
   eventCollection.onError
 );
 
+// 设置纹理加载器
 const textureLoader = new THREE.TextureLoader(loadingManager);
 // 导入纹理贴图
 let texture = textureLoader.load(

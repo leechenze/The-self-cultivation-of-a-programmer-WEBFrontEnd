@@ -44879,13 +44879,6 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 // 导入GUI图形操作库
 
 /**
- * 创建展示加载进度的DOM元素
- */
-var loadDom = document.createElement("div");
-loadDom.style.cssText = "width: 100%;height:20px;line-height:20px;text-align:center;font-size:18px;position:absolute;top:10px;right:0;color:white;";
-document.body.appendChild(loadDom);
-
-/**
  * 1.创建场景
  */
 var scene = new THREE.Scene();
@@ -44904,67 +44897,26 @@ scene.add(camera);
  * 3.场景中添加物体
  */
 
-var eventCollection = {
-  onLoad: function onLoad() {
-    console.log("图片加载完成");
-  },
-  onProgress: function onProgress(url, num, total) {
-    loadDom.innerText = "\u5F53\u524D\u52A0\u8F7D\u8FDB\u5EA6".concat((num / total * 100).toFixed(2), "%");
-  },
-  onError: function onError(err) {
-    console.log(err);
-  }
-};
-// 设置加载管理器
-var loadingManager = new THREE.LoadingManager(eventCollection.onLoad, eventCollection.onProgress, eventCollection.onError);
-var textureLoader = new THREE.TextureLoader(loadingManager);
-// 导入纹理贴图
-var texture = textureLoader.load("./textures/fruits.jpg"
-// eventCollection.onLoad,
-// eventCollection.onProgress,
-// eventCollection.onError
-);
-// 导入透明贴图
-var alphaTexture = textureLoader.load("./textures/grid1.png");
-// 导入环境贴图
-var aoTexture = textureLoader.load("./textures/grid2.png");
-// 导入置换贴图
-var heightTexture = textureLoader.load("./textures/fruits2.png");
-// 导入粗糙贴图
-var roughnessTexture = textureLoader.load("./texture/fruits3.png");
-// 导入金属贴图
-var metalnessTexture = textureLoader.load("./texture/fruits2.png");
-// 导入法线贴图
-var normalTexture = textureLoader.load("./texture/fruits2.png");
-var cubeGeometry = new THREE.BoxGeometry(1, 1, 1, 100, 100, 100);
-var cubeMaterial = new THREE.MeshStandardMaterial({
-  color: "#ffff00",
-  map: texture,
-  transparent: true,
-  alphaMap: alphaTexture,
-  opacity: 0.8,
-  aoMap: aoTexture,
-  aoMapIntensity: 0.9,
-  displacementMap: heightTexture,
-  displacementScale: 0.03,
-  roughness: 1,
-  roughnessMap: roughnessTexture,
-  metalness: 1,
-  metalnessMap: metalnessTexture
-  // normalMap: normalTexture,
+// 设置Cube纹理加载器
+var cubeTextureLoader = new THREE.CubeTextureLoader();
+var environmentMapTexture = cubeTextureLoader.load(["textures/cube/Park3Med/px.jpg", "textures/cube/Park3Med/nx.jpg", "textures/cube/Park3Med/py.jpg", "textures/cube/Park3Med/ny.jpg", "textures/cube/Park3Med/pz.jpg", "textures/cube/Park3Med/nz.jpg"]);
+
+// 创建球形物体
+var sphereGeometry = new THREE.SphereGeometry(1, 20, 20);
+var sphereMaterial = new THREE.MeshStandardMaterial({
+  metalness: 0.8,
+  roughness: 0,
+  envMap: environmentMapTexture
 });
-// aoMap需要第二组uv进行设置
-cubeGeometry.setAttribute("uv2", new THREE.BufferAttribute(cubeGeometry.attributes.uv.array, 2));
-cubeMaterial.side = THREE.DoubleSide;
-var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-scene.add(cube);
+var sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+scene.add(sphereMesh);
 
 /**
  * 添加光照场景
  */
 // 环境光照(四面八方的打过来的光);
-// const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-// scene.add(ambientLight);
+var ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+scene.add(ambientLight);
 // 直线光照
 var directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
 directionalLight.position.set(10, 10, 10);
