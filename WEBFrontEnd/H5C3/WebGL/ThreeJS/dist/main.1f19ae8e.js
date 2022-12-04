@@ -45288,7 +45288,23 @@ var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
 directionalLight.position.set(10, 10, 10);
 // 设置光照允许投射阴影
 directionalLight.castShadow = true;
+// 设置阴影模糊度
+directionalLight.shadow.radius = 30;
+// 设置阴影贴图分辨率
+directionalLight.shadow.mapSize.set(3456, 2234);
+// 设置平行光投射相机属性
+directionalLight.shadow.camera.near = 0.5;
+directionalLight.shadow.camera.far = 500;
+directionalLight.shadow.camera.top = 5;
+directionalLight.shadow.camera.bottom = -5;
+directionalLight.shadow.camera.left = -5;
+directionalLight.shadow.camera.right = 5;
 scene.add(directionalLight);
+var GUI = new dat.GUI();
+GUI.add(directionalLight.shadow.camera, "near").min(0).max(100).step(0.1).onChange(function () {
+  // 更新相机投影矩阵
+  directionalLight.shadow.camera.updateProjectionMatrix();
+});
 
 /**
  * 4.初始化渲染器

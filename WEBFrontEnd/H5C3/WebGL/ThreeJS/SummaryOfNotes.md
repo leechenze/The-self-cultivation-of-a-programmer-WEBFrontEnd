@@ -496,9 +496,30 @@
       planeMesh.receiveShadow = true;
   
 叁拾肆.平行关阴影属性与阴影相机原理(28.main.js);
-  
+  设置阴影模糊度
+    directionalLight.shadow.radius = 30;
+  设置阴影贴图分辨率
+    directionalLight.shadow.mapSize.set(3456, 2234);
+  设置平行光投射相机属性
+    directionalLight.shadow.camera.near = 0.5;
+    directionalLight.shadow.camera.far = 500;
+    directionalLight.shadow.camera.top = 5;
+    directionalLight.shadow.camera.bottom = -5;
+    directionalLight.shadow.camera.left = -5;
+    directionalLight.shadow.camera.right = 5;
+  使用datGUI可视化查看参数变化
+    const GUI = new dat.GUI();
+    GUI.add(directionalLight.shadow.camera, "near")
+      .min(0)
+      .max(100)
+      .step(0.1)
+      .onChange(() => {
+        更新相机投影矩阵
+        directionalLight.shadow.camera.updateProjectionMatrix();
+      });
 
-叁拾伍.
+叁拾伍.详解聚光灯各种属性与应用(29.main.js);
+  
 
 叁拾陆.
 
