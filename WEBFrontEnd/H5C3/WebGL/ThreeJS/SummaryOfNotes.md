@@ -397,9 +397,40 @@
     normalMap: normalTexture,
   });
 
-叁拾.
+叁拾.纹理加载进度情况(24.main.js);
+  设置事件集合
+    let eventCollection = {
+      onLoad: function () {
+        console.log("图片加载完成");
+      },
+      onProgress: function (url, num, total) {
+        loadDom.innerText = `当前加载进度${((num / total) * 100).toFixed(2)}%`;
+      },
+      onError: function (err) {
+        console.log(err);
+      },
+    };
+  方式一:
+    设置加载管理器
+      const loadingManager = new THREE.LoadingManager(
+        eventCollection.onLoad,
+        eventCollection.onProgress,
+        eventCollection.onError
+      );
+    声明纹理加载器时传入加载管理器
+      const textureLoader = new THREE.TextureLoader(loadingManager);
+  
+  方式二:
+    let texture = textureLoader.load(
+      "./textures/fruits.jpg"
+        eventCollection.onLoad,
+        eventCollection.onProgress,
+        eventCollection.onError
+    );
 
-叁拾壹.
+  
+
+叁拾壹.(25.main.js);
 
 叁拾贰.
 
