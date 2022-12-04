@@ -45249,43 +45249,45 @@ var scene = new THREE.Scene();
  * 2.创建相机
  */
 // 创建透视相机; (角度, 宽高比,近端参, 远端参;)
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+var camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
 // 设置相机位置; (x,y,z);
-camera.position.set(0, 0, 10);
+camera.position.set(0, 5, 8);
 // 把相机添加到场景中
 scene.add(camera);
 
 /**
  * 3.场景中添加物体
  */
-var rgbeLoader = new _RGBELoader.RGBELoader();
-rgbeLoader.loadAsync("textures/equirectangular/quarry_01_1k.hdr").then(function (texture) {
-  // 纹理映射方法,声明球形投影映射效果;
-  texture.mapping = THREE.EquirectangularReflectionMapping;
-  // 添加场景背景
-  scene.background = texture;
-  // 给所有物体添加默认环境贴图,如果物体材质上有环境贴图那就用材质的贴图,如果没有就用场景贴图
-  scene.environment = texture;
-});
-
 // 创建球形物体
-var sphereGeometry = new THREE.SphereGeometry(1, 20, 20);
-var sphereMaterial = new THREE.MeshStandardMaterial({
-  metalness: 0.8,
-  roughness: 0
-});
+var sphereGeometry = new THREE.SphereGeometry(1, 100, 100);
+var sphereMaterial = new THREE.MeshStandardMaterial();
 var sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+// 设置物体允许投射阴影
+sphereMesh.castShadow = true;
 scene.add(sphereMesh);
+// 创建平面(用来接收呈现的阴影)
+var planeGeometry = new THREE.PlaneGeometry(10, 10);
+var planeMaterial = new THREE.MeshStandardMaterial({
+  side: THREE.DoubleSide
+});
+var planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+planeMesh.position.y = -1;
+planeMesh.rotation.x = Math.PI / 2;
+// 设置平面允许接收阴影
+planeMesh.receiveShadow = true;
+scene.add(planeMesh);
 
 /**
  * 添加光照场景
  */
 // 环境光照(四面八方的打过来的光);
-var ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+var ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambientLight);
 // 直线光照
-var directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
 directionalLight.position.set(10, 10, 10);
+// 设置光照允许投射阴影
+directionalLight.castShadow = true;
 scene.add(directionalLight);
 
 /**
@@ -45295,6 +45297,9 @@ scene.add(directionalLight);
 var renderer = new THREE.WebGLRenderer();
 // 设置渲染尺寸大小; (画布宽, 画布高);
 renderer.setSize(window.innerWidth, window.innerHeight);
+// 设置渲染器允许场景中的阴影贴图
+renderer.shadowMap.enabled = true;
+
 // 将webgl渲染的canvas内容添加到body元素上
 document.body.appendChild(renderer.domElement);
 
@@ -45305,9 +45310,6 @@ document.body.appendChild(renderer.domElement);
 var control = new _OrbitControls.OrbitControls(camera, renderer.domElement);
 // 设置阻尼感,操作效果更真实;
 control.enableDamping = true;
-
-// 最后使用渲染器,通过相机将场景渲染进来
-renderer.render(scene, camera);
 
 /**
  * 添加坐标轴辅助器

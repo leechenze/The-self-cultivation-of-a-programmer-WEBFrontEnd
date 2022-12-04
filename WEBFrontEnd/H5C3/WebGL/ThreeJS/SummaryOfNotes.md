@@ -484,9 +484,19 @@
     dataTextureLoader是对一整张图片进行映射,一整张图展开后就是一个全景图;平面世界地图就是类似原理
 
 叁拾叁.灯光与阴影的关系设置(27.main.js);
+  条件及步骤:
+    1.满足对光照响应的物体材质
+    2.设置渲染器允许场景中的阴影贴图
+      renderer.shadowMap.enabled = true;
+    3.设置光照允许投射阴影
+      directionalLight.castShadow = true;
+    4.设置物体允许投射阴影
+      sphereMesh.castShadow = true;
+    5.设置平面允许接收阴影(创建一个平面,用来接收呈现的阴影)
+      planeMesh.receiveShadow = true;
   
-
-叁拾肆.
+叁拾肆.平行关阴影属性与阴影相机原理(28.main.js);
+  
 
 叁拾伍.
 
