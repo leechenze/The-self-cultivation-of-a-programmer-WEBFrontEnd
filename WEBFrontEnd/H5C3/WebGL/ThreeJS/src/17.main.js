@@ -31,19 +31,19 @@ scene.add(camera);
  */
 // 导入纹理
 const textureLoader = new THREE.TextureLoader();
-let texture = textureLoader.load("./textures/fruits.jpg");
-let alphaTexture = textureLoader.load("./textures/grid1.png");
+let texture = textureLoader.load("./textures/minecraft/grass_dirt.png");
+
+// 纹理显示算法,纹理显示设置(NearestFilter设置为使用原始像素值);
+// texture.minFilter = THREE.NearestFilter;
+// texture.magFilter = THREE.NearestFilter;
+texture.minFilter = THREE.LinearFilter;
+texture.magFilter = THREE.LinearFilter;
 
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
 const cubeMaterial = new THREE.MeshBasicMaterial({
   color: "#ffff00",
   map: texture,
-  transparent: true,
-  alphaMap: alphaTexture,
-  opacity: 0.8,
-  // side: THREE.DoubleSide,
 });
-cubeMaterial.side = THREE.DoubleSide;
 
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 scene.add(cube);

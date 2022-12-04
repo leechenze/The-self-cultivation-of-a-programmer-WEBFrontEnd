@@ -260,11 +260,29 @@
   
 
 贰拾壹.设置纹理显示算法与mipmap(17.main.js);
+  texture.minFilter = THREE.NearestFilter;
+  texture.magFilter = THREE.NearestFilter;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  const cubeMaterial = new THREE.MeshBasicMaterial({
+    color: "#ffff00",
+    map: texture,
+  });
+
+贰拾贰.透明材质和透明纹理(18.main.js);
+  const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+  const cubeMaterial = new THREE.MeshBasicMaterial({
+    color: "#ffff00",
+    map: texture,
+    transparent: true,
+    alphaMap: alphaTexture,               黑白图片, 黑色部分不显示, 只现实白色部分;
+    opacity: 0.8,                         透明度
+    side: THREE.DoubleSide,               设置正面和背面都显示
+  });
+  OR: cubeMaterial.side = THREE.DoubleSide; 构造后的实例对象也可设值
   
-
-贰拾贰.
-
-贰拾叁.
+贰拾叁.环境遮挡贴图与强度
+  
 
 贰拾肆.
 
