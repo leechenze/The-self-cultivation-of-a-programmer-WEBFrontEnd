@@ -55,12 +55,47 @@ scene.add(planeMesh);
  * 添加光照场景
  */
 // 环境光照(四面八方的打过来的光);
-const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambientLight);
-// 直线光照
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-directionalLight.position.set(10, 10, 10);
-scene.add(directionalLight);
+// 聚光灯光照
+const spotLight = new THREE.SpotLight(0xffffff, 0.5);
+spotLight.position.set(3, 3, 3);
+// 设置光照允许投射阴影
+spotLight.castShadow = true;
+// 设置阴影模糊度
+spotLight.shadow.radius = 5;
+// 设置阴影贴图分辨率
+spotLight.shadow.mapSize.set(3456, 2234);
+// 设置聚光灯(手电筒光)照向的物体
+spotLight.target = sphereMesh;
+// 聚光灯角度
+spotLight.angle = Math.PI / 4;
+// 相机近端参
+// spotLight.shadow.camera.near = 500;
+// 相机远端参
+// spotLight.shadow.camera.far = 4000;
+// 相机角度
+// spotLight.shadow.camera.fov = 30;
+// 光照距离
+spotLight.distance = 0;
+// 聚光锥的半影衰减百分比
+spotLight.penumbra = 0;
+// 沿光照距离的衰减量(需配合设置使用物理上正确的光照模式才有效果 physics)
+spotLight.decay = 0;
+// 调节光照亮度
+spotLight.intensity = 2;
+scene.add(spotLight);
+
+const GUI = new dat.GUI();
+GUI.add(sphereMesh.position, "x").min(-5).max(5).step(0.1);
+GUI.add(spotLight, "angle")
+  .min(Math.PI / 80)
+  .max(Math.PI / 2)
+  .step(0.01);
+GUI.add(spotLight, "distance").min(0).max(100).step(0.01);
+GUI.add(spotLight, "penumbra").min(0).max(1).step(0.01);
+GUI.add(spotLight, "decay").min(0).max(5).step(0.01);
+GUI.add(spotLight, "intensity").min(0).max(10).step(0.01);
 
 /**
  * 4.初始化渲染器

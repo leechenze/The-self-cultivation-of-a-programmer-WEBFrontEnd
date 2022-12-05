@@ -45266,7 +45266,7 @@ var sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
 sphereMesh.castShadow = true;
 scene.add(sphereMesh);
 // 创建平面(用来接收呈现的阴影)
-var planeGeometry = new THREE.PlaneGeometry(10, 10);
+var planeGeometry = new THREE.PlaneGeometry(50, 50);
 var planeMaterial = new THREE.MeshStandardMaterial({
   side: THREE.DoubleSide
 });
@@ -45281,30 +45281,12 @@ scene.add(planeMesh);
  * 添加光照场景
  */
 // 环境光照(四面八方的打过来的光);
-var ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+var ambientLight = new THREE.AmbientLight(0xffffff, 1);
 scene.add(ambientLight);
 // 直线光照
-var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight.position.set(10, 10, 10);
-// 设置光照允许投射阴影
-directionalLight.castShadow = true;
-// 设置阴影模糊度
-directionalLight.shadow.radius = 30;
-// 设置阴影贴图分辨率
-directionalLight.shadow.mapSize.set(3456, 2234);
-// 设置平行光投射相机属性
-directionalLight.shadow.camera.near = 0.5;
-directionalLight.shadow.camera.far = 500;
-directionalLight.shadow.camera.top = 5;
-directionalLight.shadow.camera.bottom = -5;
-directionalLight.shadow.camera.left = -5;
-directionalLight.shadow.camera.right = 5;
 scene.add(directionalLight);
-var GUI = new dat.GUI();
-GUI.add(directionalLight.shadow.camera, "near").min(0).max(100).step(0.1).onChange(function () {
-  // 更新相机投影矩阵
-  directionalLight.shadow.camera.updateProjectionMatrix();
-});
 
 /**
  * 4.初始化渲染器
@@ -45315,6 +45297,8 @@ var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 // 设置渲染器允许场景中的阴影贴图
 renderer.shadowMap.enabled = true;
+// 设置使用物理上正确的光照模式
+renderer.physicallyCorrectLights = true;
 
 // 将webgl渲染的canvas内容添加到body元素上
 document.body.appendChild(renderer.domElement);
@@ -45396,7 +45380,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52633" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62776" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

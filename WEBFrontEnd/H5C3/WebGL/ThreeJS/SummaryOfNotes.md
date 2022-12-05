@@ -519,9 +519,48 @@
       });
 
 叁拾伍.详解聚光灯各种属性与应用(29.main.js);
-  P38 00:00
+  聚光灯光照(模拟类似手电筒的光照)
+    const spotLight = new THREE.SpotLight(0xffffff, 0.5);
+    spotLight.position.set(3, 3, 3);
+  设置光照允许投射阴影
+    spotLight.castShadow = true;
+  设置阴影模糊度
+    spotLight.shadow.radius = 5;
+  设置阴影贴图分辨率
+    spotLight.shadow.mapSize.set(3456, 2234);
+  设置聚光灯(手电筒光)照向的物体
+    spotLight.target = sphereMesh;
+  聚光灯角度
+    spotLight.angle = Math.PI / 4;
+  相机近端参
+    spotLight.shadow.camera.near = 500;
+  相机远端参
+    spotLight.shadow.camera.far = 4000;
+  相机角度
+    spotLight.shadow.camera.fov = 30;
+  光照距离
+    spotLight.distance = 0;
+  聚光锥的半影衰减百分比
+    spotLight.penumbra = 0;
+  沿光照距离的衰减量(需配合设置使用物理上正确的光照模式才有效果 physics)
+    spotLight.decay = 0;
+  调节光照亮度
+    spotLight.intensity = 2;
+    scene.add(spotLight);
+  GUI可视化设置
+    const GUI = new dat.GUI();
+    GUI.add(sphereMesh.position, "x").min(-5).max(5).step(0.1);
+    GUI.add(spotLight, "angle")
+      .min(Math.PI / 80)
+      .max(Math.PI / 2)
+      .step(0.01);
+    GUI.add(spotLight, "distance").min(0).max(100).step(0.01);
+    GUI.add(spotLight, "penumbra").min(0).max(1).step(0.01);
+    GUI.add(spotLight, "decay").min(0).max(5).step(0.01);
+    GUI.add(spotLight, "intensity").min(0).max(10).step(0.01);
 
-叁拾陆.
+叁拾陆.详解点光源属性与应用(30.main.js);
+  P39 00:00
 
 叁拾柒.
 
