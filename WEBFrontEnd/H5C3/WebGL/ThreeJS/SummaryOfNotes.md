@@ -559,9 +559,69 @@
     GUI.add(spotLight, "decay").min(0).max(5).step(0.01);
     GUI.add(spotLight, "intensity").min(0).max(10).step(0.01);
 
-叁拾陆.详解点光源属性与应用(30.main.js);
-  P39 00:00
 
+叁拾陆.详解点光源属性与应用(30.main.js);
+  环境光照(四面八方的打过来的光);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+    scene.add(ambientLight);
+  创建点光源
+    const pointLight = new THREE.PointLight(0xff0000, 30);
+    // pointLight.position.set(5,5,5);
+    pointLight.castShadow = true;
+    pointLight.intensity = 30;
+    // scene.add(pointLight);
+  创建一个小球
+    const lightBall = new THREE.Mesh(
+      new THREE.SphereGeometry(0.2, 20, 20),
+      new THREE.MeshBasicMaterial({ color: 0xff0000 })
+    );
+    lightBall.position.set(5, 5, 5);
+    lightBall.add(pointLight);
+    scene.add(lightBall);
+  创建GUI
+    const GUI = new dat.GUI();
+    GUI.add(pointLight.position, "x").min(-10).max(10).step(0.01);
+    GUI.add(pointLight, "distance").min(0).max(10).step(0.01);
+    GUI.add(pointLight, "decay").min(0).max(5).step(0.01);
+    GUI.add(lightBall.position, "x").min(-10).max(10).step(0.01);
+  渲染器渲染
+    const clock = new THREE.Clock();
+    function render() {
+      let time = clock.getElapsedTime();
+      lightBall.position.x = Math.sin(time) * 3;
+      lightBall.position.z = Math.cos(time) * 3;
+      lightBall.position.y = Math.sin(time) * 3;
+      control.update();
+      renderer.render(scene, camera);
+      // 渲染下一帧时递归调用rander函数;
+      requestAnimationFrame(render);
+    }
+    render();
+  章节思想:
+    可以看到
+      // pointLight.position.set(5,5,5);
+      // scene.add(pointLight);
+    这两行被注释掉了, (点光源注掉)然后创建了个小球,然后:
+      lightBall.add(pointLight);
+    那么使用小球add添加点光源之后,这个小球就是点光源的父级元素
+    设置小球位置为原来点光源的位置, 那么这个小球就是点光源;
+    然后渲染器渲染时,改变小球的x,y,z值就可以实现移动效果,这里简单做了一个环绕运动
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 叁拾柒.
 
 叁拾捌.

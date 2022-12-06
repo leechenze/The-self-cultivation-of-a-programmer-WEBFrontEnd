@@ -45281,12 +45281,26 @@ scene.add(planeMesh);
  * 添加光照场景
  */
 // 环境光照(四面八方的打过来的光);
-var ambientLight = new THREE.AmbientLight(0xffffff, 1);
+var ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
 scene.add(ambientLight);
-// 直线光照
-var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-directionalLight.position.set(10, 10, 10);
-scene.add(directionalLight);
+// 点光照
+var pointLight = new THREE.PointLight(0xff0000, 30);
+// pointLight.position.set(5,5,5);
+pointLight.castShadow = true;
+pointLight.intensity = 30;
+// scene.add(pointLight);
+// 创建一个小球
+var lightBall = new THREE.Mesh(new THREE.SphereGeometry(0.2, 20, 20), new THREE.MeshBasicMaterial({
+  color: 0xff0000
+}));
+lightBall.position.set(5, 5, 5);
+lightBall.add(pointLight);
+scene.add(lightBall);
+var GUI = new dat.GUI();
+GUI.add(pointLight.position, "x").min(-10).max(10).step(0.01);
+GUI.add(pointLight, "distance").min(0).max(10).step(0.01);
+GUI.add(pointLight, "decay").min(0).max(5).step(0.01);
+GUI.add(lightBall.position, "x").min(-10).max(10).step(0.01);
 
 /**
  * 4.初始化渲染器
@@ -45316,11 +45330,15 @@ control.enableDamping = true;
  */
 var axesHelper = new THREE.AxesHelper(5);
 scene.add(axesHelper);
-
+var clock = new THREE.Clock();
 /**
  * 封装渲染函数
  */
 function render() {
+  var time = clock.getElapsedTime();
+  lightBall.position.x = Math.sin(time) * 3;
+  lightBall.position.z = Math.cos(time) * 3;
+  lightBall.position.y = Math.sin(time) * 3;
   control.update();
   renderer.render(scene, camera);
   // 渲染下一帧时递归调用rander函数;
@@ -45380,7 +45398,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62776" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56033" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
