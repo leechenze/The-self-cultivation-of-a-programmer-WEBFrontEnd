@@ -38,7 +38,7 @@ const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 // 物体缩放
 // cube.scale.set(1, 1, 3);
 // cube.scale.z = 3;
-// 物体选择
+// 物体旋转
 // cube.rotation.set(Math.PI / 4, 0, 0, "XYZ");
 // cube.rotation.x = Math.PI / 4;
 // 将几何体添加至场景中
