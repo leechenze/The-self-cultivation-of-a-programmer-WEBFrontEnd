@@ -1,3 +1,4 @@
-*.js linguist-language=HTML
-*.html linguist-language=JavaScript
-*.css linguist-language=css
+*.html linguist-language=TypeScript
+*.js linguist-language=Go
+*.css linguist-language=Go
+*.vue linguist-language=Dart
